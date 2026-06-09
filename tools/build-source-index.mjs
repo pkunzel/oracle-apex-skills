@@ -2,8 +2,13 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import https from "node:https";
 
-const root = path.resolve(process.cwd(), "Documentation", "APEX 26.1 reference");
-const metaDir = path.join(root, "_meta");
+const projectRoot = process.cwd();
+const root = process.env.APEX_REFERENCE_ROOT
+  ? path.resolve(process.env.APEX_REFERENCE_ROOT)
+  : path.resolve(projectRoot, "skills", "apex-26-1-api", "references");
+const metaDir = process.env.APEX_REFERENCE_META_DIR
+  ? path.resolve(process.env.APEX_REFERENCE_META_DIR)
+  : path.resolve(projectRoot, "meta");
 const plsqlDir = path.join(root, "PLSQL");
 const jsDir = path.join(root, "JavaScript");
 
@@ -205,8 +210,8 @@ This reference is generated and curated from official Oracle documentation, then
 
 - [PLSQL](PLSQL/INDEX.md): ${plsqlPackages.length} package chapters and ${totalMembers} indexed package members.
 - [JavaScript](JavaScript/INDEX.md): ${jsModules.length} indexed namespaces, interfaces, widgets, and global APIs.
-- [_meta](./_meta): generated manifests and coverage.
-- [_tools](./_tools): generator scripts for refreshing indexes.
+- [Project meta](../../../meta): generated manifests and coverage.
+- [Project tools](../../../tools): generator scripts for refreshing indexes.
 
 ## Skill/GPT Usage
 
@@ -389,4 +394,3 @@ main().catch(error => {
   console.error(error);
   process.exitCode = 1;
 });
-

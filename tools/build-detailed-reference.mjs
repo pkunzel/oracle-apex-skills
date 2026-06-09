@@ -2,8 +2,13 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import https from "node:https";
 
-const root = path.resolve(process.cwd(), "Documentation", "APEX 26.1 reference");
-const metaDir = path.join(root, "_meta");
+const projectRoot = process.cwd();
+const root = process.env.APEX_REFERENCE_ROOT
+  ? path.resolve(process.env.APEX_REFERENCE_ROOT)
+  : path.resolve(projectRoot, "skills", "apex-26-1-api", "references");
+const metaDir = process.env.APEX_REFERENCE_META_DIR
+  ? path.resolve(process.env.APEX_REFERENCE_META_DIR)
+  : path.resolve(projectRoot, "meta");
 const manifestPath = path.join(metaDir, "source-index.json");
 
 const curatedMarker = "Status: curated";
@@ -832,13 +837,14 @@ ${curated.map(item => `- \`${item}\``).join("\n")}
 
 ## Skill Entrypoints
 
-- \`LLM_SKILL_INDEX.md\`
+- \`skills/apex-26-1-api/SKILL.md\`
+- \`skills/apex-26-1-api/references/LLM_SKILL_INDEX.md\`
 
 Current curated first-pass count: ${curated.length} guide pages plus the skill entrypoint.
 
 ## Local File Verification
 
-- Run \`node "Documentation/APEX 26.1 reference/_tools/verify-reference.mjs"\` after generation or curation.
+- Run \`node tools/verify-reference.mjs\` after generation or curation.
 - Expected verified counts: PL/SQL package pages 62 of 62, PL/SQL member detail pages 1252 of 1252, JavaScript module pages 46 of 46.
 - Verification report: \`verification-report.json\`
 - Package pages include generated local member-detail navigation after \`link-member-pages.mjs\` is run.

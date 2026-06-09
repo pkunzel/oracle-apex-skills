@@ -8,8 +8,6 @@ Use this file first, then open the package/module guide, then open generated mem
 
 - PL/SQL index: [PLSQL/INDEX.md](PLSQL/INDEX.md)
 - JavaScript index: [JavaScript/INDEX.md](JavaScript/INDEX.md)
-- Coverage and verification: [_meta/coverage.md](_meta/coverage.md)
-- Source manifest: [_meta/source-index.json](_meta/source-index.json)
 
 ## How To Answer APEX Coding Questions
 

@@ -1,8 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const root = path.resolve(process.cwd(), "Documentation", "APEX 26.1 reference");
-const manifestPath = path.join(root, "_meta", "source-index.json");
+const projectRoot = process.cwd();
+const root = process.env.APEX_REFERENCE_ROOT
+  ? path.resolve(process.env.APEX_REFERENCE_ROOT)
+  : path.resolve(projectRoot, "skills", "apex-26-1-api", "references");
+const metaDir = process.env.APEX_REFERENCE_META_DIR
+  ? path.resolve(process.env.APEX_REFERENCE_META_DIR)
+  : path.resolve(projectRoot, "meta");
+const manifestPath = path.join(metaDir, "source-index.json");
 
 const beginMarker = "<!-- BEGIN GENERATED MEMBER LINKS -->";
 const endMarker = "<!-- END GENERATED MEMBER LINKS -->";
@@ -65,4 +71,3 @@ main().catch(error => {
   console.error(error);
   process.exitCode = 1;
 });
-

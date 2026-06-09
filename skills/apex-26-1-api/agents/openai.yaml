@@ -1,0 +1,7 @@
+interface:
+  display_name: "APEX 26.1 API"
+  short_description: "APEX PL/SQL and JavaScript APIs"
+  default_prompt: "Use $apex-26-1-api to write Oracle APEX 26.1 PL/SQL and JavaScript API code."
+
+policy:
+  allow_implicit_invocation: true
