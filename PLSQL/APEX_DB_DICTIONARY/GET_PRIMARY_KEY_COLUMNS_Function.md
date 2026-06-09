@@ -1,0 +1,87 @@
+# APEX_DB_DICTIONARY.GET_PRIMARY_KEY_COLUMNS Function
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_PRIMARY_KEY_COLUMNS-Function.html)
+
+Status: generated detailed reference. Review edge cases against the source before production use.
+
+Parent package: [APEX_DB_DICTIONARY](../APEX_DB_DICTIONARY.md)
+
+## Purpose
+
+This procedure returns a comma-delimited list of column names in the primary key. Returns NULL if no PK constraint exists.
+
+## When To Use
+
+Use this page when code needs the `APEX_DB_DICTIONARY.GET_PRIMARY_KEY_COLUMNS` function. Confirm security, workspace, and session requirements for your calling context.
+
+## Signature
+
+```sql
+FUNCTION apex_db_dictionary.get_primary_key_columns (
+    p_table      IN   VARCHAR2,
+    p_owner      IN   VARCHAR2     DEFAULT NULL,
+    p_delimiter  IN   VARCHAR2     DEFAULT ',' )
+    RETURN VARCHAR2;
+```
+
+## Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_table` | Name of the object (table or view). May include the owner, e.g. HR.EMP . |
+| `p_owner` | (Optional) The owner of the object (default current user). |
+| `p_delimiter` | Delimiter used between column names (default ' , '). |
+
+## Returns
+
+This function returns a comma-delimited list of primary key column names. Returns NULL if no primary key constraint exists.
+
+## Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+## Simple Example
+
+```sql
+declare
+    l_result VARCHAR2;
+begin
+    l_result := apex_db_dictionary.GET_PRIMARY_KEY_COLUMNS(
+        p_table => 'EXAMPLE',
+        p_owner => 'EXAMPLE',
+        p_delimiter => 'EXAMPLE'
+    );
+    sys.dbms_output.put_line('Result captured.');
+end;
+/
+```
+
+## More Complex Example
+
+```sql
+declare
+    l_result VARCHAR2;
+begin
+    -- Assuming this runs outside a normal APEX page request.
+    apex_session.create_session(
+        p_app_id   => 100,
+        p_page_id  => 1,
+        p_username => 'USER');
+
+    l_result := apex_db_dictionary.GET_PRIMARY_KEY_COLUMNS(
+            p_table => 'EXAMPLE',
+            p_owner => 'EXAMPLE',
+            p_delimiter => 'EXAMPLE'
+        );
+
+    apex_session.delete_session;
+exception
+    when others then
+        apex_session.delete_session;
+        raise;
+end;
+/
+```
+

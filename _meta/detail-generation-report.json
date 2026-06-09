@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-06-09T12:56:06.355Z",
+  "plsql": {
+    "attempted": 1252,
+    "generated": 1252,
+    "failed": []
+  },
+  "javascript": {
+    "attempted": 46,
+    "generated": 38,
+    "skippedCurated": 8,
+    "failed": []
+  }
+}

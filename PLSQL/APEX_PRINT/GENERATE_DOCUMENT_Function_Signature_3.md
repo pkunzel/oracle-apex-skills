@@ -1,0 +1,95 @@
+# APEX_PRINT.GENERATE_DOCUMENT Function Signature 3
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-3.html)
+
+Status: generated detailed reference. Review edge cases against the source before production use.
+
+Parent package: [APEX_PRINT](../APEX_PRINT.md)
+
+## Purpose
+
+This function returns a document as BLOB using a pre-defined report layout.
+
+## When To Use
+
+Use this page when code needs the `APEX_PRINT.GENERATE_DOCUMENT` function. Confirm security, workspace, and session requirements for your calling context.
+
+## Signature
+
+```sql
+APEX_PRINT.GENERATE_DOCUMENT (
+    p_application_id            IN NUMBER,
+    p_data                      IN CLOB,
+    p_report_layout_static_id   IN VARCHAR2,
+    p_output_type               IN t_output_type    DEFAULT c_output_pdf,
+    p_output_password           IN VARCHAR2         DEFAULT NULL )
+    RETURN BLOB;
+```
+
+## Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_application_id` | Defines the application ID of the report layout. |
+| `p_data` | Report data. The format depends on the type of print server that is used. |
+| `p_report_layout_static_id` | Static ID of the report layout (stored under application's shared components). |
+| `p_output_type` | Defines the document format. See t_output_type for the available types in Constants . |
+| `p_output_password` | The password to needed to open the generated document. PDF only. |
+
+## Returns
+
+A BLOB containing the generated document.
+
+## Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+## Simple Example
+
+```sql
+declare
+    l_result BLOB;
+begin
+    l_result := apex_print.GENERATE_DOCUMENT(
+        p_application_id => 1,
+        p_data => to_clob('Example text'),
+        p_report_layout_static_id => 'EXAMPLE_STATIC_ID',
+        p_output_type => null,
+        p_output_password => 'EXAMPLE'
+    );
+    sys.dbms_output.put_line('Result captured.');
+end;
+/
+```
+
+## More Complex Example
+
+```sql
+declare
+    l_result BLOB;
+begin
+    -- Assuming this runs outside a normal APEX page request.
+    apex_session.create_session(
+        p_app_id   => 100,
+        p_page_id  => 1,
+        p_username => 'USER');
+
+    l_result := apex_print.GENERATE_DOCUMENT(
+            p_application_id => 1,
+            p_data => to_clob('Example text'),
+            p_report_layout_static_id => 'EXAMPLE_STATIC_ID',
+            p_output_type => null,
+            p_output_password => 'EXAMPLE'
+        );
+
+    apex_session.delete_session;
+exception
+    when others then
+        apex_session.delete_session;
+        raise;
+end;
+/
+```
+

@@ -1,0 +1,70 @@
+# APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS-Procedure.html)
+
+Status: generated detailed reference. Review edge cases against the source before production use.
+
+Parent package: [APEX_INSTANCE_DEBUG](../APEX_INSTANCE_DEBUG.md)
+
+## Purpose
+
+This procedure emits a report of the most recent Oracle APEX requests which had debug enabled.
+
+## When To Use
+
+Use this page when code needs the `APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+## Signature
+
+```sql
+APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS (
+    p_session_id             IN              NUMBER DEFAULT NULL,
+    p_max_rows               IN              NUMBER DEFAULT 30,
+    p_show_d2                IN              BOOLEAN DEFAULT FALSE);
+```
+
+## Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_session_id` | Optionally restrict output to the given APEX session. |
+| `p_max_rows` | Restrict output to the given number of rows (default 30). The value must be between 1 and 10,000. |
+| `p_show_d2` | If TRUE , emit @d2 prefix before page view IDs, to easily copy/paste in SQL. The d1.sql and ds.sql scripts set this parameter. |
+
+## Returns
+
+This is a procedure and does not return a value.
+
+## Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+## Simple Example
+
+```sql
+begin
+    apex_instance_debug.LIST_PAGE_VIEWS(
+        p_session_id => 1,
+        p_max_rows => 1,
+        p_show_d2 => true
+    );
+end;
+/
+```
+
+## More Complex Example
+
+```sql
+begin
+    -- Assuming this runs inside an APEX page process with the right workspace/app context.
+    apex_instance_debug.LIST_PAGE_VIEWS(
+            p_session_id => 1,
+            p_max_rows => 1,
+            p_show_d2 => true
+        );
+end;
+/
+```
+
