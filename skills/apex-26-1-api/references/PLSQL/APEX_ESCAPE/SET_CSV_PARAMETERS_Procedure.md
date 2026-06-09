@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_escape.SET_CSV_PARAMETERS(
-            p_enclosed_by => 'EXAMPLE',
-            p_separated_by => 'EXAMPLE',
-            p_escape_formulas => true
-        );
-end;
-/
-```
-

@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_web_service.APPEND_TO_MULTIPART(
-            p_multipart => null,
-            p_name => 'EXAMPLE',
-            p_filename => 'EXAMPLE',
-            p_content_type => to_clob('Example text'),
-            p_body_blob => to_clob('Example text')
-        );
-end;
-/
-```
-

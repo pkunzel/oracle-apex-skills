@@ -58,17 +58,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.EXECUTE_PLSQL_CODE(
-            p_plsql_code => to_clob('Example text'),
-            p_auto_bind_items => true,
-            p_bind_list => null
-        );
-end;
-/
-```
-

@@ -55,16 +55,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_json.PARSE(
-            p_source => to_clob('Example text'),
-            p_strict => true
-        );
-end;
-/
-```
-

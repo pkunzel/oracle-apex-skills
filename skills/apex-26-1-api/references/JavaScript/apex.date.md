@@ -135,20 +135,6 @@ Constants for the different date/time units used by apex.date functions.
 apex.date.UNIT;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.UNIT;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## ISOWeek
 
 Signature: `(static) ISOWeek (pDate opt ) &rarr; {number}`
@@ -173,22 +159,6 @@ The week number Type number Example Returns the ISO-8601 week number.
 apex.date.ISOWeek(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.ISOWeek(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## add
@@ -221,24 +191,6 @@ apex.date.add(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.add(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## clone
 
 Signature: `(static) clone (pDate) &rarr; {Date}`
@@ -263,22 +215,6 @@ The cloned date object Type Date Example Returns the clone of a given date objec
 apex.date.clone(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.clone(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## dayOfWeek
@@ -307,22 +243,6 @@ apex.date.dayOfWeek(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.dayOfWeek(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## daysInMonth
 
 Signature: `(static) daysInMonth (pDate opt ) &rarr; {number}`
@@ -347,22 +267,6 @@ The days count Type number Example Returns the day count of given month.
 apex.date.daysInMonth(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.daysInMonth(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## endOfDay
@@ -391,22 +295,6 @@ apex.date.endOfDay(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.endOfDay(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## firstOfMonth
 
 Signature: `(static) firstOfMonth (pDate opt ) &rarr; {Date}`
@@ -431,22 +319,6 @@ The first day as date Type Date Example Returns the first day of a given month a
 apex.date.firstOfMonth(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.firstOfMonth(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## format
@@ -479,24 +351,6 @@ apex.date.format(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.format(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getDayOfYear
 
 Signature: `(static) getDayOfYear (pDate opt ) &rarr; {number}`
@@ -521,22 +375,6 @@ The day number Type number Example Returns the day number of given year.
 apex.date.getDayOfYear(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.getDayOfYear(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## isAfter
@@ -569,24 +407,6 @@ apex.date.isAfter(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isAfter(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## isBefore
 
 Signature: `(static) isBefore (pDate1, pDate2, pUnit opt ) &rarr; {boolean}`
@@ -615,24 +435,6 @@ apex.date.isBefore(
     null,
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isBefore(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## isBetween
@@ -667,25 +469,6 @@ apex.date.isBetween(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isBetween(
-    null,
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## isLeapYear
 
 Signature: `(static) isLeapYear (pDate opt ) &rarr; {boolean}`
@@ -710,22 +493,6 @@ is a leap year Type boolean Example Returns if it's a leap year for a given date
 apex.date.isLeapYear(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isLeapYear(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## isSame
@@ -758,24 +525,6 @@ apex.date.isSame(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isSame(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## isSameOrAfter
 
 Signature: `(static) isSameOrAfter (pDate1, pDate2, pUnit opt ) &rarr; {boolean}`
@@ -804,24 +553,6 @@ apex.date.isSameOrAfter(
     null,
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isSameOrAfter(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## isSameOrBefore
@@ -854,24 +585,6 @@ apex.date.isSameOrBefore(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isSameOrBefore(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## isValid
 
 Signature: `(static) isValid (pDate) &rarr; {boolean}`
@@ -896,22 +609,6 @@ is it a valid date Type boolean Example Returns if a date object is valid.
 apex.date.isValid(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isValid(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## isValidString
@@ -940,22 +637,6 @@ apex.date.isValidString(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.isValidString(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## lastOfMonth
 
 Signature: `(static) lastOfMonth (pDate opt ) &rarr; {Date}`
@@ -980,22 +661,6 @@ The last day as date Type Date Example Returns the last day of a given month as 
 apex.date.lastOfMonth(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.lastOfMonth(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## max
@@ -1024,22 +689,6 @@ apex.date.max(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.max(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## min
 
 Signature: `(static) min (&hellip;pDates opt ) &rarr; {Date}`
@@ -1064,22 +713,6 @@ The min date object Type Date Example Returns the minimum (most distant future) 
 apex.date.min(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.min(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## monthsBetween
@@ -1110,23 +743,6 @@ apex.date.monthsBetween(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.monthsBetween(
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## parse
 
 Signature: `(static) parse (pDateString, pFormat opt ) &rarr; {Date}`
@@ -1155,23 +771,6 @@ apex.date.parse(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.parse(
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## secondsPastMidnight
 
 Signature: `(static) secondsPastMidnight (pDate opt ) &rarr; {number}`
@@ -1196,22 +795,6 @@ seconds past midnight Type number Example Returns the seconds past midnight.
 apex.date.secondsPastMidnight(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.secondsPastMidnight(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## setDayOfYear
@@ -1242,23 +825,6 @@ apex.date.setDayOfYear(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.setDayOfYear(
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## since
 
 Signature: `(static) since (pDate opt , pShort opt ) &rarr; {string}`
@@ -1287,23 +853,6 @@ apex.date.since(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.since(
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## startOfDay
 
 Signature: `(static) startOfDay (pDate opt ) &rarr; {Date}`
@@ -1328,22 +877,6 @@ The start date of a day Type Date Example Returns the start date of a given day.
 apex.date.startOfDay(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.startOfDay(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## subtract
@@ -1376,24 +909,6 @@ apex.date.subtract(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.subtract(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## toISOString
 
 Signature: `(static) toISOString (pDate opt ) &rarr; {string}`
@@ -1420,22 +935,6 @@ apex.date.toISOString(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.toISOString(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## weekOfMonth
 
 Signature: `(static) weekOfMonth (pDate opt ) &rarr; {number}`
@@ -1460,22 +959,6 @@ The week number Type number Example Returns the week number of given month. Docu
 apex.date.weekOfMonth(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.date is loaded.
-const result = apex.date.weekOfMonth(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

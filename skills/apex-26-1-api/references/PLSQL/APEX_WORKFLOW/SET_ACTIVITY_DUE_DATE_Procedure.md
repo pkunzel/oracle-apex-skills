@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_workflow.SET_ACTIVITY_DUE_DATE(
-            p_instance_id => 1,
-            p_activity_static_id => 'EXAMPLE_STATIC_ID',
-            p_due_date => sysdate
-        );
-end;
-/
-```
-

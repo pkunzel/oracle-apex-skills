@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_theme.SET_SESSION_STYLE_CSS(
-            p_application_id => 1,
-            p_theme_number => 1,
-            p_css_file_urls => 'EXAMPLE',
-            p_page_css_classes => 'EXAMPLE'
-        );
-end;
-/
-```
-

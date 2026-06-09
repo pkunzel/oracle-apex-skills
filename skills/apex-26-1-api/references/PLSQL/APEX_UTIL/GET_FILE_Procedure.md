@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.GET_FILE(
-            p_file_id => 'EXAMPLE',
-            p_inline => 'EXAMPLE'
-        );
-end;
-/
-```
-

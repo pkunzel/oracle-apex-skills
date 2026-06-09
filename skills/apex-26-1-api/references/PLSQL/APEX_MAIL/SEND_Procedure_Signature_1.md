@@ -69,22 +69,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_mail.SEND(
-            p_to => 'EXAMPLE',
-            p_from => 'EXAMPLE',
-            p_body => to_clob('Example text'),
-            p_body_html => to_clob('Example text'),
-            p_subj => 'EXAMPLE',
-            p_cc => 'EXAMPLE',
-            p_bcc => 'EXAMPLE',
-            p_replyto => 'EXAMPLE'
-        );
-end;
-/
-```
-

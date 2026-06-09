@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_background_process.SET_PROGRESS(
-            p_totalwork => 1,
-            p_sofar => 1
-        );
-end;
-/
-```
-

@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_authorization.ENABLE_DYNAMIC_GROUPS(
-            p_group_names => 'EXAMPLE'
-        );
-end;
-/
-```
-

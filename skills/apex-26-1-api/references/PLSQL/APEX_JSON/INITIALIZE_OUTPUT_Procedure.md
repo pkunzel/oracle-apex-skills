@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_json.INITIALIZE_OUTPUT(
-            p_http_header => true,
-            p_http_cache => true,
-            p_http_cache_etag => 'EXAMPLE',
-            p_indent => 1
-        );
-end;
-/
-```
-

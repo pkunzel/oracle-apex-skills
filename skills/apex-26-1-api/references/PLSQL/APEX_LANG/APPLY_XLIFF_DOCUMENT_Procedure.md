@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_lang.APPLY_XLIFF_DOCUMENT(
-            p_application_id => 1,
-            p_language => 'EXAMPLE',
-            p_document => to_clob('Example text')
-        );
-end;
-/
-```
-

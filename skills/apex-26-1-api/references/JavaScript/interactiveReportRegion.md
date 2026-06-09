@@ -122,20 +122,6 @@ The jQuery object for the region element.
 interactiveReportRegion.element;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.element;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## type
 
 Signature: `type :string`
@@ -150,20 +136,6 @@ The Interactive Report region type is "InteractiveReport".
 interactiveReportRegion.type;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.type;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## focus
 
 Signature: `focus ()`
@@ -176,20 +148,6 @@ Set focus to the Interactive Report if possible. If the report supports selectio
 
 ```javascript
 interactiveReportRegion.focus();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.focus();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getCurrentRow
@@ -210,20 +168,6 @@ The current row or null if not supported. Type jQuery Example This example gets 
 interactiveReportRegion.getCurrentRow();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.getCurrentRow();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getCurrentRowValue
 
 Signature: `getCurrentRowValue () &rarr; {string}`
@@ -240,20 +184,6 @@ The current row value or null if not supported. Type string
 
 ```javascript
 interactiveReportRegion.getCurrentRowValue();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.getCurrentRowValue();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getSelectedValues
@@ -274,20 +204,6 @@ Array of selected record values. Returns null if selection is not supported. Typ
 interactiveReportRegion.getSelectedValues();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.getSelectedValues();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getSelection
 
 Signature: `getSelection () &rarr; (nullable) {jQuery}`
@@ -306,20 +222,6 @@ The selected row elements as a jQuery collection. Returns null if selection isn'
 interactiveReportRegion.getSelection();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.getSelection();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getViewName
 
 Signature: `getViewName () &rarr; {string}`
@@ -336,20 +238,6 @@ The current view mode. Type string Example The following example gets the curren
 
 ```javascript
 interactiveReportRegion.getViewName();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.getViewName();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## refresh
@@ -372,22 +260,6 @@ Refreshes the report with new data from the server.
 interactiveReportRegion.refresh(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.refresh(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## selectAll
@@ -415,24 +287,6 @@ interactiveReportRegion.selectAll(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.selectAll(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## setCurrentRow
 
 Signature: `setCurrentRow (pRow$, pFocus opt )`
@@ -457,23 +311,6 @@ interactiveReportRegion.setCurrentRow(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.setCurrentRow(
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## setCurrentRowValue
 
 Signature: `setCurrentRowValue (pRowValue, pFocus opt )`
@@ -496,23 +333,6 @@ interactiveReportRegion.setCurrentRowValue(
     "Example",
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.setCurrentRowValue(
-    "Example",
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## setSelectedValues
@@ -545,24 +365,6 @@ interactiveReportRegion.setSelectedValues(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.setSelectedValues(
-    "Example",
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## setSelection
 
 Signature: `setSelection (pElements$, pFocus opt , pNoNotify opt )`
@@ -587,24 +389,6 @@ interactiveReportRegion.setSelection(
     null,
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveReportRegion is loaded.
-const result = interactiveReportRegion.setSelection(
-    null,
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

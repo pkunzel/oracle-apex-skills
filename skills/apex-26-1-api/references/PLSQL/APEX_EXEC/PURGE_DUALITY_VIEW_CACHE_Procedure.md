@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.PURGE_DUALITY_VIEW_CACHE(
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_current_session_only => true
-        );
-end;
-/
-```
-

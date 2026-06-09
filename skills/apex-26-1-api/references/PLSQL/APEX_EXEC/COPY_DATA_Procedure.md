@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.COPY_DATA(
-            p_from_context => to_clob('Example text'),
-            p_to_context => to_clob('Example text'),
-            p_operation_column_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

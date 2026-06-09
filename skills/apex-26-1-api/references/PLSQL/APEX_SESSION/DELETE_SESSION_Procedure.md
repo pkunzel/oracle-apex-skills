@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_session.DELETE_SESSION(
-            p_session_id => 1
-        );
-end;
-/
-```
-

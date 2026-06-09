@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_install.INSTALL(
-            p_source => null,
-            p_overwrite_existing => true
-        );
-end;
-/
-```
-

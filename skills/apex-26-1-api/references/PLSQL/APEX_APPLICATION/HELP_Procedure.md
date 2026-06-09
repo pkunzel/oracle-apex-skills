@@ -84,27 +84,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application.HELP(
-            p_request => 'EXAMPLE',
-            p_flow_id => 'EXAMPLE',
-            p_flow_step_id => 'EXAMPLE',
-            p_show_item_help => 'EXAMPLE',
-            p_show_regions => 'EXAMPLE',
-            p_before_page_html => 'EXAMPLE',
-            p_after_page_html => 'EXAMPLE',
-            p_before_region_html => 'EXAMPLE',
-            p_after_region_html => 'EXAMPLE',
-            p_before_prompt_html => to_clob('Example text'),
-            p_after_prompt_html => to_clob('Example text'),
-            p_before_item_html => 'EXAMPLE',
-            p_after_item_html => 'EXAMPLE'
-        );
-end;
-/
-```
-

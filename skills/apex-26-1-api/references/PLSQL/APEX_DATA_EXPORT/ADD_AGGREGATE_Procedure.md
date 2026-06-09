@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_data_export.ADD_AGGREGATE(
-            p_aggregates => null,
-            p_label => null,
-            p_format_mask => 'EXAMPLE',
-            p_display_column => null,
-            p_value_column => null,
-            p_overall_label => null,
-            p_overall_value_column => null
-        );
-end;
-/
-```
-

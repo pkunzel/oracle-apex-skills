@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.ADD_WORKSPACE(
-            p_workspace_id => 1,
-            p_workspace => 'EXAMPLE',
-            p_source_identifier => 'EXAMPLE',
-            p_primary_schema => 'EXAMPLE',
-            p_additional_schemas => 'EXAMPLE',
-            p_rm_consumer_group => 'EXAMPLE',
-            p_host_prefix => 'EXAMPLE'
-        );
-end;
-/
-```
-

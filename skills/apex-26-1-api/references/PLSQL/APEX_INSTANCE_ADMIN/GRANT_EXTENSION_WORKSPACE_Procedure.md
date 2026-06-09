@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.GRANT_EXTENSION_WORKSPACE(
-            p_from_workspace => 'EXAMPLE',
-            p_to_workspace => 'EXAMPLE',
-            p_read_access => true,
-            p_menu_label => 'EXAMPLE'
-        );
-end;
-/
-```
-

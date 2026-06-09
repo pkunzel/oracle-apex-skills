@@ -48,28 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result WWV_FLOW_T_VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_dg_data_gen.GET_WEIGHTED_INLINE_DATA(
-            p_data => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

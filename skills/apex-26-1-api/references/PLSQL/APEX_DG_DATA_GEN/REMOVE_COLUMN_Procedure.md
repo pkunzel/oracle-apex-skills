@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.REMOVE_COLUMN(
-            p_blueprint => 'EXAMPLE',
-            p_table_name => 'EXAMPLE',
-            p_column_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

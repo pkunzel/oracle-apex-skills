@@ -63,20 +63,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_pwa.SEND_PUSH_NOTIFICATION(
-            p_application_id => 1,
-            p_user_name => 'USER',
-            p_title => 'EXAMPLE',
-            p_body => to_clob('Example text'),
-            p_icon_url => 'EXAMPLE',
-            p_target_url => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -78,18 +78,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_debug.MESSAGE(
-            p_message => to_clob('Example text'),
-            p_max_length => 1,
-            p_level => null,
-            p_force => true
-        );
-end;
-/
-```
-

@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ui_default_update.UPD_TABLE(
-            p_table_name => 'EXAMPLE',
-            p_form_region_title => 'EXAMPLE',
-            p_report_region_title => 'EXAMPLE'
-        );
-end;
-/
-```
-

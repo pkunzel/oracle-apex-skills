@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.ADD_WEB_ENTRY_POINT(
-            p_name => 'EXAMPLE',
-            p_methods => 'EXAMPLE'
-        );
-end;
-/
-```
-

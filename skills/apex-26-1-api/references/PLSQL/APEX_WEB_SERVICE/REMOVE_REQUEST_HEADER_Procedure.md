@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_web_service.REMOVE_REQUEST_HEADER(
-            p_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

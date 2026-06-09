@@ -73,35 +73,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result CLOB;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_ai.CHAT(
-            p_prompt => to_clob('Example text'),
-            p_system_prompt => to_clob('Example text'),
-            p_service_static_id => 'MY_AI_SERVICE',
-            p_temperature => 0.2,
-            p_messages => to_clob('Example text'),
-            p_tools => null,
-            p_response_handler_procedure => 'EXAMPLE',
-            p_max_tool_roundtrips => 3
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

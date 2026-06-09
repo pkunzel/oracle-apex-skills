@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_approval.SET_TASK_DUE(
-            p_task_id => 1,
-            p_due_date => sysdate
-        );
-end;
-/
-```
-

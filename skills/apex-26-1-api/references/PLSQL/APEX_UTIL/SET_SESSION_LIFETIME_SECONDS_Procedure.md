@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_SESSION_LIFETIME_SECONDS(
-            p_seconds => 1,
-            p_scope => 'EXAMPLE'
-        );
-end;
-/
-```
-

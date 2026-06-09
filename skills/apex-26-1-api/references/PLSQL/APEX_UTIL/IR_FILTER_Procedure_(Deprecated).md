@@ -64,19 +64,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.IR_FILTER(
-            p_page_id => 1,
-            p_report_column => 'EXAMPLE',
-            p_operator_abbr => 'EXAMPLE',
-            p_filter_value => 'EXAMPLE',
-            p_report_alias => 'EXAMPLE'
-        );
-end;
-/
-```
-

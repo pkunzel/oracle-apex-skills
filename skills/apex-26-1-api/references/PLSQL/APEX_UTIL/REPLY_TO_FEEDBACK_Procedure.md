@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.REPLY_TO_FEEDBACK(
-            p_feedback_id => 1,
-            p_type => 1,
-            p_status => 1,
-            p_tags => 'EXAMPLE',
-            p_developer_comment => 'EXAMPLE',
-            p_public_response => true,
-            p_followup => 'EXAMPLE'
-        );
-end;
-/
-```
-

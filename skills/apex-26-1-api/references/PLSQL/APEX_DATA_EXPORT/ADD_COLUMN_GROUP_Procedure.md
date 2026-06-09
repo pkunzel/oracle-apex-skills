@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_data_export.ADD_COLUMN_GROUP(
-            p_column_groups => null,
-            p_idx => 1,
-            p_name => 'EXAMPLE',
-            p_alignment => null,
-            p_parent_group_idx => 1
-        );
-end;
-/
-```
-

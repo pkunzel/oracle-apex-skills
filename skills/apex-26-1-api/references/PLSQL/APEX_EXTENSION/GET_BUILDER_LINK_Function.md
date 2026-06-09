@@ -60,32 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_extension.GET_BUILDER_LINK(
-            p_app_id => 1,
-            p_page_id => 1,
-            p_view_name => 'EXAMPLE',
-            p_component_id => 1,
-            p_as_data_action => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

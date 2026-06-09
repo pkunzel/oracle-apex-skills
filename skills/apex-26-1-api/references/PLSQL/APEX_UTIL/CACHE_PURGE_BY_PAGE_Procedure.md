@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.CACHE_PURGE_BY_PAGE(
-            p_application => 1,
-            p_page => 1,
-            p_user_name => 'USER'
-        );
-end;
-/
-```
-

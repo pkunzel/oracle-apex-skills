@@ -52,15 +52,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.CUSTOM_CALENDAR(
-            p_date_type_field => 'EXAMPLE'
-        );
-end;
-/
-```
-

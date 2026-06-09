@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.ADD_DML_ARRAY_ROW(
-            p_context => to_clob('Example text'),
-            p_column_name => 'EXAMPLE',
-            p_column_position => 1,
-            p_operation => null
-        );
-end;
-/
-```
-

@@ -67,21 +67,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_css.ADD_FILE(
-            p_name => 'EXAMPLE',
-            p_directory => 'EXAMPLE',
-            p_version => 'EXAMPLE',
-            p_skip_extension => true,
-            p_media_query => to_clob('Example text'),
-            p_ie_condition => 'EXAMPLE',
-            p_attributes => 'EXAMPLE'
-        );
-end;
-/
-```
-

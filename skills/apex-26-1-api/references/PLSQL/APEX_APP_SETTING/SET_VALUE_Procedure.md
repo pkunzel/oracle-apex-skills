@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_app_setting.SET_VALUE(
-            p_name => 'EXAMPLE',
-            p_value => 'EXAMPLE',
-            p_raise_error => true
-        );
-end;
-/
-```
-

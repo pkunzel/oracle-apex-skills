@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_GROUP_GROUP_GRANTS(
-            p_group_name => 'EXAMPLE',
-            p_granted_group_names => 'EXAMPLE'
-        );
-end;
-/
-```
-

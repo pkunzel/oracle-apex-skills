@@ -151,23 +151,6 @@ apex.locale.formatCompactNumber(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.formatCompactNumber(
-    "Example",
-    {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## formatNumber
 
 Signature: `(static) formatNumber (pValue, pFormat opt , pOptions opt ) &rarr; {string}`
@@ -207,24 +190,6 @@ apex.locale.formatNumber(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.formatNumber(
-    "Example",
-    null,
-    {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getAbbrevDayNames
 
 Signature: `(static) getAbbrevDayNames () &rarr; {array}`
@@ -241,20 +206,6 @@ Array of abbreviated day names. For example ["Sun","Mon","Tue","Wed",...,"Sat"] 
 
 ```javascript
 apex.locale.getAbbrevDayNames();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getAbbrevDayNames();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getAbbrevMonthNames
@@ -275,20 +226,6 @@ Array of abbreviated month names. For example ["Jan","Feb","Mar", ..., "Dec"] Ty
 apex.locale.getAbbrevMonthNames();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getAbbrevMonthNames();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getCurrency
 
 Signature: `(static) getCurrency () &rarr; {string}`
@@ -305,20 +242,6 @@ Type string
 
 ```javascript
 apex.locale.getCurrency();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getCurrency();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getDLDateFormat
@@ -339,20 +262,6 @@ DL Date format mask. For example "fmDay, Month fmdd, yyyy" or "fmDay, dd. Month 
 apex.locale.getDLDateFormat();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getDLDateFormat();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getDSDateFormat
 
 Signature: `(static) getDSDateFormat () &rarr; {string}`
@@ -369,20 +278,6 @@ DS Date format mask. For example "fmMM/DD/RRRR" or "DD.MM.RRRR" Type string
 
 ```javascript
 apex.locale.getDSDateFormat();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getDSDateFormat();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getDateFormat
@@ -403,20 +298,6 @@ Date format mask. For example "YYYY/MM/DD" or "DD.MM.YYYY" Type string
 apex.locale.getDateFormat();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getDateFormat();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getDayNames
 
 Signature: `(static) getDayNames () &rarr; {array}`
@@ -433,20 +314,6 @@ Array of day names. For example ["Sunday","Monday","Tuesday","Wednesday", ...,"S
 
 ```javascript
 apex.locale.getDayNames();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getDayNames();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getDecimalSeparator
@@ -467,20 +334,6 @@ The decimal separator. For example "." (US) or "," (Germany). Type string
 apex.locale.getDecimalSeparator();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getDecimalSeparator();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getDualCurrency
 
 Signature: `(static) getDualCurrency () &rarr; {string}`
@@ -497,20 +350,6 @@ Type string
 
 ```javascript
 apex.locale.getDualCurrency();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getDualCurrency();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getGroupSeparator
@@ -531,20 +370,6 @@ The group separator. For example "," (US) or "." (Germany). Type string
 apex.locale.getGroupSeparator();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getGroupSeparator();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getISOCurrency
 
 Signature: `(static) getISOCurrency () &rarr; {string}`
@@ -561,20 +386,6 @@ Type string
 
 ```javascript
 apex.locale.getISOCurrency();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getISOCurrency();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getLanguage
@@ -595,20 +406,6 @@ current language. For example "en", "de", "en-US", ... Type string
 apex.locale.getLanguage();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getLanguage();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getMonthNames
 
 Signature: `(static) getMonthNames () &rarr; {array}`
@@ -625,20 +422,6 @@ Array of month names. For example ["January","February","March", ...,"December"]
 
 ```javascript
 apex.locale.getMonthNames();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.getMonthNames();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## resourcesLoaded
@@ -667,22 +450,6 @@ apex.locale.resourcesLoaded(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.resourcesLoaded(
-    function() {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## toNumber
 
 Signature: `(static) toNumber (pValue, pFormat opt ) &rarr; {number}`
@@ -709,23 +476,6 @@ apex.locale.toNumber(
     "Example",
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.locale is loaded.
-const result = apex.locale.toNumber(
-    "Example",
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

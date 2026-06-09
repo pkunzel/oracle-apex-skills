@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.UNLOCK_USER(
-            p_workspace => 'EXAMPLE',
-            p_username => 'USER',
-            p_password => 'EXAMPLE'
-        );
-end;
-/
-```
-

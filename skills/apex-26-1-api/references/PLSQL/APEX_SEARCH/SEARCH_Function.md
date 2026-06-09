@@ -62,31 +62,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result APEX_SEARCH_RESULT_TABLE;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_search.SEARCH(
-            p_search_static_ids => 'EXAMPLE_STATIC_ID',
-            p_search_expression => 'EXAMPLE',
-            p_apply_order_bys => 'EXAMPLE',
-            p_return_total_row_count => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

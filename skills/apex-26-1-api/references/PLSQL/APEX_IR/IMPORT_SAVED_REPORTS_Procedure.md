@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ir.IMPORT_SAVED_REPORTS(
-            p_export_content => to_clob('Example text'),
-            p_credential_static_id => 'EXAMPLE_STATIC_ID',
-            p_replace_report => true,
-            p_new_owner => 'EXAMPLE',
-            p_new_application_id => 1
-        );
-end;
-/
-```
-

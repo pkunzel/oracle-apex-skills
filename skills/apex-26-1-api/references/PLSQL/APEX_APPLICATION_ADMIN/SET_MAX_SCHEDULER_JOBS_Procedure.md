@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_admin.SET_MAX_SCHEDULER_JOBS(
-            p_application_id => 1,
-            p_max_scheduler_jobs => 1
-        );
-end;
-/
-```
-

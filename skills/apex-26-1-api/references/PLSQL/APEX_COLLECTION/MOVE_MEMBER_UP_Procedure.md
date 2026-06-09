@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.MOVE_MEMBER_UP(
-            p_collection_name => 'EXAMPLE',
-            p_seq => 1
-        );
-end;
-/
-```
-

@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.EXECUTE_DML(
-            p_context => to_clob('Example text'),
-            p_continue_on_error => true
-        );
-end;
-/
-```
-

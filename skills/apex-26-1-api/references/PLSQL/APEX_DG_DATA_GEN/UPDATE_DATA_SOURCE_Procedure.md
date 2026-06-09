@@ -75,24 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.UPDATE_DATA_SOURCE(
-            p_blueprint => 'EXAMPLE',
-            p_name => 'EXAMPLE',
-            p_new_name => 'EXAMPLE',
-            p_data_source_type => 'EXAMPLE',
-            p_table => 'EXAMPLE',
-            p_preserve_case => 'EXAMPLE',
-            p_sql_query => to_clob('Example text'),
-            p_where_clause => 'EXAMPLE',
-            p_inline_data => to_clob('Example text'),
-            p_order_by_column => 'EXAMPLE'
-        );
-end;
-/
-```
-

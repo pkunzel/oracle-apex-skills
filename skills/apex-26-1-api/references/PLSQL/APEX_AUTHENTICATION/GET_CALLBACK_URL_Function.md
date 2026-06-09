@@ -69,38 +69,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_authentication.GET_CALLBACK_URL(
-            p_x01 => 'EXAMPLE',
-            p_x02 => 'EXAMPLE',
-            p_x03 => 'EXAMPLE',
-            p_x04 => 'EXAMPLE',
-            p_x05 => 'EXAMPLE',
-            p_x06 => 'EXAMPLE',
-            p_x07 => 'EXAMPLE',
-            p_x08 => 'EXAMPLE',
-            p_x09 => 'EXAMPLE',
-            p_x10 => 'EXAMPLE',
-            p_callback_name => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

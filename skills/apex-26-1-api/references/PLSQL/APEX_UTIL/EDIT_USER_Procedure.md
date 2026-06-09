@@ -108,35 +108,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.EDIT_USER(
-            p_user_id => 1,
-            p_user_name => 'USER',
-            p_first_name => 'EXAMPLE',
-            p_last_name => 'EXAMPLE',
-            p_web_password => 'EXAMPLE',
-            p_new_password => 'EXAMPLE',
-            p_email_address => 'EXAMPLE',
-            p_start_date => 'EXAMPLE',
-            p_end_date => 'EXAMPLE',
-            p_employee_id => 'EXAMPLE',
-            p_allow_access_to_schemas => 'EXAMPLE',
-            p_person_type => 'EXAMPLE',
-            p_default_schema => 'EXAMPLE',
-            p_group_ids => 'EXAMPLE',
-            p_developer_roles => 'EXAMPLE',
-            p_description => 'EXAMPLE',
-            p_account_expiry => 1,
-            p_account_locked => 'EXAMPLE',
-            p_failed_access_attempts => 1,
-            p_change_password_on_first_use => 'EXAMPLE',
-            p_first_password_use_occurred => 'EXAMPLE'
-        );
-end;
-/
-```
-

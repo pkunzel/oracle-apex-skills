@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_mail.PREPARE_TEMPLATE(
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_placeholders => to_clob('Example text'),
-            p_application_id => 1,
-            p_subject => 'EXAMPLE',
-            p_html => to_clob('Example text'),
-            p_text => to_clob('Example text'),
-            p_language_override => 'EXAMPLE'
-        );
-end;
-/
-```
-

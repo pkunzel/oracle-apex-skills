@@ -55,29 +55,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result BLOB;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_lang.EXPORT_TEXT_MESSAGES(
-            p_application_id => 1,
-            p_format => null
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

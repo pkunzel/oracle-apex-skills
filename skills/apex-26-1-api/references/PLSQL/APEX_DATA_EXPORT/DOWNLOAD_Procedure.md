@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_data_export.DOWNLOAD(
-            p_export => null,
-            p_content_disposition => to_clob('Example text'),
-            p_add_file_extension => true,
-            p_stop_apex_engine => true
-        );
-end;
-/
-```
-

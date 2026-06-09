@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.SET_ARRAY_ROW_VERSION_CHECKSUM(
-            p_context => to_clob('Example text'),
-            p_checksum => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_lang.UPDATE_MESSAGE(
-            p_id => 1,
-            p_name => 'EXAMPLE',
-            p_language => 'EXAMPLE',
-            p_message_text => to_clob('Example text'),
-            p_used_in_javascript => true,
-            p_comment => 'EXAMPLE',
-            p_metadata => to_clob('Example text')
-        );
-end;
-/
-```
-

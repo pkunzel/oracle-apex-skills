@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_debug.REMOVE_DEBUG_BY_VIEW(
-            p_application_id => 1,
-            p_view_id => 1
-        );
-end;
-/
-```
-

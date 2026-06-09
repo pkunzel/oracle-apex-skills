@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_zip.ADD_FILE(
-            p_zipped_blob => null,
-            p_file_name => 'EXAMPLE',
-            p_content => to_clob('Example text')
-        );
-end;
-/
-```
-

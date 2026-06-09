@@ -82,39 +82,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result APEX_T_LDAP_ATTRIBUTES;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_ldap.SEARCH(
-            p_username => 'USER',
-            p_pass => 'EXAMPLE',
-            p_auth_base => 'EXAMPLE',
-            p_host => 'EXAMPLE',
-            p_port => 1,
-            p_use_ssl => 'EXAMPLE',
-            p_search_base => 'EXAMPLE',
-            p_search_filter => 'EXAMPLE',
-            p_scope => 1,
-            p_timeout_sec => 1,
-            p_attribute_names => 'EXAMPLE',
-            p_credential_static_id => 'EXAMPLE_STATIC_ID'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

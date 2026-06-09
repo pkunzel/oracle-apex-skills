@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_acl.ADD_USER_ROLE(
-            p_application_id => 1,
-            p_user_name => 'USER',
-            p_role_static_id => 'EXAMPLE_STATIC_ID'
-        );
-end;
-/
-```
-

@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_data_parser.SET_PARSER_FLAGS(
-            p_name => 'EXAMPLE',
-            p_value => 'EXAMPLE'
-        );
-end;
-/
-```
-

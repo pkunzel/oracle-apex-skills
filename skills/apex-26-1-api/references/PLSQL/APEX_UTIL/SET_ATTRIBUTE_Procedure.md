@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_ATTRIBUTE(
-            p_userid => 1,
-            p_attribute_number => 1,
-            p_attribute_value => 'EXAMPLE'
-        );
-end;
-/
-```
-

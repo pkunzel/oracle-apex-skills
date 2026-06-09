@@ -68,23 +68,6 @@ apex.navigation.popup.close(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.navigation.popup is loaded.
-const result = apex.navigation.popup.close(
-    "P1_ITEM",
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## Notes
 
 - Run APEX JavaScript APIs from an APEX page where the `apex` namespace is loaded.

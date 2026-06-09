@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.DEBUG_REGION(
-            p_plugin => null,
-            p_region => null
-        );
-end;
-/
-```
-

@@ -58,19 +58,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.PREVIEW_BLUEPRINT(
-            p_blueprint => null,
-            p_table_name => 'EXAMPLE',
-            p_number_of_rows => null,
-            p_data_collection => null,
-            p_header_collection => null
-        );
-end;
-/
-```
-

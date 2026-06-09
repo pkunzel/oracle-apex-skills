@@ -61,31 +61,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result CLOB;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_barcode.GET_CODE128_SVG(
-            p_value => 'EXAMPLE',
-            p_size => 1,
-            p_foreground_color => 'EXAMPLE',
-            p_background_color => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

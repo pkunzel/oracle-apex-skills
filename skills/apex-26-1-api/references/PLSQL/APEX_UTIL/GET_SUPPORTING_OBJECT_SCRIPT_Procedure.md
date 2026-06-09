@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.GET_SUPPORTING_OBJECT_SCRIPT(
-            p_application_id => 1,
-            p_script_type => 'EXAMPLE',
-            p_output_type => 'EXAMPLE'
-        );
-end;
-/
-```
-

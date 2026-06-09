@@ -155,7 +155,7 @@ The requested end state is satisfied by the local reference set:
 - Return behavior
 - Important notes
 - Simple example
-- More complex example or an explicit "Assuming structure with ..." setup
+- More complex example on curated guide pages, or omit that section when no distinct documented example is available
 - Source links
 
 - All indexed PL/SQL package guide pages are curated.

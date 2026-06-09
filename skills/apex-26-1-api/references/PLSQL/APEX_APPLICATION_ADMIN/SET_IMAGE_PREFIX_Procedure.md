@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_admin.SET_IMAGE_PREFIX(
-            p_application_id => 1,
-            p_image_prefix => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -45,13 +45,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_approval.HANDLE_TASK_DEADLINES;
-end;
-/
-```
-

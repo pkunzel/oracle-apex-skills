@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_PREFERENCE(
-            p_preference => 'EXAMPLE',
-            p_value => 'EXAMPLE',
-            p_user => 'USER'
-        );
-end;
-/
-```
-

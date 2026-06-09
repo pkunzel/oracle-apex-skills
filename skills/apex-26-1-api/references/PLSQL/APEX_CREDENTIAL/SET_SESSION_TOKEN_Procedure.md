@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_credential.SET_SESSION_TOKEN(
-            p_credential_static_id => 'EXAMPLE_STATIC_ID',
-            p_token_type => null,
-            p_token_value => 'EXAMPLE',
-            p_token_expires => sysdate,
-            p_token_scope => 'EXAMPLE'
-        );
-end;
-/
-```
-

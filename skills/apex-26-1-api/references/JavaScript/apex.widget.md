@@ -82,20 +82,6 @@ Use `initPageItem` as documented by the `apex.widget` module.
 apex.widget.initPageItem();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.widget is loaded.
-const result = apex.widget.initPageItem();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## waitPopup
 
 Signature: `(static) waitPopup (pContent opt ) &rarr; {Object}`
@@ -120,22 +106,6 @@ Object with a no argument function "remove" that closes the popup. Type Object E
 apex.widget.waitPopup(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.widget is loaded.
-const result = apex.widget.waitPopup(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

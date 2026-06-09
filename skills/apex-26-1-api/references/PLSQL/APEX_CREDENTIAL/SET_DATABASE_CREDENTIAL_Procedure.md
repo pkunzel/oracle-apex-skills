@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_credential.SET_DATABASE_CREDENTIAL(
-            p_credential_static_id => 'EXAMPLE_STATIC_ID',
-            p_db_credential_name => 'EXAMPLE',
-            p_db_credential_is_instance => true
-        );
-end;
-/
-```
-

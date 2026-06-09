@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_approval.DELEGATE_TASK(
-            p_task_id => 1,
-            p_to_user => 'USER'
-        );
-end;
-/
-```
-

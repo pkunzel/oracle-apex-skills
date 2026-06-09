@@ -65,20 +65,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PROCESS_DML_RESPONSE(
-            p_web_source_operation => null,
-            p_web_source => null,
-            p_response => to_clob('Example text'),
-            p_status_code => 1,
-            p_error_message => to_clob('Example text'),
-            p_values_context => to_clob('Example text')
-        );
-end;
-/
-```
-

@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.DELETE_FEEDBACK(
-            p_feedback_id => 1
-        );
-end;
-/
-```
-

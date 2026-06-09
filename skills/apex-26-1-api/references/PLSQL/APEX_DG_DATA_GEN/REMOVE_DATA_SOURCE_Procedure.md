@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.REMOVE_DATA_SOURCE(
-            p_blueprint => 'EXAMPLE',
-            p_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

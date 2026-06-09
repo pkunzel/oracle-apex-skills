@@ -55,16 +55,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_CURRENT_THEME_STYLE(
-            p_theme_number => 1,
-            p_theme_style_id => 1
-        );
-end;
-/
-```
-

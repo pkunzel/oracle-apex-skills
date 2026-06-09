@@ -62,19 +62,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_rest_source_sync.DYNAMIC_SYNCHRONIZE_DATA(
-            p_module_static_id => 'EXAMPLE_STATIC_ID',
-            p_sync_static_id => 'EXAMPLE_STATIC_ID',
-            p_sync_external_filter_expr => 'EXAMPLE',
-            p_sync_parameters => null,
-            p_application_id => 1
-        );
-end;
-/
-```
-

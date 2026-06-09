@@ -58,18 +58,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.MAKE_REST_REQUEST(
-            p_web_source_operation => null,
-            p_request_body => to_clob('Example text'),
-            p_response => null,
-            p_response_parameters => null
-        );
-end;
-/
-```
-

@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_install.SET_PROXY(
-            p_proxy => 'EXAMPLE',
-            p_no_proxy_domains => 'EXAMPLE'
-        );
-end;
-/
-```
-

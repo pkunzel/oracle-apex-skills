@@ -161,20 +161,6 @@ Redirect to page 2 in the current application.
 apex.env;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.env;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## gPageContext$
 
 Signature: `(static) gPageContext$ :jQuery`
@@ -187,20 +173,6 @@ This namespace property stores the current page context. The current page contex
 
 ```javascript
 apex.gPageContext$;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.gPageContext$;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## items
@@ -217,20 +189,6 @@ Use `items` as documented by the `apex` module.
 apex.items();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.items();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## jQuery
 
 Signature: `(static) jQuery :function`
@@ -245,20 +203,6 @@ This namespace property holds the jQuery function that APEX uses. Ideally there 
 apex.jQuery;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.jQuery;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## regions
 
 Signature: `(static) regions`
@@ -271,20 +215,6 @@ Use `regions` as documented by the `apex` module.
 
 ```javascript
 apex.regions();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.regions();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## apexafterclosecanceldialog
@@ -311,20 +241,6 @@ This event is triggered when an APEX modal dialog page is closed or cancelled by
 apex.apexafterclosecanceldialog();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexafterclosecanceldialog();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexafterclosedialog
 
 Signature: `apexafterclosedialog`
@@ -349,20 +265,6 @@ This event is triggered when an APEX modal dialog page is closed by either the D
 apex.apexafterclosedialog();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexafterclosedialog();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexafterrefresh
 
 Signature: `apexafterrefresh`
@@ -382,20 +284,6 @@ This event is triggered by a number of page or column items just after they are 
 
 ```javascript
 apex.apexafterrefresh();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexafterrefresh();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## apexbeforepagesubmit
@@ -419,20 +307,6 @@ This event is triggered when the page is submitted with apex.page.submit or apex
 apex.apexbeforepagesubmit();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexbeforepagesubmit();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexbeforerefresh
 
 Signature: `apexbeforerefresh`
@@ -452,20 +326,6 @@ This event is triggered by a number of page or column items just before they are
 
 ```javascript
 apex.apexbeforerefresh();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexbeforerefresh();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## apexbeginrecordedit
@@ -492,20 +352,6 @@ This event is triggered when a model row/record is about to be edited (when a ne
 apex.apexbeginrecordedit();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexbeginrecordedit();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexcurrentrowchange
 
 Signature: `apexcurrentrowchange`
@@ -526,20 +372,6 @@ This event is triggered when the current item/row/record changes in a region tha
 
 ```javascript
 apex.apexcurrentrowchange();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexcurrentrowchange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## apexendrecordedit
@@ -566,20 +398,6 @@ This event is triggered when a model row/record is done being edited (when a new
 apex.apexendrecordedit();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexendrecordedit();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexpagesubmit
 
 Signature: `apexpagesubmit`
@@ -601,20 +419,6 @@ This event is triggered when the page is submitted with apex.page.submit or apex
 apex.apexpagesubmit();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexpagesubmit();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexreadyend
 
 Signature: `apexreadyend`
@@ -633,20 +437,6 @@ This event is triggered at the end of all APEX page load functionality. This eve
 
 ```javascript
 apex.apexreadyend();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexreadyend();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## apexselectionchange
@@ -671,20 +461,6 @@ This event is triggered when the selection changes in a region that supports sel
 apex.apexselectionchange();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexselectionchange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## apexwindowresized
 
 Signature: `apexwindowresized`
@@ -705,20 +481,6 @@ This event is triggered on the window a couple hundred milliseconds after the wi
 apex.apexwindowresized();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.apexwindowresized();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## confirm
 
 Signature: `(static) confirm ()`
@@ -731,20 +493,6 @@ Use `confirm` as documented by the `apex` module.
 
 ```javascript
 apex.confirm();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.confirm();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## item
@@ -773,22 +521,6 @@ apex.item(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.item(
-    "P1_ITEM"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## region
 
 Signature: `(static) region (pRegionId) &rarr; { region |null}`
@@ -815,22 +547,6 @@ apex.region(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.region(
-    "P1_ITEM"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## submit
 
 Signature: `(static) submit ()`
@@ -843,20 +559,6 @@ Use `submit` as documented by the `apex` module.
 
 ```javascript
 apex.submit();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.submit();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## userHasTouched
@@ -875,20 +577,6 @@ true if the user has been using touch to interact with the web app and false oth
 
 ```javascript
 apex.userHasTouched();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex is loaded.
-const result = apex.userHasTouched();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

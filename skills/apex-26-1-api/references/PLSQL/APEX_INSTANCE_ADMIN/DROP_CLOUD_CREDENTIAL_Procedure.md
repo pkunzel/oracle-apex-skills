@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.DROP_CLOUD_CREDENTIAL(
-            p_credential_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

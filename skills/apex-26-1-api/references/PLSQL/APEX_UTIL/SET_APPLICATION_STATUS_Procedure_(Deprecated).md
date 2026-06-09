@@ -61,18 +61,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_APPLICATION_STATUS(
-            p_application_id => 1,
-            p_application_status => 'EXAMPLE',
-            p_unavailable_value => 'EXAMPLE',
-            p_restricted_user_list => 'USER'
-        );
-end;
-/
-```
-

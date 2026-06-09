@@ -63,20 +63,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.GENERATE_DATA_INTO_COLLECTION(
-            p_blueprint => 'EXAMPLE',
-            p_format => 'EXAMPLE',
-            p_blueprint_table => 'EXAMPLE',
-            p_row_scaling => 1,
-            p_stop_after_errors => 1,
-            p_errors => to_clob('Example text')
-        );
-end;
-/
-```
-

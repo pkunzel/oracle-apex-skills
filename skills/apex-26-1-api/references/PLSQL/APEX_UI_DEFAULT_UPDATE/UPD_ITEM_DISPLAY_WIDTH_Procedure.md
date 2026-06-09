@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ui_default_update.UPD_ITEM_DISPLAY_WIDTH(
-            p_table_name => 'EXAMPLE',
-            p_column_name => 'EXAMPLE',
-            p_display_width => 1
-        );
-end;
-/
-```
-

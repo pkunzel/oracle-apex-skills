@@ -61,19 +61,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.BUILD_REQUEST_BODY(
-            p_request_format => null,
-            p_profile_columns => null,
-            p_values_context => to_clob('Example text'),
-            p_build_when_empty => true,
-            p_request_body => to_clob('Example text')
-        );
-end;
-/
-```
-

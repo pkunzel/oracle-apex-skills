@@ -69,22 +69,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.FETCH_USER(
-            p_user_id => 1,
-            p_user_name => 'USER',
-            p_first_name => 'EXAMPLE',
-            p_last_name => 'EXAMPLE',
-            p_email_address => 'EXAMPLE',
-            p_groups => 'EXAMPLE',
-            p_developer_role => 'EXAMPLE',
-            p_description => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -75,24 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.ADD_COLUMN(
-            p_columns => null,
-            p_column_name => 'EXAMPLE',
-            p_data_type => null,
-            p_sql_expression => to_clob('Example text'),
-            p_format_mask => 'EXAMPLE',
-            p_is_primary_key => true,
-            p_is_query_only => true,
-            p_is_returning => true,
-            p_is_checksum => true,
-            p_parent_column_path => 'EXAMPLE'
-        );
-end;
-/
-```
-

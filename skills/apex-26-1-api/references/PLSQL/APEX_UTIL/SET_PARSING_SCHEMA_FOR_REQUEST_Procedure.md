@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_PARSING_SCHEMA_FOR(
-            p_schema => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ai.SET_TOOL_RESULT(
-            p_response_handler_param => null,
-            p_response_handler_result => null,
-            p_tool_call => null,
-            p_result => to_clob('Example text')
-        );
-end;
-/
-```
-

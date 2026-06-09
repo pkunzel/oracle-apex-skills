@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.CREATE_OR_UPDATE_ADMIN_USER(
-            p_username => 'USER'
-        );
-end;
-/
-```
-

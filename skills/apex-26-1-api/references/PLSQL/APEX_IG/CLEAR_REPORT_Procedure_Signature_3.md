@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ig.CLEAR_REPORT(
-            p_page_id => 1,
-            p_region_static_id => 'EXAMPLE_STATIC_ID',
-            p_report_static_id => 'EXAMPLE_STATIC_ID'
-        );
-end;
-/
-```
-

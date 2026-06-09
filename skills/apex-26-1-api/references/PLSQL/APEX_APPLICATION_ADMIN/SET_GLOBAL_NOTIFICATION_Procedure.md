@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_admin.SET_GLOBAL_NOTIFICATION(
-            p_application_id => 1,
-            p_global_notification_message => to_clob('Example text')
-        );
-end;
-/
-```
-

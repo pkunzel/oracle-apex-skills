@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PRINT_HIDDEN(
-            p_item => null,
-            p_param => null,
-            p_id_postfix => 'EXAMPLE',
-            p_classes => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -75,37 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_ir.RADIOGROUP(
-            p_idx => 1,
-            p_value => 'EXAMPLE',
-            p_selected_value => 'EXAMPLE',
-            p_display => 'EXAMPLE',
-            p_attributes => 'EXAMPLE',
-            p_onblur => 'EXAMPLE',
-            p_onchange => 'EXAMPLE',
-            p_onfocus => 'EXAMPLE',
-            p_item_id => 'EXAMPLE',
-            p_item_label => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

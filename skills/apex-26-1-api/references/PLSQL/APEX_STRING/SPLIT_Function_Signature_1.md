@@ -54,30 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result APEX_T_VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_string.SPLIT(
-            p_str => 'EXAMPLE',
-            p_sep => 'EXAMPLE',
-            p_limit => 1
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

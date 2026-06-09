@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_extension.ADD_MENU_ENTRY(
-            p_label => 'EXAMPLE',
-            p_url => 'EXAMPLE',
-            p_display_sequence => 1,
-            p_description => 'EXAMPLE',
-            p_is_public => true,
-            p_tab_identifier => 'EXAMPLE',
-            p_workspace => 'EXAMPLE'
-        );
-end;
-/
-```
-

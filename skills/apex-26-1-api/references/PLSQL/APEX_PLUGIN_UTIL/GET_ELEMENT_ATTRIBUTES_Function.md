@@ -69,35 +69,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_plugin_util.GET_ELEMENT_ATTRIBUTES(
-            p_item => null,
-            p_name => 'EXAMPLE',
-            p_default_class => 'EXAMPLE',
-            p_add_id => true,
-            p_add_required => true,
-            p_add_labelledby => true,
-            p_aria_describedby_id => 'EXAMPLE',
-            p_add_multi_value => true
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

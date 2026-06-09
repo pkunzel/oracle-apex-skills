@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.SET_WORKSPACE_CONSUMER_GROUP(
-            p_workspace => 'EXAMPLE',
-            p_rm_consumer_group => 'EXAMPLE'
-        );
-end;
-/
-```
-

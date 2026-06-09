@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.RESET_PASSWORD(
-            p_user_name => 'USER',
-            p_old_password => 'EXAMPLE',
-            p_new_password => 'EXAMPLE',
-            p_change_password_on_first_use => true
-        );
-end;
-/
-```
-

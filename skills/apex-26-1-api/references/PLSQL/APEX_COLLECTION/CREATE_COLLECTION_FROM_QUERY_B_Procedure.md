@@ -63,20 +63,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.CREATE_COLLECTION_FROM_QUERY_B(
-            p_collection_name => 'EXAMPLE',
-            p_query => to_clob('Example text'),
-            p_names => 'EXAMPLE',
-            p_values => 'EXAMPLE',
-            p_max_row_count => 1,
-            p_truncate_if_exists => 'EXAMPLE'
-        );
-end;
-/
-```
-

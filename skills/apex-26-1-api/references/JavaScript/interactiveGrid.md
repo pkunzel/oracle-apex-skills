@@ -138,20 +138,6 @@ This option allows passing options to the underlying tableModelView widget for d
 interactiveGrid.defaultDetailViewOptions;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.defaultDetailViewOptions;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## defaultGridViewOptions
 
 Signature: `defaultGridViewOptions :Object`
@@ -164,20 +150,6 @@ This option allows passing options to the underlying grid widget for grid view. 
 
 ```javascript
 interactiveGrid.defaultGridViewOptions;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.defaultGridViewOptions;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## defaultIconViewOptions
@@ -194,20 +166,6 @@ This option allows passing options to the underlying tableModelView widget for i
 interactiveGrid.defaultIconViewOptions;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.defaultIconViewOptions;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## defaultModelOptions
 
 Signature: `defaultModelOptions :Object`
@@ -220,20 +178,6 @@ This option allows passing options not explicitly set by Interactive Grid to the
 
 ```javascript
 interactiveGrid.defaultModelOptions;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.defaultModelOptions;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## defaultSingleRowOptions
@@ -250,20 +194,6 @@ This option allows passing options to the underlying recordView widget for the s
 interactiveGrid.defaultSingleRowOptions;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.defaultSingleRowOptions;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## editable
 
 Signature: `editable :boolean`
@@ -276,20 +206,6 @@ Initialize the interactiveGrid with the editable option specified in the Interac
 
 ```javascript
 interactiveGrid.editable;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.editable;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## features
@@ -313,20 +229,6 @@ Controls which general features of the Interactive Grid are enabled.
 interactiveGrid.features;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.features;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## initActions
 
 Signature: `initActions :function`
@@ -339,20 +241,6 @@ Allows you to add or modify actions . function( actions ) Function has one argum
 
 ```javascript
 interactiveGrid.initActions;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.initActions;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## initialSelection
@@ -369,20 +257,6 @@ Controls if the Interactive Grid has an initial selection.
 interactiveGrid.initialSelection;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.initialSelection;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## reportSettingsArea
 
 Signature: `reportSettingsArea :boolean`
@@ -395,20 +269,6 @@ Controls if the report settings area displays for the Interactive Grid. The repo
 
 ```javascript
 interactiveGrid.reportSettingsArea;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.reportSettingsArea;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## saveLoadingIndicator
@@ -425,20 +285,6 @@ A loading indicator suitable for the apex.server.plugin loadingIndicator option 
 interactiveGrid.saveLoadingIndicator;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.saveLoadingIndicator;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## saveLoadingIndicatorPosition
 
 Signature: `saveLoadingIndicatorPosition :string`
@@ -451,20 +297,6 @@ A loading indicator position suitable for the apex.server.plugin loadingIndicato
 
 ```javascript
 interactiveGrid.saveLoadingIndicatorPosition;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.saveLoadingIndicatorPosition;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## text
@@ -488,20 +320,6 @@ Defines various text messages. Most messages come from declarative attributes. I
 
 ```javascript
 interactiveGrid.text;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.text;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## toolbar
@@ -530,20 +348,6 @@ Controls which functionality of the default Interactive Grid toolbar is displaye
 interactiveGrid.toolbar;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.toolbar;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## toolbarData
 
 Signature: `toolbarData :Array`
@@ -558,20 +362,6 @@ Contains the metadata for the toolbar displayed at the top of the Interactive Gr
 interactiveGrid.toolbarData;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.toolbarData;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## trackParentSelection
 
 Signature: `trackParentSelection :boolean`
@@ -584,20 +374,6 @@ Determines if a detail Interactive Grid will change the detail instance automati
 
 ```javascript
 interactiveGrid.trackParentSelection;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.trackParentSelection;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## modechange
@@ -622,20 +398,6 @@ Use `modechange` as documented by the `interactiveGrid` module.
 interactiveGrid.modechange();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.modechange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## reportchange
 
 Signature: `reportchange`
@@ -654,20 +416,6 @@ Use `reportchange` as documented by the `interactiveGrid` module.
 
 ```javascript
 interactiveGrid.reportchange();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.reportchange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## reportsettingschange
@@ -690,20 +438,6 @@ Use `reportsettingschange` as documented by the `interactiveGrid` module.
 interactiveGrid.reportsettingschange();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.reportsettingschange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## save
 
 Signature: `save`
@@ -724,20 +458,6 @@ Use `save` as documented by the `interactiveGrid` module.
 
 ```javascript
 interactiveGrid.save();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.save();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## selectionchange
@@ -763,20 +483,6 @@ Triggered when the selection state changes and will work for all views that supp
 interactiveGrid.selectionchange();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.selectionchange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## viewchange
 
 Signature: `viewchange`
@@ -798,20 +504,6 @@ Triggered when the view changes.
 
 ```javascript
 interactiveGrid.viewchange();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.viewchange();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## viewmodelcreate
@@ -837,20 +529,6 @@ Use `viewmodelcreate` as documented by the `interactiveGrid` module.
 interactiveGrid.viewmodelcreate();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.viewmodelcreate();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## focus
 
 Signature: `focus ()`
@@ -863,20 +541,6 @@ Use `focus` as documented by the `interactiveGrid` module.
 
 ```javascript
 interactiveGrid.focus();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.focus();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getActions
@@ -897,20 +561,6 @@ the actions context Type apex.actions Example
 interactiveGrid.getActions();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.getActions();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getCurrentView
 
 Signature: `getCurrentView () &rarr; { interactiveGridView }`
@@ -927,20 +577,6 @@ View interface. Type interactiveGridView
 
 ```javascript
 interactiveGrid.getCurrentView();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.getCurrentView();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getCurrentViewId
@@ -961,20 +597,6 @@ view id. Type string
 interactiveGrid.getCurrentViewId();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.getCurrentViewId();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getSelectedRecords
 
 Signature: `getSelectedRecords () &rarr; {Array}`
@@ -993,20 +615,6 @@ array of records from the model corresponding to the selected rows/records Retur
 interactiveGrid.getSelectedRecords();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.getSelectedRecords();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getToolbar
 
 Signature: `getToolbar () &rarr; {jQuery}`
@@ -1023,20 +631,6 @@ jQuery object of the interactive grid toolbar or null if there is no toolbar Typ
 
 ```javascript
 interactiveGrid.getToolbar();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.getToolbar();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getViews
@@ -1065,22 +659,6 @@ interactiveGrid.getViews(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.getViews(
-    "P1_ITEM"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## gotoCell
 
 Signature: `gotoCell (pModelInstanceId opt , pRecordId, pColumn opt )`
@@ -1107,24 +685,6 @@ interactiveGrid.gotoCell(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.gotoCell(
-    {},
-    {},
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## refresh
 
 Signature: `refresh ()`
@@ -1139,20 +699,6 @@ Use `refresh` as documented by the `interactiveGrid` module.
 interactiveGrid.refresh();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.refresh();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## resize
 
 Signature: `resize ()`
@@ -1165,20 +711,6 @@ Use `resize` as documented by the `interactiveGrid` module.
 
 ```javascript
 interactiveGrid.resize();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.resize();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## setMasterRecord
@@ -1203,23 +735,6 @@ interactiveGrid.setMasterRecord(
     {},
     {}
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.setMasterRecord(
-    {},
-    {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## setSelectedRecords
@@ -1248,24 +763,6 @@ interactiveGrid.setSelectedRecords(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.setSelectedRecords(
-    {},
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## copyDefaultToolbar
 
 Signature: `(static) copyDefaultToolbar () &rarr; { interactiveGrid.toolbarData }`
@@ -1282,20 +779,6 @@ Returns an array containing a copy of the default Interactive Grid toolbar metad
 
 ```javascript
 interactiveGrid.copyDefaultToolbar();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.copyDefaultToolbar();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## toolbarData
@@ -1322,20 +805,6 @@ Toolbar widget metadata returned by interactiveGrid.copyDefaultToolbar .
 
 ```javascript
 interactiveGrid.toolbarData();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGrid is loaded.
-const result = interactiveGrid.toolbarData();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

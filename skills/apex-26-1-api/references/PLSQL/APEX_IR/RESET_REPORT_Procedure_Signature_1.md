@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ir.RESET_REPORT(
-            p_page_id => 1,
-            p_region_id => 1,
-            p_report_id => 1
-        );
-end;
-/
-```
-

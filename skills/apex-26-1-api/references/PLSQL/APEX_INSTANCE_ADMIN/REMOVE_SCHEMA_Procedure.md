@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.REMOVE_SCHEMA(
-            p_workspace => 'EXAMPLE',
-            p_schema => 'EXAMPLE'
-        );
-end;
-/
-```
-

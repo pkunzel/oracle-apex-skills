@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.EXPORT_USERS(
-            p_export_format => 'EXAMPLE'
-        );
-end;
-/
-```
-

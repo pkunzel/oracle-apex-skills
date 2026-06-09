@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_session.ATTACH(
-            p_app_id => 1,
-            p_page_id => 1,
-            p_session_id => 1
-        );
-end;
-/
-```
-

@@ -63,20 +63,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.COUNT_CLICK(
-            p_url => 'EXAMPLE',
-            p_cat => 'EXAMPLE',
-            p_id => 'EXAMPLE',
-            p_user => 'USER',
-            p_workspace => 'EXAMPLE',
-            p_referrer_policy => 'EXAMPLE'
-        );
-end;
-/
-```
-

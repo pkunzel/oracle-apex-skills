@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_shared_component.PUBLISH(
-            p_component_type => null,
-            p_component_id => 1
-        );
-end;
-/
-```
-

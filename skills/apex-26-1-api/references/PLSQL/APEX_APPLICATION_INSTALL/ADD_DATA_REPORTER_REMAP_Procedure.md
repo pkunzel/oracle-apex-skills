@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_install.ADD_DATA_REPORTER_REMAP(
-            p_schema_from => 'EXAMPLE',
-            p_schema_to => 'EXAMPLE'
-        );
-end;
-/
-```
-

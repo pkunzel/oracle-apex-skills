@@ -65,20 +65,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_admin.SET_APPLICATION_STATUS(
-            p_application_id => 1,
-            p_application_status => null,
-            p_allowed_users_list => 'USER',
-            p_message => to_clob('Example text'),
-            p_plsql_code => to_clob('Example text'),
-            p_redirect_url => 'EXAMPLE'
-        );
-end;
-/
-```
-

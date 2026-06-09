@@ -93,30 +93,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.STRONG_PASSWORD_CHECK(
-            p_username => 'USER',
-            p_password => 'EXAMPLE',
-            p_old_password => 'EXAMPLE',
-            p_workspace_name => 'EXAMPLE',
-            p_use_strong_rules => true,
-            p_min_length_err => true,
-            p_new_differs_by_err => true,
-            p_one_alpha_err => true,
-            p_one_numeric_err => true,
-            p_one_punctuation_err => true,
-            p_one_upper_err => true,
-            p_one_lower_err => true,
-            p_not_like_username_err => true,
-            p_not_like_workspace_name_err => true,
-            p_not_like_words_err => true,
-            p_not_reusable_err => true
-        );
-end;
-/
-```
-

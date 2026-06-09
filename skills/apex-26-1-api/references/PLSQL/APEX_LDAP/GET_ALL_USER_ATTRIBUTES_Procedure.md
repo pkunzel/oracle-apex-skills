@@ -72,23 +72,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ldap.GET_ALL_USER_ATTRIBUTES(
-            p_username => 'USER',
-            p_pass => 'EXAMPLE',
-            p_auth_base => 'EXAMPLE',
-            p_host => 'EXAMPLE',
-            p_port => 'EXAMPLE',
-            p_use_ssl => 'EXAMPLE',
-            p_attributes => null,
-            p_attribute_values => 'EXAMPLE',
-            p_credential_static_id => 'EXAMPLE_STATIC_ID'
-        );
-end;
-/
-```
-

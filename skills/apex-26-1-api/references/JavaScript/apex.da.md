@@ -79,20 +79,6 @@ For Dynamic Action plug-in developers, call this function to stop execution of t
 apex.da.cancel();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.da is loaded.
-const result = apex.da.cancel();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## handleAjaxErrors
 
 Signature: `(static) handleAjaxErrors (pjqXHR, pTextStatus, pErrorThrown, pResumeCallback)`
@@ -121,25 +107,6 @@ apex.da.handleAjaxErrors(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.da is loaded.
-const result = apex.da.handleAjaxErrors(
-    null,
-    "Example",
-    null,
-    function() {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## resume
 
 Signature: `(static) resume (pCallback, pErrorOccurred)`
@@ -162,23 +129,6 @@ apex.da.resume(
     function() {},
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.da is loaded.
-const result = apex.da.resume(
-    function() {},
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

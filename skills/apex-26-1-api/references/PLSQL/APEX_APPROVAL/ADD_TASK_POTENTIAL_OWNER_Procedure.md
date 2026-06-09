@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_approval.ADD_TASK_POTENTIAL_OWNER(
-            p_task_id => 1,
-            p_potential_owner => 'EXAMPLE',
-            p_identity_type => null
-        );
-end;
-/
-```
-

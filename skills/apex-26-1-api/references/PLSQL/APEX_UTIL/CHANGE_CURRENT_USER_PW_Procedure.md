@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.CHANGE_CURRENT_USER_PW(
-            p_new_password => 'EXAMPLE'
-        );
-end;
-/
-```
-

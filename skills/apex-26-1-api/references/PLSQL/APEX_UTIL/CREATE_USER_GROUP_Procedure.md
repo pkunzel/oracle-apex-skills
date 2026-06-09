@@ -48,18 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.CREATE_USER_GROUP(
-            p_id => 1,
-            p_group_name => 'EXAMPLE',
-            p_security_group_id => 1,
-            p_group_desc => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PRINT_HIDDEN_IF_READONLY(
-            p_item_name => 'EXAMPLE',
-            p_value => 'EXAMPLE',
-            p_is_readonly => true,
-            p_is_printer_friendly => true,
-            p_id_postfix => 'EXAMPLE'
-        );
-end;
-/
-```
-

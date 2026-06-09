@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.DELETE_MEMBERS(
-            p_collection_name => 'EXAMPLE',
-            p_attr_number => 1,
-            p_attr_value => 'EXAMPLE'
-        );
-end;
-/
-```
-

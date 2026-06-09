@@ -384,7 +384,6 @@ function renderPlsqlMemberPage(pkg, member, parsed) {
 
   if (canExample) {
     lines.push("## Simple Example", "", "```sql", renderPlsqlExample(pkg.name, member, parsed, false), "```", "");
-    lines.push("## More Complex Example", "", "```sql", renderPlsqlExample(pkg.name, member, parsed, true), "```", "");
   } else {
     lines.push(
       "## Example",
@@ -590,20 +589,6 @@ function renderJsModulePage(mod, parsed) {
       "",
       "```javascript",
       renderJsCall(mod.name, fn),
-      "```",
-      "",
-      "### More Complex Example",
-      "",
-      "```javascript",
-      `// Assuming this code runs on an Oracle APEX page where ${mod.name} is loaded.`,
-      `const result = ${renderJsCall(mod.name, fn).replace(/;$/, "")};`,
-      "if ( result && typeof result.done === \"function\" ) {",
-      "    result.done( function( data ) {",
-      "        console.log( data );",
-      "    } ).fail( function( jqXHR, textStatus, errorThrown ) {",
-      "        apex.debug.error( textStatus, errorThrown );",
-      "    } );",
-      "}",
       "```",
       ""
     );
@@ -860,7 +845,7 @@ The requested end state is satisfied by the local reference set:
 - Return behavior
 - Important notes
 - Simple example
-- More complex example or an explicit "Assuming structure with ..." setup
+- More complex example on curated guide pages, or omit that section when no distinct documented example is available
 - Source links
 
 - All indexed PL/SQL package guide pages are curated.

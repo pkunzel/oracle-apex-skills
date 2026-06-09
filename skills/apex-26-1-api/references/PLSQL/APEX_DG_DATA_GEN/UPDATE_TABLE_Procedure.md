@@ -75,24 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.UPDATE_TABLE(
-            p_blueprint => 'EXAMPLE',
-            p_table_name => 'EXAMPLE',
-            p_new_table_name => 'EXAMPLE',
-            p_sequence => 1,
-            p_preserve_case => 'EXAMPLE',
-            p_display_name => 'EXAMPLE',
-            p_singular_name => 'EXAMPLE',
-            p_plural_name => 'EXAMPLE',
-            p_rows => 1,
-            p_max_rows => 'EXAMPLE'
-        );
-end;
-/
-```
-

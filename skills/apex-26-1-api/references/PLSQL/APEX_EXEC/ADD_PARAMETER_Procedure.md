@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.ADD_PARAMETER(
-            p_parameters => null,
-            p_name => null,
-            p_value => 'EXAMPLE'
-        );
-end;
-/
-```
-

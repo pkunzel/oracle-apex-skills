@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_session_state.SET_VALUE(
-            p_item => 'EXAMPLE',
-            p_value => 'EXAMPLE',
-            p_commit => true
-        );
-end;
-/
-```
-

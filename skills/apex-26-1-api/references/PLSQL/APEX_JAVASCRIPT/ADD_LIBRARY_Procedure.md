@@ -87,28 +87,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_javascript.ADD_LIBRARY(
-            p_name => 'EXAMPLE',
-            p_directory => 'EXAMPLE',
-            p_version => 'EXAMPLE',
-            p_check_to_add_minified => true,
-            p_skip_extension => true,
-            p_ie_condition => 'EXAMPLE',
-            p_requirejs_module => 'EXAMPLE',
-            p_requirejs_js_expression => 'EXAMPLE',
-            p_requirejs_required => true,
-            p_is_module => true,
-            p_is_async => true,
-            p_is_defer => true,
-            p_attributes => 'EXAMPLE',
-            p_key => 'EXAMPLE'
-        );
-end;
-/
-```
-

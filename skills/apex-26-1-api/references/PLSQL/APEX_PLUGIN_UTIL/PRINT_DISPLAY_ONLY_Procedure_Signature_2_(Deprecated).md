@@ -67,20 +67,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PRINT_DISPLAY_ONLY(
-            p_item => null,
-            p_display_value => null,
-            p_show_line_breaks => true,
-            p_escape => true,
-            p_id_postfix => 'EXAMPLE',
-            p_show_icon => true
-        );
-end;
-/
-```
-

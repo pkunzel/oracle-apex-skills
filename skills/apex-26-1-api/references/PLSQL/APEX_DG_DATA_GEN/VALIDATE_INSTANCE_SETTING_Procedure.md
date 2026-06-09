@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.VALIDATE_INSTANCE_SETTING(
-            p_json => to_clob('Example text'),
-            p_valid => 'EXAMPLE',
-            p_message => to_clob('Example text')
-        );
-end;
-/
-```
-

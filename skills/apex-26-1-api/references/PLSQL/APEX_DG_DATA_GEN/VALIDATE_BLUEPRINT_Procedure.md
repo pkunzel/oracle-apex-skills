@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.VALIDATE_BLUEPRINT(
-            p_blueprint => 'EXAMPLE',
-            p_format => 'EXAMPLE',
-            p_errors => to_clob('Example text')
-        );
-end;
-/
-```
-

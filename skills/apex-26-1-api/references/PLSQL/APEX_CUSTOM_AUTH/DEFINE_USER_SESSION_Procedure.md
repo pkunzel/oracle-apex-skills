@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_custom_auth.DEFINE_USER_SESSION(
-            p_user => 'USER',
-            p_session_id => 1
-        );
-end;
-/
-```
-

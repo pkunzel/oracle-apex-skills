@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_lang.CREATE_LANGUAGE_MAPPING(
-            p_application_id => 1,
-            p_language => 'EXAMPLE',
-            p_translation_application_id => 1,
-            p_direction_right_to_left => true,
-            p_image_directory => 'EXAMPLE'
-        );
-end;
-/
-```
-

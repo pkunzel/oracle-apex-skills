@@ -78,24 +78,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_install.SET_REMOTE_SERVER(
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_base_url => 'EXAMPLE',
-            p_https_host => 'EXAMPLE',
-            p_default_database => 'EXAMPLE',
-            p_mysql_sql_modes => to_clob('Example text'),
-            p_ords_timezone => 'EXAMPLE',
-            p_ai_model_name => 'EXAMPLE',
-            p_ai_http_headers => to_clob('Example text'),
-            p_ai_attributes => to_clob('Example text'),
-            p_ai_max_tokens => 1
-        );
-end;
-/
-```
-

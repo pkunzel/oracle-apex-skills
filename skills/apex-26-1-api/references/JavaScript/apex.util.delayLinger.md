@@ -95,23 +95,6 @@ apex.util.delayLinger.finish(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.util.delayLinger is loaded.
-const result = apex.util.delayLinger.finish(
-    "MY_PROCESS",
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## start
 
 Signature: `(static) start (pScopeName, pAction)`
@@ -134,23 +117,6 @@ apex.util.delayLinger.start(
     "MY_PROCESS",
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.util.delayLinger is loaded.
-const result = apex.util.delayLinger.start(
-    "MY_PROCESS",
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

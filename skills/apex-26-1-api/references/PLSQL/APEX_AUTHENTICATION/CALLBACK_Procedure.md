@@ -112,28 +112,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_authentication.CALLBACK(
-            p_session_id => 1,
-            p_app_id => 1,
-            p_ajax_identifier => 'EXAMPLE',
-            p_page_id => 1,
-            p_x01 => 'EXAMPLE',
-            p_x02 => 'EXAMPLE',
-            p_x03 => 'EXAMPLE',
-            p_x04 => 'EXAMPLE',
-            p_x05 => 'EXAMPLE',
-            p_x06 => 'EXAMPLE',
-            p_x07 => 'EXAMPLE',
-            p_x08 => 'EXAMPLE',
-            p_x09 => 'EXAMPLE',
-            p_x10 => 'EXAMPLE'
-        );
-end;
-/
-```
-

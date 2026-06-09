@@ -75,24 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PRINT_READ_ONLY(
-            p_item => null,
-            p_param => null,
-            p_value => null,
-            p_display_value => 'EXAMPLE',
-            p_width => 1,
-            p_height => 1,
-            p_css_classes => 'EXAMPLE',
-            p_protected => true,
-            p_escape => true,
-            p_show_icon => true
-        );
-end;
-/
-```
-

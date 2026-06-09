@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_human_task.REQUEST_MORE_INFORMATION(
-            p_task_id => 1,
-            p_text => to_clob('Example text'),
-            p_to_user => 'USER'
-        );
-end;
-/
-```
-

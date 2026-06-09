@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.REMOVE_WORKSPACE(
-            p_workspace => 'EXAMPLE',
-            p_drop_users => 'USER',
-            p_drop_tablespaces => 'EXAMPLE'
-        );
-end;
-/
-```
-

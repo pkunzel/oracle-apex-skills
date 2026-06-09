@@ -66,34 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_util.HTML_PCT_GRAPH_MASK(
-            p_number => 1,
-            p_size => 1,
-            p_background => 'EXAMPLE',
-            p_bar_background => 'EXAMPLE',
-            p_format => 'EXAMPLE',
-            p_aria_labelledby => 'EXAMPLE',
-            p_aria_label => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

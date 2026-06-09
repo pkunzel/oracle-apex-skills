@@ -117,20 +117,6 @@ Use `cssClass` as documented by the `interactiveGridView` module.
 interactiveGridView.cssClass;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.cssClass;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## icon
 
 Signature: `icon :string`
@@ -143,20 +129,6 @@ Use `icon` as documented by the `interactiveGridView` module.
 
 ```javascript
 interactiveGridView.icon;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.icon;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## internalIdentifier
@@ -173,20 +145,6 @@ Use `internalIdentifier` as documented by the `interactiveGridView` module.
 interactiveGridView.internalIdentifier;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.internalIdentifier;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## model
 
 Signature: `model : model`
@@ -199,20 +157,6 @@ The model used by this view.
 
 ```javascript
 interactiveGridView.model;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.model;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## modelName
@@ -229,20 +173,6 @@ The id of the model used by this view.
 interactiveGridView.modelName;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.modelName;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## singleRowMode
 
 Signature: `singleRowMode :boolean`
@@ -255,20 +185,6 @@ True if the view is currently showing Single Row View and false otherwise. This 
 
 ```javascript
 interactiveGridView.singleRowMode;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.singleRowMode;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## singleRowView$
@@ -285,20 +201,6 @@ The jQuery object for the alternate recordView widget that implements Single Row
 interactiveGridView.singleRowView$;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.singleRowView$;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## title
 
 Signature: `title :string`
@@ -313,20 +215,6 @@ Use `title` as documented by the `interactiveGridView` module.
 interactiveGridView.title;
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.title;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## view$
 
 Signature: `view$ :jQuery`
@@ -339,20 +227,6 @@ The jQuery object for the view.
 
 ```javascript
 interactiveGridView.view$;
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.view$;
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getContextRecord
@@ -381,22 +255,6 @@ interactiveGridView.getContextRecord(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.getContextRecord(
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getSelectedRecords
 
 Signature: `getSelectedRecords () &rarr; {Array}`
@@ -413,20 +271,6 @@ Array of model records selected. Type Array
 
 ```javascript
 interactiveGridView.getSelectedRecords();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.getSelectedRecords();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## setSelectedRecords
@@ -453,24 +297,6 @@ interactiveGridView.setSelectedRecords(
     null,
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where interactiveGridView is loaded.
-const result = interactiveGridView.setSelectedRecords(
-    {},
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

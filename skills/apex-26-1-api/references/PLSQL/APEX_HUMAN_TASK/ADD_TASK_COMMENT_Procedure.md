@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_human_task.ADD_TASK_COMMENT(
-            p_task_id => 1,
-            p_text => to_clob('Example text')
-        );
-end;
-/
-```
-

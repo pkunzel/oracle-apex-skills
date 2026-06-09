@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ir.CHANGE_SUBSCRIPTION_EMAIL(
-            p_subscription_id => 1,
-            p_email_address => 'EXAMPLE'
-        );
-end;
-/
-```
-

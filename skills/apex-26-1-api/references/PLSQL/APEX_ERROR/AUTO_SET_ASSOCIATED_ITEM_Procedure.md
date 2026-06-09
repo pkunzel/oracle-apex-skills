@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_error.AUTO_SET_ASSOCIATED_ITEM(
-            p_error_result => null,
-            p_error => null
-        );
-end;
-/
-```
-

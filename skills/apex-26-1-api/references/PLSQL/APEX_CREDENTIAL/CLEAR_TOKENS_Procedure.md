@@ -47,15 +47,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_credential.CLEAR_TOKENS(
-            p_credential_static_id => 'EXAMPLE_STATIC_ID'
-        );
-end;
-/
-```
-

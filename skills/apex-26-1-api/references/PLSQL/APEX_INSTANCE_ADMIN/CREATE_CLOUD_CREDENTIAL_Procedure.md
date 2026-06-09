@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.CREATE_CLOUD_CREDENTIAL(
-            p_credential_name => 'EXAMPLE',
-            p_user_ocid => 'USER',
-            p_tenancy_ocid => 'EXAMPLE',
-            p_private_key => 'EXAMPLE',
-            p_fingerprint => 'EXAMPLE'
-        );
-end;
-/
-```
-

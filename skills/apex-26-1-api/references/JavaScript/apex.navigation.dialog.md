@@ -92,22 +92,6 @@ apex.navigation.dialog.cancel(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.navigation.dialog is loaded.
-const result = apex.navigation.dialog.cancel(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## close
 
 Signature: `(static) close (pIsModal, pAction opt )`
@@ -130,23 +114,6 @@ apex.navigation.dialog.close(
     null,
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.navigation.dialog is loaded.
-const result = apex.navigation.dialog.close(
-    null,
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## registerCloseHandler
@@ -177,22 +144,6 @@ Registers the internal "close" event of a dialog. The event will be triggered by
 apex.navigation.dialog.registerCloseHandler(
     {}
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.navigation.dialog is loaded.
-const result = apex.navigation.dialog.registerCloseHandler(
-    {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

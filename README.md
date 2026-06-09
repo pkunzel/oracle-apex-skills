@@ -30,7 +30,7 @@ Every mature page should follow this shape:
 - Return behavior
 - Important notes
 - Simple example
-- More complex example
+- More complex example when there is a distinct documented scenario
 - Related APIs
 
 ## Copyright Note

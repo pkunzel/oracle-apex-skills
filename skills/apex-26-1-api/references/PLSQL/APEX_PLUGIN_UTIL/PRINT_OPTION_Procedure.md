@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PRINT_OPTION(
-            p_display_value => 'EXAMPLE',
-            p_return_value => 'EXAMPLE',
-            p_is_selected => true,
-            p_attributes => 'EXAMPLE',
-            p_escape => true
-        );
-end;
-/
-```
-

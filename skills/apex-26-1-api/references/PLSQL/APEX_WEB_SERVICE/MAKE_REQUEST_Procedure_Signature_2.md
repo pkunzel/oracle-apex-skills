@@ -86,27 +86,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_web_service.MAKE_REQUEST(
-            p_url => 'EXAMPLE',
-            p_action => 'EXAMPLE',
-            p_version => 'EXAMPLE',
-            p_collection_name => 'EXAMPLE',
-            p_envelope => to_clob('Example text'),
-            p_credential_static_id => 'EXAMPLE_STATIC_ID',
-            p_token_url => 'EXAMPLE',
-            p_proxy_override => 'EXAMPLE',
-            p_transfer_timeout => 1,
-            p_wallet_path => 'EXAMPLE',
-            p_wallet_pwd => 'EXAMPLE',
-            p_https_host => 'EXAMPLE',
-            p_oauth_scope => 'EXAMPLE'
-        );
-end;
-/
-```
-

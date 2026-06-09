@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.SET_ARRAY_CURRENT_ROW(
-            p_context => to_clob('Example text'),
-            p_current_row_idx => 1
-        );
-end;
-/
-```
-

@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_custom_auth.GET_LDAP_PROPS(
-            p_ldap_host => 'EXAMPLE',
-            p_ldap_port => 1,
-            p_use_ssl => 'EXAMPLE',
-            p_use_exact_dn => 'EXAMPLE',
-            p_ldap_dn => 'EXAMPLE',
-            p_search_filter => 'EXAMPLE',
-            p_ldap_edit_function => 'EXAMPLE'
-        );
-end;
-/
-```
-

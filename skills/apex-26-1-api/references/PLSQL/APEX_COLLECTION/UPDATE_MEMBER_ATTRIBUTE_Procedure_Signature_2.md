@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-            p_collection_name => 'EXAMPLE',
-            p_seq => 1,
-            p_clob_number => to_clob('Example text'),
-            p_clob_value => to_clob('Example text')
-        );
-end;
-/
-```
-

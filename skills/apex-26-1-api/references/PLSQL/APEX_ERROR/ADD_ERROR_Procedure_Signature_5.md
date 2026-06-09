@@ -80,22 +80,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_error.ADD_ERROR(
-            p_error_code => 'EXAMPLE',
-            p_escape_placeholders => true,
-            p_additional_info => 'EXAMPLE',
-            p_display_location => 'EXAMPLE',
-            p_region_id => 1,
-            p_column_alias => 'EXAMPLE',
-            p_row_num => 1,
-            p_ignore_ora_error => true
-        );
-end;
-/
-```
-

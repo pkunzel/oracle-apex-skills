@@ -57,31 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result T_DATA_LOAD_RESULT;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_data_loading.LOAD_DATA(
-            p_application_id => 1,
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_data_to_load => to_clob('Example text'),
-            p_xlsx_sheet_name => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

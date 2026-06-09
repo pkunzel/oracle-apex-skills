@@ -63,20 +63,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_data_export.ADD_HIGHLIGHT(
-            p_highlights => null,
-            p_id => 1,
-            p_value_column => null,
-            p_display_column => null,
-            p_text_color => to_clob('Example text'),
-            p_background_color => null
-        );
-end;
-/
-```
-

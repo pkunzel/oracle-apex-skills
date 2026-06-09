@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.IMPORT_BLUEPRINT(
-            p_clob => to_clob('Example text'),
-            p_override_name => 'EXAMPLE',
-            p_replace => true,
-            p_blueprint_id => 1
-        );
-end;
-/
-```
-

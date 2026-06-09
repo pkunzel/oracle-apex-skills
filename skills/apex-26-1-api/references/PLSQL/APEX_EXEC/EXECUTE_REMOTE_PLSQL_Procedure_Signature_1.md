@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.EXECUTE_REMOTE_PLSQL(
-            p_server_static_id => 'EXAMPLE_STATIC_ID',
-            p_plsql_code => to_clob('Example text'),
-            p_auto_bind_items => true,
-            p_sql_parameters => to_clob('Example text')
-        );
-end;
-/
-```
-

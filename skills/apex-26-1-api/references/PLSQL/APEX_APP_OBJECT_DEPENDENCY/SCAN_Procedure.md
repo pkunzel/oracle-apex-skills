@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_app_object_dependency.SCAN(
-            p_application_id => 1,
-            p_page_id => 1,
-            p_options => 'EXAMPLE'
-        );
-end;
-/
-```
-

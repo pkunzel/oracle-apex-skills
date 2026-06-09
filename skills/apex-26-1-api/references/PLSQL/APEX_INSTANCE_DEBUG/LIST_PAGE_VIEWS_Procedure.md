@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_debug.LIST_PAGE_VIEWS(
-            p_session_id => 1,
-            p_max_rows => 1,
-            p_show_d2 => true
-        );
-end;
-/
-```
-

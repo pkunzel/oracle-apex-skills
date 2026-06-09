@@ -64,19 +64,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.DEBUG_PAGE_ITEM(
-            p_plugin => null,
-            p_page_item => null,
-            p_value => 'EXAMPLE',
-            p_is_readonly => true,
-            p_is_printer_friendly => true
-        );
-end;
-/
-```
-

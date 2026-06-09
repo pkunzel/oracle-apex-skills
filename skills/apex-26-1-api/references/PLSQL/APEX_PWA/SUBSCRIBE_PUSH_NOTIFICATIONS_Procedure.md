@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_pwa.SUBSCRIBE_PUSH_NOTIFICATIONS(
-            p_application_id => 1,
-            p_user_name => 'USER',
-            p_subscription_interface => 'EXAMPLE'
-        );
-end;
-/
-```
-

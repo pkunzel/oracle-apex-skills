@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_session.SET_TRACE(
-            p_session_id => 1,
-            p_mode => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_http.DOWNLOAD(
-            p_blob => null,
-            p_content_type => to_clob('Example text'),
-            p_filename => 'EXAMPLE',
-            p_is_inline => true
-        );
-end;
-/
-```
-

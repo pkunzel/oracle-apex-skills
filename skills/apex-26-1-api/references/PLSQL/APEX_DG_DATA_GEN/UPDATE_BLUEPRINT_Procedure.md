@@ -62,20 +62,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_dg_data_gen.UPDATE_BLUEPRINT(
-            p_name => 'EXAMPLE',
-            p_new_name => 'EXAMPLE',
-            p_display_name => 'EXAMPLE',
-            p_description => 'EXAMPLE',
-            p_lang => 'EXAMPLE',
-            p_default_schema => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -75,24 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_data_export.ADD_COLUMN(
-            p_columns => null,
-            p_name => null,
-            p_heading => 'EXAMPLE',
-            p_format_mask => 'EXAMPLE',
-            p_heading_alignment => null,
-            p_value_alignment => null,
-            p_width => 1,
-            p_is_column_break => true,
-            p_is_frozen => true,
-            p_column_group_idx => 1
-        );
-end;
-/
-```
-

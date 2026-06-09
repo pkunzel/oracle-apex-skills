@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.EXPIRE_END_USER_ACCOUNT(
-            p_user_name => 'USER'
-        );
-end;
-/
-```
-

@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.PRINT_LOV_AS_JSON(
-            p_sql_statement => to_clob('Example text'),
-            p_component_name => 'EXAMPLE',
-            p_escape => true,
-            p_replace_substitutions => true
-        );
-end;
-/
-```
-

@@ -78,38 +78,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result T_COLUMN_VALUE_LIST;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_plugin_util.GET_DATA(
-            p_sql_statement => to_clob('Example text'),
-            p_min_columns => 1,
-            p_max_columns => 1,
-            p_component_name => 'EXAMPLE',
-            p_search_type => 'EXAMPLE',
-            p_search_column_no => 'EXAMPLE',
-            p_search_string => 'EXAMPLE',
-            p_first_row => 1,
-            p_max_rows => 1,
-            p_auto_bind_items => true,
-            p_bind_list => null
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

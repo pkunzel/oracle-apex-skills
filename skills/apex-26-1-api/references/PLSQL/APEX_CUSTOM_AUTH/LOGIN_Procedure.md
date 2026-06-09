@@ -52,20 +52,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_custom_auth.LOGIN(
-            p_uname => 'EXAMPLE',
-            p_password => 'EXAMPLE',
-            p_session_id => 'EXAMPLE',
-            p_app_page => 'EXAMPLE',
-            p_entry_point => 'EXAMPLE',
-            p_preserve_case => true
-        );
-end;
-/
-```
-

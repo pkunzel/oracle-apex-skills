@@ -113,22 +113,6 @@ apex.lang.addMessages(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.addMessages(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## clearMessages
 
 Signature: `(static) clearMessages ()`
@@ -141,20 +125,6 @@ Remove all messages. This method is rarely needed. Many Oracle APEX components r
 
 ```javascript
 apex.lang.clearMessages();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.clearMessages();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## format
@@ -190,23 +160,6 @@ apex.lang.format(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.format(
-    null,
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## formatMessage
 
 Signature: `(static) formatMessage (pKey, &hellip;pValues) &rarr; {string}`
@@ -238,23 +191,6 @@ apex.lang.formatMessage(
     null,
     "Example"
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.formatMessage(
-    null,
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## formatMessageNoEscape
@@ -290,23 +226,6 @@ apex.lang.formatMessageNoEscape(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.formatMessageNoEscape(
-    null,
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## formatNoEscape
 
 Signature: `(static) formatNoEscape (pPattern, &hellip;pValues) &rarr; {string}`
@@ -340,23 +259,6 @@ apex.lang.formatNoEscape(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.formatNoEscape(
-    null,
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getMessage
 
 Signature: `(static) getMessage (pKey) &rarr; {string}`
@@ -381,22 +283,6 @@ The localized message text. If the key is not found then the key is returned. Ty
 apex.lang.getMessage(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.getMessage(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## hasMessage
@@ -425,22 +311,6 @@ apex.lang.hasMessage(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.hasMessage(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## loadMessages
 
 Signature: `(static) loadMessages (pMessageKeys) &rarr; {Promise}`
@@ -467,22 +337,6 @@ apex.lang.loadMessages(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.loadMessages(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## loadMessagesIfNeeded
 
 Signature: `(static) loadMessagesIfNeeded (pMessageKeys, pCallback)`
@@ -505,23 +359,6 @@ apex.lang.loadMessagesIfNeeded(
     null,
     function() {}
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.lang is loaded.
-const result = apex.lang.loadMessagesIfNeeded(
-    null,
-    function() {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

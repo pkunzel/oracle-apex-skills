@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_jwt.VALIDATE(
-            p_token => null,
-            p_iss => 'EXAMPLE',
-            p_aud => 'EXAMPLE',
-            p_leeway_seconds => 1
-        );
-end;
-/
-```
-

@@ -83,30 +83,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.UPDATE_MEMBERS(
-            p_collection_name => 'EXAMPLE',
-            p_seq => null,
-            p_c001 => null,
-            p_c002 => null,
-            p_c003 => null,
-            p_c050 => null,
-            p_n001 => null,
-            p_n002 => null,
-            p_n003 => null,
-            p_n004 => null,
-            p_n005 => null,
-            p_d001 => null,
-            p_d002 => null,
-            p_d003 => null,
-            p_d004 => null,
-            p_d005 => null
-        );
-end;
-/
-```
-

@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_pwa.GENERATE_PUSH_CREDENTIALS(
-            p_application_id => 1
-        );
-end;
-/
-```
-

@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_install.SET_DATASET_IMPORT_MODE(
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_mode => null
-        );
-end;
-/
-```
-

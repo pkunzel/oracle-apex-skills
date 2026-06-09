@@ -62,25 +62,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_debug.LIST_ACTIVITY(
-            p_from_date => sysdate,
-            p_to_date => sysdate,
-            p_app_id => 1,
-            p_page_id => 1,
-            p_workspace_name => 'EXAMPLE',
-            p_session_id => 1,
-            p_user => 'USER',
-            p_ip_address => 'EXAMPLE',
-            p_not_ip_address => 'EXAMPLE',
-            p_error => 'EXAMPLE',
-            p_debug => 1
-        );
-end;
-/
-```
-

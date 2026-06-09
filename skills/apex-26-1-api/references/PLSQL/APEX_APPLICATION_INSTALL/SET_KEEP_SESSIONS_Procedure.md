@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_application_install.SET_KEEP_SESSIONS(
-            p_keep_sessions => true
-        );
-end;
-/
-```
-

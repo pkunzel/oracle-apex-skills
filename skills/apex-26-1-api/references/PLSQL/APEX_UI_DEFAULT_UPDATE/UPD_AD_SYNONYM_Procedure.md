@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ui_default_update.UPD_AD_SYNONYM(
-            p_syn_name => 'EXAMPLE',
-            p_new_syn_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

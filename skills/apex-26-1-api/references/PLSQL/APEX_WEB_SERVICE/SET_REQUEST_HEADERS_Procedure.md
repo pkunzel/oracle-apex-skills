@@ -81,26 +81,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_web_service.SET_REQUEST_HEADERS(
-            p_name_01 => 'EXAMPLE',
-            p_value_01 => 'EXAMPLE',
-            p_name_02 => 'EXAMPLE',
-            p_value_02 => 'EXAMPLE',
-            p_name_03 => 'EXAMPLE',
-            p_value_03 => 'EXAMPLE',
-            p_name_04 => 'EXAMPLE',
-            p_value_04 => 'EXAMPLE',
-            p_name_05 => 'EXAMPLE',
-            p_value_05 => 'EXAMPLE',
-            p_reset => true,
-            p_skip_if_exists => true
-        );
-end;
-/
-```
-

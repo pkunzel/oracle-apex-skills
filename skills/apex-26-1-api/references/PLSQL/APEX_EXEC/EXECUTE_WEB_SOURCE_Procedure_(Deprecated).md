@@ -61,18 +61,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.EXECUTE_WEB_SOURCE(
-            p_module_static_id => 'EXAMPLE_STATIC_ID',
-            p_operation => 'EXAMPLE',
-            p_url_pattern => 'EXAMPLE',
-            p_parameters => null
-        );
-end;
-/
-```
-

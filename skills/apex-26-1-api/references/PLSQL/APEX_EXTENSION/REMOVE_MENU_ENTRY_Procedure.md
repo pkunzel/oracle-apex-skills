@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_extension.REMOVE_MENU_ENTRY(
-            p_label => 'EXAMPLE',
-            p_workspace => 'EXAMPLE'
-        );
-end;
-/
-```
-

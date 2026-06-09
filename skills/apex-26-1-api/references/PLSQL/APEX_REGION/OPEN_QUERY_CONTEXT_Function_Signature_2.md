@@ -78,38 +78,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result APEX_EXEC.T_CONTEXT;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_region.OPEN_QUERY_CONTEXT(
-            p_page_id => 1,
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_component_id => 1,
-            p_view_mode => 'EXAMPLE',
-            p_additional_filters => null,
-            p_outer_sql => to_clob('Example text'),
-            p_first_row => 1,
-            p_max_rows => 1,
-            p_total_row_count => true,
-            p_total_row_count_limit => 1,
-            p_parent_column_values => null
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

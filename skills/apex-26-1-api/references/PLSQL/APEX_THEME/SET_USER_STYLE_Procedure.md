@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_theme.SET_USER_STYLE(
-            p_application_id => 1,
-            p_user => 'USER',
-            p_theme_number => 1,
-            p_id => 1
-        );
-end;
-/
-```
-

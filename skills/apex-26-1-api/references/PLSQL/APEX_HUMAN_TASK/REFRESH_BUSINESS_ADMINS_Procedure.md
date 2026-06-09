@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_human_task.REFRESH_BUSINESS_ADMINS(
-            p_task_id => 1
-        );
-end;
-/
-```
-

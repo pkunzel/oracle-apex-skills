@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_lang.UPDATE_TRANSLATED_STRING(
-            p_id => 1,
-            p_language => 'EXAMPLE',
-            p_string => 'EXAMPLE'
-        );
-end;
-/
-```
-

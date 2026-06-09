@@ -44,16 +44,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.REMOVE_SCHEMA_EXCEPTION(
-            p_schema => 'EXAMPLE',
-            p_workspace => 'EXAMPLE'
-        );
-end;
-/
-```
-

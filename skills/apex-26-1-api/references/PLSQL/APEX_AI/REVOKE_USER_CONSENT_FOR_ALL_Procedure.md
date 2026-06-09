@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ai.REVOKE_USER_CONSENT_FOR_ALL(
-            p_application_id => 1
-        );
-end;
-/
-```
-

@@ -82,26 +82,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_credential.CREATE_CREDENTIAL(
-            p_credential_name => 'EXAMPLE',
-            p_credential_static_id => 'EXAMPLE_STATIC_ID',
-            p_authentication_type => 'EXAMPLE',
-            p_scope => 'EXAMPLE',
-            p_allowed_urls => 'EXAMPLE',
-            p_prompt_on_install => true,
-            p_credential_comment => 'EXAMPLE',
-            p_db_credential_name => 'EXAMPLE',
-            p_db_credential_is_instance => true,
-            p_named_scopes => 'EXAMPLE',
-            p_referenced_static_id => 'EXAMPLE_STATIC_ID',
-            p_oauth_token_request_type => 'EXAMPLE'
-        );
-end;
-/
-```
-

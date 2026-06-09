@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_authentication.SEND_LOGIN_USERNAME_COOKIE(
-            p_username => 'USER',
-            p_cookie_name => 'EXAMPLE',
-            p_consent => true
-        );
-end;
-/
-```
-

@@ -85,39 +85,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result SYS.XMLTYPE;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_web_service.MAKE_REQUEST(
-            p_url => 'EXAMPLE',
-            p_action => 'EXAMPLE',
-            p_version => 'EXAMPLE',
-            p_envelope => to_clob('Example text'),
-            p_username => 'USER',
-            p_password => 'EXAMPLE',
-            p_scheme => 'EXAMPLE',
-            p_proxy_override => 'EXAMPLE',
-            p_transfer_timeout => 1,
-            p_wallet_path => 'EXAMPLE',
-            p_wallet_pwd => 'EXAMPLE',
-            p_https_host => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

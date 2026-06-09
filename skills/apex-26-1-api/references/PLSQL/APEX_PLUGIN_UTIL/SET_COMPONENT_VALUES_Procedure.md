@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.SET_COMPONENT_VALUES(
-            p_column_value_list => null,
-            p_row_num => 1
-        );
-end;
-/
-```
-

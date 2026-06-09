@@ -92,33 +92,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.UPDATE_MEMBER(
-            p_collection_name => 'EXAMPLE',
-            p_seq => 'EXAMPLE',
-            p_c001 => 'EXAMPLE',
-            p_c002 => 'EXAMPLE',
-            p_c003 => 'EXAMPLE',
-            p_c050 => 'EXAMPLE',
-            p_n001 => 1,
-            p_n002 => 1,
-            p_n003 => 1,
-            p_n004 => 1,
-            p_n005 => 1,
-            p_d001 => sysdate,
-            p_d002 => sysdate,
-            p_d003 => sysdate,
-            p_d004 => sysdate,
-            p_d005 => sysdate,
-            p_clob001 => to_clob('Example text'),
-            p_blob001 => null,
-            p_xmltype001 => 'EXAMPLE'
-        );
-end;
-/
-```
-

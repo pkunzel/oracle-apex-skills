@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_background_process.SET_STATUS(
-            p_message => to_clob('Example text')
-        );
-end;
-/
-```
-

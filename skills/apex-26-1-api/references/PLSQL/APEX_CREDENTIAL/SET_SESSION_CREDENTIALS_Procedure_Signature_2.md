@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_credential.SET_SESSION_CREDENTIALS(
-            p_credential_static_id => 'EXAMPLE_STATIC_ID',
-            p_client_id => 'EXAMPLE',
-            p_client_secret => 'EXAMPLE',
-            p_namespace => 'EXAMPLE',
-            p_fingerprint => 'EXAMPLE'
-        );
-end;
-/
-```
-

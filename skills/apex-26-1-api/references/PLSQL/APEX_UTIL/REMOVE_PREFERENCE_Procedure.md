@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.REMOVE_PREFERENCE(
-            p_preference => 'EXAMPLE',
-            p_user => 'USER'
-        );
-end;
-/
-```
-

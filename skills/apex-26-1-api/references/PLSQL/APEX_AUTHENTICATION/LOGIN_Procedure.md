@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_authentication.LOGIN(
-            p_username => 'USER',
-            p_password => 'EXAMPLE',
-            p_uppercase_username => true,
-            p_set_persistent_auth => true
-        );
-end;
-/
-```
-

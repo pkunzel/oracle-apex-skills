@@ -75,24 +75,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_web_service.OAUTH_AUTHENTICATE(
-            p_token_url => 'EXAMPLE',
-            p_client_id => 'EXAMPLE',
-            p_client_secret => 'EXAMPLE',
-            p_flow_type => 'EXAMPLE',
-            p_proxy_override => 'EXAMPLE',
-            p_transfer_timeout => 1,
-            p_wallet_path => 'EXAMPLE',
-            p_wallet_pwd => 'EXAMPLE',
-            p_https_host => 'EXAMPLE',
-            p_scope => 'EXAMPLE'
-        );
-end;
-/
-```
-

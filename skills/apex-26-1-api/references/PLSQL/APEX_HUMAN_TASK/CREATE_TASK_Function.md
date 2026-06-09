@@ -77,36 +77,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result NUMBER;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_human_task.CREATE_TASK(
-            p_application_id => 1,
-            p_task_def_static_id => 'EXAMPLE_STATIC_ID',
-            p_subject => 'EXAMPLE',
-            p_parameters => null,
-            p_priority => 1,
-            p_initiator => 'EXAMPLE',
-            p_initiator_can_complete => true,
-            p_detail_pk => 'EXAMPLE',
-            p_due_date => sysdate
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.OPEN_ARRAY(
-            p_context => to_clob('Example text'),
-            p_column_position => 1
-        );
-end;
-/
-```
-

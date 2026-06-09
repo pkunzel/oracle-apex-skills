@@ -72,36 +72,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result NUMBER;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_mail.SEND(
-            p_template_static_id => 'EXAMPLE_STATIC_ID',
-            p_placeholders => to_clob('Example text'),
-            p_to => 'EXAMPLE',
-            p_cc => 'EXAMPLE',
-            p_bcc => 'EXAMPLE',
-            p_from => 'EXAMPLE',
-            p_replyto => 'EXAMPLE',
-            p_application_id => 1,
-            p_language_override => 'EXAMPLE'
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

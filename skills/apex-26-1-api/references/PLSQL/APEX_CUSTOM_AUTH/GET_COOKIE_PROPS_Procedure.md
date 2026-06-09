@@ -60,19 +60,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_custom_auth.GET_COOKIE_PROPS(
-            p_app_id => 1,
-            p_cookie_name => 'EXAMPLE',
-            p_cookie_path => 'EXAMPLE',
-            p_cookie_domain => 'EXAMPLE',
-            p_secure => true
-        );
-end;
-/
-```
-

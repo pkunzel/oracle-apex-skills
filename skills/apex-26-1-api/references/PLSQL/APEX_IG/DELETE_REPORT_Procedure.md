@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ig.DELETE_REPORT(
-            p_application_id => 1,
-            p_report_id => 1
-        );
-end;
-/
-```
-

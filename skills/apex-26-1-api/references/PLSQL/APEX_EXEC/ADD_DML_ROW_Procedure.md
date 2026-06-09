@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.ADD_DML_ROW(
-            p_context => to_clob('Example text'),
-            p_operation => null
-        );
-end;
-/
-```
-

@@ -114,22 +114,6 @@ apex.storage.getCookie(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.getCookie(
-    "MY_PROCESS"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## getScopedLocalStorage
 
 Signature: `(static) getScopedLocalStorage (options) &rarr; {localStorage}`
@@ -163,22 +147,6 @@ A localStorage wrapper object. Type localStorage Example Creates a local storage
 apex.storage.getScopedLocalStorage(
     {}
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.getScopedLocalStorage(
-    {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## getScopedSessionStorage
@@ -216,22 +184,6 @@ apex.storage.getScopedSessionStorage(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.getScopedSessionStorage(
-    {}
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## hasLocalStorageSupport
 
 Signature: `(static) hasLocalStorageSupport () &rarr; {boolean}`
@@ -250,20 +202,6 @@ true if the browser supports the local storage API and false otherwise. Type boo
 apex.storage.hasLocalStorageSupport();
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.hasLocalStorageSupport();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## hasSessionStorageSupport
 
 Signature: `(static) hasSessionStorageSupport () &rarr; {boolean}`
@@ -280,20 +218,6 @@ true if the browser supports the session storage API and false otherwise. Type b
 
 ```javascript
 apex.storage.hasSessionStorageSupport();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.hasSessionStorageSupport();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## setCookie
@@ -318,23 +242,6 @@ apex.storage.setCookie(
     "MY_PROCESS",
     "Example"
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.setCookie(
-    "MY_PROCESS",
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## storageWrapper
@@ -362,20 +269,6 @@ A storage wrapper object. This object has the same properties and functions as t
 
 ```javascript
 apex.storage.storageWrapper();
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.storage is loaded.
-const result = apex.storage.storageWrapper();
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

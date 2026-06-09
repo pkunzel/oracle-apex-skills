@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.CREATE_OR_TRUNCATE_COLLECTION(
-            p_collection_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

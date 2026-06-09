@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ig.CHANGE_REPORT_OWNER(
-            p_application_id => 1,
-            p_report_id => 1,
-            p_old_owner => 'EXAMPLE',
-            p_new_owner => 'EXAMPLE'
-        );
-end;
-/
-```
-

@@ -118,22 +118,6 @@ apex.theme.closeRegion(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.theme is loaded.
-const result = apex.theme.closeRegion(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## mq
 
 Signature: `(static) mq (pMediaQuery) &rarr; {boolean}`
@@ -158,22 +142,6 @@ true if the media query matches. Type boolean Example After each time the window
 apex.theme.mq(
     null
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.theme is loaded.
-const result = apex.theme.mq(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## openRegion
@@ -202,22 +170,6 @@ apex.theme.openRegion(
 );
 ```
 
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.theme is loaded.
-const result = apex.theme.openRegion(
-    null
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
-```
-
 ## popupFieldHelp
 
 Signature: `(static) popupFieldHelp (pItemId, pSessionId opt , pUrl opt )`
@@ -242,24 +194,6 @@ apex.theme.popupFieldHelp(
     "P1_ITEM",
     "Example"
 );
-```
-
-### More Complex Example
-
-```javascript
-// Assuming this code runs on an Oracle APEX page where apex.theme is loaded.
-const result = apex.theme.popupFieldHelp(
-    "P1_ITEM",
-    "P1_ITEM",
-    "Example"
-);
-if ( result && typeof result.done === "function" ) {
-    result.done( function( data ) {
-        console.log( data );
-    } ).fail( function( jqXHR, textStatus, errorThrown ) {
-        apex.debug.error( textStatus, errorThrown );
-    } );
-}
 ```
 
 ## Notes

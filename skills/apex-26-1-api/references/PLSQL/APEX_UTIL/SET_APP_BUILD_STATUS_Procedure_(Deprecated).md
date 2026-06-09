@@ -55,16 +55,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_APP_BUILD_STATUS(
-            p_application_id => 1,
-            p_build_status => 'EXAMPLE'
-        );
-end;
-/
-```
-

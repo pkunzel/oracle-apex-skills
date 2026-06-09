@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_javascript.ADD_ONLOAD_CODE(
-            p_code => 'EXAMPLE',
-            p_key => 'EXAMPLE'
-        );
-end;
-/
-```
-

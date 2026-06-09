@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_json.INITIALIZE_CLOB_OUTPUT(
-            p_dur => 1,
-            p_cache => true,
-            p_indent => 1,
-            p_preserve => true
-        );
-end;
-/
-```
-

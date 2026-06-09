@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.CLEAR_PAGE_CACHE(
-            p_page_id => 1
-        );
-end;
-/
-```
-

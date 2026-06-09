@@ -57,18 +57,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_session.CREATE_SESSION(
-            p_app_id => 1,
-            p_page_id => 1,
-            p_username => 'USER',
-            p_call_post_authentication => true
-        );
-end;
-/
-```
-

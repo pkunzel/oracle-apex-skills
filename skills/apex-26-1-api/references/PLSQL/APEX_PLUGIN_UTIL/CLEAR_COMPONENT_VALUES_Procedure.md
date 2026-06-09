@@ -39,13 +39,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_plugin_util.CLEAR_COMPONENT_VALUES;
-end;
-/
-```
-

@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.SET_LAST_NAME(
-            p_userid => 1,
-            p_last_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

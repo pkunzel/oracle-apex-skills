@@ -66,21 +66,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ig.ADD_FILTER(
-            p_page_id => 1,
-            p_region_id => 1,
-            p_filter_value => 'EXAMPLE',
-            p_column_name => 'EXAMPLE',
-            p_operator_abbr => 'EXAMPLE',
-            p_is_case_sensitive => true,
-            p_report_id => 1
-        );
-end;
-/
-```
-

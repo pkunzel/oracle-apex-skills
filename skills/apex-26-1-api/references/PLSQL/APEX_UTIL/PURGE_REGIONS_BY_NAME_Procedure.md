@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.PURGE_REGIONS_BY_NAME(
-            p_application => 1,
-            p_page => 1,
-            p_region_name => 'EXAMPLE'
-        );
-end;
-/
-```
-

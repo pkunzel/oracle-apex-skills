@@ -62,31 +62,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-declare
-    l_result T_CONTEXT;
-begin
-    -- Assuming this runs outside a normal APEX page request.
-    apex_session.create_session(
-        p_app_id   => 100,
-        p_page_id  => 1,
-        p_username => 'USER');
-
-    l_result := apex_exec.OPEN_JSON_SOURCE_DML_CONTEXT(
-            p_static_id => 'EXAMPLE_STATIC_ID',
-            p_array_column_name => 'EXAMPLE',
-            p_columns => null,
-            p_lost_update_detection => sysdate
-        );
-
-    apex_session.delete_session;
-exception
-    when others then
-        apex_session.delete_session;
-        raise;
-end;
-/
-```
-

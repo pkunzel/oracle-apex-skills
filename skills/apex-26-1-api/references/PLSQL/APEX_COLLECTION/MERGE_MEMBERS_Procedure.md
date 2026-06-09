@@ -71,23 +71,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.MERGE_MEMBERS(
-            p_collection_name => 'EXAMPLE',
-            p_seq => null,
-            p_c001 => null,
-            p_c002 => null,
-            p_c003 => null,
-            p_c050 => null,
-            p_null_index => 1,
-            p_null_value => 'EXAMPLE',
-            p_init_query => to_clob('Example text')
-        );
-end;
-/
-```
-

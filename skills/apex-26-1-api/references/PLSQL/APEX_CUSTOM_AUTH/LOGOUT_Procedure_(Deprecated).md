@@ -50,17 +50,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_custom_auth.LOGOUT(
-            p_this_app => 'EXAMPLE',
-            p_next_app_page_sess => 'EXAMPLE',
-            p_next_url => 'EXAMPLE'
-        );
-end;
-/
-```
-

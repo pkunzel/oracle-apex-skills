@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_string.PUSH(
-            p_table => null,
-            p_values => 1,
-            p_format_mask => 'EXAMPLE'
-        );
-end;
-/
-```
-

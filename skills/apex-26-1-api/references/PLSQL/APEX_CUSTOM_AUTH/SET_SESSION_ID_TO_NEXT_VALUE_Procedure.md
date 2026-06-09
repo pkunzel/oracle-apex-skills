@@ -39,13 +39,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_custom_auth.SET_SESSION_ID_TO_NEXT_VALUE;
-end;
-/
-```
-

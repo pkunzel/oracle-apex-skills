@@ -87,28 +87,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ui_default_update.ADD_AD_COLUMN(
-            p_column_name => 'EXAMPLE',
-            p_label => 'EXAMPLE',
-            p_help_text => to_clob('Example text'),
-            p_format_mask => 'EXAMPLE',
-            p_default_value => 'EXAMPLE',
-            p_form_format_mask => 'EXAMPLE',
-            p_form_display_width => 'EXAMPLE',
-            p_form_display_height => 'EXAMPLE',
-            p_form_data_type => 'EXAMPLE',
-            p_report_format_mask => 'EXAMPLE',
-            p_report_col_alignment => 'EXAMPLE',
-            p_syn_name1 => 'EXAMPLE',
-            p_syn_name2 => 'EXAMPLE',
-            p_syn_name3 => 'EXAMPLE'
-        );
-end;
-/
-```
-

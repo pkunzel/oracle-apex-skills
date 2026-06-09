@@ -55,16 +55,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_exec.PURGE_WEB_SOURCE_CACHE(
-            p_module_static_id => 'EXAMPLE_STATIC_ID',
-            p_current_session_only => true
-        );
-end;
-/
-```
-

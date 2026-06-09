@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.SET_LOG_SWITCH_INTERVAL(
-            p_log_name => 'EXAMPLE',
-            p_log_switch_after_days => 1
-        );
-end;
-/
-```
-

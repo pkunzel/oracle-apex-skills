@@ -48,15 +48,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_instance_admin.FREE_WORKSPACE_APP_IDS(
-            p_workspace_id => 1
-        );
-end;
-/
-```
-

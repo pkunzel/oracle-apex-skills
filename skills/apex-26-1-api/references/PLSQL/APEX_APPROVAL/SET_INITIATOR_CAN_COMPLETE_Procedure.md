@@ -51,16 +51,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_approval.SET_INITIATOR_CAN_COMPLETE(
-            p_task_id => 1,
-            p_initiator_can_complete => true
-        );
-end;
-/
-```
-

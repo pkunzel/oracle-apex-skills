@@ -96,31 +96,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_ui_default_update.UPD_COLUMN(
-            p_table_name => 'EXAMPLE',
-            p_column_name => 'EXAMPLE',
-            p_group_id => 'EXAMPLE',
-            p_label => 'EXAMPLE',
-            p_help_text => to_clob('Example text'),
-            p_display_in_form => 'EXAMPLE',
-            p_display_seq_form => 'EXAMPLE',
-            p_mask_form => 'EXAMPLE',
-            p_default_value => 'EXAMPLE',
-            p_required => 'EXAMPLE',
-            p_display_width => 'EXAMPLE',
-            p_max_width => 'EXAMPLE',
-            p_height => 'EXAMPLE',
-            p_display_in_report => 'EXAMPLE',
-            p_display_seq_report => 'EXAMPLE',
-            p_mask_report => 'EXAMPLE',
-            p_alignment => 'EXAMPLE'
-        );
-end;
-/
-```
-

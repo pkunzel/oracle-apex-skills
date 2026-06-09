@@ -69,22 +69,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_util.DOWNLOAD_PRINT_DOCUMENT(
-            p_file_name => 'EXAMPLE',
-            p_content_disposition => to_clob('Example text'),
-            p_application_id => 1,
-            p_report_query_name => to_clob('Example text'),
-            p_report_layout => to_clob('Example text'),
-            p_report_layout_type => 'EXAMPLE',
-            p_document_format => 'EXAMPLE',
-            p_print_server => 'EXAMPLE'
-        );
-end;
-/
-```
-

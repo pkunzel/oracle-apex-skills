@@ -54,17 +54,3 @@ end;
 /
 ```
 
-## More Complex Example
-
-```sql
-begin
-    -- Assuming this runs inside an APEX page process with the right workspace/app context.
-    apex_collection.CREATE_COLLECTION_FROM_QUERYB2(
-            p_collection_name => 'EXAMPLE',
-            p_query => to_clob('Example text'),
-            p_max_row_count => 1
-        );
-end;
-/
-```
-
