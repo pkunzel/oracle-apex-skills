@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.SEND_LOGIN_USERNAME_COOKIE(
-        p_username => 'USER',
-        p_cookie_name => 'EXAMPLE',
-        p_consent => true
+    apex_authentication.send_login_username_cookie(
+        p_username    => :P101_USERNAME,
+        p_cookie_name => apex_authentication.c_default_username_cookie,
+        p_consent     => :P101_REMEMBER = 'Y'
     );
 end;
 /
 ```
-

@@ -38,13 +38,13 @@ APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MAPPING (
 
 ```sql
 declare
-    l_result NUMBER;
+    l_target_app_id number;
 begin
-    l_result := apex_application_install.GET_SUBSCRIPTION_MAPPING(
-        p_from_application_id => 1
+    l_target_app_id := apex_application_install.get_subscription_mapping(
+        p_from_application_id => 100
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Subscription source 100 maps to ' || l_target_app_id);
 end;
 /
 ```
-

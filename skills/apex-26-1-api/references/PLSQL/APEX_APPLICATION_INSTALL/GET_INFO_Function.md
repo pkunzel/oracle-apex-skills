@@ -42,13 +42,18 @@ This function returns information about the application that can be used to conf
 
 ```sql
 declare
-    l_result T_FILE_INFO;
+    l_source apex_t_export_files;
+    l_info   apex_application_install.t_file_info;
 begin
-    l_result := apex_application_install.GET_INFO(
-        p_source => null
+    l_source := apex_export.get_application(
+        p_application_id => 100
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_info := apex_application_install.get_info(
+        p_source => l_source
+    );
+
+    sys.dbms_output.put_line('Importing app ' || l_info.app_id || ': ' || l_info.app_name);
 end;
 /
 ```
-

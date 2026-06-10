@@ -38,12 +38,10 @@ RETURN NUMBER;
 
 ```sql
 declare
-    l_result NUMBER;
+    l_count number;
 begin
-    l_result := apex_collection.COLLECTION_MEMBER_COUNT(
-        p_collection_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_count := apex_collection.collection_member_count('ORDER_LINES');
+    apex_debug.info('Order line count: %s', l_count);
 end;
 /
 ```

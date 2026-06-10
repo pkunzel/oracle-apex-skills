@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.SAML_METADATA(
-        p_app_id => 1
+    apex_authentication.saml_metadata(
+        p_app_id => :APP_ID
     );
 end;
 /
 ```
-

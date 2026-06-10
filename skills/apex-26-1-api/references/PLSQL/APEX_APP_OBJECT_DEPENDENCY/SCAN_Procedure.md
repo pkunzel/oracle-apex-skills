@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_app_object_dependency.SCAN(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_options => 'EXAMPLE'
+    apex_app_object_dependency.scan(
+        p_application_id => :APP_ID,
+        p_page_id => 10,
+        p_options => apex_app_object_dependency.c_option_identifiers
     );
 end;
 /
 ```
-

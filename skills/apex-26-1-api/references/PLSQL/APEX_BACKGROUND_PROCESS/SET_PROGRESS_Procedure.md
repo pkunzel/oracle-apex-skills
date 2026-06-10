@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.SET_PROGRESS(
-        p_totalwork => 1,
-        p_sofar => 1
+    apex_background_process.set_progress(
+        p_totalwork => 100,
+        p_sofar     => :P50_ROWS_PROCESSED
     );
 end;
 /

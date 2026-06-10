@@ -40,14 +40,16 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_feature_enabled varchar2(32767);
 begin
-    l_result := apex_app_setting.GET_VALUE(
-        p_name => 'EXAMPLE',
+    l_feature_enabled := apex_app_setting.get_value(
+        p_name => 'FEATURE_AI_CHAT_ENABLED',
         p_raise_error => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_feature_enabled = 'Y' then
+        apex_debug.info('AI chat feature is enabled.');
+    end if;
 end;
 /
 ```
-

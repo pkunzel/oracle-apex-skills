@@ -44,14 +44,12 @@ The embedding for the given value. Parent topic: APEX_AI
 
 ```sql
 declare
-    l_result VECTOR;
+    l_embedding vector;
 begin
-    l_result := apex_ai.GET_VECTOR_EMBEDDINGS(
-        p_value => to_clob('Example text'),
-        p_function_name => 'EXAMPLE'
+    l_embedding := apex_ai.get_vector_embeddings(
+        p_value => to_clob('quarterly revenue outlook for western region'),
+        p_function_name => 'CUSTOM_EMBED_TEXT'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

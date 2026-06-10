@@ -46,15 +46,16 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_messages apex_ai.t_chat_messages := apex_ai.c_chat_messages;
+    l_answer   clob;
 begin
-    l_result := apex_ai.CHAT(
-        p_agent_static_id => 'MY_AGENT',
-        p_prompt => to_clob('Example text'),
-        p_messages => to_clob('Example text')
+    l_answer := apex_ai.chat(
+        p_agent_static_id => 'support_agent',
+        p_prompt => to_clob('Summarize the current ticket.'),
+        p_messages => l_messages
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
-

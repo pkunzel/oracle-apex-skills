@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_WORKSPACE(
-        p_workspace => 'EXAMPLE'
+    apex_application_install.set_workspace(
+        p_workspace => 'SALES_WS'
     );
 end;
 /
 ```
-

@@ -60,24 +60,17 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_seq      apex_application_global.vc_arr2;
+    l_product  apex_application_global.vc_arr2;
 begin
-    apex_collection.UPDATE_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_seq => null,
-        p_c001 => null,
-        p_c002 => null,
-        p_c003 => null,
-        p_c050 => null,
-        p_n001 => null,
-        p_n002 => null,
-        p_n003 => null,
-        p_n004 => null,
-        p_n005 => null,
-        p_d001 => null,
-        p_d002 => null,
-        p_d003 => null,
-        p_d004 => null,
-        p_d005 => null
+    l_seq(1)     := :P20_SEQ_ID;
+    l_product(1) := :P20_PRODUCT_ID;
+
+    apex_collection.update_members(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => l_seq,
+        p_c001            => l_product
     );
 end;
 /

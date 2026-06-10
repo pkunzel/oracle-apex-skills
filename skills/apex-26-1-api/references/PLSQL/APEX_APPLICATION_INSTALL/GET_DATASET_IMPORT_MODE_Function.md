@@ -38,13 +38,15 @@ FUNCTION apex_application_install.get_dataset_import_mode (
 
 ```sql
 declare
-    l_result T_DATASET_IMPORT_MODE;
+    l_mode apex_application_install.t_dataset_import_mode;
 begin
-    l_result := apex_application_install.GET_DATASET_IMPORT_MODE(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_mode := apex_application_install.get_dataset_import_mode(
+        p_static_id => 'SALES_SAMPLE'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_mode = apex_application_install.c_dataset_overwrite then
+        sys.dbms_output.put_line('SALES_SAMPLE will be overwritten on import.');
+    end if;
 end;
 /
 ```
-

@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_PERSISTENT_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_username => 'USER',
-        p_password => 'EXAMPLE'
+    apex_credential.set_persistent_credentials(
+        p_credential_static_id => 'PARTNER_BASIC',
+        p_username             => :P50_SERVICE_USERNAME,
+        p_password             => :P50_SERVICE_PASSWORD
     );
 end;
 /

@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.ADD_TASK_COMMENT(
-        p_task_id => 1,
-        p_text => to_clob('Example text')
+    apex_approval.add_task_comment(
+        p_task_id => :P20_TASK_ID,
+        p_text    => 'Please review the updated attachment.'
     );
 end;
 /
 ```
-

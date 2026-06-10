@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_app_setting.SET_VALUE(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE',
+    apex_app_setting.set_value(
+        p_name => 'FEATURE_AI_CHAT_ENABLED',
+        p_value => 'Y',
         p_raise_error => true
     );
 end;
 /
 ```
-

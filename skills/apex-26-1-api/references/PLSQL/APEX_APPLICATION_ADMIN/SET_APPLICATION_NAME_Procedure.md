@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_NAME(
-        p_application_id => 1,
-        p_application_name => 'EXAMPLE'
+    apex_application_admin.set_application_name(
+        p_application_id => 100,
+        p_application_name => 'Order Management'
     );
 end;
 /
 ```
-

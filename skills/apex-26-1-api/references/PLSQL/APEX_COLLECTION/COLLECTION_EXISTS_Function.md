@@ -37,13 +37,10 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_collection.COLLECTION_EXISTS(
-        p_collection_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_collection.collection_exists('ORDER_LINES') then
+        apex_debug.info('ORDER_LINES exists in this session.');
+    end if;
 end;
 /
 ```

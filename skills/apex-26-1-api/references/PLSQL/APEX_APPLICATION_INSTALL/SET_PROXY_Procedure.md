@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_PROXY(
-        p_proxy => 'EXAMPLE',
-        p_no_proxy_domains => 'EXAMPLE'
+    apex_application_install.set_proxy(
+        p_proxy            => 'www-proxy.example.com',
+        p_no_proxy_domains => '*.example.internal,localhost'
     );
 end;
 /
 ```
-

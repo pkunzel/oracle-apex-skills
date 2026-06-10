@@ -42,13 +42,13 @@ A table of apex_t_temp_lov_data .
 
 ```sql
 declare
-    l_result APEX_T_TEMP_LOV_DATA;
+    l_priorities apex_t_temp_lov_data;
 begin
-    l_result := apex_approval.GET_TASK_PRIORITIES(
-        p_task_id => 1
+    l_priorities := apex_approval.get_task_priorities(
+        p_task_id => :P20_TASK_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Available priority rows: ' || l_priorities.count);
 end;
 /
 ```
-

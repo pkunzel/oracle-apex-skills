@@ -47,11 +47,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.EXECUTE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_filters => null,
-        p_order_bys => null
+    apex_automation.execute(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS',
+        p_filters        => apex_exec.c_empty_filters,
+        p_order_bys      => apex_exec.c_empty_order_bys
     );
 end;
 /

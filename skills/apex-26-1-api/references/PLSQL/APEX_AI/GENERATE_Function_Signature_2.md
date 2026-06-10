@@ -58,21 +58,25 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_json clob;
 begin
-    l_result := apex_ai.GENERATE(
-        p_prompt => to_clob('Example text'),
-        p_system_prompt => to_clob('Example text'),
+    l_json := apex_ai.generate(
+        p_prompt => to_clob('Return priority and reason for order ' || :P10_ORDER_ID),
+        p_system_prompt => to_clob('Return only JSON that matches the schema.'),
         p_service_static_id => 'MY_AI_SERVICE',
-        p_temperature => 0.2,
-        p_attachments => null,
-        p_response_json_schema => to_clob('Example text'),
-        p_tools => null,
-        p_response_handler_procedure => 'EXAMPLE',
-        p_max_tool_roundtrips => 3
+        p_temperature => 0.1,
+        p_response_json_schema => q'~{
+            "type": "object",
+            "properties": {
+                "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+                "reason": { "type": "string" }
+            },
+            "required": ["priority", "reason"],
+            "additionalProperties": false
+        }~'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Generated JSON length: %s', dbms_lob.getlength(l_json));
 end;
 /
 ```
-

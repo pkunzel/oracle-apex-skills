@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_SUBSCRIPTION_MODE(
-        p_mode => null
+    apex_application_install.set_subscription_mode(
+        p_mode => apex_application_install.c_subscription_strict
     );
 end;
 /
 ```
-

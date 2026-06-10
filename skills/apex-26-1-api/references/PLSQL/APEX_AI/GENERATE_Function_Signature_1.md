@@ -46,15 +46,14 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_answer clob;
 begin
-    l_result := apex_ai.GENERATE(
-        p_agent_static_id => 'MY_AGENT',
-        p_prompt => to_clob('Example text'),
-        p_attachments => null
+    l_answer := apex_ai.generate(
+        p_agent_static_id => 'order_assistant',
+        p_prompt => to_clob('Write a short status update for order ' || :P10_ORDER_ID)
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
-

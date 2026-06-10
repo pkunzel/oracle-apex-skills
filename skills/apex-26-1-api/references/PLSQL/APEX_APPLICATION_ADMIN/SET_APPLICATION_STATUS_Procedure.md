@@ -53,15 +53,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_STATUS(
-        p_application_id => 1,
-        p_application_status => null,
-        p_allowed_users_list => 'USER',
-        p_message => to_clob('Example text'),
-        p_plsql_code => to_clob('Example text'),
-        p_redirect_url => 'EXAMPLE'
+    apex_application_admin.set_application_status(
+        p_application_id => 100,
+        p_application_status => apex_application_admin.c_app_restricted_access,
+        p_allowed_users_list => apex_t_varchar2('PKUNZEL', 'QA_USER'),
+        p_message => 'This application is currently open only for testing.'
     );
 end;
 /
 ```
-

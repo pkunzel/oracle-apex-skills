@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.REMOVE_PERSISTENT_AUTH(
-        p_username => 'USER'
+    apex_authentication.remove_persistent_auth(
+        p_username => :P20_USERNAME
     );
 end;
 /
 ```
-

@@ -46,14 +46,22 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+create or replace procedure ai_response_handler (
+    p_param  in            apex_ai.t_chat_response_handler_param,
+    p_result in out nocopy apex_ai.t_chat_response_handler_result )
+as
 begin
-    apex_ai.SET_TOOL_RESULT(
-        p_response_handler_param => null,
-        p_response_handler_result => null,
-        p_tool_call => null,
-        p_result => to_clob('Example text')
-    );
+    if p_result.response.type = apex_ai.c_response_type_tool_calls then
+        for i in 1 .. p_param.pending_tool_calls.count loop
+            if p_param.pending_tool_calls(i).name = 'get_order_status' then
+                apex_ai.set_tool_result(
+                    p_response_handler_param  => p_param,
+                    p_response_handler_result => p_result,
+                    p_tool_call               => p_param.pending_tool_calls(i),
+                    p_result                  => to_clob('{"status":"shipped"}') );
+            end if;
+        end loop;
+    end if;
 end;
 /
 ```
-

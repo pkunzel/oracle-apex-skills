@@ -45,15 +45,15 @@ VARCHAR2 - The old value of this parameter in VARCHAR2 format.
 
 ```sql
 declare
-    l_result varchar2(32767);
+    l_old_amount varchar2(32767);
 begin
-    l_result := apex_approval.GET_TASK_PARAMETER_OLD_VALUE(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID',
+    l_old_amount := apex_approval.get_task_parameter_old_value(
+        p_task_id         => :P20_TASK_ID,
+        p_param_static_id => 'AMOUNT',
         p_raise_error => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Previous amount: ' || l_old_amount);
 end;
 /
 ```
-

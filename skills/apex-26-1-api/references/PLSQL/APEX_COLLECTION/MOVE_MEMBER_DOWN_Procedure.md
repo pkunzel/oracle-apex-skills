@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.MOVE_MEMBER_DOWN(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1
+    apex_collection.move_member_down(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
 end;
 /

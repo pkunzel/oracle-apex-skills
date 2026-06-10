@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_GLOBAL_NOTIFICATION(
-        p_application_id => 1,
-        p_global_notification_message => to_clob('Example text')
+    apex_application_admin.set_global_notification(
+        p_application_id => 100,
+        p_global_notification_message => 'New release deployed.'
     );
 end;
 /
 ```
-

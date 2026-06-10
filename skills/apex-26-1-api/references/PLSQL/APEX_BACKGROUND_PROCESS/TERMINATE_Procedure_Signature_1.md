@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.TERMINATE(
-        p_application_id => 1,
-        p_process_id => 1
+    apex_background_process.terminate(
+        p_application_id => apex_application.g_flow_id,
+        p_process_id     => :P50_PROCESS_ID
     );
 end;
 /

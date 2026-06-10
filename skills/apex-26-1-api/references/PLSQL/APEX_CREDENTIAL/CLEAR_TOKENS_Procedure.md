@@ -40,9 +40,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.CLEAR_TOKENS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_credential.clear_tokens('OAUTH_PROVIDER');
 end;
 /
 ```

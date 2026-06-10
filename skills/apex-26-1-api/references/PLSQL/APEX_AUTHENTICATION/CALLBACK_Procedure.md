@@ -92,23 +92,17 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.CALLBACK(
-        p_session_id => 1,
-        p_app_id => 1,
-        p_ajax_identifier => 'EXAMPLE',
-        p_page_id => 1,
-        p_x01 => 'EXAMPLE',
-        p_x02 => 'EXAMPLE',
-        p_x03 => 'EXAMPLE',
-        p_x04 => 'EXAMPLE',
-        p_x05 => 'EXAMPLE',
-        p_x06 => 'EXAMPLE',
-        p_x07 => 'EXAMPLE',
-        p_x08 => 'EXAMPLE',
-        p_x09 => 'EXAMPLE',
-        p_x10 => 'EXAMPLE'
+    apex_authentication.callback(
+        p_session_id      => :APP_SESSION,
+        p_app_id          => :APP_ID,
+        p_page_id         => :APP_PAGE_ID,
+        p_x01             => :APP_SESSION,
+        p_x02             => :P101_RETURN_URL,
+        state             => :REQUEST_STATE,
+        code              => :REQUEST_CODE,
+        error             => :REQUEST_ERROR,
+        error_description => :REQUEST_ERROR_DESCRIPTION
     );
 end;
 /
 ```
-

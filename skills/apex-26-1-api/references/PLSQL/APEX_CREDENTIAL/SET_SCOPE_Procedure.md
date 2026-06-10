@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SCOPE(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_scope => 'EXAMPLE',
-        p_named_scopes => 'EXAMPLE'
+    apex_credential.set_scope(
+        p_credential_static_id => 'OAUTH_PROVIDER',
+        p_scope                => 'profile email',
+        p_named_scopes         => 'openid:profile:email'
     );
 end;
 /

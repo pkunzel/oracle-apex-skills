@@ -40,11 +40,10 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_SQL_MODE (
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_SQL_MODE(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_sql_mode(
+        p_static_id => 'ORDERS_API'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

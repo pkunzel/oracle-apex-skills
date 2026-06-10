@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_PARSING_SCHEMA(
-        p_application_id => 1,
-        p_schema => 'EXAMPLE'
+    apex_application_admin.set_parsing_schema(
+        p_application_id => 100,
+        p_schema => 'APP_RUNTIME'
     );
 end;
 /
 ```
-

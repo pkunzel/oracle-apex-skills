@@ -44,13 +44,16 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_params apex_approval.t_task_parameters;
 begin
-    apex_approval.SET_TASK_PARAMETER_VALUES(
-        p_task_id => 1,
-        p_parameters => null,
+    l_params := apex_approval.c_empty_task_parameters;
+
+    apex_approval.set_task_parameter_values(
+        p_task_id     => :P20_TASK_ID,
+        p_parameters  => l_params,
         p_raise_error => true
     );
 end;
 /
 ```
-

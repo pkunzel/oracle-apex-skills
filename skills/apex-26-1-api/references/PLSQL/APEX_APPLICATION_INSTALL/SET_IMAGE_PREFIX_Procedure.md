@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_IMAGE_PREFIX(
-        p_image_prefix => 'EXAMPLE'
+    apex_application_install.set_image_prefix(
+        p_image_prefix => '/i/'
     );
 end;
 /
 ```
-

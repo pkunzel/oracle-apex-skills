@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.RELEASE_TASK(
-        p_task_id => 1
+    apex_approval.release_task(
+        p_task_id => :P20_TASK_ID
     );
 end;
 /
 ```
-

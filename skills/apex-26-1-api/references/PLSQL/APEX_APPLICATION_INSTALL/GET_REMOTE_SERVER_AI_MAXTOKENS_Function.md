@@ -40,11 +40,10 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MAXTOKENS (
 declare
     l_result NUMBER;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_AI_MAXTOKENS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_ai_maxtokens(
+        p_static_id => 'ORDERS_AI'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

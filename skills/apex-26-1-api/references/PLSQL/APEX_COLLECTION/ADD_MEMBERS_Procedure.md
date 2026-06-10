@@ -60,24 +60,21 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_products apex_application_global.vc_arr2;
+    l_names    apex_application_global.vc_arr2;
+    l_qty      apex_application_global.n_arr;
 begin
-    apex_collection.ADD_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_c001 => null,
-        p_c002 => null,
-        p_c003 => null,
-        p_c050 => null,
-        p_n001 => null,
-        p_n002 => null,
-        p_n003 => null,
-        p_n004 => null,
-        p_n005 => null,
-        p_d001 => null,
-        p_d002 => null,
-        p_d003 => null,
-        p_d004 => null,
-        p_d005 => null,
-        p_generate_md5 => 'EXAMPLE'
+    l_products(1) := :P20_PRODUCT_ID;
+    l_names(1)    := :P20_PRODUCT_NAME;
+    l_qty(1)      := :P20_QUANTITY;
+
+    apex_collection.add_members(
+        p_collection_name => 'ORDER_LINES',
+        p_c001            => l_products,
+        p_c002            => l_names,
+        p_n001            => l_qty,
+        p_generate_md5    => 'YES'
     );
 end;
 /

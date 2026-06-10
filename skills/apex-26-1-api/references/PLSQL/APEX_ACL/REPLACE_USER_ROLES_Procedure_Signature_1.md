@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_acl.REPLACE_USER_ROLES(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_role_ids => 1
+    apex_acl.replace_user_roles(
+        p_application_id => apex_application.g_flow_id,
+        p_user_name => upper(:P10_USER_NAME),
+        p_role_ids => apex_t_number(100100, 100300)
     );
 end;
 /
 ```
-

@@ -42,12 +42,15 @@ Parameter Description TRUE If the authorization is successful. FALSE If the auth
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_can_manage_orders boolean;
 begin
-    l_result := apex_authorization.HAS_ACCESS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_can_manage_orders := apex_authorization.has_access(
+        p_authorization_name => 'CAN_MANAGE_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_can_manage_orders then
+        apex_debug.info('Current user may manage orders.');
+    end if;
 end;
 /
 ```

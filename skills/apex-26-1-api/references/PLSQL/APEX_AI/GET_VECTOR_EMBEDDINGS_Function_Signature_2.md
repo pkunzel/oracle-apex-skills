@@ -46,15 +46,13 @@ The embedding for the given value. Parent topic: APEX_AI
 
 ```sql
 declare
-    l_result VECTOR;
+    l_embedding vector;
 begin
-    l_result := apex_ai.GET_VECTOR_EMBEDDINGS(
-        p_value => to_clob('Example text'),
-        p_local_llm_owner => 'EXAMPLE',
-        p_local_llm_name => 'EXAMPLE'
+    l_embedding := apex_ai.get_vector_embeddings(
+        p_value => to_clob('quarterly revenue outlook for western region'),
+        p_local_llm_owner => 'AI_MODELS',
+        p_local_llm_name => 'ALL_MINILM_L12_V2'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

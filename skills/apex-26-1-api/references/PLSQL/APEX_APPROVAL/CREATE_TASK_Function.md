@@ -58,21 +58,21 @@ Returns the ID of the newly created task.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_task_id number;
 begin
-    l_result := apex_approval.CREATE_TASK(
-        p_application_id => 1,
-        p_task_def_static_id => 'EXAMPLE_STATIC_ID',
-        p_subject => 'EXAMPLE',
-        p_parameters => null,
-        p_priority => 1,
-        p_initiator => 'EXAMPLE',
-        p_initiator_can_complete => true,
-        p_detail_pk => 'EXAMPLE',
-        p_due_date => sysdate
+    l_task_id := apex_approval.create_task(
+        p_application_id         => apex_application.g_flow_id,
+        p_task_def_static_id     => 'EXPENSE_APPROVAL',
+        p_subject                => 'Approve expense ' || :P10_EXPENSE_ID,
+        p_parameters             => apex_approval.c_empty_task_parameters,
+        p_priority               => 3,
+        p_initiator              => :APP_USER,
+        p_initiator_can_complete => false,
+        p_detail_pk              => :P10_EXPENSE_ID,
+        p_due_date               => systimestamp + interval '3' day
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Created approval task %s', l_task_id);
 end;
 /
 ```
-

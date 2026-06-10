@@ -40,11 +40,10 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_HEADERS (
 declare
     l_result CLOB;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_AI_HEADERS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_ai_headers(
+        p_static_id => 'ORDERS_AI'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

@@ -44,13 +44,16 @@ If TRUE , the automation is currently running.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_running boolean;
 begin
-    l_result := apex_automation.IS_RUNNING(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_running := apex_automation.is_running(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_running then
+        apex_debug.info('SYNC_ORDERS is already running.');
+    end if;
 end;
 /
 ```

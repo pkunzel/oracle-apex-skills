@@ -41,9 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.DROP_CREDENTIAL(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_credential.drop_credential('PAYMENTS_API');
 end;
 /
 ```

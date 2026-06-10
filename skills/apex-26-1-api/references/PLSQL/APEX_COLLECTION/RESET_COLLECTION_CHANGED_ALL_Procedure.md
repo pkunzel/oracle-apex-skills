@@ -34,7 +34,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.RESET_COLLECTION_CHANGED_ALL;
+    apex_collection.reset_collection_changed_all;
 end;
 /
 ```

@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.LOGOUT(
-        p_session_id => 1,
-        p_app_id => 1
+    apex_authentication.logout(
+        p_session_id => :APP_SESSION,
+        p_app_id     => :APP_ID
     );
 end;
 /
 ```
-

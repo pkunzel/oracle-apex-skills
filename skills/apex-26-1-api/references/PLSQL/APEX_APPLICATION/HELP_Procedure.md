@@ -65,22 +65,16 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application.HELP(
-        p_request => 'EXAMPLE',
-        p_flow_id => 'EXAMPLE',
-        p_flow_step_id => 'EXAMPLE',
-        p_show_item_help => 'EXAMPLE',
-        p_show_regions => 'EXAMPLE',
-        p_before_page_html => 'EXAMPLE',
-        p_after_page_html => 'EXAMPLE',
-        p_before_region_html => 'EXAMPLE',
-        p_after_region_html => 'EXAMPLE',
-        p_before_prompt_html => to_clob('Example text'),
-        p_after_prompt_html => to_clob('Example text'),
-        p_before_item_html => 'EXAMPLE',
-        p_after_item_html => 'EXAMPLE'
+    apex_application.help(
+        p_flow_id => :APP_ID,
+        p_flow_step_id => :APP_PAGE_ID,
+        p_show_item_help => 'YES',
+        p_show_regions => 'YES',
+        p_before_region_html => '<section class="a-Help-region">',
+        p_after_region_html => '</section>',
+        p_before_prompt_html => '<strong>',
+        p_after_prompt_html => '</strong>: '
     );
 end;
 /
 ```
-

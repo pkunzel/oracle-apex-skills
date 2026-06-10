@@ -43,15 +43,12 @@ A table of approval log entries (type apex_t_approval_log_table ) containing the
 ## Simple Example
 
 ```sql
-declare
-    l_result APEX_T_APPROVAL_LOG_TABLE;
-begin
-    l_result := apex_approval.GET_TASK_HISTORY(
-        p_task_id => 1,
-        p_include_all => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select event_timestamp,
+       event_type,
+       event_creator,
+       display_msg
+  from table(apex_approval.get_task_history(
+           p_task_id     => :P20_TASK_ID,
+           p_include_all => 'Y'))
+ order by event_timestamp;
 ```
-

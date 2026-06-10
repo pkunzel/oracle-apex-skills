@@ -48,14 +48,14 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_answer clob;
 begin
-    l_result := apex_ai.GENERATE(
-        p_config_static_id => 'EXAMPLE_STATIC_ID',
-        p_prompt => to_clob('Example text')
+    l_answer := apex_ai.generate(
+        p_config_static_id => 'legacy_ai_config',
+        p_prompt => to_clob('Summarize this customer note: ' || :P10_NOTE)
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
-

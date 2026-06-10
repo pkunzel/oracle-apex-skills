@@ -41,8 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.LOG_WARN(
-        p_message => to_clob('Example text')
+    apex_automation.log_warn(
+        p_log_message => 'Order ' || :ORDER_ID || ' was skipped because it is locked.'
     );
 end;
 /

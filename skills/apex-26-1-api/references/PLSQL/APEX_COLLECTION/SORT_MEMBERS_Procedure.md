@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.SORT_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_sort_on_column_number => 1
+    apex_collection.sort_members(
+        p_collection_name => 'ORDER_LINES',
+        p_sort_on_column_number => 2
     );
 end;
 /

@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_AUTHENTICATION_SCHEME(
-        p_name => 'EXAMPLE'
+    apex_application_install.set_authentication_scheme(
+        p_name => 'Application Express Accounts'
     );
 end;
 /
 ```
-

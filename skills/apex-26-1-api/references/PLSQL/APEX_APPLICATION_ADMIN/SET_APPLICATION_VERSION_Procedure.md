@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_VERSION(
-        p_application_id => 1,
-        p_version => 'EXAMPLE'
+    apex_application_admin.set_application_version(
+        p_application_id => 100,
+        p_version => '2026.06.10'
     );
 end;
 /
 ```
-

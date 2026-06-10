@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_id => 1,
-        p_build_status => null
+    apex_application_admin.set_build_option_status(
+        p_application_id => 100,
+        p_id => 123456789,
+        p_build_status => apex_application_admin.c_build_option_status_include
     );
 end;
 /
 ```
-

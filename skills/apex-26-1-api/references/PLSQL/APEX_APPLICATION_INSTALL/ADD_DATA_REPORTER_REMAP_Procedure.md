@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.ADD_DATA_REPORTER_REMAP(
-        p_schema_from => 'EXAMPLE',
-        p_schema_to => 'EXAMPLE'
+    apex_application_install.add_data_reporter_remap(
+        p_schema_from => 'OLD_REPORTING',
+        p_schema_to   => 'APP_REPORTING'
     );
 end;
 /
 ```
-

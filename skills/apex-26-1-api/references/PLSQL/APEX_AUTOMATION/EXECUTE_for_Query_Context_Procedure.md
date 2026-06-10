@@ -44,12 +44,27 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_context apex_exec.t_context;
 begin
-    apex_automation.EXECUTE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_query_context => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => q'[select order_id, status from orders where status = 'READY']'
     );
+
+    apex_automation.execute(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS',
+        p_query_context  => l_context
+    );
+
+    apex_exec.close(l_context);
+exception
+    when others then
+        if l_context is not null then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```

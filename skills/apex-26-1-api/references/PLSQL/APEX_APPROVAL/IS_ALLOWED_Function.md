@@ -48,16 +48,20 @@ TRUE if the user given by p_user is permitted to perform the operation given by 
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_allowed boolean;
 begin
-    l_result := apex_approval.IS_ALLOWED(
-        p_task_id => 1,
-        p_operation => null,
-        p_user => 'USER',
-        p_new_participant => 'EXAMPLE'
+    l_is_allowed := apex_approval.is_allowed(
+        p_task_id         => :P20_TASK_ID,
+        p_operation       => apex_approval.c_task_op_delegate,
+        p_user            => :APP_USER,
+        p_new_participant => :P20_NEW_OWNER
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_is_allowed then
+        apex_approval.delegate_task(
+            p_task_id => :P20_TASK_ID,
+            p_to_user => :P20_NEW_OWNER);
+    end if;
 end;
 /
 ```
-

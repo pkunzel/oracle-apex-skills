@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_APPLICATION_NAME(
-        p_application_name => 'EXAMPLE'
+    apex_application_install.set_application_name(
+        p_application_name => 'Sales Operations'
     );
 end;
 /
 ```
-

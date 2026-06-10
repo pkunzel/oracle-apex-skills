@@ -40,13 +40,13 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_md5 varchar2(32767);
 begin
-    l_result := apex_collection.GET_MEMBER_MD5(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1
+    l_md5 := apex_collection.get_member_md5(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+    apex_debug.info('Member MD5: %s', l_md5);
 end;
 /
 ```

@@ -43,10 +43,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.TERMINATE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_automation.terminate;
 end;
 /
 ```

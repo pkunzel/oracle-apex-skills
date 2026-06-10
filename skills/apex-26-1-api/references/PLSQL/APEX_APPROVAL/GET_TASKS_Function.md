@@ -49,18 +49,15 @@ A table of tasks (type apex_t_approval_tasks ) containing the following columns:
 ## Simple Example
 
 ```sql
-declare
-    l_result APEX_T_APPROVAL_TASKS;
-begin
-    l_result := apex_approval.GET_TASKS(
-        p_context => to_clob('Example text'),
-        p_user => 'USER',
-        p_task_id => 1,
-        p_application_id => 1,
-        p_show_expired_tasks => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select task_id,
+       subject,
+       state,
+       priority,
+       due_on
+  from table(apex_approval.get_tasks(
+           p_context            => apex_approval.c_context_my_tasks,
+           p_user               => :APP_USER,
+           p_application_id     => apex_application.g_flow_id,
+           p_show_expired_tasks => 'N'))
+ order by due_on nulls last;
 ```
-

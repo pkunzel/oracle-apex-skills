@@ -44,13 +44,14 @@ Return Description * Timestamp of the last successful automation run.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_last_run_at timestamp with time zone;
 begin
-    l_result := apex_automation.GET_LAST_RUN_TIMESTAMP(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_last_run_at := apex_automation.get_last_run_timestamp(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('SYNC_ORDERS last ran at %s', l_last_run_at);
 end;
 /
 ```

@@ -42,12 +42,15 @@ Parameter Description TRUE If the authorization is successful. FALSE If the auth
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_authorized boolean;
 begin
-    l_result := apex_authorization.IS_AUTHORIZED(
-        p_authorization_name => 'EXAMPLE'
+    l_is_authorized := apex_authorization.is_authorized(
+        p_authorization_name => 'CAN_APPROVE_DISCOUNTS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if not l_is_authorized then
+        raise_application_error(-20000, 'Not authorized.');
+    end if;
 end;
 /
 ```

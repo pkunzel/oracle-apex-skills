@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.SET_TASK_DUE(
-        p_task_id => 1,
-        p_due_date => sysdate
+    apex_approval.set_task_due(
+        p_task_id  => :P20_TASK_ID,
+        p_due_date => systimestamp + interval '1' day
     );
 end;
 /
 ```
-

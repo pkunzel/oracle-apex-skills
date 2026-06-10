@@ -34,7 +34,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_ALL_COLLECTIONS;
+    apex_collection.delete_all_collections;
 end;
 /
 ```

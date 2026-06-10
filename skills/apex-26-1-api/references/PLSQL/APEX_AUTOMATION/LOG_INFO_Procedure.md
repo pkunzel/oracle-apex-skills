@@ -41,8 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.LOG_INFO(
-        p_message => to_clob('Example text')
+    apex_automation.log_info(
+        p_log_message => 'Order ' || :ORDER_ID || ' synchronized.'
     );
 end;
 /

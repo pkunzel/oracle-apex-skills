@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_AUTHENTICATION_SCHEME(
-        p_application_id => 1,
-        p_name => 'EXAMPLE'
+    apex_application_admin.set_authentication_scheme(
+        p_application_id => 100,
+        p_name => 'APEX Accounts'
     );
 end;
 /
 ```
-

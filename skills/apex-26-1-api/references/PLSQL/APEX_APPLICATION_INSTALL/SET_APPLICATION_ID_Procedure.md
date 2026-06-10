@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_APPLICATION_ID(
-        p_application_id => 1
+    apex_application_install.set_application_id(
+        p_application_id => 200
     );
 end;
 /
 ```
-

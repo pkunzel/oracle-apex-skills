@@ -47,11 +47,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_attr_number => 1,
-        p_date_value => sysdate
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_attr_number     => 1,
+        p_date_value      => sysdate
     );
 end;
 /

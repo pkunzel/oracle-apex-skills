@@ -38,13 +38,13 @@ FUNCTION apex_application_install.get_data_reporter_remap (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_target_schema varchar2(128);
 begin
-    l_result := apex_application_install.GET_DATA_REPORTER_REMAP(
-        p_schema_from => 'EXAMPLE'
+    l_target_schema := apex_application_install.get_data_reporter_remap(
+        p_schema_from => 'OLD_REPORTING'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('OLD_REPORTING maps to ' || l_target_schema);
 end;
 /
 ```
-

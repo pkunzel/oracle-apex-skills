@@ -48,15 +48,14 @@ The SVG value of the EAN 8 barcode.
 
 ```sql
 declare
-    l_result CLOB;
+    l_svg clob;
 begin
-    l_result := apex_barcode.GET_EAN8_SVG(
-        p_value => 'EXAMPLE',
-        p_size => 1,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_svg := apex_barcode.get_ean8_svg(
+        p_value            => '5512345',
+        p_size             => 2,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```

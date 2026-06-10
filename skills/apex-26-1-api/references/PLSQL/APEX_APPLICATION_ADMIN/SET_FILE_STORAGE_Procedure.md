@@ -47,13 +47,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_FILE_STORAGE(
-        p_application_id => 1,
-        p_storage_type => 'EXAMPLE',
-        p_remote_server_static_id => 'EXAMPLE_STATIC_ID',
+    apex_application_admin.set_file_storage(
+        p_application_id => 100,
+        p_storage_type => apex_application_admin.c_file_storage_oci,
+        p_remote_server_static_id => 'bucket-app-files-myapp',
         p_migrate_files => true
     );
 end;
 /
 ```
-

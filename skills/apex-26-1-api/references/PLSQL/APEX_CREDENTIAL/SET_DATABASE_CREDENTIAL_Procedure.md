@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_DATABASE_CREDENTIAL(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_db_credential_name => 'EXAMPLE',
-        p_db_credential_is_instance => true
+    apex_credential.set_database_credential(
+        p_credential_static_id      => 'PAYMENTS_DB',
+        p_db_credential_name        => 'PAYMENTS_DBMS_CRED',
+        p_db_credential_is_instance => false
     );
 end;
 /

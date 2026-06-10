@@ -35,10 +35,10 @@ T_EXECUTION record with status information for the current execution.
 
 ```sql
 declare
-    l_result T_EXECUTION;
+    l_execution apex_background_process.t_execution;
 begin
-    l_result := apex_background_process.GET_CURRENT_EXECUTION;
-    sys.dbms_output.put_line('Result captured.');
+    l_execution := apex_background_process.get_current_execution;
+    apex_debug.info('Current background execution captured.');
 end;
 /
 ```

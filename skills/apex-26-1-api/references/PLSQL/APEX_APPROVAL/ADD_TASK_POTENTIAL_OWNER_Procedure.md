@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.ADD_TASK_POTENTIAL_OWNER(
-        p_task_id => 1,
-        p_potential_owner => 'EXAMPLE',
-        p_identity_type => null
+    apex_approval.add_task_potential_owner(
+        p_task_id         => :P20_TASK_ID,
+        p_potential_owner => 'JSMITH',
+        p_identity_type   => apex_approval.c_task_identity_type_user
     );
 end;
 /
 ```
-

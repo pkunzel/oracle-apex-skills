@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_THEME_ID(
-        p_theme_id => 1
+    apex_application_install.set_theme_id(
+        p_theme_id => 42
     );
 end;
 /
 ```
-

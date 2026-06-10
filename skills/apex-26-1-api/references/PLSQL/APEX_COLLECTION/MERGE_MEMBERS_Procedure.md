@@ -55,17 +55,17 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_seq      apex_application_global.vc_arr2;
+    l_product  apex_application_global.vc_arr2;
 begin
-    apex_collection.MERGE_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_seq => null,
-        p_c001 => null,
-        p_c002 => null,
-        p_c003 => null,
-        p_c050 => null,
-        p_null_index => 1,
-        p_null_value => 'EXAMPLE',
-        p_init_query => to_clob('Example text')
+    l_seq(1)     := :P20_SEQ_ID;
+    l_product(1) := :P20_PRODUCT_ID;
+
+    apex_collection.merge_members(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => l_seq,
+        p_c001            => l_product
     );
 end;
 /

@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SUSPEND_BACKGROUND_EXECS(
-        p_application_id => 1
+    apex_application_install.suspend_background_execs(
+        p_application_id => 200
     );
 end;
 /
 ```
-

@@ -47,13 +47,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.LOGIN(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_uppercase_username => true,
-        p_set_persistent_auth => true
+    apex_authentication.login(
+        p_username            => :P101_USERNAME,
+        p_password            => :P101_PASSWORD,
+        p_uppercase_username  => true,
+        p_set_persistent_auth => :P101_REMEMBER = 'Y'
     );
 end;
 /
 ```
-

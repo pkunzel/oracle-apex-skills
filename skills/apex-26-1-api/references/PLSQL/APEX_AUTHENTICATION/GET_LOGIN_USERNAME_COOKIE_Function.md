@@ -38,13 +38,13 @@ GET_LOGIN_USERNAME_COOKIE (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_last_username varchar2(255);
 begin
-    l_result := apex_authentication.GET_LOGIN_USERNAME_COOKIE(
-        p_cookie_name => 'EXAMPLE'
+    l_last_username := apex_authentication.get_login_username_cookie(
+        p_cookie_name => apex_authentication.c_default_username_cookie
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    :P101_USERNAME := l_last_username;
 end;
 /
 ```
-

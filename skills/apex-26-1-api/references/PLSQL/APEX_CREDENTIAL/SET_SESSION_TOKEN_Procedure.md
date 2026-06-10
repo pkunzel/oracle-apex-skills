@@ -49,12 +49,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_TOKEN(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_token_type => null,
-        p_token_value => 'EXAMPLE',
-        p_token_expires => sysdate,
-        p_token_scope => 'EXAMPLE'
+    apex_credential.set_session_token(
+        p_credential_static_id => 'OAUTH_PROVIDER',
+        p_token_type           => apex_credential.c_token_access,
+        p_token_value          => :P10_ACCESS_TOKEN,
+        p_token_expires        => sysdate + (55 / 1440),
+        p_token_scope          => 'profile email'
     );
 end;
 /

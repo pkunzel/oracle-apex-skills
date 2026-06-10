@@ -62,19 +62,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_REMOTE_SERVER(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_base_url => 'EXAMPLE',
-        p_https_host => 'EXAMPLE',
-        p_default_database => 'EXAMPLE',
-        p_mysql_sql_modes => to_clob('Example text'),
-        p_ords_timezone => 'EXAMPLE',
-        p_ai_model_name => 'EXAMPLE',
-        p_ai_http_headers => to_clob('Example text'),
-        p_ai_attributes => to_clob('Example text'),
-        p_ai_max_tokens => 1
+    apex_application_install.set_remote_server(
+        p_static_id  => 'ORDERS_API',
+        p_base_url   => 'https://api.example.com/orders/',
+        p_https_host => 'api.example.com'
     );
 end;
 /
 ```
-

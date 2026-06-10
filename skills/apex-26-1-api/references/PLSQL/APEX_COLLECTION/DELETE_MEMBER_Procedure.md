@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_MEMBER(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 'EXAMPLE'
+    apex_collection.delete_member(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
 end;
 /

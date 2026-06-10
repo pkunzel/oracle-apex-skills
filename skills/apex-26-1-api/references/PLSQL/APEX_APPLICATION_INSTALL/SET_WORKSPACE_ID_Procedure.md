@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_WORKSPACE_ID(
-        p_workspace_id => 1
+    apex_application_install.set_workspace_id(
+        p_workspace_id => apex_util.find_security_group_id('SALES_WS')
     );
 end;
 /
 ```
-

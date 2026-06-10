@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERY_B(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_max_row_count => 1
+    apex_collection.create_collection_from_query_b(
+        p_collection_name => 'ACTIVE_PRODUCTS',
+        p_query           => q'[select product_id, product_name, unit_price from products where active_yn = 'Y']',
+        p_max_row_count   => 500
     );
 end;
 /

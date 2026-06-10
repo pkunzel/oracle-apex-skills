@@ -52,17 +52,16 @@ The SVG value of the QR code.
 
 ```sql
 declare
-    l_result CLOB;
+    l_svg clob;
 begin
-    l_result := apex_barcode.GET_QRCODE_SVG(
-        p_value => 'EXAMPLE',
-        p_size => 1,
-        p_quiet => 1,
-        p_eclevel => null,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_svg := apex_barcode.get_qrcode_svg(
+        p_value            => 'https://example.com/orders/10045',
+        p_size             => 4,
+        p_quiet            => 2,
+        p_eclevel          => apex_barcode.c_eclevel_type_high,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```

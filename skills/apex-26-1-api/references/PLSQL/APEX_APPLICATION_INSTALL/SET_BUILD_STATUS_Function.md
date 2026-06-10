@@ -36,14 +36,10 @@ APEX_APPLICATION_INSTALL.SET_BUILD_STATUS (
 ## Simple Example
 
 ```sql
-declare
-    l_result varchar2(32767);
 begin
-    l_result := apex_application_install.SET_BUILD_STATUS(
-        p_build_status => null
+    apex_application_install.set_build_status(
+        p_build_status => apex_application_admin.c_build_status_run_only
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

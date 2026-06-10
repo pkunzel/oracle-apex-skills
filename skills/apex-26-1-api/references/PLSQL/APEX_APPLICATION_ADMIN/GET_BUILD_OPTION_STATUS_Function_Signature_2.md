@@ -40,14 +40,14 @@ RETURN t_build_option_status;
 
 ```sql
 declare
-    l_result T_BUILD_OPTION_STATUS;
+    l_build_status t_build_option_status;
 begin
-    l_result := apex_application_admin.GET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_build_option_name => 'EXAMPLE'
+    l_build_status := apex_application_admin.get_build_option_status(
+        p_application_id => 100,
+        p_build_option_name => 'FEATURE_AI_CHAT'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('FEATURE_AI_CHAT build option status: %s', l_build_status);
 end;
 /
 ```
-

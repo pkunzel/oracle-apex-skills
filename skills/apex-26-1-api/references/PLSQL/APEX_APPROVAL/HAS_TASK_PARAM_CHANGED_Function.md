@@ -40,14 +40,16 @@ RETURN BOOLEAN;
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_amount_changed boolean;
 begin
-    l_result := apex_approval.HAS_TASK_PARAM_CHANGED(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID'
+    l_amount_changed := apex_approval.has_task_param_changed(
+        p_task_id         => :P20_TASK_ID,
+        p_param_static_id => 'AMOUNT'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_amount_changed then
+        sys.dbms_output.put_line('Amount was updated.');
+    end if;
 end;
 /
 ```
-

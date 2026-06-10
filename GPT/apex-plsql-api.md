@@ -9,6 +9,7 @@ Included coverage:
 - PL/SQL packages: 62
 - PL/SQL package members/topics: 1252
 - Primary source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/toc.htm
+
 ---
 
 ## PL/SQL API Reference
@@ -77,7 +78,6 @@ Included coverage:
 | APEX_WEB_SERVICE | 34 | No | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WEB_SERVICE.html) |
 | APEX_WORKFLOW | 25 | No | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.html) |
 | APEX_ZIP | 7 | No | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.html) |
----
 
 ## APEX_ACL
 
@@ -236,11 +236,27 @@ end;
 - Reset authorization cache after changing roles in the current session.
 - Treat page item role lists as untrusted until validated against known roles.
 - Use `APEX_AUTHORIZATION` for runtime scheme checks and `APEX_ACL` for role assignment maintenance.
----
 
-### Member Details: APEX_ACL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ADD_USER_ROLE Procedure Signature 1 | procedure | [local](APEX_ACL/ADD_USER_ROLE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_USER_ROLE-Procedure-Signature1.html) |
+| ADD_USER_ROLE Procedure Signature 2 | procedure | [local](APEX_ACL/ADD_USER_ROLE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_USER_ROLE-Procedure-Signature2.html) |
+| HAS_USER_ANY_ROLES Function | function | [local](APEX_ACL/HAS_USER_ANY_ROLES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HAS_USER_ANY_ROLES-Function.html) |
+| HAS_USER_ROLE Function | function | [local](APEX_ACL/HAS_USER_ROLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HAS_USER_ROLE-Function.html) |
+| IS_ROLE_REMOVED_FROM_USER Function | function | [local](APEX_ACL/IS_ROLE_REMOVED_FROM_USER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_ROLE_REMOVED_FROM_USER-Function.html) |
+| REMOVE_USER_ROLE Procedure Signature 1 | procedure | [local](APEX_ACL/REMOVE_USER_ROLE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_USER_ROLE-Procedure-Signature1.html) |
+| REMOVE_USER_ROLE Procedure Signature 2 | procedure | [local](APEX_ACL/REMOVE_USER_ROLE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_USER_ROLE-Procedure-Signature2.html) |
+| REPLACE_USER_ROLES Procedure Signature 1 | procedure | [local](APEX_ACL/REPLACE_USER_ROLES_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REPLACE_USER_ROLES-Procedure-Signature1.html) |
+| REPLACE_USER_ROLES Procedure Signature 2 | procedure | [local](APEX_ACL/REPLACE_USER_ROLES_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REPLACE_USER_ROLES-Procedure-Signature2.html) |
+| REMOVE_ALL_USER_ROLES Procedure | procedure | [local](APEX_ACL/REMOVE_ALL_USER_ROLES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_ALL_USER_ROLES-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_ACL.ADD_USER_ROLE Procedure Signature 1
 
@@ -295,7 +311,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ACL.ADD_USER_ROLE Procedure Signature 2
 
@@ -350,7 +365,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ACL.HAS_USER_ANY_ROLES Function
 
@@ -402,7 +416,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ACL.HAS_USER_ROLE Function
 
@@ -457,7 +470,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ACL.IS_ROLE_REMOVED_FROM_USER Function
 
@@ -507,19 +519,21 @@ Returns TRUE when p_user_name currently has the role identified by p_role_static
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_role_removed boolean;
 begin
-    l_result := apex_acl.IS_ROLE_REMOVED_FROM_USER(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_role_static_id => 'EXAMPLE_STATIC_ID',
-        p_role_ids => 1
+    l_role_removed := apex_acl.is_role_removed_from_user(
+        p_application_id => apex_application.g_flow_id,
+        p_user_name => upper(:P10_USER_NAME),
+        p_role_static_id => 'CONTRIBUTOR',
+        p_role_ids => apex_t_number(100100, 100300)
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_role_removed then
+        apex_debug.info('Contributor role removed for %s.', :P10_USER_NAME);
+    end if;
 end;
 /
 ```
----
 
 ### APEX_ACL.REMOVE_USER_ROLE Procedure Signature 1
 
@@ -574,7 +588,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ACL.REMOVE_USER_ROLE Procedure Signature 2
 
@@ -593,9 +606,9 @@ Use this page when code needs the `APEX_ACL.REMOVE_USER_ROLE` procedure. Confirm
 #### Signature
 
 ```sql
-APEX_ACL.REMOVE_USER_ROLE (
-        p_application_id IN NUMBER   DEFAULT apex_application.g_flow_id,
-        p_user_name      IN VARCHAR2,
+APEX_ACL.REMOVE_USER_ROLE (   
+        p_application_id IN NUMBER   DEFAULT apex_application.g_flow_id,   
+        p_user_name      IN VARCHAR2,   
         p_role_static_id IN VARCHAR2 )
 ```
 
@@ -629,7 +642,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ACL.REPLACE_USER_ROLES Procedure Signature 1
 
@@ -676,15 +688,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_acl.REPLACE_USER_ROLES(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_role_ids => 1
+    apex_acl.replace_user_roles(
+        p_application_id => apex_application.g_flow_id,
+        p_user_name => upper(:P10_USER_NAME),
+        p_role_ids => apex_t_number(100100, 100300)
     );
 end;
 /
 ```
----
 
 ### APEX_ACL.REPLACE_USER_ROLES Procedure Signature 2
 
@@ -731,15 +742,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_acl.REPLACE_USER_ROLES(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_role_static_ids => 'EXAMPLE_STATIC_ID'
+    apex_acl.replace_user_roles(
+        p_application_id => apex_application.g_flow_id,
+        p_user_name => upper(:P10_USER_NAME),
+        p_role_static_ids => apex_t_varchar2('READER', 'CONTRIBUTOR')
     );
 end;
 /
 ```
----
 
 ### APEX_ACL.REMOVE_ALL_USER_ROLES Procedure
 
@@ -791,7 +801,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_AI
 
@@ -1277,11 +1286,35 @@ Use `p_early_exit => true` when another model roundtrip is not useful.
 - Log tool calls, token usage, response types, and failures.
 - Treat uploaded files and model output as untrusted input.
 - Validate JSON before DML, especially on database versions before automatic JSON Schema validation support.
----
 
-### Member Details: APEX_AI
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_AI/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.Data-Types.html) |
+| CHAT Function Signature 1 | function | [local](APEX_AI/CHAT_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.CHAT-Function-Signature-1.html) |
+| CHAT Function Signature 2 | function | [local](APEX_AI/CHAT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.CHAT-Function-Signature-2.html) |
+| CHAT Function Signature 3 (Deprecated) | function | [local](APEX_AI/CHAT_Function_Signature_3_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.CHAT-Function-Signature-3.html) |
+| GENERATE Function Signature 1 | function | [local](APEX_AI/GENERATE_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GENERATE-Function-Signature-1.html) |
+| GENERATE Function Signature 2 | function | [local](APEX_AI/GENERATE_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GENERATE-Function-Signature-2.html) |
+| GENERATE Function Signature 3 (Deprecated) | function | [local](APEX_AI/GENERATE_Function_Signature_3_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GENERATE-Function-Signature-3.html) |
+| GET_AVAILABLE_TOKENS Function | function | [local](APEX_AI/GET_AVAILABLE_TOKENS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GET_AVAILABLE_TOKENS-Function.html) |
+| GET_VECTOR_EMBEDDINGS Function Signature 1 | function | [local](APEX_AI/GET_VECTOR_EMBEDDINGS_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GET_VECTOR_EMBEDDINGS-Function-Signature-1.html) |
+| GET_VECTOR_EMBEDDINGS Function Signature 2 | function | [local](APEX_AI/GET_VECTOR_EMBEDDINGS_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GET_VECTOR_EMBEDDINGS-Function-Signature-2.html) |
+| GET_VECTOR_EMBEDDINGS Function Signature 3 | function | [local](APEX_AI/GET_VECTOR_EMBEDDINGS_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GET_VECTOR_EMBEDDINGS-Function-Signature-3.html) |
+| IS_ENABLED Function | function | [local](APEX_AI/IS_ENABLED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.IS_ENABLED-Function.html) |
+| IS_USER_CONSENT_NEEDED Function | function | [local](APEX_AI/IS_USER_CONSENT_NEEDED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.IS_USER_CONSENT_NEEDED-Function.html) |
+| REVOKE_USER_CONSENT Procedure | procedure | [local](APEX_AI/REVOKE_USER_CONSENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.REVOKE_USER_CONSENT-Procedure.html) |
+| REVOKE_USER_CONSENT_FOR_ALL Procedure | procedure | [local](APEX_AI/REVOKE_USER_CONSENT_FOR_ALL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.REVOKE_USER_CONSENT_FOR_ALL-Procedure.html) |
+| SET_TOOL_RESULT Procedure Signature 1 | procedure | [local](APEX_AI/SET_TOOL_RESULT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.SET_TOOL_RESULT-Procedure-Signature-1.html) |
+| SET_TOOL_RESULT Procedure Signature 2 | procedure | [local](APEX_AI/SET_TOOL_RESULT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.SET_TOOL_RESULT-Procedure-Signature-2.html) |
+| SET_USER_CONSENT Procedure | procedure | [local](APEX_AI/SET_USER_CONSENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.SET_USER_CONSENT-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_AI.Constants and Data Types
 
@@ -1306,7 +1339,6 @@ Use this page when code needs the `APEX_AI.Constants and Data Types` constants. 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_AI.CHAT Function Signature 1
 
@@ -1354,18 +1386,19 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_messages apex_ai.t_chat_messages := apex_ai.c_chat_messages;
+    l_answer   clob;
 begin
-    l_result := apex_ai.CHAT(
-        p_agent_static_id => 'MY_AGENT',
-        p_prompt => to_clob('Example text'),
-        p_messages => to_clob('Example text')
+    l_answer := apex_ai.chat(
+        p_agent_static_id => 'support_agent',
+        p_prompt => to_clob('Summarize the current ticket.'),
+        p_messages => l_messages
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
----
 
 ### APEX_AI.CHAT Function Signature 2
 
@@ -1423,86 +1456,21 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_messages apex_ai.t_chat_messages := apex_ai.c_chat_messages;
+    l_answer   clob;
 begin
-    l_result := apex_ai.CHAT(
-        p_prompt => to_clob('Example text'),
-        p_system_prompt => to_clob('Example text'),
+    l_answer := apex_ai.chat(
+        p_prompt => to_clob('Explain why order ' || :P10_ORDER_ID || ' is delayed.'),
+        p_system_prompt => to_clob('Answer as a concise support analyst.'),
         p_service_static_id => 'MY_AI_SERVICE',
         p_temperature => 0.2,
-        p_messages => to_clob('Example text'),
-        p_tools => null,
-        p_response_handler_procedure => 'EXAMPLE',
-        p_max_tool_roundtrips => 3
+        p_messages => l_messages
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
----
-
-### APEX_AI.CHAT Function Signature 3 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.CHAT-Function-Signature-3.html)
-
-Parent package: APEX_AI
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_AI.CHAT` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_AI.CHAT (
-    p_config_static_id  IN              VARCHAR2,
-    p_prompt            IN              CLOB,
-    p_messages          IN OUT NOCOPY   t_chat_messages )
-    RETURN CLOB;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_config_static_id` | The static ID of the AI Agent. |
-| `p_prompt` | The user prompt. |
-| `p_messages` | The chat history that is updated with the provider response. |
-
-#### Returns
-
-The response for the given prompt.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result CLOB;
-begin
-    l_result := apex_ai.CHAT(
-        p_config_static_id => 'EXAMPLE_STATIC_ID',
-        p_prompt => to_clob('Example text'),
-        p_messages => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_AI.GENERATE Function Signature 1
 
@@ -1550,18 +1518,17 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_answer clob;
 begin
-    l_result := apex_ai.GENERATE(
-        p_agent_static_id => 'MY_AGENT',
-        p_prompt => to_clob('Example text'),
-        p_attachments => null
+    l_answer := apex_ai.generate(
+        p_agent_static_id => 'order_assistant',
+        p_prompt => to_clob('Write a short status update for order ' || :P10_ORDER_ID)
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
----
 
 ### APEX_AI.GENERATE Function Signature 2
 
@@ -1580,7 +1547,7 @@ Use this page when code needs the `APEX_AI.GENERATE` function. Confirm security,
 #### Signature
 
 ```sql
-FUNCTION apex_ai.generate (
+FUNCTION apex_ai.generate (    
     p_prompt                         IN   CLOB,
     p_system_prompt                  IN   CLOB             DEFAULT NULL,
     p_service_static_id              IN   VARCHAR2         DEFAULT NULL,
@@ -1621,84 +1588,28 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_json clob;
 begin
-    l_result := apex_ai.GENERATE(
-        p_prompt => to_clob('Example text'),
-        p_system_prompt => to_clob('Example text'),
+    l_json := apex_ai.generate(
+        p_prompt => to_clob('Return priority and reason for order ' || :P10_ORDER_ID),
+        p_system_prompt => to_clob('Return only JSON that matches the schema.'),
         p_service_static_id => 'MY_AI_SERVICE',
-        p_temperature => 0.2,
-        p_attachments => null,
-        p_response_json_schema => to_clob('Example text'),
-        p_tools => null,
-        p_response_handler_procedure => 'EXAMPLE',
-        p_max_tool_roundtrips => 3
+        p_temperature => 0.1,
+        p_response_json_schema => q'~{
+            "type": "object",
+            "properties": {
+                "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+                "reason": { "type": "string" }
+            },
+            "required": ["priority", "reason"],
+            "additionalProperties": false
+        }~'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Generated JSON length: %s', dbms_lob.getlength(l_json));
 end;
 /
 ```
----
-
-### APEX_AI.GENERATE Function Signature 3 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AI.GENERATE-Function-Signature-3.html)
-
-Parent package: APEX_AI
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_AI.GENERATE` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_AI.GENERATE (
-    p_config_static_id  IN              VARCHAR2,
-    p_prompt            IN              CLOB )
-    RETURN CLOB;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_config_static_id` | The static ID of the AI Agent. |
-| `p_prompt` | The user prompt. |
-
-#### Returns
-
-The response for the given prompt.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result CLOB;
-begin
-    l_result := apex_ai.GENERATE(
-        p_config_static_id => 'EXAMPLE_STATIC_ID',
-        p_prompt => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_AI.GET_AVAILABLE_TOKENS Function
 
@@ -1751,7 +1662,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AI.GET_VECTOR_EMBEDDINGS Function Signature 1
 
@@ -1797,17 +1707,15 @@ The embedding for the given value.
 
 ```sql
 declare
-    l_result VECTOR;
+    l_embedding vector;
 begin
-    l_result := apex_ai.GET_VECTOR_EMBEDDINGS(
-        p_value => to_clob('Example text'),
-        p_service_static_id => 'MY_AI_SERVICE'
+    l_embedding := apex_ai.get_vector_embeddings(
+        p_value => to_clob('quarterly revenue outlook for western region'),
+        p_service_static_id => 'OCI_EMBEDDINGS'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_AI.GET_VECTOR_EMBEDDINGS Function Signature 2
 
@@ -1855,18 +1763,16 @@ The embedding for the given value. Parent topic: APEX_AI
 
 ```sql
 declare
-    l_result VECTOR;
+    l_embedding vector;
 begin
-    l_result := apex_ai.GET_VECTOR_EMBEDDINGS(
-        p_value => to_clob('Example text'),
-        p_local_llm_owner => 'EXAMPLE',
-        p_local_llm_name => 'EXAMPLE'
+    l_embedding := apex_ai.get_vector_embeddings(
+        p_value => to_clob('quarterly revenue outlook for western region'),
+        p_local_llm_owner => 'AI_MODELS',
+        p_local_llm_name => 'ALL_MINILM_L12_V2'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_AI.GET_VECTOR_EMBEDDINGS Function Signature 3
 
@@ -1912,17 +1818,15 @@ The embedding for the given value. Parent topic: APEX_AI
 
 ```sql
 declare
-    l_result VECTOR;
+    l_embedding vector;
 begin
-    l_result := apex_ai.GET_VECTOR_EMBEDDINGS(
-        p_value => to_clob('Example text'),
-        p_function_name => 'EXAMPLE'
+    l_embedding := apex_ai.get_vector_embeddings(
+        p_value => to_clob('quarterly revenue outlook for western region'),
+        p_function_name => 'CUSTOM_EMBED_TEXT'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_AI.IS_ENABLED Function
 
@@ -1966,7 +1870,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AI.IS_USER_CONSENT_NEEDED Function
 
@@ -2022,7 +1925,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AI.REVOKE_USER_CONSENT Procedure
 
@@ -2074,7 +1976,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AI.REVOKE_USER_CONSENT_FOR_ALL Procedure
 
@@ -2123,7 +2024,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AI.SET_TOOL_RESULT Procedure Signature 1
 
@@ -2172,16 +2072,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_ai.SET_TOOL_RESULT(
-        p_result => to_clob('Example text'),
-        p_notification_message => to_clob('Example text'),
-        p_notification_type => null,
+    apex_ai.set_tool_result(
+        p_result => to_clob('{"status":"approved","orderId":"' || :P10_ORDER_ID || '"}'),
+        p_notification_message => 'Order approval tool completed.',
         p_early_exit => true
     );
 end;
 /
 ```
----
 
 ### APEX_AI.SET_TOOL_RESULT Procedure Signature 2
 
@@ -2229,17 +2127,25 @@ This is a procedure and does not return a value.
 #### Simple Example
 
 ```sql
+create or replace procedure ai_response_handler (
+    p_param  in            apex_ai.t_chat_response_handler_param,
+    p_result in out nocopy apex_ai.t_chat_response_handler_result )
+as
 begin
-    apex_ai.SET_TOOL_RESULT(
-        p_response_handler_param => null,
-        p_response_handler_result => null,
-        p_tool_call => null,
-        p_result => to_clob('Example text')
-    );
+    if p_result.response.type = apex_ai.c_response_type_tool_calls then
+        for i in 1 .. p_param.pending_tool_calls.count loop
+            if p_param.pending_tool_calls(i).name = 'get_order_status' then
+                apex_ai.set_tool_result(
+                    p_response_handler_param  => p_param,
+                    p_response_handler_result => p_result,
+                    p_tool_call               => p_param.pending_tool_calls(i),
+                    p_result                  => to_clob('{"status":"shipped"}') );
+            end if;
+        end loop;
+    end if;
 end;
 /
 ```
----
 
 ### APEX_AI.SET_USER_CONSENT Procedure
 
@@ -2291,7 +2197,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_APP_OBJECT_DEPENDENCY
 
@@ -2363,14 +2268,23 @@ end;
 
 ### Related APIs
 
-- APEX_EXPORT for export-time inspection and CI artifacts.
-- APEX_APPLICATION_INSTALL for deployment installs.
-- APEX_INSTANCE_ADMIN for workspace/application administration.
----
+- [APEX_EXPORT](APEX_EXPORT.md) for export-time inspection and CI artifacts.
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) for deployment installs.
+- [APEX_INSTANCE_ADMIN](APEX_INSTANCE_ADMIN.md) for workspace/application administration.
 
-### Member Details: APEX_APP_OBJECT_DEPENDENCY
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_APP_OBJECT_DEPENDENCY/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.Constants.html) |
+| CLEAR_CACHE Procedure | procedure | [local](APEX_APP_OBJECT_DEPENDENCY/CLEAR_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.CLEAR_CACHE-Procedure.html) |
+| SCAN Procedure | procedure | [local](APEX_APP_OBJECT_DEPENDENCY/SCAN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.SCAN-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_APP_OBJECT_DEPENDENCY.Constants
 
@@ -2395,7 +2309,6 @@ Use this page when code needs the `APEX_APP_OBJECT_DEPENDENCY.Constants` constan
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APP_OBJECT_DEPENDENCY.CLEAR_CACHE Procedure
 
@@ -2444,7 +2357,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APP_OBJECT_DEPENDENCY.SCAN Procedure
 
@@ -2491,15 +2403,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_app_object_dependency.SCAN(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_options => 'EXAMPLE'
+    apex_app_object_dependency.scan(
+        p_application_id => :APP_ID,
+        p_page_id => 10,
+        p_options => apex_app_object_dependency.c_option_identifiers
     );
 end;
 /
 ```
----
 
 ## APEX_APP_SETTING
 
@@ -2627,11 +2538,19 @@ This pattern keeps demo knobs in application metadata and secrets in credentials
 - Use authorization before allowing users to call `SET_VALUE`.
 - Expect `SET_VALUE` to obey required-value, valid-value, build-option, and subscription behavior.
 - For code outside a normal APEX request, create or attach an APEX session before reading current-application settings.
----
 
-### Member Details: APEX_APP_SETTING
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| GET_VALUE Function | function | [local](APEX_APP_SETTING/GET_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.GET_VALUE-Function.html) |
+| SET_VALUE Procedure | procedure | [local](APEX_APP_SETTING/SET_VALUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.SET_VALUE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_APP_SETTING.GET_VALUE Function
 
@@ -2673,17 +2592,19 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_feature_enabled varchar2(32767);
 begin
-    l_result := apex_app_setting.GET_VALUE(
-        p_name => 'EXAMPLE',
+    l_feature_enabled := apex_app_setting.get_value(
+        p_name => 'FEATURE_AI_CHAT_ENABLED',
         p_raise_error => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_feature_enabled = 'Y' then
+        apex_debug.info('AI chat feature is enabled.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_APP_SETTING.SET_VALUE Procedure
 
@@ -2730,15 +2651,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_app_setting.SET_VALUE(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE',
+    apex_app_setting.set_value(
+        p_name => 'FEATURE_AI_CHAT_ENABLED',
+        p_value => 'Y',
         p_raise_error => true
     );
 end;
 /
 ```
----
 
 ## APEX_APPLICATION
 
@@ -2861,36 +2781,21 @@ Use this for custom help pages. Escape any custom wrapper HTML you compose from 
 - Prefer `APEX_SESSION_STATE` for page item values in PL/SQL.
 - `STOP_APEX_ENGINE` prevents APEX from appending normal page markup after custom output.
 - Catching exceptions around `STOP_APEX_ENGINE` can accidentally continue rendering; keep custom response code small and deliberate.
----
 
-### Member Details: APEX_APPLICATION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
 
-### APEX_APPLICATION.Working with G_Fnn Arrays (Legacy)
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
 
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/working-with-g_fnn-arrays.html)
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Working with G_Fnn Arrays (Legacy) | topic | [local](APEX_APPLICATION/Working_with_G_Fnn_Arrays_(Legacy).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/working-with-g_fnn-arrays.html) |
+| Global Variables | topic | [local](APEX_APPLICATION/Global_Variables.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION-Global-Variables.html) |
+| HELP Procedure | procedure | [local](APEX_APPLICATION/HELP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HELP-Procedure.html) |
+| STOP_APEX_ENGINE Procedure | procedure | [local](APEX_APPLICATION/STOP_APEX_ENGINE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STOP_APEX_ENGINE-Procedure.html) |
 
-Parent package: APEX_APPLICATION
-
-#### Purpose
-
-Important:
-
-#### When To Use
-
-Use this page when code needs the `APEX_APPLICATION.Working with G_Fnn Arrays (Legacy)` topic. Confirm security, workspace, and session requirements for your calling context.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Example
-
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_APPLICATION.Global Variables
 
@@ -2915,7 +2820,6 @@ Use this page when code needs the `APEX_APPLICATION.Global Variables` topic. Con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPLICATION.HELP Procedure
 
@@ -2982,25 +2886,19 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application.HELP(
-        p_request => 'EXAMPLE',
-        p_flow_id => 'EXAMPLE',
-        p_flow_step_id => 'EXAMPLE',
-        p_show_item_help => 'EXAMPLE',
-        p_show_regions => 'EXAMPLE',
-        p_before_page_html => 'EXAMPLE',
-        p_after_page_html => 'EXAMPLE',
-        p_before_region_html => 'EXAMPLE',
-        p_after_region_html => 'EXAMPLE',
-        p_before_prompt_html => to_clob('Example text'),
-        p_after_prompt_html => to_clob('Example text'),
-        p_before_item_html => 'EXAMPLE',
-        p_after_item_html => 'EXAMPLE'
+    apex_application.help(
+        p_flow_id => :APP_ID,
+        p_flow_step_id => :APP_PAGE_ID,
+        p_show_item_help => 'YES',
+        p_show_regions => 'YES',
+        p_before_region_html => '<section class="a-Help-region">',
+        p_after_region_html => '</section>',
+        p_before_prompt_html => '<strong>',
+        p_after_prompt_html => '</strong>: '
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION.STOP_APEX_ENGINE Procedure
 
@@ -3040,7 +2938,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_APPLICATION_ADMIN
 
@@ -3050,7 +2947,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 `APEX_APPLICATION_ADMIN` modifies attributes of installed APEX applications. It covers application identity, status, version, build status, authentication scheme, build option statuses, file storage, global notification, parsing schema, proxy settings, image prefix, and remote server settings.
 
-Use it after an app exists. Use APEX_APPLICATION_INSTALL before or during import.
+Use it after an app exists. Use [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) before or during import.
 
 ### When To Use
 
@@ -3148,8 +3045,8 @@ Assuming a build option static ID `FEATURE_AI_CHAT` exists in app `100`:
 begin
     apex_application_admin.set_build_option_status(
         p_application_id         => 100,
-        p_build_option_static_id => 'FEATURE_AI_CHAT',
-        p_build_status           => 'INCLUDE');
+        p_static_id              => 'FEATURE_AI_CHAT',
+        p_build_status           => apex_application_admin.c_build_option_status_include);
 end;
 /
 ```
@@ -3161,12 +3058,12 @@ Use the ID-based signature when automation has a component ID from APEX metadata
 ```sql
 begin
     apex_application_admin.set_application_version(
-        p_application_id      => 100,
-        p_application_version => '2026.06.09');
+        p_application_id => 100,
+        p_version        => '2026.06.10');
 
     apex_application_admin.set_global_notification(
-        p_application_id      => 100,
-        p_global_notification => 'New release deployed.');
+        p_application_id              => 100,
+        p_global_notification_message => 'New release deployed.');
 end;
 /
 ```
@@ -3182,15 +3079,54 @@ end;
 
 ### Related APIs
 
-- APEX_APPLICATION_INSTALL for install-time changes.
-- APEX_INSTANCE_ADMIN for instance/workspace administration.
-- APEX_APP_SETTING for application settings and feature flags.
-- APEX_AUTHENTICATION and APEX_AUTHORIZATION for request-time security behavior.
----
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) for install-time changes.
+- [APEX_INSTANCE_ADMIN](APEX_INSTANCE_ADMIN.md) for instance/workspace administration.
+- [APEX_APP_SETTING](APEX_APP_SETTING.md) for application settings and feature flags.
+- [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md) and [APEX_AUTHORIZATION](APEX_AUTHORIZATION.md) for request-time security behavior.
 
-### Member Details: APEX_APPLICATION_ADMIN
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_APPLICATION_ADMIN/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.Constants-and-Data-Types.html) |
+| GET_APPLICATION_ALIAS Function | function | [local](APEX_APPLICATION_ADMIN/GET_APPLICATION_ALIAS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS-Function.html) |
+| GET_APPLICATION_NAME Function | function | [local](APEX_APPLICATION_ADMIN/GET_APPLICATION_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME-Function.html) |
+| GET_APPLICATION_STATUS Function | function | [local](APEX_APPLICATION_ADMIN/GET_APPLICATION_STATUS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS-Function.html) |
+| GET_APPLICATION_VERSION Function | function | [local](APEX_APPLICATION_ADMIN/GET_APPLICATION_VERSION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION-Function.html) |
+| GET_AUTHENTICATION_SCHEME Function | function | [local](APEX_APPLICATION_ADMIN/GET_AUTHENTICATION_SCHEME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME-Function.html) |
+| GET_BUILD_OPTION_STATUS Function Signature 1 | function | [local](APEX_APPLICATION_ADMIN/GET_BUILD_OPTION_STATUS_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html) |
+| GET_BUILD_OPTION_STATUS Function Signature 2 | function | [local](APEX_APPLICATION_ADMIN/GET_BUILD_OPTION_STATUS_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html) |
+| GET_BUILD_STATUS Function | function | [local](APEX_APPLICATION_ADMIN/GET_BUILD_STATUS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_STATUS-Function.html) |
+| GET_GLOBAL_NOTIFICATION Function | function | [local](APEX_APPLICATION_ADMIN/GET_GLOBAL_NOTIFICATION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION-Function.html) |
+| GET_FILE_STORAGE Function | function | [local](APEX_APPLICATION_ADMIN/GET_FILE_STORAGE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FILE_STORAGE-Function.html) |
+| GET_IMAGE_PREFIX Function | function | [local](APEX_APPLICATION_ADMIN/GET_IMAGE_PREFIX_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX-Function.html) |
+| GET_MAX_SCHEDULER_JOBS Function | function | [local](APEX_APPLICATION_ADMIN/GET_MAX_SCHEDULER_JOBS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS-Function.html) |
+| GET_NO_PROXY_DOMAINS Function | function | [local](APEX_APPLICATION_ADMIN/GET_NO_PROXY_DOMAINS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html) |
+| GET_PARSING_SCHEMA Function | function | [local](APEX_APPLICATION_ADMIN/GET_PARSING_SCHEMA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA-Function.html) |
+| GET_PASS_ECID Function | function | [local](APEX_APPLICATION_ADMIN/GET_PASS_ECID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PASS_ECID-Function.html) |
+| GET_PROXY_SERVER Function | function | [local](APEX_APPLICATION_ADMIN/GET_PROXY_SERVER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html) |
+| SET_APPLICATION_ALIAS Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_APPLICATION_ALIAS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS-Procedure.html) |
+| SET_APPLICATION_NAME Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_APPLICATION_NAME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME-Procedure.html) |
+| SET_APPLICATION_STATUS Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_APPLICATION_STATUS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS-Procedure.html) |
+| SET_APPLICATION_VERSION Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_APPLICATION_VERSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION-Procedure.html) |
+| SET_AUTHENTICATION_SCHEME Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_AUTHENTICATION_SCHEME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME-Procedure.html) |
+| SET_BUILD_OPTION_STATUS Procedure Signature 1 | procedure | [local](APEX_APPLICATION_ADMIN/SET_BUILD_OPTION_STATUS_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-1.html) |
+| SET_BUILD_OPTION_STATUS Procedure Signature 2 | procedure | [local](APEX_APPLICATION_ADMIN/SET_BUILD_OPTION_STATUS_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-2.html) |
+| SET_BUILD_STATUS Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_BUILD_STATUS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_STATUS-Procedure.html) |
+| SET_FILE_STORAGE Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_FILE_STORAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_FILE_STORAGE-Procedure.html) |
+| SET_GLOBAL_NOTIFICATION Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_GLOBAL_NOTIFICATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION-Procedure.html) |
+| SET_IMAGE_PREFIX Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_IMAGE_PREFIX_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX-Procedure.html) |
+| SET_MAX_SCHEDULER_JOBS Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_MAX_SCHEDULER_JOBS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS-Procedure.html) |
+| SET_PARSING_SCHEMA Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_PARSING_SCHEMA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA-Procedure.html) |
+| SET_PASS_ECID Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_PASS_ECID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PASS_ECID-Procedure.html) |
+| SET_PROXY_SERVER Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_PROXY_SERVER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html) |
+| SET_REMOTE_SERVER Procedure | procedure | [local](APEX_APPLICATION_ADMIN/SET_REMOTE_SERVER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_REMOTE_SERVER-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_APPLICATION_ADMIN.Constants and Data Types
 
@@ -3215,7 +3151,6 @@ Use this page when code needs the `APEX_APPLICATION_ADMIN.Constants and Data Typ
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS Function
 
@@ -3264,7 +3199,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME Function
 
@@ -3313,7 +3247,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS Function
 
@@ -3362,7 +3295,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION Function
 
@@ -3411,7 +3343,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME Function
 
@@ -3460,7 +3391,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS Function Signature 1
 
@@ -3512,7 +3442,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS Function Signature 2
 
@@ -3554,17 +3483,17 @@ RETURN t_build_option_status;
 
 ```sql
 declare
-    l_result T_BUILD_OPTION_STATUS;
+    l_build_status t_build_option_status;
 begin
-    l_result := apex_application_admin.GET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_build_option_name => 'EXAMPLE'
+    l_build_status := apex_application_admin.get_build_option_status(
+        p_application_id => 100,
+        p_build_option_name => 'FEATURE_AI_CHAT'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('FEATURE_AI_CHAT build option status: %s', l_build_status);
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_BUILD_STATUS Function
 
@@ -3613,7 +3542,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION Function
 
@@ -3662,7 +3590,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_FILE_STORAGE Function
 
@@ -3715,7 +3642,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX Function
 
@@ -3764,7 +3690,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS Function
 
@@ -3813,7 +3738,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS Function
 
@@ -3866,7 +3790,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA Function
 
@@ -3915,7 +3838,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_PASS_ECID Function
 
@@ -3964,7 +3886,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.GET_PROXY_SERVER Function
 
@@ -4013,7 +3934,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS Procedure
 
@@ -4058,14 +3978,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_ALIAS(
-        p_application_id => 1,
-        p_application_alias => 'EXAMPLE'
+    apex_application_admin.set_application_alias(
+        p_application_id => 100,
+        p_application_alias => 'ORDERS_ADMIN'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME Procedure
 
@@ -4110,14 +4029,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_NAME(
-        p_application_id => 1,
-        p_application_name => 'EXAMPLE'
+    apex_application_admin.set_application_name(
+        p_application_id => 100,
+        p_application_name => 'Order Management'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS Procedure
 
@@ -4172,18 +4090,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_STATUS(
-        p_application_id => 1,
-        p_application_status => null,
-        p_allowed_users_list => 'USER',
-        p_message => to_clob('Example text'),
-        p_plsql_code => to_clob('Example text'),
-        p_redirect_url => 'EXAMPLE'
+    apex_application_admin.set_application_status(
+        p_application_id => 100,
+        p_application_status => apex_application_admin.c_app_restricted_access,
+        p_allowed_users_list => apex_t_varchar2('PKUNZEL', 'QA_USER'),
+        p_message => 'This application is currently open only for testing.'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION Procedure
 
@@ -4228,14 +4143,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_APPLICATION_VERSION(
-        p_application_id => 1,
-        p_version => 'EXAMPLE'
+    apex_application_admin.set_application_version(
+        p_application_id => 100,
+        p_version => '2026.06.10'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME Procedure
 
@@ -4280,14 +4194,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_AUTHENTICATION_SCHEME(
-        p_application_id => 1,
-        p_name => 'EXAMPLE'
+    apex_application_admin.set_authentication_scheme(
+        p_application_id => 100,
+        p_name => 'APEX Accounts'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS Procedure Signature 1
 
@@ -4334,15 +4247,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_id => 1,
-        p_build_status => null
+    apex_application_admin.set_build_option_status(
+        p_application_id => 100,
+        p_id => 123456789,
+        p_build_status => apex_application_admin.c_build_option_status_include
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS Procedure Signature 2
 
@@ -4389,15 +4301,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_build_status => null
+    apex_application_admin.set_build_option_status(
+        p_application_id => 100,
+        p_static_id => 'FEATURE_AI_CHAT',
+        p_build_status => apex_application_admin.c_build_option_status_include
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_BUILD_STATUS Procedure
 
@@ -4442,14 +4353,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_BUILD_STATUS(
-        p_application_id => 1,
-        p_build_status => null
+    apex_application_admin.set_build_status(
+        p_application_id => 100,
+        p_build_status => 'RUN_ONLY'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_FILE_STORAGE Procedure
 
@@ -4498,16 +4408,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_FILE_STORAGE(
-        p_application_id => 1,
-        p_storage_type => 'EXAMPLE',
-        p_remote_server_static_id => 'EXAMPLE_STATIC_ID',
+    apex_application_admin.set_file_storage(
+        p_application_id => 100,
+        p_storage_type => apex_application_admin.c_file_storage_oci,
+        p_remote_server_static_id => 'bucket-app-files-myapp',
         p_migrate_files => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION Procedure
 
@@ -4552,14 +4461,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_GLOBAL_NOTIFICATION(
-        p_application_id => 1,
-        p_global_notification_message => to_clob('Example text')
+    apex_application_admin.set_global_notification(
+        p_application_id => 100,
+        p_global_notification_message => 'New release deployed.'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX Procedure
 
@@ -4604,14 +4512,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_IMAGE_PREFIX(
-        p_application_id => 1,
-        p_image_prefix => 'EXAMPLE'
+    apex_application_admin.set_image_prefix(
+        p_application_id => 100,
+        p_image_prefix => '/i/'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS Procedure
 
@@ -4663,7 +4570,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA Procedure
 
@@ -4708,14 +4614,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_PARSING_SCHEMA(
-        p_application_id => 1,
-        p_schema => 'EXAMPLE'
+    apex_application_admin.set_parsing_schema(
+        p_application_id => 100,
+        p_schema => 'APP_RUNTIME'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_PASS_ECID Procedure
 
@@ -4767,7 +4672,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_PROXY_SERVER Procedure
 
@@ -4814,15 +4718,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_PROXY_SERVER(
-        p_application_id => 1,
-        p_proxy_server => 'EXAMPLE',
-        p_no_proxy_domains => 'EXAMPLE'
+    apex_application_admin.set_proxy_server(
+        p_application_id => 100,
+        p_proxy_server => 'www-proxy.example.com',
+        p_no_proxy_domains => 'localhost,internal.example.com'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_ADMIN.SET_REMOTE_SERVER Procedure
 
@@ -4886,22 +4789,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_REMOTE_SERVER(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_base_url => 'EXAMPLE',
-        p_https_host => 'EXAMPLE',
-        p_default_database => 'EXAMPLE',
-        p_mysql_sql_modes => to_clob('Example text'),
-        p_ords_timezone => 'EXAMPLE',
-        p_ai_model_name => 'EXAMPLE',
-        p_ai_http_headers => to_clob('Example text'),
-        p_ai_attributes => to_clob('Example text'),
-        p_ai_max_tokens => 1
+    apex_application_admin.set_remote_server(
+        p_static_id => 'ORDERS_API',
+        p_base_url => 'https://api.example.com/orders/',
+        p_https_host => 'api.example.com'
     );
 end;
 /
 ```
----
 
 ## APEX_APPLICATION_INSTALL
 
@@ -4915,7 +4810,7 @@ Use this package for CI/CD import scripts, cross-environment migrations, templat
 
 ### When To Use
 
-Use `APEX_APPLICATION_INSTALL` before or during an import. Use APEX_APPLICATION_ADMIN after an application is already installed.
+Use `APEX_APPLICATION_INSTALL` before or during an import. Use [APEX_APPLICATION_ADMIN](APEX_APPLICATION_ADMIN.md) after an application is already installed.
 
 Common tasks:
 
@@ -5015,7 +4910,7 @@ end;
 /
 ```
 
-For AI remote server attributes in APEX 26.1, inspect the `GET_REMOTE_SERVER_AI_*` member detail sections for exact fields and defaults.
+For AI remote server attributes in APEX 26.1, inspect the `GET_REMOTE_SERVER_AI_*` local member pages for exact fields and defaults.
 
 ### Build Status Pattern
 
@@ -5076,15 +4971,87 @@ end;
 
 ### Related APIs
 
-- APEX_EXPORT for producing application exports.
-- APEX_APPLICATION_ADMIN for modifying installed applications.
-- APEX_INSTANCE_ADMIN for workspace/schema administration.
-- APEX_UTIL for setting workspace context in older scripts.
----
+- [APEX_EXPORT](APEX_EXPORT.md) for producing application exports.
+- [APEX_APPLICATION_ADMIN](APEX_APPLICATION_ADMIN.md) for modifying installed applications.
+- [APEX_INSTANCE_ADMIN](APEX_INSTANCE_ADMIN.md) for workspace/schema administration.
+- [APEX_UTIL](APEX_UTIL.md) for setting workspace context in older scripts.
 
-### Member Details: APEX_APPLICATION_INSTALL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| About the APEX_APPLICATION_INSTALL API | about | [local](APEX_APPLICATION_INSTALL/About_the_APEX_APPLICATION_INSTALL_API.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Package-Overview.html) |
+| Attributes Manipulated by APEX_APPLICATION_INSTALL | topic | [local](APEX_APPLICATION_INSTALL/Attributes_Manipulated_by_APEX_APPLICATION_INSTALL.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Attributes-Manipulated-by-APEX_APPLICATION_INSTALL.html) |
+| Import Data Types | data types | [local](APEX_APPLICATION_INSTALL/Import_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL-Data-Types.html) |
+| Import Script Examples | examples | [local](APEX_APPLICATION_INSTALL/Import_Script_Examples.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Import-Script-Examples.html) |
+| ADD_DATA_REPORTER_REMAP Procedure | procedure | [local](APEX_APPLICATION_INSTALL/ADD_DATA_REPORTER_REMAP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL-ADD_DATA_REPORTER_REMAP-Procedure.html) |
+| CLEAR_ALL Procedure | procedure | [local](APEX_APPLICATION_INSTALL/CLEAR_ALL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_ALL-Procedure.html) |
+| CLEAR_DATASET_IMPORT_MODES Procedure | procedure | [local](APEX_APPLICATION_INSTALL/CLEAR_DATASET_IMPORT_MODES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.CLEAR_DATASET_IMPORT_MODES-Procedure.html) |
+| CLEAR_DATA_REPORTER_REMAP Procedure | procedure | [local](APEX_APPLICATION_INSTALL/CLEAR_DATA_REPORTER_REMAP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.CLEAR_DATA_REPORTER_REMAP-Procedure.html) |
+| GENERATE_APPLICATION_ID Procedure | procedure | [local](APEX_APPLICATION_INSTALL/GENERATE_APPLICATION_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GENERATE_APPLICATION_ID-Procedure.html) |
+| GENERATE_OFFSET Procedure | procedure | [local](APEX_APPLICATION_INSTALL/GENERATE_OFFSET_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GENERATE_OFFSET-Procedure.html) |
+| GET_APPLICATION_ALIAS Function | function | [local](APEX_APPLICATION_INSTALL/GET_APPLICATION_ALIAS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_APPLICATION_ALIAS-Function.html) |
+| GET_APPLICATION_ID Function | function | [local](APEX_APPLICATION_INSTALL/GET_APPLICATION_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_APPLICATION_ID-Function.html) |
+| GET_APPLICATION_NAME Function | function | [local](APEX_APPLICATION_INSTALL/GET_APPLICATION_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_APPLICATION_NAME-Function.html) |
+| GET_AUTHENTICATION_SCHEME Function | function | [local](APEX_APPLICATION_INSTALL/GET_AUTHENTICATION_SCHEME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_AUTHENTICATION_SCHEME-Function.html) |
+| GET_AUTO_INSTALL_SUP_OBJ Function | function | [local](APEX_APPLICATION_INSTALL/GET_AUTO_INSTALL_SUP_OBJ_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_AUTO_INSTALL_SUP_OBJ-Function.html) |
+| GET_BUILD_STATUS Function | function | [local](APEX_APPLICATION_INSTALL/GET_BUILD_STATUS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_BUILD_STATUS-Function.html) |
+| GET_DATA_REPORTER_REMAP Function | function | [local](APEX_APPLICATION_INSTALL/GET_DATA_REPORTER_REMAP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_DATA_REPORTER_REMAP-Function.html) |
+| GET_DATASET_IMPORT_MODE Function | function | [local](APEX_APPLICATION_INSTALL/GET_DATASET_IMPORT_MODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_DATASET_IMPORT_MODE-Function.html) |
+| GET_IMAGE_PREFIX Function | function | [local](APEX_APPLICATION_INSTALL/GET_IMAGE_PREFIX_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_IMAGE_PREFIX-Function.html) |
+| GET_INFO Function | function | [local](APEX_APPLICATION_INSTALL/GET_INFO_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_INFO-Function.html) |
+| GET_KEEP_BACKGROUND_EXECS Function | function | [local](APEX_APPLICATION_INSTALL/GET_KEEP_BACKGROUND_EXECS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_KEEP_BACKGROUND_EXECS-Function.html) |
+| GET_KEEP_SESSIONS Function | function | [local](APEX_APPLICATION_INSTALL/GET_KEEP_SESSIONS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_KEEP_SESSIONS-Function.html) |
+| GET_MAX_SCHEDULER_JOBS Function | function | [local](APEX_APPLICATION_INSTALL/GET_MAX_SCHEDULER_JOBS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_MAX_SCHEDULER_JOBS-Function.html) |
+| GET_NO_PROXY_DOMAINS Function | function | [local](APEX_APPLICATION_INSTALL/GET_NO_PROXY_DOMAINS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_NO_PROXY_DOMAINS-Function.html) |
+| GET_OFFSET Function | function | [local](APEX_APPLICATION_INSTALL/GET_OFFSET_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_OFFSET-Function.html) |
+| GET_PASS_ECID Function | function | [local](APEX_APPLICATION_INSTALL/GET_PASS_ECID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_PASS_ECID-Function.html) |
+| GET_PROXY Function | function | [local](APEX_APPLICATION_INSTALL/GET_PROXY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PROXY-Function.html) |
+| GET_REMOTE_SERVER_AI_ATTRS Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_AI_ATTRS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_AI_ATTRS-Function.html) |
+| GET_REMOTE_SERVER_AI_HEADERS Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_AI_HEADERS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_AI_HEADERS-Function.html) |
+| GET_REMOTE_SERVER_AI_MAXTOKENS Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_AI_MAXTOKENS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MAXTOKENS-Function.html) |
+| GET_REMOTE_SERVER_AI_MODEL Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_AI_MODEL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_AI_MODEL-Function.html) |
+| GET_REMOTE_SERVER_BASE_URL Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_BASE_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_BASE_URL-Function.html) |
+| GET_REMOTE_SERVER_DEFAULT_DB Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_DEFAULT_DB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_DEFAULT_DB-Function.html) |
+| GET_REMOTE_SERVER_HTTPS_HOST Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_HTTPS_HOST_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_HTTPS_HOST-Function.html) |
+| GET_REMOTE_SERVER_SQL_MODE Function | function | [local](APEX_APPLICATION_INSTALL/GET_REMOTE_SERVER_SQL_MODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REMOTE_SERVER_SQL_MODE-Function.html) |
+| GET_REST_SOURCE_CATALOG_GROUP Function | function | [local](APEX_APPLICATION_INSTALL/GET_REST_SOURCE_CATALOG_GROUP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REST_SOURCE_CATALOG_GROUP-Function.html) |
+| GET_SCHEMA Function | function | [local](APEX_APPLICATION_INSTALL/GET_SCHEMA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SCHEMA-Function.html) |
+| GET_SUBSCRIPTION_MAPPING Function | function | [local](APEX_APPLICATION_INSTALL/GET_SUBSCRIPTION_MAPPING_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MAPPING-Function.html) |
+| GET_SUBSCRIPTION_MODE Function | function | [local](APEX_APPLICATION_INSTALL/GET_SUBSCRIPTION_MODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MODE-Function.html) |
+| GET_THEME_ID Function | function | [local](APEX_APPLICATION_INSTALL/GET_THEME_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_THEME_ID-Function.html) |
+| GET_WORKSPACE_ID Function | function | [local](APEX_APPLICATION_INSTALL/GET_WORKSPACE_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_WORKSPACE_ID-Function.html) |
+| INSTALL Procedure | procedure | [local](APEX_APPLICATION_INSTALL/INSTALL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INSTALL-Procedure.html) |
+| REMOVE_APPLICATION Procedure | procedure | [local](APEX_APPLICATION_INSTALL/REMOVE_APPLICATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.REMOVE_APPLICATION-Procedure.html) |
+| SET_APPLICATION_ALIAS Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_APPLICATION_ALIAS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_APPLICATION_ALIAS-Procedure.html) |
+| SET_APPLICATION_ID Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_APPLICATION_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_APPLICATION_ID-Procedure.html) |
+| SET_APPLICATION_NAME Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_APPLICATION_NAME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_APPLICATION_NAME-Procedure.html) |
+| SET_AUTHENTICATION_SCHEME Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_AUTHENTICATION_SCHEME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_AUTHENTICATION_SCHEME-Procedure.html) |
+| SET_AUTO_INSTALL_SUP_OBJ Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_AUTO_INSTALL_SUP_OBJ_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_AUTO_INSTALL_SUP_OBJ-Procedure.html) |
+| SET_BUILD_STATUS Function | function | [local](APEX_APPLICATION_INSTALL/SET_BUILD_STATUS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_BUILD_STATUS-Function.html) |
+| SET_DATASET_IMPORT_MODE Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_DATASET_IMPORT_MODE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_DATASET_IMPORT_MODE-Function.html) |
+| SET_IMAGE_PREFIX Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_IMAGE_PREFIX_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_IMAGE_PREFIX-Procedure.html) |
+| SET_KEEP_BACKGROUND_EXECS Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_KEEP_BACKGROUND_EXECS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_KEEP_BACKGROUND_EXECS-Procedure.html) |
+| SET_KEEP_SESSIONS Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_KEEP_SESSIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_KEEP_SESSIONS-Procedure.html) |
+| SET_MAX_SCHEDULER_JOBS Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_MAX_SCHEDULER_JOBS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_MAX_SCHEDULER_JOBS-Procedure.html) |
+| SET_OFFSET Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_OFFSET_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_OFFSET-Procedure.html) |
+| SET_PASS_ECID Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_PASS_ECID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_PASS_ECID-Procedure.html) |
+| SET_PROXY Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_PROXY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PROXY-Procedure.html) |
+| SET_REMOTE_SERVER Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_REMOTE_SERVER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_REMOTE_SERVER-Procedure.html) |
+| SET_REST_SOURCE_CATALOG_GROUP Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_REST_SOURCE_CATALOG_GROUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_REST_SOURCE_CATALOG_GROUP-Procedure.html) |
+| SET_SCHEMA Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_SCHEMA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SCHEMA-Procedure.html) |
+| SET_SUBSCRIPTION_MAPPING Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_SUBSCRIPTION_MAPPING_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_SUBSCRIPTION_MAPPING-Procedure.html) |
+| SET_SUBSCRIPTION_MODE Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_SUBSCRIPTION_MODE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_SUBSCRIPTION_MODE-Procedure.html) |
+| SET_THEME_ID Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_THEME_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_THEME_ID-Procedure.html) |
+| SET_WORKSPACE_ID Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_WORKSPACE_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_WORKSPACE_ID-Procedure.html) |
+| SET_WORKSPACE Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SET_WORKSPACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_INSTALL.SET_WORKSPACE_Procedure.html) |
+| SUSPEND_BACKGROUND_EXECS Procedure | procedure | [local](APEX_APPLICATION_INSTALL/SUSPEND_BACKGROUND_EXECS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SUSPEND_BACKGROUND_EXECS-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_APPLICATION_INSTALL.About the APEX_APPLICATION_INSTALL API
 
@@ -5109,7 +5076,6 @@ Use this page when code needs the `APEX_APPLICATION_INSTALL.About the APEX_APPLI
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPLICATION_INSTALL.Attributes Manipulated by APEX_APPLICATION_INSTALL
 
@@ -5134,7 +5100,6 @@ Use this page when code needs the `APEX_APPLICATION_INSTALL.Attributes Manipulat
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPLICATION_INSTALL.Import Data Types
 
@@ -5159,7 +5124,6 @@ Use this page when code needs the `APEX_APPLICATION_INSTALL.Import Data Types` d
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPLICATION_INSTALL.Import Script Examples
 
@@ -5184,7 +5148,6 @@ Use this page when code needs the `APEX_APPLICATION_INSTALL.Import Script Exampl
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPLICATION_INSTALL.ADD_DATA_REPORTER_REMAP Procedure
 
@@ -5229,14 +5192,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.ADD_DATA_REPORTER_REMAP(
-        p_schema_from => 'EXAMPLE',
-        p_schema_to => 'EXAMPLE'
+    apex_application_install.add_data_reporter_remap(
+        p_schema_from => 'OLD_REPORTING',
+        p_schema_to   => 'APP_REPORTING'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.CLEAR_ALL Procedure
 
@@ -5276,7 +5238,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.CLEAR_DATASET_IMPORT_MODES Procedure
 
@@ -5316,7 +5277,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.CLEAR_DATA_REPORTER_REMAP Procedure
 
@@ -5356,7 +5316,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GENERATE_APPLICATION_ID Procedure
 
@@ -5396,7 +5355,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GENERATE_OFFSET Procedure
 
@@ -5436,7 +5394,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_APPLICATION_ALIAS Function
 
@@ -5476,7 +5433,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_APPLICATION_ID Function
 
@@ -5516,7 +5472,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_APPLICATION_NAME Function
 
@@ -5556,7 +5511,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_AUTHENTICATION_SCHEME Function
 
@@ -5596,7 +5550,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_AUTO_INSTALL_SUP_OBJ Function
 
@@ -5636,7 +5589,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_BUILD_STATUS Function
 
@@ -5676,7 +5628,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_DATA_REPORTER_REMAP Function
 
@@ -5716,16 +5667,16 @@ FUNCTION apex_application_install.get_data_reporter_remap (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_target_schema varchar2(128);
 begin
-    l_result := apex_application_install.GET_DATA_REPORTER_REMAP(
-        p_schema_from => 'EXAMPLE'
+    l_target_schema := apex_application_install.get_data_reporter_remap(
+        p_schema_from => 'OLD_REPORTING'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('OLD_REPORTING maps to ' || l_target_schema);
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_DATASET_IMPORT_MODE Function
 
@@ -5765,16 +5716,18 @@ FUNCTION apex_application_install.get_dataset_import_mode (
 
 ```sql
 declare
-    l_result T_DATASET_IMPORT_MODE;
+    l_mode apex_application_install.t_dataset_import_mode;
 begin
-    l_result := apex_application_install.GET_DATASET_IMPORT_MODE(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_mode := apex_application_install.get_dataset_import_mode(
+        p_static_id => 'SALES_SAMPLE'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_mode = apex_application_install.c_dataset_overwrite then
+        sys.dbms_output.put_line('SALES_SAMPLE will be overwritten on import.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_IMAGE_PREFIX Function
 
@@ -5814,7 +5767,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_INFO Function
 
@@ -5858,16 +5810,21 @@ This function returns information about the application that can be used to conf
 
 ```sql
 declare
-    l_result T_FILE_INFO;
+    l_source apex_t_export_files;
+    l_info   apex_application_install.t_file_info;
 begin
-    l_result := apex_application_install.GET_INFO(
-        p_source => null
+    l_source := apex_export.get_application(
+        p_application_id => 100
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_info := apex_application_install.get_info(
+        p_source => l_source
+    );
+
+    sys.dbms_output.put_line('Importing app ' || l_info.app_id || ': ' || l_info.app_name);
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_KEEP_BACKGROUND_EXECS Function
 
@@ -5907,7 +5864,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_KEEP_SESSIONS Function
 
@@ -5947,7 +5903,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_MAX_SCHEDULER_JOBS Function
 
@@ -5987,7 +5942,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_NO_PROXY_DOMAINS Function
 
@@ -6027,7 +5981,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_OFFSET Function
 
@@ -6067,7 +6020,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_PASS_ECID Function
 
@@ -6107,7 +6059,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_PROXY Function
 
@@ -6147,7 +6098,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_ATTRS Function
 
@@ -6189,14 +6139,13 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_ATTRS (
 declare
     l_result CLOB;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_AI_ATTRS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_ai_attrs(
+        p_static_id => 'ORDERS_AI'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_HEADERS Function
 
@@ -6238,14 +6187,13 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_HEADERS (
 declare
     l_result CLOB;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_AI_HEADERS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_ai_headers(
+        p_static_id => 'ORDERS_AI'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MAXTOKENS Function
 
@@ -6287,14 +6235,13 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MAXTOKENS (
 declare
     l_result NUMBER;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_AI_MAXTOKENS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_ai_maxtokens(
+        p_static_id => 'ORDERS_AI'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MODEL Function
 
@@ -6336,14 +6283,13 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MODEL (
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_AI_MODEL(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_ai_model(
+        p_static_id => 'ORDERS_AI'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_BASE_URL Function
 
@@ -6385,14 +6331,13 @@ RETURN VARCHAR2;
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_BASE_URL(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_base_url(
+        p_static_id => 'ORDERS_API'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_DEFAULT_DB Function
 
@@ -6434,14 +6379,13 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_DEFAULT_DB (
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_DEFAULT_DB(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_default_db(
+        p_static_id => 'ORDERS_API'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_HTTPS_HOST Function
 
@@ -6483,14 +6427,13 @@ RETURN VARCHAR2;
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_HTTPS_HOST(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_https_host(
+        p_static_id => 'ORDERS_API'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_SQL_MODE Function
 
@@ -6532,14 +6475,13 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_SQL_MODE (
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_SQL_MODE(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_sql_mode(
+        p_static_id => 'ORDERS_API'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_REST_SOURCE_CATALOG_GROUP Function
 
@@ -6579,7 +6521,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_SCHEMA Function
 
@@ -6619,7 +6560,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MAPPING Function
 
@@ -6659,16 +6599,16 @@ APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MAPPING (
 
 ```sql
 declare
-    l_result NUMBER;
+    l_target_app_id number;
 begin
-    l_result := apex_application_install.GET_SUBSCRIPTION_MAPPING(
-        p_from_application_id => 1
+    l_target_app_id := apex_application_install.get_subscription_mapping(
+        p_from_application_id => 100
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Subscription source 100 maps to ' || l_target_app_id);
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MODE Function
 
@@ -6708,7 +6648,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_THEME_ID Function
 
@@ -6752,7 +6691,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.GET_WORKSPACE_ID Function
 
@@ -6792,7 +6730,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.INSTALL Procedure
 
@@ -6837,14 +6774,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.INSTALL(
-        p_source => null,
+    apex_application_install.install(
         p_overwrite_existing => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.REMOVE_APPLICATION Procedure
 
@@ -6887,13 +6822,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.REMOVE_APPLICATION(
-        p_application_id => 1
+    apex_application_install.remove_application(
+        p_application_id => 200
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_APPLICATION_ALIAS Procedure
 
@@ -6936,13 +6870,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_APPLICATION_ALIAS(
-        p_application_alias => 'EXAMPLE'
+    apex_application_install.set_application_alias(
+        p_application_alias => 'SALES_APP'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_APPLICATION_ID Procedure
 
@@ -6985,13 +6918,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_APPLICATION_ID(
-        p_application_id => 1
+    apex_application_install.set_application_id(
+        p_application_id => 200
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_APPLICATION_NAME Procedure
 
@@ -7034,13 +6966,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_APPLICATION_NAME(
-        p_application_name => 'EXAMPLE'
+    apex_application_install.set_application_name(
+        p_application_name => 'Sales Operations'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_AUTHENTICATION_SCHEME Procedure
 
@@ -7083,13 +7014,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_AUTHENTICATION_SCHEME(
-        p_name => 'EXAMPLE'
+    apex_application_install.set_authentication_scheme(
+        p_name => 'Application Express Accounts'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_AUTO_INSTALL_SUP_OBJ Procedure
 
@@ -7138,7 +7068,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_BUILD_STATUS Function
 
@@ -7176,17 +7105,13 @@ APEX_APPLICATION_INSTALL.SET_BUILD_STATUS (
 #### Simple Example
 
 ```sql
-declare
-    l_result varchar2(32767);
 begin
-    l_result := apex_application_install.SET_BUILD_STATUS(
-        p_build_status => null
+    apex_application_install.set_build_status(
+        p_build_status => apex_application_admin.c_build_status_run_only
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_DATASET_IMPORT_MODE Procedure
 
@@ -7231,14 +7156,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_DATASET_IMPORT_MODE(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_mode => null
+    apex_application_install.set_dataset_import_mode(
+        p_static_id => 'SALES_SAMPLE',
+        p_mode      => apex_application_install.c_dataset_overwrite
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_IMAGE_PREFIX Procedure
 
@@ -7281,13 +7205,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_IMAGE_PREFIX(
-        p_image_prefix => 'EXAMPLE'
+    apex_application_install.set_image_prefix(
+        p_image_prefix => '/i/'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_KEEP_BACKGROUND_EXECS Procedure
 
@@ -7336,7 +7259,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_KEEP_SESSIONS Procedure
 
@@ -7385,7 +7307,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_MAX_SCHEDULER_JOBS Procedure
 
@@ -7428,13 +7349,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_MAX_SCHEDULER_JOBS(
-        p_max_scheduler_jobs => 1
+    apex_application_install.set_max_scheduler_jobs(
+        p_max_scheduler_jobs => 4
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_OFFSET Procedure
 
@@ -7477,13 +7397,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_OFFSET(
-        p_offset => 1
+    apex_application_install.set_offset(
+        p_offset => 100000
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_PASS_ECID Procedure
 
@@ -7532,7 +7451,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_PROXY Procedure
 
@@ -7577,14 +7495,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_PROXY(
-        p_proxy => 'EXAMPLE',
-        p_no_proxy_domains => 'EXAMPLE'
+    apex_application_install.set_proxy(
+        p_proxy            => 'www-proxy.example.com',
+        p_no_proxy_domains => '*.example.internal,localhost'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_REMOTE_SERVER Procedure
 
@@ -7648,22 +7565,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_REMOTE_SERVER(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_base_url => 'EXAMPLE',
-        p_https_host => 'EXAMPLE',
-        p_default_database => 'EXAMPLE',
-        p_mysql_sql_modes => to_clob('Example text'),
-        p_ords_timezone => 'EXAMPLE',
-        p_ai_model_name => 'EXAMPLE',
-        p_ai_http_headers => to_clob('Example text'),
-        p_ai_attributes => to_clob('Example text'),
-        p_ai_max_tokens => 1
+    apex_application_install.set_remote_server(
+        p_static_id  => 'ORDERS_API',
+        p_base_url   => 'https://api.example.com/orders/',
+        p_https_host => 'api.example.com'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_REST_SOURCE_CATALOG_GROUP Procedure
 
@@ -7706,13 +7615,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_REST_SOURCE_CATALOG_GROUP(
-        p_name => 'EXAMPLE'
+    apex_application_install.set_rest_source_catalog_group(
+        p_name => 'Sales APIs'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_SCHEMA Procedure
 
@@ -7755,13 +7663,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_SCHEMA(
-        p_schema => 'EXAMPLE'
+    apex_application_install.set_schema(
+        p_schema => 'SALES_APP'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_SUBSCRIPTION_MAPPING Procedure
 
@@ -7806,14 +7713,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_SUBSCRIPTION_MAPPING(
-        p_from_application_id => 1,
-        p_to_application_id => 1
+    apex_application_install.set_subscription_mapping(
+        p_from_application_id => 100,
+        p_to_application_id   => 200
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_SUBSCRIPTION_MODE Procedure
 
@@ -7856,13 +7762,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_SUBSCRIPTION_MODE(
-        p_mode => null
+    apex_application_install.set_subscription_mode(
+        p_mode => apex_application_install.c_subscription_strict
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_THEME_ID Procedure
 
@@ -7905,13 +7810,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_THEME_ID(
-        p_theme_id => 1
+    apex_application_install.set_theme_id(
+        p_theme_id => 42
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_WORKSPACE_ID Procedure
 
@@ -7954,13 +7858,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_WORKSPACE_ID(
-        p_workspace_id => 1
+    apex_application_install.set_workspace_id(
+        p_workspace_id => apex_util.find_security_group_id('SALES_WS')
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SET_WORKSPACE Procedure
 
@@ -8003,13 +7906,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_WORKSPACE(
-        p_workspace => 'EXAMPLE'
+    apex_application_install.set_workspace(
+        p_workspace => 'SALES_WS'
     );
 end;
 /
 ```
----
 
 ### APEX_APPLICATION_INSTALL.SUSPEND_BACKGROUND_EXECS Procedure
 
@@ -8052,13 +7954,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SUSPEND_BACKGROUND_EXECS(
-        p_application_id => 1
+    apex_application_install.suspend_background_execs(
+        p_application_id => 200
     );
 end;
 /
 ```
----
 
 ## APEX_APPROVAL
 
@@ -8066,7 +7967,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 ### Purpose
 
-`APEX_APPROVAL` is the legacy approval-task package. The local manifest marks the package as deprecated. For new work, prefer APEX_HUMAN_TASK, which exposes the modern task API and closely mirrors the approval lifecycle.
+`APEX_APPROVAL` is the legacy approval-task package. The local manifest marks the package as deprecated. For new work, prefer [APEX_HUMAN_TASK](APEX_HUMAN_TASK.md), which exposes the modern task API and closely mirrors the approval lifecycle.
 
 This page remains useful when maintaining older applications that still call `APEX_APPROVAL` members.
 
@@ -8152,11 +8053,51 @@ select task_id,
 - When migrating, compare member signatures against the corresponding local `APEX_HUMAN_TASK` page.
 - Re-test authorization behavior; do not assume UI-level permission checks cover PL/SQL calls.
 - Keep this page for legacy maintenance and source compatibility.
----
 
-### Member Details: APEX_APPROVAL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_APPROVAL/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.Constants-and-Data-Types.html) |
+| ADD_TASK_COMMENT Procedure | procedure | [local](APEX_APPROVAL/ADD_TASK_COMMENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TASK_COMMENT-Procedure.html) |
+| ADD_TASK_POTENTIAL_OWNER Procedure | procedure | [local](APEX_APPROVAL/ADD_TASK_POTENTIAL_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TASK_POTENTIAL_OWNER-Procedure.html) |
+| ADD_TO_HISTORY Procedure | procedure | [local](APEX_APPROVAL/ADD_TO_HISTORY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TO_HISTORY-Procedure.html) |
+| APPROVE_TASK Procedure | procedure | [local](APEX_APPROVAL/APPROVE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APPROVE_TASK-Procedure.html) |
+| CANCEL_TASK Procedure | procedure | [local](APEX_APPROVAL/CANCEL_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CANCEL_TASK-Procedure.html) |
+| CLAIM_TASK Procedure | procedure | [local](APEX_APPROVAL/CLAIM_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLAIM_TASK-Procedure.html) |
+| COMPLETE_TASK Procedure | procedure | [local](APEX_APPROVAL/COMPLETE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COMPLETE_TASK-Procedure.html) |
+| CREATE_TASK Function | function | [local](APEX_APPROVAL/CREATE_TASK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_TASK-Function.html) |
+| DELEGATE_TASK Procedure | procedure | [local](APEX_APPROVAL/DELEGATE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELEGATE_TASK-Procedure.html) |
+| GET_LOV_PRIORITY Function | function | [local](APEX_APPROVAL/GET_LOV_PRIORITY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOV_PRIORITY-Function.html) |
+| GET_LOV_STATE Function | function | [local](APEX_APPROVAL/GET_LOV_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOV_STATE-Function.html) |
+| GET_NEXT_PURGE_TIMESTAMP Function | function | [local](APEX_APPROVAL/GET_NEXT_PURGE_TIMESTAMP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.GET_NEXT_PURGE_TIMESTAMP-Function.html) |
+| GET_TASK_DELEGATES Function | function | [local](APEX_APPROVAL/GET_TASK_DELEGATES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_DELEGATES-Function.html) |
+| GET_TASK_HISTORY Function | function | [local](APEX_APPROVAL/GET_TASK_HISTORY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_HISTORY-Function.html) |
+| GET_TASK_PARAMETER_OLD_VALUE Function | function | [local](APEX_APPROVAL/GET_TASK_PARAMETER_OLD_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_PARAMETER_OLD_VALUE-Function.html) |
+| GET_TASK_PARAMETER_VALUE Function | function | [local](APEX_APPROVAL/GET_TASK_PARAMETER_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_PARAMETER_VALUE-Function.html) |
+| GET_TASK_PRIORITIES Function | function | [local](APEX_APPROVAL/GET_TASK_PRIORITIES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_PRIORITIES-Function.html) |
+| GET_TASKS Function | function | [local](APEX_APPROVAL/GET_TASKS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASKS-Function.html) |
+| HANDLE_TASK_DEADLINES Procedure | procedure | [local](APEX_APPROVAL/HANDLE_TASK_DEADLINES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HANDLE_TASK_DEADLINES-Procedure.html) |
+| HAS_TASK_PARAM_CHANGED Function | function | [local](APEX_APPROVAL/HAS_TASK_PARAM_CHANGED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HAS_TASK_PARAM_CHANGED-Function.html) |
+| IS_ALLOWED Function | function | [local](APEX_APPROVAL/IS_ALLOWED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_ALLOWED-Function.html) |
+| IS_BUSINESS_ADMIN Function | function | [local](APEX_APPROVAL/IS_BUSINESS_ADMIN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_BUSINESS_ADMIN-Function.html) |
+| IS_OF_PARTICIPANT_TYPE Function | function | [local](APEX_APPROVAL/IS_OF_PARTICIPANT_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_OF_PARTICIPANT_TYPE-Function.html) |
+| REJECT_TASK Procedure | procedure | [local](APEX_APPROVAL/REJECT_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REJECT_TASK-Procedure.html) |
+| RELEASE_TASK Procedure | procedure | [local](APEX_APPROVAL/RELEASE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RELEASE_TASK-Procedure.html) |
+| REMOVE_POTENTIAL_OWNER Procedure | procedure | [local](APEX_APPROVAL/REMOVE_POTENTIAL_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_POTENTIAL_OWNER-Procedure.html) |
+| RENEW_TASK Function | function | [local](APEX_APPROVAL/RENEW_TASK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RENEW_TASK-Function.html) |
+| REQUEST_MORE_INFORMATION Procedure | procedure | [local](APEX_APPROVAL/REQUEST_MORE_INFORMATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REQUEST_MORE_INFORMATION-Procedure.html) |
+| SET_INITIATOR_CAN_COMPLETE Procedure | procedure | [local](APEX_APPROVAL/SET_INITIATOR_CAN_COMPLETE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_INITIATOR_CAN_COMPLETE-Procedure.html) |
+| SET_TASK_DUE Procedure | procedure | [local](APEX_APPROVAL/SET_TASK_DUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TASK_DUE-Procedure.html) |
+| SET_TASK_PARAMETER_VALUES Procedure | procedure | [local](APEX_APPROVAL/SET_TASK_PARAMETER_VALUES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TASK_PARAMETER_VALUES-Procedure.html) |
+| SET_TASK_PRIORITY Procedure | procedure | [local](APEX_APPROVAL/SET_TASK_PRIORITY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TASK_PRIORITY-Procedure.html) |
+| SUBMIT_INFORMATION Procedure | procedure | [local](APEX_APPROVAL/SUBMIT_INFORMATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SUBMIT_INFORMATION-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_APPROVAL.Constants and Data Types
 
@@ -8181,7 +8122,6 @@ Use this page when code needs the `APEX_APPROVAL.Constants and Data Types` const
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_APPROVAL.ADD_TASK_COMMENT Procedure
 
@@ -8226,14 +8166,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.ADD_TASK_COMMENT(
-        p_task_id => 1,
-        p_text => to_clob('Example text')
+    apex_approval.add_task_comment(
+        p_task_id => :P20_TASK_ID,
+        p_text    => 'Please review the updated attachment.'
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.ADD_TASK_POTENTIAL_OWNER Procedure
 
@@ -8280,15 +8219,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.ADD_TASK_POTENTIAL_OWNER(
-        p_task_id => 1,
-        p_potential_owner => 'EXAMPLE',
-        p_identity_type => null
+    apex_approval.add_task_potential_owner(
+        p_task_id         => :P20_TASK_ID,
+        p_potential_owner => 'JSMITH',
+        p_identity_type   => apex_approval.c_task_identity_type_user
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.ADD_TO_HISTORY Procedure
 
@@ -8331,13 +8269,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.ADD_TO_HISTORY(
-        p_message => to_clob('Example text')
+    apex_approval.add_to_history(
+        p_message => 'Reviewer requested the invoice attachment.'
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.APPROVE_TASK Procedure
 
@@ -8382,14 +8319,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.APPROVE_TASK(
-        p_task_id => 1,
+    apex_approval.approve_task(
+        p_task_id   => :P20_TASK_ID,
         p_autoclaim => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.CANCEL_TASK Procedure
 
@@ -8432,13 +8368,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.CANCEL_TASK(
-        p_task_id => 1
+    apex_approval.cancel_task(
+        p_task_id => :P20_TASK_ID
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.CLAIM_TASK Procedure
 
@@ -8481,13 +8416,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.CLAIM_TASK(
-        p_task_id => 1
+    apex_approval.claim_task(
+        p_task_id => :P20_TASK_ID
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.COMPLETE_TASK Procedure
 
@@ -8534,15 +8468,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.COMPLETE_TASK(
-        p_task_id => 1,
-        p_outcome => null,
+    apex_approval.complete_task(
+        p_task_id   => :P20_TASK_ID,
+        p_outcome   => 'APPROVED',
         p_autoclaim => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.CREATE_TASK Function
 
@@ -8602,24 +8535,24 @@ Returns the ID of the newly created task.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_task_id number;
 begin
-    l_result := apex_approval.CREATE_TASK(
-        p_application_id => 1,
-        p_task_def_static_id => 'EXAMPLE_STATIC_ID',
-        p_subject => 'EXAMPLE',
-        p_parameters => null,
-        p_priority => 1,
-        p_initiator => 'EXAMPLE',
-        p_initiator_can_complete => true,
-        p_detail_pk => 'EXAMPLE',
-        p_due_date => sysdate
+    l_task_id := apex_approval.create_task(
+        p_application_id         => apex_application.g_flow_id,
+        p_task_def_static_id     => 'EXPENSE_APPROVAL',
+        p_subject                => 'Approve expense ' || :P10_EXPENSE_ID,
+        p_parameters             => apex_approval.c_empty_task_parameters,
+        p_priority               => 3,
+        p_initiator              => :APP_USER,
+        p_initiator_can_complete => false,
+        p_detail_pk              => :P10_EXPENSE_ID,
+        p_due_date               => systimestamp + interval '3' day
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Created approval task %s', l_task_id);
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.DELEGATE_TASK Procedure
 
@@ -8664,14 +8597,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.DELEGATE_TASK(
-        p_task_id => 1,
-        p_to_user => 'USER'
+    apex_approval.delegate_task(
+        p_task_id => :P20_TASK_ID,
+        p_to_user => :P20_NEW_OWNER
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_LOV_PRIORITY Function
 
@@ -8715,7 +8647,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_LOV_STATE Function
 
@@ -8759,7 +8690,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_NEXT_PURGE_TIMESTAMP Function
 
@@ -8803,7 +8733,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_TASK_DELEGATES Function
 
@@ -8847,16 +8776,16 @@ A table of apex_t_temp_lov_data .
 
 ```sql
 declare
-    l_result APEX_T_TEMP_LOV_DATA;
+    l_delegates apex_t_temp_lov_data;
 begin
-    l_result := apex_approval.GET_TASK_DELEGATES(
-        p_task_id => 1
+    l_delegates := apex_approval.get_task_delegates(
+        p_task_id => :P20_TASK_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Delegate rows: ' || l_delegates.count);
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_TASK_HISTORY Function
 
@@ -8901,18 +8830,15 @@ A table of approval log entries (type apex_t_approval_log_table ) containing the
 #### Simple Example
 
 ```sql
-declare
-    l_result APEX_T_APPROVAL_LOG_TABLE;
-begin
-    l_result := apex_approval.GET_TASK_HISTORY(
-        p_task_id => 1,
-        p_include_all => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select event_timestamp,
+       event_type,
+       event_creator,
+       display_msg
+  from table(apex_approval.get_task_history(
+           p_task_id     => :P20_TASK_ID,
+           p_include_all => 'Y'))
+ order by event_timestamp;
 ```
----
 
 ### APEX_APPROVAL.GET_TASK_PARAMETER_OLD_VALUE Function
 
@@ -8959,18 +8885,18 @@ VARCHAR2 - The old value of this parameter in VARCHAR2 format.
 
 ```sql
 declare
-    l_result varchar2(32767);
+    l_old_amount varchar2(32767);
 begin
-    l_result := apex_approval.GET_TASK_PARAMETER_OLD_VALUE(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID',
+    l_old_amount := apex_approval.get_task_parameter_old_value(
+        p_task_id         => :P20_TASK_ID,
+        p_param_static_id => 'AMOUNT',
         p_raise_error => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Previous amount: ' || l_old_amount);
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_TASK_PARAMETER_VALUE Function
 
@@ -9018,18 +8944,18 @@ The task parameter value for the given static ID or null.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_amount varchar2(32767);
 begin
-    l_result := apex_approval.GET_TASK_PARAMETER_VALUE(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID',
+    l_amount := apex_approval.get_task_parameter_value(
+        p_task_id => :P20_TASK_ID,
+        p_param_static_id => 'AMOUNT',
         p_ignore_not_found => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Current amount: ' || l_amount);
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_TASK_PRIORITIES Function
 
@@ -9073,16 +8999,16 @@ A table of apex_t_temp_lov_data .
 
 ```sql
 declare
-    l_result APEX_T_TEMP_LOV_DATA;
+    l_priorities apex_t_temp_lov_data;
 begin
-    l_result := apex_approval.GET_TASK_PRIORITIES(
-        p_task_id => 1
+    l_priorities := apex_approval.get_task_priorities(
+        p_task_id => :P20_TASK_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Available priority rows: ' || l_priorities.count);
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.GET_TASKS Function
 
@@ -9133,21 +9059,18 @@ A table of tasks (type apex_t_approval_tasks ) containing the following columns:
 #### Simple Example
 
 ```sql
-declare
-    l_result APEX_T_APPROVAL_TASKS;
-begin
-    l_result := apex_approval.GET_TASKS(
-        p_context => to_clob('Example text'),
-        p_user => 'USER',
-        p_task_id => 1,
-        p_application_id => 1,
-        p_show_expired_tasks => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select task_id,
+       subject,
+       state,
+       priority,
+       due_on
+  from table(apex_approval.get_tasks(
+           p_context            => apex_approval.c_context_my_tasks,
+           p_user               => :APP_USER,
+           p_application_id     => apex_application.g_flow_id,
+           p_show_expired_tasks => 'N'))
+ order by due_on nulls last;
 ```
----
 
 ### APEX_APPROVAL.HANDLE_TASK_DEADLINES Procedure
 
@@ -9193,7 +9116,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.HAS_TASK_PARAM_CHANGED Function
 
@@ -9235,17 +9157,19 @@ RETURN BOOLEAN;
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_amount_changed boolean;
 begin
-    l_result := apex_approval.HAS_TASK_PARAM_CHANGED(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID'
+    l_amount_changed := apex_approval.has_task_param_changed(
+        p_task_id         => :P20_TASK_ID,
+        p_param_static_id => 'AMOUNT'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_amount_changed then
+        sys.dbms_output.put_line('Amount was updated.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.IS_ALLOWED Function
 
@@ -9295,19 +9219,23 @@ TRUE if the user given by p_user is permitted to perform the operation given by 
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_allowed boolean;
 begin
-    l_result := apex_approval.IS_ALLOWED(
-        p_task_id => 1,
-        p_operation => null,
-        p_user => 'USER',
-        p_new_participant => 'EXAMPLE'
+    l_is_allowed := apex_approval.is_allowed(
+        p_task_id         => :P20_TASK_ID,
+        p_operation       => apex_approval.c_task_op_delegate,
+        p_user            => :APP_USER,
+        p_new_participant => :P20_NEW_OWNER
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_is_allowed then
+        apex_approval.delegate_task(
+            p_task_id => :P20_TASK_ID,
+            p_to_user => :P20_NEW_OWNER);
+    end if;
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.IS_BUSINESS_ADMIN Function
 
@@ -9353,17 +9281,19 @@ TRUE if the user given by p_user is at least in one task definition configured a
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_admin boolean;
 begin
-    l_result := apex_approval.IS_BUSINESS_ADMIN(
-        p_user => 'USER',
-        p_application_id => 1
+    l_is_admin := apex_approval.is_business_admin(
+        p_user           => :APP_USER,
+        p_application_id => apex_application.g_flow_id
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_is_admin then
+        sys.dbms_output.put_line(:APP_USER || ' can administer approval tasks.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.IS_OF_PARTICIPANT_TYPE Function
 
@@ -9413,18 +9343,21 @@ TRUE if the user given by p_user is a participant of given participant type for 
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_potential_owner boolean;
 begin
-    l_result := apex_approval.IS_OF_PARTICIPANT_TYPE(
-        p_task_id => 1,
-        p_participant_type => null,
-        p_user => 'USER'
+    l_is_potential_owner := apex_approval.is_of_participant_type(
+        p_task_id          => :P20_TASK_ID,
+        p_participant_type => apex_approval.c_task_potential_owner,
+        p_user             => :APP_USER
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_is_potential_owner then
+        apex_approval.claim_task(
+            p_task_id => :P20_TASK_ID);
+    end if;
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.REJECT_TASK Procedure
 
@@ -9469,14 +9402,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.REJECT_TASK(
-        p_task_id => 1,
+    apex_approval.reject_task(
+        p_task_id   => :P20_TASK_ID,
         p_autoclaim => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.RELEASE_TASK Procedure
 
@@ -9519,13 +9451,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.RELEASE_TASK(
-        p_task_id => 1
+    apex_approval.release_task(
+        p_task_id => :P20_TASK_ID
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.REMOVE_POTENTIAL_OWNER Procedure
 
@@ -9570,14 +9501,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.REMOVE_POTENTIAL_OWNER(
-        p_task_id => 1,
-        p_potential_owner => 'EXAMPLE'
+    apex_approval.remove_potential_owner(
+        p_task_id         => :P20_TASK_ID,
+        p_potential_owner => 'JSMITH'
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.RENEW_TASK Function
 
@@ -9625,18 +9555,18 @@ This function returns the ID of the renewed task.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_new_task_id number;
 begin
-    l_result := apex_approval.RENEW_TASK(
-        p_task_id => 1,
-        p_priority => 1,
-        p_due_date => sysdate
+    l_new_task_id := apex_approval.renew_task(
+        p_task_id  => :P20_TASK_ID,
+        p_priority => 3,
+        p_due_date => systimestamp + interval '2' day
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Renewed task id: ' || l_new_task_id);
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.REQUEST_MORE_INFORMATION Procedure
 
@@ -9681,14 +9611,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.REQUEST_MORE_INFORMATION(
-        p_task_id => 1,
-        p_text => to_clob('Example text')
+    apex_approval.request_more_information(
+        p_task_id => :P20_TASK_ID,
+        p_text    => 'Please attach the missing invoice.'
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.SET_INITIATOR_CAN_COMPLETE Procedure
 
@@ -9733,14 +9662,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.SET_INITIATOR_CAN_COMPLETE(
-        p_task_id => 1,
+    apex_approval.set_initiator_can_complete(
+        p_task_id                => :P20_TASK_ID,
         p_initiator_can_complete => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.SET_TASK_DUE Procedure
 
@@ -9785,14 +9713,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.SET_TASK_DUE(
-        p_task_id => 1,
-        p_due_date => sysdate
+    apex_approval.set_task_due(
+        p_task_id  => :P20_TASK_ID,
+        p_due_date => systimestamp + interval '1' day
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.SET_TASK_PARAMETER_VALUES Procedure
 
@@ -9838,16 +9765,19 @@ This is a procedure and does not return a value.
 #### Simple Example
 
 ```sql
+declare
+    l_params apex_approval.t_task_parameters;
 begin
-    apex_approval.SET_TASK_PARAMETER_VALUES(
-        p_task_id => 1,
-        p_parameters => null,
+    l_params := apex_approval.c_empty_task_parameters;
+
+    apex_approval.set_task_parameter_values(
+        p_task_id     => :P20_TASK_ID,
+        p_parameters  => l_params,
         p_raise_error => true
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.SET_TASK_PRIORITY Procedure
 
@@ -9892,14 +9822,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.SET_TASK_PRIORITY(
-        p_task_id => 1,
-        p_priority => 1
+    apex_approval.set_task_priority(
+        p_task_id  => :P20_TASK_ID,
+        p_priority => 3
     );
 end;
 /
 ```
----
 
 ### APEX_APPROVAL.SUBMIT_INFORMATION Procedure
 
@@ -9944,14 +9873,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.SUBMIT_INFORMATION(
-        p_task_id => 1,
-        p_text => to_clob('Example text')
+    apex_approval.submit_information(
+        p_task_id => :P20_TASK_ID,
+        p_text    => 'Invoice INV-10045 has been uploaded.'
     );
 end;
 /
 ```
----
 
 ## APEX_AUTHENTICATION
 
@@ -10160,11 +10088,34 @@ end;
 - Avoid storing secrets in `p_x01` through `p_x10` callback parameters.
 - Use explicit user consent for username cookies.
 - Use generated member pages below for exact signatures, especially `CALLBACK`, `CALLBACK2`, and SAML procedures.
----
 
-### Member Details: APEX_AUTHENTICATION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_AUTHENTICATION/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION-Constants.html) |
+| CALLBACK Procedure | procedure | [local](APEX_AUTHENTICATION/CALLBACK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK-Procedure.html) |
+| CALLBACK2 Procedure | procedure | [local](APEX_AUTHENTICATION/CALLBACK2_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK2-Procedure.html) |
+| GET_CALLBACK_URL Function | function | [local](APEX_AUTHENTICATION/GET_CALLBACK_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CALLBACK_URL-Function.html) |
+| GET_LOGIN_USERNAME_COOKIE Function | function | [local](APEX_AUTHENTICATION/GET_LOGIN_USERNAME_COOKIE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOGIN_USERNAME_COOKIE-Function.html) |
+| IS_AUTHENTICATED Function | function | [local](APEX_AUTHENTICATION/IS_AUTHENTICATED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_AUTHENTICATED-Function.html) |
+| IS_PUBLIC_USER Function | function | [local](APEX_AUTHENTICATION/IS_PUBLIC_USER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_PUBLIC_USER-Function.html) |
+| LOGIN Procedure | procedure | [local](APEX_AUTHENTICATION/LOGIN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure.html) |
+| LOGOUT Procedure | procedure | [local](APEX_AUTHENTICATION/LOGOUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGOUT-Procedure.html) |
+| PERSISTENT_AUTH_ENABLED Function | function | [local](APEX_AUTHENTICATION/PERSISTENT_AUTH_ENABLED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PERSISTENT_AUTH_ENABLED-Function.html) |
+| PERSISTENT_COOKIES_ENABLED Function | function | [local](APEX_AUTHENTICATION/PERSISTENT_COOKIES_ENABLED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PERSISTENT_COOKIES_ENABLED-Function.html) |
+| POST_LOGIN Procedure | procedure | [local](APEX_AUTHENTICATION/POST_LOGIN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POST_LOGIN-Procedure.html) |
+| REMOVE_CURRENT_PERSISTENT_AUTH Procedure | procedure | [local](APEX_AUTHENTICATION/REMOVE_CURRENT_PERSISTENT_AUTH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_CURRENT_PERSISTENT_AUTH-Procedure.html) |
+| REMOVE_PERSISTENT_AUTH Procedure | procedure | [local](APEX_AUTHENTICATION/REMOVE_PERSISTENT_AUTH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_PERSISTENT_AUTH-Procedure.html) |
+| SAML_CALLBACK Procedure | procedure | [local](APEX_AUTHENTICATION/SAML_CALLBACK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SAML_CALLBACK-Procedure.html) |
+| SAML_METADATA Procedure | procedure | [local](APEX_AUTHENTICATION/SAML_METADATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SAML_METADATA-Procedure.html) |
+| SEND_LOGIN_USERNAME_COOKIE Procedure | procedure | [local](APEX_AUTHENTICATION/SEND_LOGIN_USERNAME_COOKIE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND_LOGIN_USERNAME_COOKIE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_AUTHENTICATION.Constants
 
@@ -10189,7 +10140,6 @@ Use this page when code needs the `APEX_AUTHENTICATION.Constants` constants. Con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_AUTHENTICATION.CALLBACK Procedure
 
@@ -10283,26 +10233,20 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.CALLBACK(
-        p_session_id => 1,
-        p_app_id => 1,
-        p_ajax_identifier => 'EXAMPLE',
-        p_page_id => 1,
-        p_x01 => 'EXAMPLE',
-        p_x02 => 'EXAMPLE',
-        p_x03 => 'EXAMPLE',
-        p_x04 => 'EXAMPLE',
-        p_x05 => 'EXAMPLE',
-        p_x06 => 'EXAMPLE',
-        p_x07 => 'EXAMPLE',
-        p_x08 => 'EXAMPLE',
-        p_x09 => 'EXAMPLE',
-        p_x10 => 'EXAMPLE'
+    apex_authentication.callback(
+        p_session_id      => :APP_SESSION,
+        p_app_id          => :APP_ID,
+        p_page_id         => :APP_PAGE_ID,
+        p_x01             => :APP_SESSION,
+        p_x02             => :P101_RETURN_URL,
+        state             => :REQUEST_STATE,
+        code              => :REQUEST_CODE,
+        error             => :REQUEST_ERROR,
+        error_description => :REQUEST_ERROR_DESCRIPTION
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.CALLBACK2 Procedure
 
@@ -10372,26 +10316,20 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.CALLBACK2(
-        p_session_id => 1,
-        p_app_id => 1,
-        p_ajax_identifier => 'EXAMPLE',
-        p_page_id => 1,
-        p_x01 => 'EXAMPLE',
-        p_x02 => 'EXAMPLE',
-        p_x03 => 'EXAMPLE',
-        p_x04 => 'EXAMPLE',
-        p_x05 => 'EXAMPLE',
-        p_x06 => 'EXAMPLE',
-        p_x07 => 'EXAMPLE',
-        p_x08 => 'EXAMPLE',
-        p_x09 => 'EXAMPLE',
-        p_x10 => 'EXAMPLE'
+    apex_authentication.callback2(
+        p_session_id      => :APP_SESSION,
+        p_app_id          => :APP_ID,
+        p_page_id         => :APP_PAGE_ID,
+        p_x01             => :APP_SESSION,
+        p_x02             => :P101_RETURN_URL,
+        state             => :REQUEST_STATE,
+        code              => :REQUEST_CODE,
+        error             => :REQUEST_ERROR,
+        error_description => :REQUEST_ERROR_DESCRIPTION
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.GET_CALLBACK_URL Function
 
@@ -10410,18 +10348,18 @@ Use this page when code needs the `APEX_AUTHENTICATION.GET_CALLBACK_URL` functio
 #### Signature
 
 ```sql
-APEX_AUTHENTICATION.GET_CALLBACK_URL (
-    p_x01           IN VARCHAR2 DEFAULT NULL,
-    p_x02           IN VARCHAR2 DEFAULT NULL,
-    p_x03           IN VARCHAR2 DEFAULT NULL,
-    p_x04           IN VARCHAR2 DEFAULT NULL,
-    p_x05           IN VARCHAR2 DEFAULT NULL,
-    p_x06           IN VARCHAR2 DEFAULT NULL,
-    p_x07           IN VARCHAR2 DEFAULT NULL,
-    p_x08           IN VARCHAR2 DEFAULT NULL,
-    p_x09           IN VARCHAR2 DEFAULT NULL,
+APEX_AUTHENTICATION.GET_CALLBACK_URL ( 
+    p_x01           IN VARCHAR2 DEFAULT NULL, 
+    p_x02           IN VARCHAR2 DEFAULT NULL, 
+    p_x03           IN VARCHAR2 DEFAULT NULL, 
+    p_x04           IN VARCHAR2 DEFAULT NULL, 
+    p_x05           IN VARCHAR2 DEFAULT NULL, 
+    p_x06           IN VARCHAR2 DEFAULT NULL, 
+    p_x07           IN VARCHAR2 DEFAULT NULL, 
+    p_x08           IN VARCHAR2 DEFAULT NULL, 
+    p_x09           IN VARCHAR2 DEFAULT NULL, 
     p_x10           IN VARCHAR2 DEFAULT NULL,
-    p_callback_name IN VARCHAR2 DEFAULT NULL )
+    p_callback_name IN VARCHAR2 DEFAULT NULL ) 
     RETURN VARCHAR2;
 ```
 
@@ -10442,26 +10380,18 @@ APEX_AUTHENTICATION.GET_CALLBACK_URL (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_callback_url varchar2(32767);
 begin
-    l_result := apex_authentication.GET_CALLBACK_URL(
-        p_x01 => 'EXAMPLE',
-        p_x02 => 'EXAMPLE',
-        p_x03 => 'EXAMPLE',
-        p_x04 => 'EXAMPLE',
-        p_x05 => 'EXAMPLE',
-        p_x06 => 'EXAMPLE',
-        p_x07 => 'EXAMPLE',
-        p_x08 => 'EXAMPLE',
-        p_x09 => 'EXAMPLE',
-        p_x10 => 'EXAMPLE',
-        p_callback_name => 'EXAMPLE'
+    l_callback_url := apex_authentication.get_callback_url(
+        p_x01           => :APP_SESSION,
+        p_x02           => :P101_RETURN_URL,
+        p_callback_name => 'OAUTH2_CALLBACK'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.redirect_url(l_callback_url);
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.GET_LOGIN_USERNAME_COOKIE Function
 
@@ -10501,16 +10431,16 @@ GET_LOGIN_USERNAME_COOKIE (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_last_username varchar2(255);
 begin
-    l_result := apex_authentication.GET_LOGIN_USERNAME_COOKIE(
-        p_cookie_name => 'EXAMPLE'
+    l_last_username := apex_authentication.get_login_username_cookie(
+        p_cookie_name => apex_authentication.c_default_username_cookie
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    :P101_USERNAME := l_last_username;
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.IS_AUTHENTICATED Function
 
@@ -10550,7 +10480,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.IS_PUBLIC_USER Function
 
@@ -10590,7 +10519,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.LOGIN Procedure
 
@@ -10609,9 +10537,9 @@ Use this page when code needs the `APEX_AUTHENTICATION.LOGIN` procedure. Confirm
 #### Signature
 
 ```sql
-APEX_AUTHENTICATION.LOGIN (
-    p_username              IN VARCHAR2,
-    p_password              IN VARCHAR2,
+APEX_AUTHENTICATION.LOGIN ( 
+    p_username              IN VARCHAR2, 
+    p_password              IN VARCHAR2, 
     p_uppercase_username    IN BOOLEAN  DEFAULT TRUE
     p_set_persistent_auth   IN BOOLEAN  DEFAULT FALSE );
 ```
@@ -10639,16 +10567,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.LOGIN(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_uppercase_username => true,
-        p_set_persistent_auth => true
+    apex_authentication.login(
+        p_username            => :P101_USERNAME,
+        p_password            => :P101_PASSWORD,
+        p_uppercase_username  => true,
+        p_set_persistent_auth => :P101_REMEMBER = 'Y'
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.LOGOUT Procedure
 
@@ -10667,7 +10594,7 @@ Use this page when code needs the `APEX_AUTHENTICATION.LOGOUT` procedure. Confir
 #### Signature
 
 ```sql
-APEX_AUTHENTICATION.LOGOUT (
+APEX_AUTHENTICATION.LOGOUT ( 
     p_session_id    IN NUMBER,
     p_app_id        IN NUMBER );
 ```
@@ -10693,14 +10620,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.LOGOUT(
-        p_session_id => 1,
-        p_app_id => 1
+    apex_authentication.logout(
+        p_session_id => :APP_SESSION,
+        p_app_id     => :APP_ID
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.PERSISTENT_AUTH_ENABLED Function
 
@@ -10740,7 +10666,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.PERSISTENT_COOKIES_ENABLED Function
 
@@ -10784,7 +10709,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.POST_LOGIN Procedure
 
@@ -10831,15 +10755,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.POST_LOGIN(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
+    apex_authentication.post_login(
+        p_username           => :P101_USERNAME,
+        p_password           => :P101_EXTERNAL_TOKEN,
         p_uppercase_username => true
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.REMOVE_CURRENT_PERSISTENT_AUTH Procedure
 
@@ -10879,7 +10802,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.REMOVE_PERSISTENT_AUTH Procedure
 
@@ -10898,7 +10820,7 @@ Use this page when code needs the `APEX_AUTHENTICATION.REMOVE_PERSISTENT_AUTH` p
 #### Signature
 
 ```sql
-APEX_AUTHENTICATION.REMOVE_PERSISTENT_AUTH (
+APEX_AUTHENTICATION.REMOVE_PERSISTENT_AUTH ( 
     p_username      IN VARCHAR2 )
 ```
 
@@ -10922,13 +10844,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.REMOVE_PERSISTENT_AUTH(
-        p_username => 'USER'
+    apex_authentication.remove_persistent_auth(
+        p_username => :P20_USERNAME
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.SAML_CALLBACK Procedure
 
@@ -10983,7 +10904,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.SAML_METADATA Procedure
 
@@ -11026,13 +10946,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.SAML_METADATA(
-        p_app_id => 1
+    apex_authentication.saml_metadata(
+        p_app_id => :APP_ID
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHENTICATION.SEND_LOGIN_USERNAME_COOKIE Procedure
 
@@ -11079,15 +10998,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.SEND_LOGIN_USERNAME_COOKIE(
-        p_username => 'USER',
-        p_cookie_name => 'EXAMPLE',
-        p_consent => true
+    apex_authentication.send_login_username_cookie(
+        p_username    => :P101_USERNAME,
+        p_cookie_name => apex_authentication.c_default_username_cookie,
+        p_consent     => :P101_REMEMBER = 'Y'
     );
 end;
 /
 ```
----
 
 ## APEX_AUTHORIZATION
 
@@ -11232,11 +11150,21 @@ end;
 - Remember that results are cached; call `RESET_CACHE` after role/group changes in the same session.
 - Do not confuse `APEX_AUTHORIZATION` with `APEX_ACL`: authorization evaluates access, ACL maintains role assignments.
 - For code outside a browser request, create or attach an APEX session before evaluating authorization.
----
 
-### Member Details: APEX_AUTHORIZATION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ENABLE_DYNAMIC_GROUPS Procedure | procedure | [local](APEX_AUTHORIZATION/ENABLE_DYNAMIC_GROUPS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ENABLE_DYNAMIC_GROUPS-Procedure.html) |
+| HAS_ACCESS Function | function | [local](APEX_AUTHORIZATION/HAS_ACCESS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHORIZATION.HAS_ACCESS-Function.html) |
+| IS_AUTHORIZED Function | function | [local](APEX_AUTHORIZATION/IS_AUTHORIZED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_AUTHORIZED-Function.html) |
+| RESET_CACHE Procedure | procedure | [local](APEX_AUTHORIZATION/RESET_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_CACHE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_AUTHORIZATION.ENABLE_DYNAMIC_GROUPS Procedure
 
@@ -11279,13 +11207,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authorization.ENABLE_DYNAMIC_GROUPS(
-        p_group_names => 'EXAMPLE'
+    apex_authorization.enable_dynamic_groups(
+        p_group_names => 'SALES_MANAGERS:FINANCE_REVIEWERS'
     );
 end;
 /
 ```
----
 
 ### APEX_AUTHORIZATION.HAS_ACCESS Function
 
@@ -11329,16 +11256,18 @@ Parameter Description TRUE If the authorization is successful. FALSE If the auth
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_can_manage_orders boolean;
 begin
-    l_result := apex_authorization.HAS_ACCESS(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_can_manage_orders := apex_authorization.has_access(
+        p_authorization_name => 'CAN_MANAGE_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_can_manage_orders then
+        apex_debug.info('Current user may manage orders.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_AUTHORIZATION.IS_AUTHORIZED Function
 
@@ -11382,16 +11311,18 @@ Parameter Description TRUE If the authorization is successful. FALSE If the auth
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_authorized boolean;
 begin
-    l_result := apex_authorization.IS_AUTHORIZED(
-        p_authorization_name => 'EXAMPLE'
+    l_is_authorized := apex_authorization.is_authorized(
+        p_authorization_name => 'CAN_APPROVE_DISCOUNTS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if not l_is_authorized then
+        raise_application_error(-20000, 'Not authorized.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_AUTHORIZATION.RESET_CACHE Procedure
 
@@ -11427,11 +11358,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authorization.RESET_CACHE;
+    apex_authorization.reset_cache;
 end;
 /
 ```
----
 
 ## APEX_AUTOMATION
 
@@ -11592,67 +11522,34 @@ end;
 - Use `RESCHEDULE` for polling automations rather than repeatedly forcing manual runs.
 - Do not log secrets, tokens, or private payloads from automation action code.
 - Avoid deprecated `ABORT`; use `TERMINATE` for current code.
----
 
-### Member Details: APEX_AUTOMATION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
 
-### APEX_AUTOMATION.ABORT Procedure (Deprecated)
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
 
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_ABORT-Procedure.html)
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ABORT Procedure (Deprecated) | procedure | [local](APEX_AUTOMATION/ABORT_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_ABORT-Procedure.html) |
+| DISABLE Procedure | procedure | [local](APEX_AUTOMATION/DISABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_DISABLE-Procedure.html) |
+| ENABLE Procedure | procedure | [local](APEX_AUTOMATION/ENABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_ENABLE-Procedure.html) |
+| EXECUTE Procedure Signature 1 | procedure | [local](APEX_AUTOMATION/EXECUTE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXECUTE-Procedure-Signature-1.html) |
+| EXECUTE Procedure Signature 2 | procedure | [local](APEX_AUTOMATION/EXECUTE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXECUTE-Procedure-Signature-2.html) |
+| EXECUTE for Query Context Procedure | procedure | [local](APEX_AUTOMATION/EXECUTE_for_Query_Context_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXECUTE-for-Query-Context.html) |
+| EXIT Procedure | procedure | [local](APEX_AUTOMATION/EXIT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXIT-Procedure.html) |
+| GET_LAST_RUN Function | function | [local](APEX_AUTOMATION/GET_LAST_RUN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_GET_LAST_RETURN-Function.html) |
+| GET_LAST_RUN_TIMESTAMP Function | function | [local](APEX_AUTOMATION/GET_LAST_RUN_TIMESTAMP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_GET_LAST_RUN_TIMESTAMP-Procedure.html) |
+| GET_SCHEDULER_JOB_NAME Function | function | [local](APEX_AUTOMATION/GET_SCHEDULER_JOB_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_GET_SCHEDULER_JOB_NAME-Function.html) |
+| IS_RUNNING Function | function | [local](APEX_AUTOMATION/IS_RUNNING_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_IS_RUNNING-Function.html) |
+| LOG_ERROR Procedure | procedure | [local](APEX_AUTOMATION/LOG_ERROR_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_LOG_ERROR-Procedure.html) |
+| LOG_INFO Procedure | procedure | [local](APEX_AUTOMATION/LOG_INFO_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_LONG_INFO-Procedure.html) |
+| LOG_WARN Procedure | procedure | [local](APEX_AUTOMATION/LOG_WARN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_LOG_WARN-Procedure.html) |
+| RESCHEDULE Procedure | procedure | [local](APEX_AUTOMATION/RESCHEDULE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_RESCHEDULE-Procedure.html) |
+| SKIP_CURRENT_ROW Procedure | procedure | [local](APEX_AUTOMATION/SKIP_CURRENT_ROW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_SKIP_CURRENT_ROW-Procedure.html) |
+| TERMINATE Procedure | procedure | [local](APEX_AUTOMATION/TERMINATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_TERMINATE-Procedure.html) |
 
-Parent package: APEX_AUTOMATION
-
-#### Purpose
-
-Important:
-
-#### When To Use
-
-Use this page when code needs the `APEX_AUTOMATION.ABORT` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_AUTOMATION.ABORT (
-    p_application_id    IN NUMBER   DEFAULT {current application id},
-    p_static_id         IN VARCHAR2 )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | ID of the application which contains the automation. |
-| `p_static_id` | Static ID of the automation to terminate. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_automation.ABORT(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
-    );
-end;
-/
-```
----
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_AUTOMATION.DISABLE Procedure
 
@@ -11697,14 +11594,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.DISABLE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    apex_automation.disable(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.ENABLE Procedure
 
@@ -11749,14 +11645,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.ENABLE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    apex_automation.enable(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.EXECUTE Procedure Signature 1
 
@@ -11805,16 +11700,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.EXECUTE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_filters => null,
-        p_order_bys => null
+    apex_automation.execute(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS',
+        p_filters        => apex_exec.c_empty_filters,
+        p_order_bys      => apex_exec.c_empty_order_bys
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.EXECUTE Procedure Signature 2
 
@@ -11861,15 +11755,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.EXECUTE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
+    apex_automation.execute(
+        p_application_id    => apex_application.g_flow_id,
+        p_static_id         => 'SYNC_ORDERS',
         p_run_in_background => true
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.EXECUTE for Query Context Procedure
 
@@ -11915,16 +11808,30 @@ This is a procedure and does not return a value.
 #### Simple Example
 
 ```sql
+declare
+    l_context apex_exec.t_context;
 begin
-    apex_automation.EXECUTE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_query_context => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => q'[select order_id, status from orders where status = 'READY']'
     );
+
+    apex_automation.execute(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS',
+        p_query_context  => l_context
+    );
+
+    apex_exec.close(l_context);
+exception
+    when others then
+        if l_context is not null then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.EXIT Procedure
 
@@ -11967,13 +11874,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.EXIT(
-        p_log_message => to_clob('Example text')
-    );
+    apex_automation.exit;
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.GET_LAST_RUN Function
 
@@ -12010,14 +11914,14 @@ Return Description * Timestamp of the previous automation run.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_last_run_at timestamp with time zone;
 begin
-    l_result := apex_automation.GET_LAST_RUN;
-    sys.dbms_output.put_line('Result captured.');
+    l_last_run_at := apex_automation.get_last_run;
+
+    apex_debug.info('Previous automation run: %s', l_last_run_at);
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.GET_LAST_RUN_TIMESTAMP Function
 
@@ -12063,17 +11967,17 @@ Return Description * Timestamp of the last successful automation run.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_last_run_at timestamp with time zone;
 begin
-    l_result := apex_automation.GET_LAST_RUN_TIMESTAMP(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_last_run_at := apex_automation.get_last_run_timestamp(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('SYNC_ORDERS last ran at %s', l_last_run_at);
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.GET_SCHEDULER_JOB_NAME Function
 
@@ -12119,17 +12023,17 @@ The name of the the scheduler job which is generated to execute this automation.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_job_name varchar2(261);
 begin
-    l_result := apex_automation.GET_SCHEDULER_JOB_NAME(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_job_name := apex_automation.get_scheduler_job_name(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Scheduler job: %s', l_job_name);
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.IS_RUNNING Function
 
@@ -12175,17 +12079,19 @@ If TRUE , the automation is currently running.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_running boolean;
 begin
-    l_result := apex_automation.IS_RUNNING(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_running := apex_automation.is_running(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_running then
+        apex_debug.info('SYNC_ORDERS is already running.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.LOG_ERROR Procedure
 
@@ -12228,13 +12134,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.LOG_ERROR(
-        p_message => to_clob('Example text')
+    apex_automation.log_error(
+        p_log_message => 'Order synchronization failed for order ' || :ORDER_ID
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.LOG_INFO Procedure
 
@@ -12277,13 +12182,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.LOG_INFO(
-        p_message => to_clob('Example text')
+    apex_automation.log_info(
+        p_log_message => 'Order ' || :ORDER_ID || ' synchronized.'
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.LOG_WARN Procedure
 
@@ -12326,13 +12230,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.LOG_WARN(
-        p_message => to_clob('Example text')
+    apex_automation.log_warn(
+        p_log_message => 'Order ' || :ORDER_ID || ' was skipped because it is locked.'
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.RESCHEDULE Procedure
 
@@ -12379,15 +12282,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.RESCHEDULE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_next_run_at => sysdate
+    apex_automation.reschedule(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS',
+        p_next_run_at    => systimestamp + interval '15' minute
     );
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.SKIP_CURRENT_ROW Procedure
 
@@ -12430,13 +12332,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.SKIP_CURRENT_ROW(
-        p_log_message => to_clob('Example text')
-    );
+    apex_automation.skip_current_row;
 end;
 /
 ```
----
 
 ### APEX_AUTOMATION.TERMINATE Procedure
 
@@ -12481,14 +12380,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.TERMINATE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_automation.terminate;
 end;
 /
 ```
----
 
 ## APEX_BACKGROUND_PROCESS
 
@@ -12614,11 +12509,27 @@ end;
 - Protect termination actions with server-side authorization.
 - Avoid deprecated `ABORT`; use `TERMINATE`.
 - Use generated member detail pages below for exact constants and `t_execution` fields.
----
 
-### Member Details: APEX_BACKGROUND_PROCESS
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_BACKGROUND_PROCESS/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS-Constants.html) |
+| Data Types | data types | [local](APEX_BACKGROUND_PROCESS/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS-Data-Types.html) |
+| ABORT Procedure Signature 1 (Deprecated) | procedure | [local](APEX_BACKGROUND_PROCESS/ABORT_Procedure_Signature_1_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-1.html) |
+| ABORT Procedure Signature 2 (Deprecated) | procedure | [local](APEX_BACKGROUND_PROCESS/ABORT_Procedure_Signature_2_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-2.html) |
+| GET_CURRENT_EXECUTION Function | function | [local](APEX_BACKGROUND_PROCESS/GET_CURRENT_EXECUTION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.GET_CURRENT_EXECUTION-Function.html) |
+| GET_EXECUTION Function | function | [local](APEX_BACKGROUND_PROCESS/GET_EXECUTION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html) |
+| SET_PROGRESS Procedure | procedure | [local](APEX_BACKGROUND_PROCESS/SET_PROGRESS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.SET_PROGRESS-Procedure.html) |
+| SET_STATUS Procedure | procedure | [local](APEX_BACKGROUND_PROCESS/SET_STATUS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.SET_STATUS-Procedure.html) |
+| TERMINATE Procedure Signature 1 | procedure | [local](APEX_BACKGROUND_PROCESS/TERMINATE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-1.html) |
+| TERMINATE Procedure Signature 2 | procedure | [local](APEX_BACKGROUND_PROCESS/TERMINATE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_BACKGROUND_PROCESS.Constants
 
@@ -12643,7 +12554,6 @@ Use this page when code needs the `APEX_BACKGROUND_PROCESS.Constants` constants.
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_BACKGROUND_PROCESS.Data Types
 
@@ -12668,119 +12578,6 @@ Use this page when code needs the `APEX_BACKGROUND_PROCESS.Data Types` data type
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
-
-### APEX_BACKGROUND_PROCESS.ABORT Procedure Signature 1 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-1.html)
-
-Parent package: APEX_BACKGROUND_PROCESS
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_BACKGROUND_PROCESS.ABORT` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_BACKGROUND_PROCESS.ABORT (
-    p_application_id    IN NUMBER DEFAULT apex_application.g_flow_id,
-    p_process_id        IN NUMBER )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | ID of the application containing the process. |
-| `p_process_id` | ID of the execution chain to abort executions for. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_background_process.ABORT(
-        p_application_id => 1,
-        p_process_id => 1
-    );
-end;
-/
-```
----
-
-### APEX_BACKGROUND_PROCESS.ABORT Procedure Signature 2 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-2.html)
-
-Parent package: APEX_BACKGROUND_PROCESS
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_BACKGROUND_PROCESS.ABORT` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_BACKGROUND_PROCESS.ABORT (
-    p_application_id    IN NUMBER DEFAULT apex_application.g_flow_id,
-    p_execution_id      IN NUMBER )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | ID of the application containing the process. |
-| `p_execution_id` | ID of the execution to abort. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_background_process.ABORT(
-        p_application_id => 1,
-        p_execution_id => 1
-    );
-end;
-/
-```
----
 
 ### APEX_BACKGROUND_PROCESS.GET_CURRENT_EXECUTION Function
 
@@ -12817,14 +12614,13 @@ T_EXECUTION record with status information for the current execution.
 
 ```sql
 declare
-    l_result T_EXECUTION;
+    l_execution apex_background_process.t_execution;
 begin
-    l_result := apex_background_process.GET_CURRENT_EXECUTION;
-    sys.dbms_output.put_line('Result captured.');
+    l_execution := apex_background_process.get_current_execution;
+    apex_debug.info('Current background execution captured.');
 end;
 /
 ```
----
 
 ### APEX_BACKGROUND_PROCESS.GET_EXECUTION Function
 
@@ -12870,17 +12666,17 @@ This function returns t_execution record with current status information for thi
 
 ```sql
 declare
-    l_result T_EXECUTION;
+    l_execution apex_background_process.t_execution;
 begin
-    l_result := apex_background_process.GET_EXECUTION(
-        p_application_id => 1,
-        p_execution_id => 1
+    l_execution := apex_background_process.get_execution(
+        p_application_id => apex_application.g_flow_id,
+        p_execution_id   => :P50_EXECUTION_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Background execution captured.');
 end;
 /
 ```
----
 
 ### APEX_BACKGROUND_PROCESS.SET_PROGRESS Procedure
 
@@ -12925,14 +12721,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.SET_PROGRESS(
-        p_totalwork => 1,
-        p_sofar => 1
+    apex_background_process.set_progress(
+        p_totalwork => 100,
+        p_sofar     => :P50_ROWS_PROCESSED
     );
 end;
 /
 ```
----
 
 ### APEX_BACKGROUND_PROCESS.SET_STATUS Procedure
 
@@ -12975,13 +12770,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.SET_STATUS(
-        p_message => to_clob('Example text')
+    apex_background_process.set_status(
+        p_message => 'Importing order batch ' || :P50_BATCH_ID
     );
 end;
 /
 ```
----
 
 ### APEX_BACKGROUND_PROCESS.TERMINATE Procedure Signature 1
 
@@ -13026,14 +12820,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.TERMINATE(
-        p_application_id => 1,
-        p_process_id => 1
+    apex_background_process.terminate(
+        p_application_id => apex_application.g_flow_id,
+        p_process_id     => :P50_PROCESS_ID
     );
 end;
 /
 ```
----
 
 ### APEX_BACKGROUND_PROCESS.TERMINATE Procedure Signature 2
 
@@ -13078,14 +12871,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.TERMINATE(
-        p_application_id => 1,
-        p_execution_id => 1
+    apex_background_process.terminate(
+        p_application_id => apex_application.g_flow_id,
+        p_execution_id   => :P50_EXECUTION_ID
     );
 end;
 /
 ```
----
 
 ## APEX_BARCODE
 
@@ -13176,14 +12968,26 @@ Use Code 128 for general alphanumeric identifiers. Use EAN-8 only for valid EAN-
 
 ### Related APIs
 
-- APEX_PAGE for URL generation.
-- APEX_HTTP for image download responses.
-- APEX_PRINT for embedding generated codes in printable documents.
----
+- [APEX_PAGE](APEX_PAGE.md) for URL generation.
+- [APEX_HTTP](APEX_HTTP.md) for image download responses.
+- [APEX_PRINT](APEX_PRINT.md) for embedding generated codes in printable documents.
 
-### Member Details: APEX_BARCODE
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| GET_CODE128_PNG Function | function | [local](APEX_BARCODE/GET_CODE128_PNG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CODE128_PNG-Function.html) |
+| GET_CODE128_SVG Function | function | [local](APEX_BARCODE/GET_CODE128_SVG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CODE128_SVG-Function.html) |
+| GET_EAN8_PNG Function | function | [local](APEX_BARCODE/GET_EAN8_PNG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EAN8_PNG-Function.html) |
+| GET_EAN8_SVG Function | function | [local](APEX_BARCODE/GET_EAN8_SVG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EAN8_SVG-Function.html) |
+| GET_QRCODE_PNG Function | function | [local](APEX_BARCODE/GET_QRCODE_PNG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_QRCODE_PNG-Function.html) |
+| GET_QRCODE_SVG Function | function | [local](APEX_BARCODE/GET_QRCODE_SVG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_QRCODE_SVG-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_BARCODE.GET_CODE128_PNG Function
 
@@ -13233,19 +13037,17 @@ The Code 128 barcode PNG image file.
 
 ```sql
 declare
-    l_result BLOB;
+    l_png blob;
 begin
-    l_result := apex_barcode.GET_CODE128_PNG(
-        p_value => 'EXAMPLE',
-        p_scale => 1,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_png := apex_barcode.get_code128_png(
+        p_value            => 'ORD-10045',
+        p_scale            => 2,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_BARCODE.GET_CODE128_SVG Function
 
@@ -13295,19 +13097,17 @@ The SVG value of the Code 128 barcode.
 
 ```sql
 declare
-    l_result CLOB;
+    l_svg clob;
 begin
-    l_result := apex_barcode.GET_CODE128_SVG(
-        p_value => 'EXAMPLE',
-        p_size => 1,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_svg := apex_barcode.get_code128_svg(
+        p_value            => 'ORD-10045',
+        p_size             => 2,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_BARCODE.GET_EAN8_PNG Function
 
@@ -13357,19 +13157,17 @@ The EAN 8 barcode PNG image file.
 
 ```sql
 declare
-    l_result BLOB;
+    l_png blob;
 begin
-    l_result := apex_barcode.GET_EAN8_PNG(
-        p_value => 'EXAMPLE',
-        p_scale => 1,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_png := apex_barcode.get_ean8_png(
+        p_value            => '5512345',
+        p_scale            => 2,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_BARCODE.GET_EAN8_SVG Function
 
@@ -13419,19 +13217,17 @@ The SVG value of the EAN 8 barcode.
 
 ```sql
 declare
-    l_result CLOB;
+    l_svg clob;
 begin
-    l_result := apex_barcode.GET_EAN8_SVG(
-        p_value => 'EXAMPLE',
-        p_size => 1,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_svg := apex_barcode.get_ean8_svg(
+        p_value            => '5512345',
+        p_size             => 2,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_BARCODE.GET_QRCODE_PNG Function
 
@@ -13485,21 +13281,19 @@ The QR code PNG image file.
 
 ```sql
 declare
-    l_result BLOB;
+    l_png blob;
 begin
-    l_result := apex_barcode.GET_QRCODE_PNG(
-        p_value => 'EXAMPLE',
-        p_scale => 1,
-        p_quiet => 1,
-        p_eclevel => null,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_png := apex_barcode.get_qrcode_png(
+        p_value            => 'https://example.com/orders/10045',
+        p_scale            => 4,
+        p_quiet            => 2,
+        p_eclevel          => apex_barcode.c_eclevel_type_high,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_BARCODE.GET_QRCODE_SVG Function
 
@@ -13553,21 +13347,19 @@ The SVG value of the QR code.
 
 ```sql
 declare
-    l_result CLOB;
+    l_svg clob;
 begin
-    l_result := apex_barcode.GET_QRCODE_SVG(
-        p_value => 'EXAMPLE',
-        p_size => 1,
-        p_quiet => 1,
-        p_eclevel => null,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_svg := apex_barcode.get_qrcode_svg(
+        p_value            => 'https://example.com/orders/10045',
+        p_size             => 4,
+        p_quiet            => 2,
+        p_eclevel          => apex_barcode.c_eclevel_type_high,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ## APEX_COLLECTION
 
@@ -13698,7 +13490,7 @@ end;
 /
 ```
 
-Use the member detail sections to choose the correct `UPDATE_MEMBER_ATTRIBUTE` signature for character, number, date, CLOB, or BLOB values.
+Use the generated local detail pages to choose the correct `UPDATE_MEMBER_ATTRIBUTE` signature for character, number, date, CLOB, or BLOB values.
 
 ### Query-Based Load Pattern
 
@@ -13730,11 +13522,57 @@ Use bind-aware signatures where possible. Avoid no-bind query construction with 
 - Use `COLLECTION_EXISTS` before reading when the page can be reached in multiple ways.
 - Resequence only when the UI depends on contiguous row ordering.
 - Remember that collection contents can affect authorization-sensitive processing; validate again before final DML.
----
 
-### Member Details: APEX_COLLECTION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| About the APEX_COLLECTION API | about | [local](APEX_COLLECTION/About_the_APEX_COLLECTION_API.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-the-APEX_COLLECTION-API.html) |
+| Accessing a Collection | topic | [local](APEX_COLLECTION/Accessing_a_Collection.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Accessing-a-Collection.html) |
+| Determining Collection Status | topic | [local](APEX_COLLECTION/Determining_Collection_Status.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Determining-Collection-Status.html) |
+| Clearing Collection Session State | topic | [local](APEX_COLLECTION/Clearing_Collection_Session_State.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Clearing-Collection-Session-State.html) |
+| ADD_MEMBER Procedure | procedure | [local](APEX_COLLECTION/ADD_MEMBER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_MEMBER-Procedure.html) |
+| ADD_MEMBER Function | function | [local](APEX_COLLECTION/ADD_MEMBER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_MEMBER-Function.html) |
+| ADD_MEMBERS Procedure | procedure | [local](APEX_COLLECTION/ADD_MEMBERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_MEMBERS-Procedure.html) |
+| COLLECTION_EXISTS Function | function | [local](APEX_COLLECTION/COLLECTION_EXISTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_EXISTS-Function.html) |
+| COLLECTION_HAS_CHANGED Function | function | [local](APEX_COLLECTION/COLLECTION_HAS_CHANGED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_HAS_CHANGED-Function.html) |
+| COLLECTION_MEMBER_COUNT Function | function | [local](APEX_COLLECTION/COLLECTION_MEMBER_COUNT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_MEMBER_COUNT-Function.html) |
+| CREATE_COLLECTION Procedure | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION-Procedure.html) |
+| CREATE_COLLECTION_FROM_QUERY Procedure | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_FROM_QUERY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY-Procedure.html) |
+| CREATE_COLLECTION_FROM_QUERY2 Procedure | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_FROM_QUERY2_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY2-Procedure.html) |
+| CREATE_COLLECTION_FROM_QUERY_B Procedure | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_FROM_QUERY_B_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure.html) |
+| CREATE_COLLECTION_FROM_QUERY_B Procedure (No bind version) | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_FROM_QUERY_B_Procedure_(No_bind_version).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure-NBV.html) |
+| CREATE_COLLECTION_FROM_QUERYB2 Procedure | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_FROM_QUERYB2_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure.html) |
+| CREATE_COLLECTION_FROM_QUERYB2 Procedure (No bind version) | procedure | [local](APEX_COLLECTION/CREATE_COLLECTION_FROM_QUERYB2_Procedure_(No_bind_version).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure-NBV.html) |
+| CREATE_OR_TRUNCATE_COLLECTION Procedure | procedure | [local](APEX_COLLECTION/CREATE_OR_TRUNCATE_COLLECTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_OR_TRUNCATE_COLLECTION-Procedure.html) |
+| DELETE_ALL_COLLECTIONS Procedure | procedure | [local](APEX_COLLECTION/DELETE_ALL_COLLECTIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_ALL_COLLECTIONS-Procedure.html) |
+| DELETE_ALL_COLLECTIONS_SESSION Procedure | procedure | [local](APEX_COLLECTION/DELETE_ALL_COLLECTIONS_SESSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_ALL_COLLECTIONS_SESSION-Procedure.html) |
+| DELETE_COLLECTION Procedure | procedure | [local](APEX_COLLECTION/DELETE_COLLECTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_COLLECTION-Procedure.html) |
+| DELETE_MEMBER Procedure | procedure | [local](APEX_COLLECTION/DELETE_MEMBER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_MEMBER-Procedure.html) |
+| DELETE_MEMBERS Procedure | procedure | [local](APEX_COLLECTION/DELETE_MEMBERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_MEMBERS-Procedure.html) |
+| GET_MEMBER_MD5 Function | function | [local](APEX_COLLECTION/GET_MEMBER_MD5_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html) |
+| MERGE_MEMBERS Procedure | procedure | [local](APEX_COLLECTION/MERGE_MEMBERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MERGE_MEMBERS-Procedure.html) |
+| MOVE_MEMBER_DOWN Procedure | procedure | [local](APEX_COLLECTION/MOVE_MEMBER_DOWN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MOVE_MEMBER_DOWN-Procedure.html) |
+| MOVE_MEMBER_UP Procedure | procedure | [local](APEX_COLLECTION/MOVE_MEMBER_UP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MOVE_MEMBER_UP-Procedure.html) |
+| RESEQUENCE_COLLECTION Procedure | procedure | [local](APEX_COLLECTION/RESEQUENCE_COLLECTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESEQUENCE_COLLECTION-Procedure.html) |
+| RESET_COLLECTION_CHANGED Procedure | procedure | [local](APEX_COLLECTION/RESET_COLLECTION_CHANGED_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED-Procedure.html) |
+| RESET_COLLECTION_CHANGED_ALL Procedure | procedure | [local](APEX_COLLECTION/RESET_COLLECTION_CHANGED_ALL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED_ALL-Procedure.html) |
+| SORT_MEMBERS Procedure | procedure | [local](APEX_COLLECTION/SORT_MEMBERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SORT_MEMBERS-Procedure.html) |
+| TRUNCATE_COLLECTION Procedure | procedure | [local](APEX_COLLECTION/TRUNCATE_COLLECTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TRUNCATE_COLLECTION-Procedure.html) |
+| UPDATE_MEMBER Procedure | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER-Procedure.html) |
+| UPDATE_MEMBERS Procedure | procedure | [local](APEX_COLLECTION/UPDATE_MEMBERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBERS-Procedure.html) |
+| UPDATE_MEMBER_ATTRIBUTE Procedure Signature 1 | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_ATTRIBUTE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-1.html) |
+| UPDATE_MEMBER_ATTRIBUTE Procedure Signature 2 | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_ATTRIBUTE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-2.html) |
+| UPDATE_MEMBER_ATTRIBUTE Procedure Signature 3 | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_ATTRIBUTE_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-3.html) |
+| UPDATE_MEMBER_ATTRIBUTE Procedure Signature 4 | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_ATTRIBUTE_Procedure_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-4.html) |
+| UPDATE_MEMBER_ATTRIBUTE Procedure Signature 5 | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_ATTRIBUTE_Procedure_Signature_5.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-5.html) |
+| UPDATE_MEMBER_ATTRIBUTE Procedure Signature 6 | procedure | [local](APEX_COLLECTION/UPDATE_MEMBER_ATTRIBUTE_Procedure_Signature_6.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-6.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_COLLECTION.About the APEX_COLLECTION API
 
@@ -13759,7 +13597,6 @@ Use this page when code needs the `APEX_COLLECTION.About the APEX_COLLECTION API
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_COLLECTION.Accessing a Collection
 
@@ -13784,7 +13621,6 @@ Use this page when code needs the `APEX_COLLECTION.Accessing a Collection` topic
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_COLLECTION.Determining Collection Status
 
@@ -13809,7 +13645,6 @@ Use this page when code needs the `APEX_COLLECTION.Determining Collection Status
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_COLLECTION.Clearing Collection Session State
 
@@ -13834,7 +13669,6 @@ Use this page when code needs the `APEX_COLLECTION.Clearing Collection Session S
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_COLLECTION.ADD_MEMBER Procedure
 
@@ -13901,29 +13735,17 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.ADD_MEMBER(
-        p_collection_name => 'EXAMPLE',
-        p_c001 => 'EXAMPLE',
-        p_c050 => 'EXAMPLE',
-        p_n001 => 1,
-        p_n002 => 1,
-        p_n003 => 1,
-        p_n004 => 1,
-        p_n005 => 1,
-        p_d001 => sysdate,
-        p_d002 => sysdate,
-        p_d003 => sysdate,
-        p_d004 => sysdate,
-        p_d005 => sysdate,
-        p_clob001 => to_clob('Example text'),
-        p_blob001 => null,
-        p_xmltype001 => 'EXAMPLE',
-        p_generate_md5 => 'EXAMPLE'
+    apex_collection.add_member(
+        p_collection_name => 'ORDER_LINES',
+        p_c001            => :P20_PRODUCT_ID,
+        p_c002            => :P20_PRODUCT_NAME,
+        p_n001            => :P20_QUANTITY,
+        p_n002            => :P20_UNIT_PRICE,
+        p_generate_md5    => 'YES'
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.ADD_MEMBER Function
 
@@ -13987,32 +13809,19 @@ RETURN NUMBER;
 
 ```sql
 declare
-    l_result NUMBER;
+    l_seq_id number;
 begin
-    l_result := apex_collection.ADD_MEMBER(
-        p_collection_name => 'EXAMPLE',
-        p_c001 => 'EXAMPLE',
-        p_c050 => 'EXAMPLE',
-        p_n001 => 1,
-        p_n002 => 1,
-        p_n003 => 1,
-        p_n004 => 1,
-        p_n005 => 1,
-        p_d001 => sysdate,
-        p_d002 => sysdate,
-        p_d003 => sysdate,
-        p_d004 => sysdate,
-        p_d005 => sysdate,
-        p_clob001 => to_clob('Example text'),
-        p_blob001 => null,
-        p_xmltype001 => 'EXAMPLE',
-        p_generate_md5 => 'EXAMPLE'
+    l_seq_id := apex_collection.add_member(
+        p_collection_name => 'ORDER_LINES',
+        p_c001            => :P20_PRODUCT_ID,
+        p_c002            => :P20_PRODUCT_NAME,
+        p_n001            => :P20_QUANTITY,
+        p_n002            => :P20_UNIT_PRICE,
+        p_generate_md5    => 'YES'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.ADD_MEMBERS Procedure
 
@@ -14074,29 +13883,25 @@ This is a procedure and does not return a value.
 #### Simple Example
 
 ```sql
+declare
+    l_products apex_application_global.vc_arr2;
+    l_names    apex_application_global.vc_arr2;
+    l_qty      apex_application_global.n_arr;
 begin
-    apex_collection.ADD_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_c001 => null,
-        p_c002 => null,
-        p_c003 => null,
-        p_c050 => null,
-        p_n001 => null,
-        p_n002 => null,
-        p_n003 => null,
-        p_n004 => null,
-        p_n005 => null,
-        p_d001 => null,
-        p_d002 => null,
-        p_d003 => null,
-        p_d004 => null,
-        p_d005 => null,
-        p_generate_md5 => 'EXAMPLE'
+    l_products(1) := :P20_PRODUCT_ID;
+    l_names(1)    := :P20_PRODUCT_NAME;
+    l_qty(1)      := :P20_QUANTITY;
+
+    apex_collection.add_members(
+        p_collection_name => 'ORDER_LINES',
+        p_c001            => l_products,
+        p_c002            => l_names,
+        p_n001            => l_qty,
+        p_generate_md5    => 'YES'
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.COLLECTION_EXISTS Function
 
@@ -14135,17 +13940,13 @@ RETURN BOOLEAN;
 #### Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_collection.COLLECTION_EXISTS(
-        p_collection_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_collection.collection_exists('ORDER_LINES') then
+        apex_debug.info('ORDER_LINES exists in this session.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.COLLECTION_HAS_CHANGED Function
 
@@ -14184,17 +13985,13 @@ RETURN BOOLEAN;
 #### Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_collection.COLLECTION_HAS_CHANGED(
-        p_collection_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_collection.collection_has_changed('ORDER_LINES') then
+        apex_debug.info('Order lines changed.');
+    end if;
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.COLLECTION_MEMBER_COUNT Function
 
@@ -14234,16 +14031,13 @@ RETURN NUMBER;
 
 ```sql
 declare
-    l_result NUMBER;
+    l_count number;
 begin
-    l_result := apex_collection.COLLECTION_MEMBER_COUNT(
-        p_collection_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_count := apex_collection.collection_member_count('ORDER_LINES');
+    apex_debug.info('Order line count: %s', l_count);
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.CREATE_COLLECTION Procedure
 
@@ -14288,14 +14082,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION(
-        p_collection_name => 'EXAMPLE',
-        p_truncate_if_exists => 'EXAMPLE'
+    apex_collection.create_collection(
+        p_collection_name => 'ORDER_LINES'
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERY Procedure
 
@@ -14344,16 +14136,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERY(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_generate_md5 => 'EXAMPLE',
-        p_truncate_if_exists => 'EXAMPLE'
+    apex_collection.create_collection_from_query(
+        p_collection_name => 'ACTIVE_PRODUCTS',
+        p_query           => q'[select product_id, product_name, unit_price from products where active_yn = 'Y']',
+        p_generate_md5    => 'YES'
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERY2 Procedure
 
@@ -14402,16 +14192,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERY2(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_generate_md5 => 'EXAMPLE',
-        p_truncate_if_exists => 'EXAMPLE'
+    apex_collection.create_collection_from_query2(
+        p_collection_name => 'ACTIVE_PRODUCTS',
+        p_query           => q'[select product_id, product_name, unit_price from products where active_yn = 'Y']',
+        p_generate_md5    => 'YES'
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERY_B Procedure
 
@@ -14464,73 +14252,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERY_B(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_names => 'EXAMPLE',
-        p_values => 'EXAMPLE',
-        p_max_row_count => 1,
-        p_truncate_if_exists => 'EXAMPLE'
+    apex_collection.create_collection_from_query_b(
+        p_collection_name => 'ACTIVE_PRODUCTS',
+        p_query           => q'[select product_id, product_name, unit_price from products where active_yn = 'Y']',
+        p_max_row_count   => 500
     );
 end;
 /
 ```
----
-
-### APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERY_B Procedure (No bind version)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure-NBV.html)
-
-Parent package: APEX_COLLECTION
-
-#### Purpose
-
-Creates a collection from a supplied query using bulk operations.
-
-#### When To Use
-
-Use this page when code needs the `APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERY_B` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Signature
-
-```sql
-APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERY_B (
-    p_collection_name   IN VARCHAR2,
-    p_query             IN VARCHAR2,
-    p_max_row_count     IN NUMBER   DEFAULT NULL )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_collection_name` | The name of the collection. The maximum length is 255 characters. An error is returned if this collection exists with the specified name of the current user and in the same session. |
-| `p_query` | Query to execute to populate the members of the collection. |
-| `p_max_row_count` | Maximum number of rows returned from the query in p_query to be added to the collection. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERY_B(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_max_row_count => 1
-    );
-end;
-/
-```
----
 
 ### APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERYB2 Procedure
 
@@ -14583,73 +14312,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERYB2(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_names => 'EXAMPLE',
-        p_values => 'EXAMPLE',
-        p_max_row_count => 1,
-        p_truncate_if_exists => 'EXAMPLE'
+    apex_collection.create_collection_from_queryb2(
+        p_collection_name => 'ACTIVE_PRODUCTS',
+        p_query           => q'[select product_id, product_name, unit_price from products where active_yn = 'Y']',
+        p_max_row_count   => 500
     );
 end;
 /
 ```
----
-
-### APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERYB2 Procedure (No bind version)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure-NBV.html)
-
-Parent package: APEX_COLLECTION
-
-#### Purpose
-
-Creates a collection from a supplied query using bulk operations.
-
-#### When To Use
-
-Use this page when code needs the `APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERYB2` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Signature
-
-```sql
-APEX_COLLECTION.CREATE_COLLECTION_FROM_QUERYB2 (
-    p_collection_name   IN VARCHAR2,
-    p_query             IN VARCHAR2,
-    p_max_row_count     IN NUMBER   DEFAULT )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_collection_name` | The name of the collection. The maximum length is 255 characters. An error is returned if this collection exists with the specified name of the current user and in the same session. |
-| `p_query` | Query to execute to populate the members of the collection. |
-| `p_max_row_count` | Maximum number of rows returned from the query in p_query to be added to the collection. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_collection.CREATE_COLLECTION_FROM_QUERYB2(
-        p_collection_name => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_max_row_count => 1
-    );
-end;
-/
-```
----
 
 ### APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION Procedure
 
@@ -14692,13 +14362,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_OR_TRUNCATE_COLLECTION(
-        p_collection_name => 'EXAMPLE'
+    apex_collection.create_or_truncate_collection(
+        p_collection_name => 'ORDER_LINES'
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.DELETE_ALL_COLLECTIONS Procedure
 
@@ -14734,11 +14403,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_ALL_COLLECTIONS;
+    apex_collection.delete_all_collections;
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.DELETE_ALL_COLLECTIONS_SESSION Procedure
 
@@ -14774,11 +14442,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_ALL_COLLECTIONS_SESSION;
+    apex_collection.delete_all_collections_session;
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.DELETE_COLLECTION Procedure
 
@@ -14821,13 +14488,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_COLLECTION(
-        p_collection_name => 'EXAMPLE'
-    );
+    apex_collection.delete_collection('ORDER_LINES');
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.DELETE_MEMBER Procedure
 
@@ -14872,14 +14536,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_MEMBER(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 'EXAMPLE'
+    apex_collection.delete_member(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.DELETE_MEMBERS Procedure
 
@@ -14926,15 +14589,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_attr_number => 1,
-        p_attr_value => 'EXAMPLE'
+    apex_collection.delete_members(
+        p_collection_name => 'ORDER_LINES',
+        p_attr_number     => 1,
+        p_attr_value      => :P20_PRODUCT_ID
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.GET_MEMBER_MD5 Function
 
@@ -14976,17 +14638,16 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_md5 varchar2(32767);
 begin
-    l_result := apex_collection.GET_MEMBER_MD5(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1
+    l_md5 := apex_collection.get_member_md5(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+    apex_debug.info('Member MD5: %s', l_md5);
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.MERGE_MEMBERS Procedure
 
@@ -15043,22 +14704,21 @@ This is a procedure and does not return a value.
 #### Simple Example
 
 ```sql
+declare
+    l_seq      apex_application_global.vc_arr2;
+    l_product  apex_application_global.vc_arr2;
 begin
-    apex_collection.MERGE_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_seq => null,
-        p_c001 => null,
-        p_c002 => null,
-        p_c003 => null,
-        p_c050 => null,
-        p_null_index => 1,
-        p_null_value => 'EXAMPLE',
-        p_init_query => to_clob('Example text')
+    l_seq(1)     := :P20_SEQ_ID;
+    l_product(1) := :P20_PRODUCT_ID;
+
+    apex_collection.merge_members(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => l_seq,
+        p_c001            => l_product
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.MOVE_MEMBER_DOWN Procedure
 
@@ -15103,14 +14763,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.MOVE_MEMBER_DOWN(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1
+    apex_collection.move_member_down(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.MOVE_MEMBER_UP Procedure
 
@@ -15155,14 +14814,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.MOVE_MEMBER_UP(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1
+    apex_collection.move_member_up(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.RESEQUENCE_COLLECTION Procedure
 
@@ -15205,13 +14863,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.RESEQUENCE_COLLECTION(
-        p_collection_name => 'EXAMPLE'
-    );
+    apex_collection.resequence_collection('ORDER_LINES');
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.RESET_COLLECTION_CHANGED Procedure
 
@@ -15254,13 +14909,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.RESET_COLLECTION_CHANGED(
-        p_collection_name => 'EXAMPLE'
-    );
+    apex_collection.reset_collection_changed('ORDER_LINES');
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.RESET_COLLECTION_CHANGED_ALL Procedure
 
@@ -15296,11 +14948,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.RESET_COLLECTION_CHANGED_ALL;
+    apex_collection.reset_collection_changed_all;
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.SORT_MEMBERS Procedure
 
@@ -15345,14 +14996,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.SORT_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_sort_on_column_number => 1
+    apex_collection.sort_members(
+        p_collection_name => 'ORDER_LINES',
+        p_sort_on_column_number => 2
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.TRUNCATE_COLLECTION Procedure
 
@@ -15395,13 +15045,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.TRUNCATE_COLLECTION(
-        p_collection_name => 'EXAMPLE'
-    );
+    apex_collection.truncate_collection('ORDER_LINES');
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER Procedure
 
@@ -15437,7 +15084,7 @@ APEX_COLLECTION.UPDATE_MEMBER (
     p_d002              IN DATE     DEFAULT NULL,
     p_d003              IN DATE     DEFAULT NULL,
     p_d004              IN DATE     DEFAULT NULL,
-    p_d005              IN DATE     DEFAULT NULL,
+    p_d005              IN DATE     DEFAULT NULL,   
     p_clob001           IN CLOB     DEFAULT empty_clob(),
     p_blob001           IN BLOB     DEFAULT empty-blob(),
     p_xmltype001        IN XMLTYPE  DEFAULT NULL )
@@ -15470,31 +15117,17 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 'EXAMPLE',
-        p_c001 => 'EXAMPLE',
-        p_c002 => 'EXAMPLE',
-        p_c003 => 'EXAMPLE',
-        p_c050 => 'EXAMPLE',
-        p_n001 => 1,
-        p_n002 => 1,
-        p_n003 => 1,
-        p_n004 => 1,
-        p_n005 => 1,
-        p_d001 => sysdate,
-        p_d002 => sysdate,
-        p_d003 => sysdate,
-        p_d004 => sysdate,
-        p_d005 => sysdate,
-        p_clob001 => to_clob('Example text'),
-        p_blob001 => null,
-        p_xmltype001 => 'EXAMPLE'
+    apex_collection.update_member(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_c001            => :P20_PRODUCT_ID,
+        p_c002            => :P20_PRODUCT_NAME,
+        p_n001            => :P20_QUANTITY,
+        p_n002            => :P20_UNIT_PRICE
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBERS Procedure
 
@@ -15556,29 +15189,21 @@ This is a procedure and does not return a value.
 #### Simple Example
 
 ```sql
+declare
+    l_seq      apex_application_global.vc_arr2;
+    l_product  apex_application_global.vc_arr2;
 begin
-    apex_collection.UPDATE_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_seq => null,
-        p_c001 => null,
-        p_c002 => null,
-        p_c003 => null,
-        p_c050 => null,
-        p_n001 => null,
-        p_n002 => null,
-        p_n003 => null,
-        p_n004 => null,
-        p_n005 => null,
-        p_d001 => null,
-        p_d002 => null,
-        p_d003 => null,
-        p_d004 => null,
-        p_d005 => null
+    l_seq(1)     := :P20_SEQ_ID;
+    l_product(1) := :P20_PRODUCT_ID;
+
+    apex_collection.update_members(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => l_seq,
+        p_c001            => l_product
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER_ATTRIBUTE Procedure Signature 1
 
@@ -15627,16 +15252,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_attr_number => 1,
-        p_attr_value => 'EXAMPLE'
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_attr_number     => 1,
+        p_attr_value      => :P20_PRODUCT_ID
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER_ATTRIBUTE Procedure Signature 2
 
@@ -15685,16 +15309,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_clob_number => to_clob('Example text'),
-        p_clob_value => to_clob('Example text')
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_clob_number     => 1,
+        p_clob_value      => :P20_NOTES
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER_ATTRIBUTE Procedure Signature 3
 
@@ -15743,16 +15366,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_blob_number => 1,
-        p_blob_value => null
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_blob_number     => 1,
+        p_blob_value      => :P20_ATTACHMENT
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER_ATTRIBUTE Procedure Signature 4
 
@@ -15801,16 +15423,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_xmltype_number => 1,
-        p_xmltype_value => 'EXAMPLE'
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_xmltype_number  => 1,
+        p_xmltype_value   => xmltype('<line status="reviewed"/>')
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER_ATTRIBUTE Procedure Signature 5
 
@@ -15859,16 +15480,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_attr_number => 1,
-        p_number_value => 1
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_attr_number     => 1,
+        p_number_value    => :P20_QUANTITY
     );
 end;
 /
 ```
----
 
 ### APEX_COLLECTION.UPDATE_MEMBER_ATTRIBUTE Procedure Signature 6
 
@@ -15917,16 +15537,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.UPDATE_MEMBER_ATTRIBUTE(
-        p_collection_name => 'EXAMPLE',
-        p_seq => 1,
-        p_attr_number => 1,
-        p_date_value => sysdate
+    apex_collection.update_member_attribute(
+        p_collection_name => 'ORDER_LINES',
+        p_seq             => :P20_SEQ_ID,
+        p_attr_number     => 1,
+        p_date_value      => sysdate
     );
 end;
 /
 ```
----
 
 ## APEX_CREDENTIAL
 
@@ -16144,11 +15763,32 @@ Instance-level database credentials require instance configuration support.
 - Changing scope or persistent credential values can clear tokens; design reconnect flows accordingly.
 - Do not log secrets, tokens, private keys, or complete authorization headers.
 - Drop credentials only from controlled install/uninstall flows.
----
 
-### Member Details: APEX_CREDENTIAL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| CLEAR_TOKENS Procedure | procedure | [local](APEX_CREDENTIAL/CLEAR_TOKENS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_TOKENS-Procedure.html) |
+| CREATE_CREDENTIAL Procedure Signature 1 | procedure | [local](APEX_CREDENTIAL/CREATE_CREDENTIAL_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_CREDENTIAL-Procedure-Signature-1.html) |
+| CREATE_CREDENTIAL Procedure Signature 2 | procedure | [local](APEX_CREDENTIAL/CREATE_CREDENTIAL_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_CREDENTIAL-Procedure-Signature-2.html) |
+| DROP_CREDENTIAL Procedure | procedure | [local](APEX_CREDENTIAL/DROP_CREDENTIAL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DROP_CREDENTIAL-Procedure.html) |
+| SET_ALLOWED_URLS Procedure | procedure | [local](APEX_CREDENTIAL/SET_ALLOWED_URLS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_ALLOWED_URLS-Procedure.html) |
+| SET_DATABASE_CREDENTIAL Procedure | procedure | [local](APEX_CREDENTIAL/SET_DATABASE_CREDENTIAL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_DATABASE_CREDENTIAL-Procedure.html) |
+| SET_PERSISTENT_CREDENTIALS Procedure Signature 1 | procedure | [local](APEX_CREDENTIAL/SET_PERSISTENT_CREDENTIALS_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PERSISTENT_CREDENTIAL-Procedure-Signature-1.html) |
+| SET_PERSISTENT_CREDENTIALS Procedure Signature 2 | procedure | [local](APEX_CREDENTIAL/SET_PERSISTENT_CREDENTIALS_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PERSISTENT_CREDENTIAL-Procedure-Signature-2.html) |
+| SET_PERSISTENT_CREDENTIALS Procedure Signature 3 | procedure | [local](APEX_CREDENTIAL/SET_PERSISTENT_CREDENTIALS_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CREDENTIAL.SET_PERSISTENT_CREDENTIALS-Procedure-Signature-3.html) |
+| SET_PERSISTENT_TOKEN Procedure | procedure | [local](APEX_CREDENTIAL/SET_PERSISTENT_TOKEN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PERSISTENT_TOKEN-Procedure.html) |
+| SET_SCOPE Procedure | procedure | [local](APEX_CREDENTIAL/SET_SCOPE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CREDENTIAL.SET_SCOPE-Procedure.html) |
+| SET_SESSION_CREDENTIALS Procedure Signature 1 | procedure | [local](APEX_CREDENTIAL/SET_SESSION_CREDENTIALS_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_CREDENTIALS-Procedure-Signature-1.html) |
+| SET_SESSION_CREDENTIALS Procedure Signature 2 | procedure | [local](APEX_CREDENTIAL/SET_SESSION_CREDENTIALS_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_CREDENTIALS-Procedure-Signature-2.html) |
+| SET_SESSION_CREDENTIALS Procedure Signature 3 | procedure | [local](APEX_CREDENTIAL/SET_SESSION_CREDENTIALS_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_CREDENTIALS-Procedure-Signature-3.html) |
+| SET_SESSION_TOKEN Procedure | procedure | [local](APEX_CREDENTIAL/SET_SESSION_TOKEN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_TOKEN-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_CREDENTIAL.CLEAR_TOKENS Procedure
 
@@ -16190,13 +15830,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.CLEAR_TOKENS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_credential.clear_tokens('OAUTH_PROVIDER');
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.CREATE_CREDENTIAL Procedure Signature 1
 
@@ -16251,19 +15888,17 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.CREATE_CREDENTIAL(
-        p_credential_name => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_authentication_type => 'EXAMPLE',
-        p_scope => 'EXAMPLE',
-        p_allowed_urls => 'EXAMPLE',
-        p_prompt_on_install => true,
-        p_credential_comment => 'EXAMPLE'
+    apex_credential.create_credential(
+        p_credential_name      => 'Payments API Key',
+        p_credential_static_id => 'PAYMENTS_API',
+        p_authentication_type  => apex_credential.c_type_http_header,
+        p_allowed_urls         => apex_t_varchar2('https://payments.example.com/'),
+        p_prompt_on_install    => true,
+        p_credential_comment   => 'Used for server-side payment status calls.'
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.CREATE_CREDENTIAL Procedure Signature 2
 
@@ -16329,24 +15964,19 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.CREATE_CREDENTIAL(
-        p_credential_name => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_authentication_type => 'EXAMPLE',
-        p_scope => 'EXAMPLE',
-        p_allowed_urls => 'EXAMPLE',
-        p_prompt_on_install => true,
-        p_credential_comment => 'EXAMPLE',
-        p_db_credential_name => 'EXAMPLE',
-        p_db_credential_is_instance => true,
-        p_named_scopes => 'EXAMPLE',
-        p_referenced_static_id => 'EXAMPLE_STATIC_ID',
-        p_oauth_token_request_type => 'EXAMPLE'
+    apex_credential.create_credential(
+        p_credential_name           => 'Object Storage Credential',
+        p_credential_static_id      => 'OCI_OBJECT_STORAGE',
+        p_authentication_type       => apex_credential.c_type_oci,
+        p_allowed_urls              => apex_t_varchar2('https://objectstorage.us-ashburn-1.oraclecloud.com/'),
+        p_prompt_on_install         => true,
+        p_db_credential_name        => 'OCI_OBJECT_STORAGE_CRED',
+        p_db_credential_is_instance => false,
+        p_credential_comment        => 'Uses an Oracle Database credential for OCI REST calls.'
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.DROP_CREDENTIAL Procedure
 
@@ -16389,13 +16019,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.DROP_CREDENTIAL(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_credential.drop_credential('PAYMENTS_API');
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_ALLOWED_URLS Procedure
 
@@ -16442,15 +16069,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_ALLOWED_URLS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_allowed_urls => 'EXAMPLE',
-        p_client_secret => 'EXAMPLE'
+    apex_credential.set_allowed_urls(
+        p_credential_static_id => 'PAYMENTS_API',
+        p_allowed_urls         => apex_t_varchar2('https://payments.example.com/'),
+        p_client_secret        => :P50_CLIENT_SECRET
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_DATABASE_CREDENTIAL Procedure
 
@@ -16497,15 +16123,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_DATABASE_CREDENTIAL(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_db_credential_name => 'EXAMPLE',
-        p_db_credential_is_instance => true
+    apex_credential.set_database_credential(
+        p_credential_static_id      => 'PAYMENTS_DB',
+        p_db_credential_name        => 'PAYMENTS_DBMS_CRED',
+        p_db_credential_is_instance => false
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_PERSISTENT_CREDENTIALS Procedure Signature 1
 
@@ -16556,17 +16181,16 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_PERSISTENT_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_client_id => 'EXAMPLE',
-        p_client_secret => 'EXAMPLE',
-        p_namespace => 'EXAMPLE',
-        p_fingerprint => 'EXAMPLE'
+    apex_credential.set_persistent_credentials(
+        p_credential_static_id => 'OCI_OBJECT_STORAGE',
+        p_client_id            => :P50_USER_OCID,
+        p_client_secret        => :P50_PRIVATE_KEY,
+        p_namespace            => :P50_TENANCY_OCID,
+        p_fingerprint          => :P50_FINGERPRINT
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_PERSISTENT_CREDENTIALS Procedure Signature 2
 
@@ -16613,15 +16237,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_PERSISTENT_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_username => 'USER',
-        p_password => 'EXAMPLE'
+    apex_credential.set_persistent_credentials(
+        p_credential_static_id => 'PARTNER_BASIC',
+        p_username             => :P50_SERVICE_USERNAME,
+        p_password             => :P50_SERVICE_PASSWORD
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_PERSISTENT_CREDENTIALS Procedure Signature 3
 
@@ -16668,15 +16291,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_PERSISTENT_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_key => 'EXAMPLE',
-        p_value => 'EXAMPLE'
+    apex_credential.set_persistent_credentials(
+        p_credential_static_id => 'PAYMENTS_API',
+        p_key                  => 'Authorization',
+        p_value                => 'Bearer ' || :P50_API_TOKEN
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_PERSISTENT_TOKEN Procedure
 
@@ -16727,17 +16349,16 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_PERSISTENT_TOKEN(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_token_type => null,
-        p_token_value => 'EXAMPLE',
-        p_token_expires => sysdate,
-        p_token_scope => 'EXAMPLE'
+    apex_credential.set_persistent_token(
+        p_credential_static_id => 'OAUTH_PROVIDER',
+        p_token_type           => apex_credential.c_token_refresh,
+        p_token_value          => :P50_REFRESH_TOKEN,
+        p_token_expires        => add_months(sysdate, 6),
+        p_token_scope          => 'offline_access'
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_SCOPE Procedure
 
@@ -16784,15 +16405,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SCOPE(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_scope => 'EXAMPLE',
-        p_named_scopes => 'EXAMPLE'
+    apex_credential.set_scope(
+        p_credential_static_id => 'OAUTH_PROVIDER',
+        p_scope                => 'profile email',
+        p_named_scopes         => 'openid:profile:email'
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_SESSION_CREDENTIALS Procedure Signature 1
 
@@ -16839,15 +16459,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_username => 'USER',
-        p_password => 'EXAMPLE'
+    apex_credential.set_session_credentials(
+        p_credential_static_id => 'USER_SUPPLIED_BASIC',
+        p_username             => :P10_USERNAME,
+        p_password             => :P10_PASSWORD
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_SESSION_CREDENTIALS Procedure Signature 2
 
@@ -16869,8 +16488,8 @@ Use this page when code needs the `APEX_CREDENTIAL.SET_SESSION_CREDENTIALS` proc
 APEX_CREDENTIAL.SET_SESSION_CREDENTIALS (
     p_credential_static_id  IN VARCHAR2,
     p_client_id             IN VARCHAR2,
-    p_client_secret         IN VARCHAR2,
-    p_namespace             IN VARCHAR2 DEFAULT NULL,
+    p_client_secret         IN VARCHAR2, 
+    p_namespace             IN VARCHAR2 DEFAULT NULL,    
     p_fingerprint           IN VARCHAR2 DEFAULT NULL );
 ```
 
@@ -16898,17 +16517,16 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_client_id => 'EXAMPLE',
-        p_client_secret => 'EXAMPLE',
-        p_namespace => 'EXAMPLE',
-        p_fingerprint => 'EXAMPLE'
+    apex_credential.set_session_credentials(
+        p_credential_static_id => 'OCI_OBJECT_STORAGE',
+        p_client_id            => :P10_USER_OCID,
+        p_client_secret        => :P10_PRIVATE_KEY,
+        p_namespace            => :P10_TENANCY_OCID,
+        p_fingerprint          => :P10_FINGERPRINT
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_SESSION_CREDENTIALS Procedure Signature 3
 
@@ -16955,15 +16573,14 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_key => 'EXAMPLE',
-        p_value => 'EXAMPLE'
+    apex_credential.set_session_credentials(
+        p_credential_static_id => 'PAYMENTS_API',
+        p_key                  => 'Authorization',
+        p_value                => 'Bearer ' || :P10_ACCESS_TOKEN
     );
 end;
 /
 ```
----
 
 ### APEX_CREDENTIAL.SET_SESSION_TOKEN Procedure
 
@@ -17014,17 +16631,16 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_TOKEN(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_token_type => null,
-        p_token_value => 'EXAMPLE',
-        p_token_expires => sysdate,
-        p_token_scope => 'EXAMPLE'
+    apex_credential.set_session_token(
+        p_credential_static_id => 'OAUTH_PROVIDER',
+        p_token_type           => apex_credential.c_token_access,
+        p_token_value          => :P10_ACCESS_TOKEN,
+        p_token_expires        => sysdate + (55 / 1440),
+        p_token_scope          => 'profile email'
     );
 end;
 /
 ```
----
 
 ## APEX_CSS
 
@@ -17108,11 +16724,20 @@ Use `APEX_ESCAPE.CSS_SELECTOR` for dynamic selector fragments. Still prefer stab
 - `P_IE_CONDITION` is desupported on `ADD_FILE`; do not build new code around it.
 - `ADD_3RD_PARTY_LIBRARY_FILE` is deprecated; prefer `ADD_FILE` with explicit directories.
 - Keep inline CSS small and scoped to a component or Static ID.
----
 
-### Member Details: APEX_CSS
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ADD Procedure | procedure | [local](APEX_CSS/ADD_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD-Procedure.html) |
+| ADD_3RD_PARTY_LIBRARY_FILE Procedure (Deprecated) | procedure | [local](APEX_CSS/ADD_3RD_PARTY_LIBRARY_FILE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_3RD_PARTY_LIBRARY_FILE-Procedure.html) |
+| ADD_FILE Procedure | procedure | [local](APEX_CSS/ADD_FILE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_FILE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_CSS.ADD Procedure
 
@@ -17164,75 +16789,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_CSS.ADD_3RD_PARTY_LIBRARY_FILE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_3RD_PARTY_LIBRARY_FILE-Procedure.html)
-
-Parent package: APEX_CSS
-
-#### Purpose
-
-This procedure adds the link tag to load a third-party CSS file and also takes into account the specified CDN (content delivery network) for the application.
-
-#### When To Use
-
-Use this page when code needs the `APEX_CSS.ADD_3RD_PARTY_LIBRARY_FILE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_CSS.ADD_3RD_PARTY_LIBRARY_FILE (
-    p_library       IN    VARCHAR2,
-    p_file_name     IN    VARCHAR2 DEFAULT NULL,
-    p_directory     IN    VARCHAR2 DEFAULT NULL,
-    p_version       IN    VARCHAR2 DEFAULT NULL,
-    p_media_query   IN    VARCHAR2 DEFAULT NULL,
-    p_attributes    IN    VARCHAR2 DEFAULT NULL )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_library` | Use one of the c_library_* constants. |
-| `p_file_name` | Specifies the file name excluding version, .min , and .css . |
-| `p_directory` | (Optional) Directory where the file p_file_name is located. |
-| `p_version` | (Optional) If no value is provided, then uses the same version shipped with APEX . |
-| `p_media_query` | (Optional) Value that is set as media query. |
-| `p_attributes` | Extra attributes to add to the link tag. Note: Callers are responsible for escaping this parameter. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_css.ADD_3RD_PARTY_LIBRARY_FILE(
-        p_library => 'EXAMPLE',
-        p_file_name => 'EXAMPLE',
-        p_directory => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_media_query => to_clob('Example text'),
-        p_attributes => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_CSS.ADD_FILE Procedure
 
@@ -17300,7 +16856,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_CUSTOM_AUTH
 
@@ -17308,7 +16863,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 ### Purpose
 
-`APEX_CUSTOM_AUTH` is the older custom authentication helper package for registering users, sessions, cookies, and authentication checks. New work should usually start with APEX_AUTHENTICATION, but this package is still important for maintaining legacy custom schemes.
+`APEX_CUSTOM_AUTH` is the older custom authentication helper package for registering users, sessions, cookies, and authentication checks. New work should usually start with [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md), but this package is still important for maintaining legacy custom schemes.
 
 ### When To Use
 
@@ -17372,18 +16927,44 @@ end;
 - Never pass unvalidated credentials to `LOGIN`.
 - `POST_LOGIN` assumes authentication has already succeeded and only registers the session.
 - Keep legacy custom-auth code small and isolated so it can later migrate to `APEX_AUTHENTICATION`.
-- Avoid deprecated `LOGOUT`; use APEX_AUTHENTICATION logout support for new code.
+- Avoid deprecated `LOGOUT`; use [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md) logout support for new code.
 
 ### Related APIs
 
-- APEX_AUTHENTICATION for modern authentication flows.
-- APEX_SESSION for attaching/creating sessions from scripts.
-- APEX_LDAP for direct LDAP checks in legacy environments.
----
+- [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md) for modern authentication flows.
+- [APEX_SESSION](APEX_SESSION.md) for attaching/creating sessions from scripts.
+- [APEX_LDAP](APEX_LDAP.md) for direct LDAP checks in legacy environments.
 
-### Member Details: APEX_CUSTOM_AUTH
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| APPLICATION_PAGE_ITEM_EXISTS Function | function | [local](APEX_CUSTOM_AUTH/APPLICATION_PAGE_ITEM_EXISTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APPLICATION_PAGE_ITEM_EXISTS-Function.html) |
+| CURRENT_PAGE_IS_PUBLIC Function | function | [local](APEX_CUSTOM_AUTH/CURRENT_PAGE_IS_PUBLIC_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CURRENT_PAGE_IS_PUBLIC-Function.html) |
+| DEFINE_USER_SESSION Procedure | procedure | [local](APEX_CUSTOM_AUTH/DEFINE_USER_SESSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEFINE_USER_SESSION-Procedure.html) |
+| GET_COOKIE_PROPS Procedure | procedure | [local](APEX_CUSTOM_AUTH/GET_COOKIE_PROPS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_COOKIE_PROPS-Procedure.html) |
+| GET_LDAP_PROPS Procedure | procedure | [local](APEX_CUSTOM_AUTH/GET_LDAP_PROPS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LDAP_PROPS-Procedure.html) |
+| GET_NEXT_SESSION_ID Function | function | [local](APEX_CUSTOM_AUTH/GET_NEXT_SESSION_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_NEXT_SESSION_ID-Function.html) |
+| GET_SECURITY_GROUP_ID Function | function | [local](APEX_CUSTOM_AUTH/GET_SECURITY_GROUP_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SECURITY_GROUP_ID-Function.html) |
+| GET_SESSION_ID Function | function | [local](APEX_CUSTOM_AUTH/GET_SESSION_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_ID-Function.html) |
+| GET_SESSION_ID_FROM_COOKIE Function | function | [local](APEX_CUSTOM_AUTH/GET_SESSION_ID_FROM_COOKIE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_ID_FROM_COOKIE-Function.html) |
+| GET_USER Function | function | [local](APEX_CUSTOM_AUTH/GET_USER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USER-Function.html) |
+| GET_USERNAME Function | function | [local](APEX_CUSTOM_AUTH/GET_USERNAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USERNAME-Function.html) |
+| IS_SESSION_VALID Function | function | [local](APEX_CUSTOM_AUTH/IS_SESSION_VALID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_SESSION_VALID-Function.html) |
+| LDAP_DNPREP Function | function | [local](APEX_CUSTOM_AUTH/LDAP_DNPREP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LDAP_DNPREP-Function.html) |
+| LOGIN Procedure | procedure | [local](APEX_CUSTOM_AUTH/LOGIN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure-2.html) |
+| LOGOUT Procedure (Deprecated) | procedure | [local](APEX_CUSTOM_AUTH/LOGOUT_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGOUT-Procedure-DEPRECATED.html) |
+| POST_LOGIN Procedure | procedure | [local](APEX_CUSTOM_AUTH/POST_LOGIN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POST_LOGIN-Procedure-2.html) |
+| SESSION_ID_EXISTS Function | function | [local](APEX_CUSTOM_AUTH/SESSION_ID_EXISTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SESSION_ID_EXISTS-Function.html) |
+| SET_SESSION_ID Procedure | procedure | [local](APEX_CUSTOM_AUTH/SET_SESSION_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_ID-Procedure.html) |
+| SET_SESSION_ID_TO_NEXT_VALUE Procedure | procedure | [local](APEX_CUSTOM_AUTH/SET_SESSION_ID_TO_NEXT_VALUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_ID_TO_NEXT_VALUE-Procedure.html) |
+| SET_USER Procedure | procedure | [local](APEX_CUSTOM_AUTH/SET_USER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_USER-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_CUSTOM_AUTH.APPLICATION_PAGE_ITEM_EXISTS Function
 
@@ -17432,7 +17013,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.CURRENT_PAGE_IS_PUBLIC Function
 
@@ -17451,7 +17031,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.CURRENT_PAGE_IS_PUBLIC` func
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.CURRENT_PAGE_IS_PUBLIC
+APEX_CUSTOM_AUTH.CURRENT_PAGE_IS_PUBLIC 
 RETURN BOOLEAN;
 ```
 
@@ -17472,7 +17052,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.DEFINE_USER_SESSION Procedure
 
@@ -17524,7 +17103,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_COOKIE_PROPS Procedure
 
@@ -17585,7 +17163,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_LDAP_PROPS Procedure
 
@@ -17652,7 +17229,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_NEXT_SESSION_ID Function
 
@@ -17671,7 +17247,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.GET_NEXT_SESSION_ID` functio
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.GET_NEXT_SESSION_ID
+APEX_CUSTOM_AUTH.GET_NEXT_SESSION_ID 
 RETURN NUMBER;
 ```
 
@@ -17692,7 +17268,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_SECURITY_GROUP_ID Function
 
@@ -17711,7 +17286,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.GET_SECURITY_GROUP_ID` funct
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.GET_SECURITY_GROUP_ID
+APEX_CUSTOM_AUTH.GET_SECURITY_GROUP_ID 
 RETURN NUMBER;
 ```
 
@@ -17732,7 +17307,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_SESSION_ID Function
 
@@ -17751,7 +17325,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.GET_SESSION_ID` function. Co
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.GET_SESSION_ID
+APEX_CUSTOM_AUTH.GET_SESSION_ID 
 RETURN NUMBER;
 ```
 
@@ -17772,7 +17346,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_SESSION_ID_FROM_COOKIE Function
 
@@ -17812,7 +17385,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_USER Function
 
@@ -17831,7 +17403,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.GET_USER` function. Confirm 
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.GET_USER
+APEX_CUSTOM_AUTH.GET_USER 
 RETURN VARCHAR2;
 ```
 
@@ -17852,7 +17424,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.GET_USERNAME Function
 
@@ -17892,7 +17463,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.IS_SESSION_VALID Function
 
@@ -17932,7 +17502,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.LDAP_DNPREP Function
 
@@ -17985,7 +17554,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.LOGIN Procedure
 
@@ -18038,58 +17606,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_CUSTOM_AUTH.LOGOUT Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGOUT-Procedure-DEPRECATED.html)
-
-Parent package: APEX_CUSTOM_AUTH
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_CUSTOM_AUTH.LOGOUT` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_CUSTOM_AUTH.LOGOUT (
-    p_this_app              IN VARCHAR2 DEFAULT NULL,
-    p_next_app_page_sess    IN VARCHAR2 DEFAULT NULL,
-    p_next_url              IN VARCHAR2 DEFAULT NULL )
-```
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_custom_auth.LOGOUT(
-        p_this_app => 'EXAMPLE',
-        p_next_app_page_sess => 'EXAMPLE',
-        p_next_url => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_CUSTOM_AUTH.POST_LOGIN Procedure
 
@@ -18138,7 +17654,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.SESSION_ID_EXISTS Function
 
@@ -18157,7 +17672,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.SESSION_ID_EXISTS` function.
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.SESSION_ID_EXISTS
+APEX_CUSTOM_AUTH.SESSION_ID_EXISTS 
 RETURN BOOLEAN;
 ```
 
@@ -18178,7 +17693,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.SET_SESSION_ID Procedure
 
@@ -18197,7 +17711,7 @@ Use this page when code needs the `APEX_CUSTOM_AUTH.SET_SESSION_ID` procedure. C
 #### Signature
 
 ```sql
-APEX_CUSTOM_AUTH.SET_SESSION_ID (
+APEX_CUSTOM_AUTH.SET_SESSION_ID ( 
     p_session_id    IN    NUMBER )
 ```
 
@@ -18227,7 +17741,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.SET_SESSION_ID_TO_NEXT_VALUE Procedure
 
@@ -18267,7 +17780,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_CUSTOM_AUTH.SET_USER Procedure
 
@@ -18316,7 +17828,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DATA_LOADING
 
@@ -18420,11 +17931,21 @@ The profile is useful when diagnosing mismatches between an uploaded file and th
 - Validate upload size, extension, and authorization before calling `LOAD_DATA`.
 - Keep commit strategy consistent with the surrounding page process. Do not hide partial-load behavior from users.
 - For custom row-by-row validation, use `APEX_DATA_PARSER` first and call business APIs explicitly.
----
 
-### Member Details: APEX_DATA_LOADING
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Data Types | data types | [local](APEX_DATA_LOADING/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING-Data-Types.html) |
+| GET_FILE_PROFILE Function | function | [local](APEX_DATA_LOADING/GET_FILE_PROFILE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.GET_FILE_PROFILE-Function.html) |
+| LOAD_DATA Function Signature 1 | function | [local](APEX_DATA_LOADING/LOAD_DATA_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOAD_DATA-Function-Signature-1.html) |
+| LOAD_DATA Function Signature 2 | function | [local](APEX_DATA_LOADING/LOAD_DATA_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOAD_DATA-Function-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DATA_LOADING.Data Types
 
@@ -18449,7 +17970,6 @@ Use this page when code needs the `APEX_DATA_LOADING.Data Types` data types. Con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_DATA_LOADING.GET_FILE_PROFILE Function
 
@@ -18501,7 +18021,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_LOADING.LOAD_DATA Function Signature 1
 
@@ -18559,7 +18078,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_LOADING.LOAD_DATA Function Signature 2
 
@@ -18617,7 +18135,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DATA_EXPORT
 
@@ -18776,11 +18293,26 @@ end;
 - Use `p_file_name` without an extension when `DOWNLOAD` uses `p_add_file_extension => true`.
 - `p_as_clob` does not apply to binary formats such as XLSX and PDF.
 - Treat filters and SQL fragments as untrusted if they come from users. Prefer bind parameters through `APEX_EXEC`.
----
 
-### Member Details: APEX_DATA_EXPORT
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Global Constants | constants | [local](APEX_DATA_EXPORT/Global_Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-Global-Constants.html) |
+| Data Types | data types | [local](APEX_DATA_EXPORT/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-Data-Types.html) |
+| ADD_AGGREGATE Procedure | procedure | [local](APEX_DATA_EXPORT/ADD_AGGREGATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_AGGREGATE-Procedure.html) |
+| ADD_COLUMN Procedure | procedure | [local](APEX_DATA_EXPORT/ADD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_COLUMN-Procedure.html) |
+| ADD_COLUMN_GROUP Procedure | procedure | [local](APEX_DATA_EXPORT/ADD_COLUMN_GROUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_COLUMN_GROUP-Procedure.html) |
+| ADD_HIGHLIGHT Procedure | procedure | [local](APEX_DATA_EXPORT/ADD_HIGHLIGHT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_HIGHLIGHT-Procedure.html) |
+| DOWNLOAD Procedure | procedure | [local](APEX_DATA_EXPORT/DOWNLOAD_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-DOWNLOAD-Procedure.html) |
+| EXPORT Function | function | [local](APEX_DATA_EXPORT/EXPORT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-EXPORT-Function.html) |
+| GET_PRINT_CONFIG Function | function | [local](APEX_DATA_EXPORT/GET_PRINT_CONFIG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-GET_PRINT_CONFIG-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DATA_EXPORT.Global Constants
 
@@ -18805,7 +18337,6 @@ Use this page when code needs the `APEX_DATA_EXPORT.Global Constants` constants.
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_DATA_EXPORT.Data Types
 
@@ -18830,7 +18361,6 @@ Use this page when code needs the `APEX_DATA_EXPORT.Data Types` data types. Conf
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_DATA_EXPORT.ADD_AGGREGATE Procedure
 
@@ -18897,7 +18427,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_EXPORT.ADD_COLUMN Procedure
 
@@ -18973,7 +18502,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_EXPORT.ADD_COLUMN_GROUP Procedure
 
@@ -19034,7 +18562,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_EXPORT.ADD_HIGHLIGHT Procedure
 
@@ -19098,7 +18625,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_EXPORT.DOWNLOAD Procedure
 
@@ -19156,7 +18682,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_EXPORT.EXPORT Function
 
@@ -19183,19 +18708,19 @@ FUNCTION EXPORT (
   p_column_groups           IN t_column_groups  DEFAULT c_empty_column_groups,
   p_aggregates              IN t_aggregates     DEFAULT c_empty_aggregates,
   p_highlights              IN t_highlights     DEFAULT c_empty_highlights,
-  --
+  --          
   p_file_name               IN VARCHAR2         DEFAULT NULL,
   p_print_config            IN t_print_config   DEFAULT c_empty_print_config,
   p_page_header             IN VARCHAR2         DEFAULT NULL,
   p_page_footer             IN VARCHAR2         DEFAULT NULL,
   p_supplemental_text       IN VARCHAR2         DEFAULT NULL,
-  --
+  --          
   p_csv_enclosed_by         IN VARCHAR2         DEFAULT NULL,
   p_csv_separator           IN VARCHAR2         DEFAULT NULL,
-  --
+  --          
   p_pdf_accessible          IN BOOLEAN          DEFAULT NULL,
   --
-  p_xml_include_declaration IN BOOLEAN          DEFAULT false )
+  p_xml_include_declaration IN BOOLEAN          DEFAULT false ) 
   RETURN t_export
 ```
 
@@ -19258,7 +18783,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_EXPORT.GET_PRINT_CONFIG Function
 
@@ -19403,7 +18927,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DATA_INSTALL
 
@@ -19417,7 +18940,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 Use this package when reinstalling or replaying supporting object data without reinstalling every supporting object, especially from SQL Workshop or a controlled post-install script.
 
-Do not use it for regular end-user uploads; use APEX_DATA_LOADING, APEX_DATA_PARSER, or application-specific import code for that.
+Do not use it for regular end-user uploads; use [APEX_DATA_LOADING](APEX_DATA_LOADING.md), [APEX_DATA_PARSER](APEX_DATA_PARSER.md), or application-specific import code for that.
 
 ### API Surface
 
@@ -19472,14 +18995,21 @@ end;
 
 ### Related APIs
 
-- APEX_APPLICATION_INSTALL for application imports.
-- APEX_DATA_LOADING for declarative data loading.
-- APEX_DATA_PARSER for parsing uploaded or staged files.
----
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) for application imports.
+- [APEX_DATA_LOADING](APEX_DATA_LOADING.md) for declarative data loading.
+- [APEX_DATA_PARSER](APEX_DATA_PARSER.md) for parsing uploaded or staged files.
 
-### Member Details: APEX_DATA_INSTALL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| LOAD_SUPPORTING_OBJECT_DATA Procedure | procedure | [local](APEX_DATA_INSTALL/LOAD_SUPPORTING_OBJECT_DATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOAD_SUPPORTING_OBJECT_DATA-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DATA_INSTALL.LOAD_SUPPORTING_OBJECT_DATA Procedure
 
@@ -19534,7 +19064,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DATA_PARSER
 
@@ -19672,11 +19201,28 @@ Use the generated `PARSE` member page for exact JSON and XML row selector behavi
 - `P_DETECT_DATA_TYPES => 'N'` keeps parsed columns as text, which is often better for validation-first flows.
 - Validate file size, extension, MIME type, and user authorization before parsing.
 - For a production import, stage parsed text first, validate all rows, then commit business tables in a separate step.
----
 
-### Member Details: APEX_DATA_PARSER
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Global Constants | constants | [local](APEX_DATA_PARSER/Global_Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.Global-Constants.html) |
+| Data Types | data types | [local](APEX_DATA_PARSER/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.Data-Types.html) |
+| ASSERT_FILE_TYPE Function | function | [local](APEX_DATA_PARSER/ASSERT_FILE_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.ASSERT_FILE_TYPE-Function.html) |
+| DISCOVER Function | function | [local](APEX_DATA_PARSER/DISCOVER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.DISCOVER-Function.html) |
+| GET_COLUMNS Function | function | [local](APEX_DATA_PARSER/GET_COLUMNS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_COLUMNS-Function.html) |
+| GET_FILE_PROFILE Function | function | [local](APEX_DATA_PARSER/GET_FILE_PROFILE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_FILE_PROFILE-Function.html) |
+| GET_FILE_TYPE Function | function | [local](APEX_DATA_PARSER/GET_FILE_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_FILE_TYPE-Function.html) |
+| GET_XLSX_WORKSHEETS Function | function | [local](APEX_DATA_PARSER/GET_XLSX_WORKSHEETS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_XLSX_WORKSHEETS-Function.html) |
+| JSON_TO_PROFILE Function | function | [local](APEX_DATA_PARSER/JSON_TO_PROFILE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.JSON_TO_PROFILE-Function.html) |
+| PARSE Function | function | [local](APEX_DATA_PARSER/PARSE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.PARSE-Function.html) |
+| SET_PARSER_FLAGS Procedure | procedure | [local](APEX_DATA_PARSER/SET_PARSER_FLAGS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.SET_PARSER_FLAGS-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DATA_PARSER.Global Constants
 
@@ -19701,7 +19247,6 @@ Use this page when code needs the `APEX_DATA_PARSER.Global Constants` constants.
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_DATA_PARSER.Data Types
 
@@ -19726,7 +19271,6 @@ Use this page when code needs the `APEX_DATA_PARSER.Data Types` data types. Conf
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_DATA_PARSER.ASSERT_FILE_TYPE Function
 
@@ -19782,7 +19326,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.DISCOVER Function
 
@@ -19863,7 +19406,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.GET_COLUMNS Function
 
@@ -19910,7 +19452,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.GET_FILE_PROFILE Function
 
@@ -19953,7 +19494,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.GET_FILE_TYPE Function
 
@@ -20000,7 +19540,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.GET_XLSX_WORKSHEETS Function
 
@@ -20047,7 +19586,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.JSON_TO_PROFILE Function
 
@@ -20094,7 +19632,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.PARSE Function
 
@@ -20216,7 +19753,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DATA_PARSER.SET_PARSER_FLAGS Procedure
 
@@ -20268,7 +19804,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DB_DICTIONARY
 
@@ -20344,18 +19879,35 @@ end;
 - `GET_METADATA` follows `DBMS_DEVELOPER.GET_METADATA` style parameters.
 - Return type may depend on database release; check the member page when assigning to `JSON` versus `CLOB` in older environments.
 - Treat object names as sensitive. Whitelist schemas and object types for user-facing tools.
-- `FORMAT_METADATA` is especially useful before calling APEX_AI because it produces prompt-friendly descriptions.
+- `FORMAT_METADATA` is especially useful before calling [APEX_AI](APEX_AI.md) because it produces prompt-friendly descriptions.
 
 ### Related APIs
 
-- APEX_AI for AI prompts over schema metadata.
-- APEX_EXEC for executing controlled local/remote queries.
-- APEX_JSON for JSON response emission.
----
+- [APEX_AI](APEX_AI.md) for AI prompts over schema metadata.
+- [APEX_EXEC](APEX_EXEC.md) for executing controlled local/remote queries.
+- [APEX_JSON](APEX_JSON.md) for JSON response emission.
 
-### Member Details: APEX_DB_DICTIONARY
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| GET_METADATA Function | function | [local](APEX_DB_DICTIONARY/GET_METADATA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_METADATA-Function.html) |
+| GET_PRIMARY_KEY_COLUMNS Function | function | [local](APEX_DB_DICTIONARY/GET_PRIMARY_KEY_COLUMNS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_PRIMARY_KEY_COLUMNS-Function.html) |
+| GET_TABLE_INFO Function Signature 1 | function | [local](APEX_DB_DICTIONARY/GET_TABLE_INFO_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_TABLE_INFO-Function-Signature-1.html) |
+| GET_TABLE_INFO Function Signature 2 | function | [local](APEX_DB_DICTIONARY/GET_TABLE_INFO_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_TABLE_INFO-Function-Signature-2.html) |
+| GET_TABLE_INFO_REGEX Function | function | [local](APEX_DB_DICTIONARY/GET_TABLE_INFO_REGEX_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_TABLE_INFO_REGEX-Function.html) |
+| GET_TABLES_ARRAY Function | function | [local](APEX_DB_DICTIONARY/GET_TABLES_ARRAY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_TABLES_ARRAY-Function.html) |
+| GET_TABLES_JSON Function | function | [local](APEX_DB_DICTIONARY/GET_TABLES_JSON_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_TABLES_JSON-Function.html) |
+| GET_TABLES_SUMMARY Function | function | [local](APEX_DB_DICTIONARY/GET_TABLES_SUMMARY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.GET_TABLES_SUMMARY-Function.html) |
+| FORMAT_METADATA Function Signature 1 | function | [local](APEX_DB_DICTIONARY/FORMAT_METADATA_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.FORMAT_METADATA-Function-Signature-1.html) |
+| FORMAT_METADATA Function Signature 2 | function | [local](APEX_DB_DICTIONARY/FORMAT_METADATA_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.FORMAT_METADATA-Function-Signature-2.html) |
+| IS_SUPPORTED Function | function | [local](APEX_DB_DICTIONARY/IS_SUPPORTED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DB_DICTIONARY.IS_SUPPORTED-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DB_DICTIONARY.GET_METADATA Function
 
@@ -20420,7 +19972,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_PRIMARY_KEY_COLUMNS Function
 
@@ -20479,7 +20030,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_TABLE_INFO Function Signature 1
 
@@ -20553,7 +20103,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_TABLE_INFO Function Signature 2
 
@@ -20627,7 +20176,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_TABLE_INFO_REGEX Function
 
@@ -20707,7 +20255,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_TABLES_ARRAY Function
 
@@ -20766,7 +20313,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_TABLES_JSON Function
 
@@ -20831,7 +20377,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.GET_TABLES_SUMMARY Function
 
@@ -20899,7 +20444,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.FORMAT_METADATA Function Signature 1
 
@@ -20973,7 +20517,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.FORMAT_METADATA Function Signature 2
 
@@ -21047,7 +20590,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DB_DICTIONARY.IS_SUPPORTED Function
 
@@ -21091,7 +20633,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DEBUG
 
@@ -21202,11 +20743,39 @@ end;
 - Prefer `APEX_DEBUG` over `DBMS_OUTPUT` for APEX runtime diagnostics.
 - Use page view IDs in user-safe error messages so support can correlate with logs.
 - Remove old debug logs as part of operational housekeeping.
----
 
-### Member Details: APEX_DEBUG
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_DEBUG/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DEBUG-Constants.html) |
+| DISABLE Procedure | procedure | [local](APEX_DEBUG/DISABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DISABLE-Procedure.html) |
+| DISABLE_DBMS_OUTPUT Procedure | procedure | [local](APEX_DEBUG/DISABLE_DBMS_OUTPUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DISABLE_DBMS_OUTPUT-Procedure.html) |
+| ENABLE Procedure | procedure | [local](APEX_DEBUG/ENABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DEBUG-ENABLE-Procedure.html) |
+| ENTER Procedure | procedure | [local](APEX_DEBUG/ENTER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ENTER-Procedure.html) |
+| ENABLE_DBMS_OUTPUT Procedure | procedure | [local](APEX_DEBUG/ENABLE_DBMS_OUTPUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ENABLE_DBMS_OUTPUT-Procedure.html) |
+| ERROR Procedure | procedure | [local](APEX_DEBUG/ERROR_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ERROR-Procedure.html) |
+| GET_LAST_MESSAGE_ID Function | function | [local](APEX_DEBUG/GET_LAST_MESSAGE_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LAST_MESSAGE_ID-Function.html) |
+| GET_PAGE_VIEW_ID Function | function | [local](APEX_DEBUG/GET_PAGE_VIEW_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PAGE_VIEW_ID-Function.html) |
+| INFO Procedure | procedure | [local](APEX_DEBUG/INFO_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INFO-Procedure.html) |
+| LOG_DBMS_OUTPUT Procedure | procedure | [local](APEX_DEBUG/LOG_DBMS_OUTPUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOG_DBMS_OUTPUT-Procedure.html) |
+| LOG_LONG_MESSAGE Procedure | procedure | [local](APEX_DEBUG/LOG_LONG_MESSAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOG_LONG_MESSAGE-Procedure.html) |
+| LOG_MESSAGE Procedure (Deprecated) | procedure | [local](APEX_DEBUG/LOG_MESSAGE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOG_MESSAGE-Procedure-Deprecated.html) |
+| LOG_PAGE_SESSION_STATE Procedure | procedure | [local](APEX_DEBUG/LOG_PAGE_SESSION_STATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOG_PAGE_SESSION_STATE-Procedure.html) |
+| MESSAGE Procedure | procedure | [local](APEX_DEBUG/MESSAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MESSAGE-Procedure.html) |
+| REMOVE_DEBUG_BY_AGE Procedure | procedure | [local](APEX_DEBUG/REMOVE_DEBUG_BY_AGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_DEBUG_BY_AGE-Procedure.html) |
+| REMOVE_DEBUG_BY_APP Procedure | procedure | [local](APEX_DEBUG/REMOVE_DEBUG_BY_APP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_DEBUG_BY_APP-Procedure.html) |
+| REMOVE_DEBUG_BY_VIEW Procedure | procedure | [local](APEX_DEBUG/REMOVE_DEBUG_BY_VIEW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_DEBUG_BY_VIEW-Procedure.html) |
+| REMOVE_SESSION_MESSAGES Procedure | procedure | [local](APEX_DEBUG/REMOVE_SESSION_MESSAGES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SESSION_MESSAGES-Procedure.html) |
+| TOCHAR Function | function | [local](APEX_DEBUG/TOCHAR_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TOCHAR-Function.html) |
+| TRACE Procedure | procedure | [local](APEX_DEBUG/TRACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TRACE-Procedure.html) |
+| WARN Procedure | procedure | [local](APEX_DEBUG/WARN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WARN-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DEBUG.Constants
 
@@ -21231,7 +20800,6 @@ Use this page when code needs the `APEX_DEBUG.Constants` constants. Confirm secu
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_DEBUG.DISABLE Procedure
 
@@ -21271,7 +20839,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.DISABLE_DBMS_OUTPUT Procedure
 
@@ -21311,7 +20878,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.ENABLE Procedure
 
@@ -21360,7 +20926,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.ENTER Procedure
 
@@ -21453,7 +21018,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.ENABLE_DBMS_OUTPUT Procedure
 
@@ -21502,7 +21066,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.ERROR Procedure
 
@@ -21565,7 +21128,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.GET_LAST_MESSAGE_ID Function
 
@@ -21605,7 +21167,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.GET_PAGE_VIEW_ID Function
 
@@ -21645,7 +21206,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.INFO Procedure
 
@@ -21708,7 +21268,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.LOG_DBMS_OUTPUT Procedure
 
@@ -21748,7 +21307,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.LOG_LONG_MESSAGE Procedure
 
@@ -21803,66 +21361,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_DEBUG.LOG_MESSAGE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOG_MESSAGE-Procedure-Deprecated.html)
-
-Parent package: APEX_DEBUG
-
-#### Purpose
-
-This procedure logs a debug message.
-
-#### When To Use
-
-Use this page when code needs the `APEX_DEBUG.LOG_MESSAGE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_DEBUG.LOG_MESSAGE (
-    p_message   IN  VARCHAR2    DEFAULT NULL,
-    p_enabled   IN  BOOLEAN     DEFAULT FALSE,
-    p_level     IN  t_log_level DEFAULT c_log_level_app_trace )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_message` | The debug message with a maximum length of 1,000 bytes. |
-| `p_enabled` | Messages are logged when logging is enabled. TRUE enables logging. |
-| `p_level` | Identifies the level of the log message where 1 is most important and 9 is least important. This is an integer value. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_debug.LOG_MESSAGE(
-        p_message => to_clob('Example text'),
-        p_enabled => true,
-        p_level => null
-    );
-end;
-/
-```
----
 
 ### APEX_DEBUG.LOG_PAGE_SESSION_STATE Procedure
 
@@ -21882,8 +21380,8 @@ Use this page when code needs the `APEX_DEBUG.LOG_PAGE_SESSION_STATE` procedure.
 
 ```sql
 APEX_DEBUG.LOG_PAGE_SESSION_STATE (
-    p_page_id   IN  NUMBER      DEFAULT NULL,
-    p_enabled   IN  BOOLEAN     DEFAULT FALSE,
+    p_page_id   IN  NUMBER      DEFAULT NULL, 
+    p_enabled   IN  BOOLEAN     DEFAULT FALSE, 
     p_level     IN  t_log_level DEFAULT c_log_level_app_trace )
 ```
 
@@ -21917,7 +21415,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.MESSAGE Procedure
 
@@ -21996,7 +21493,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.REMOVE_DEBUG_BY_AGE Procedure
 
@@ -22048,7 +21544,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.REMOVE_DEBUG_BY_APP Procedure
 
@@ -22097,7 +21592,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.REMOVE_DEBUG_BY_VIEW Procedure
 
@@ -22149,7 +21643,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.REMOVE_SESSION_MESSAGES Procedure
 
@@ -22198,7 +21691,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.TOCHAR Function
 
@@ -22247,7 +21739,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.TRACE Procedure
 
@@ -22266,7 +21757,7 @@ Use this page when code needs the `APEX_DEBUG.TRACE` procedure. Confirm security
 #### Signature
 
 ```sql
-APEX_DEBUG.TRACE (
+APEX_DEBUG.TRACE ( 
     p_message       IN  VARCHAR2,
     p0              IN  VARCHAR2    DEFAULT NULL,
     p1              IN  VARCHAR2    DEFAULT NULL,
@@ -22310,7 +21801,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DEBUG.WARN Procedure
 
@@ -22373,7 +21863,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_DG_DATA_GEN
 
@@ -22495,18 +21984,52 @@ end;
 - Names and blueprint references are often case-sensitive after preserve-case choices; keep naming consistent.
 - `GENERATE_DATA` can produce SQL INSERT, CSV, JSON, INSERT INTO, or FAST INSERT INTO output.
 - Validate blueprints before long-running data generation.
-- Generated file output can be downloaded with APEX_HTTP or staged in a table.
+- Generated file output can be downloaded with [APEX_HTTP](APEX_HTTP.md) or staged in a table.
 
 ### Related APIs
 
-- APEX_COLLECTION for generated preview rows.
-- APEX_HTTP for downloads.
-- APEX_DATA_EXPORT for exporting app data in report formats.
----
+- [APEX_COLLECTION](APEX_COLLECTION.md) for generated preview rows.
+- [APEX_HTTP](APEX_HTTP.md) for downloads.
+- [APEX_DATA_EXPORT](APEX_DATA_EXPORT.md) for exporting app data in report formats.
 
-### Member Details: APEX_DG_DATA_GEN
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ADD_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/ADD_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_BLUEPRINT-Procedure.html) |
+| ADD_BLUEPRINT_FROM_FILE Procedure | procedure | [local](APEX_DG_DATA_GEN/ADD_BLUEPRINT_FROM_FILE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_BLUEPRINT_FROM_FILE-Procedure.html) |
+| ADD_BLUEPRINT_FROM_TABLES Procedure | procedure | [local](APEX_DG_DATA_GEN/ADD_BLUEPRINT_FROM_TABLES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_BLUEPRINT_FROM_TABLES-Procedure.html) |
+| ADD_COLUMN Procedure | procedure | [local](APEX_DG_DATA_GEN/ADD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DG_DATA_GEN.ADD_COLUMN-Procedure.html) |
+| ADD_DATA_SOURCE Procedure | procedure | [local](APEX_DG_DATA_GEN/ADD_DATA_SOURCE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_DATA_SOURCE-Procedure.html) |
+| ADD_TABLE Procedure | procedure | [local](APEX_DG_DATA_GEN/ADD_TABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TABLE-Procedure.html) |
+| EXPORT_BLUEPRINT Function | function | [local](APEX_DG_DATA_GEN/EXPORT_BLUEPRINT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXPORT_BLUEPRINT-Function.html) |
+| GENERATE_DATA Procedure Signature 1 | procedure | [local](APEX_DG_DATA_GEN/GENERATE_DATA_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GENERATE_DATA-Procedure-Signature-1.html) |
+| GENERATE_DATA Procedure Signature 2 | procedure | [local](APEX_DG_DATA_GEN/GENERATE_DATA_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GENERATE_DATA-Procedure-Signature-2.html) |
+| GENERATE_DATA_INTO_COLLECTION Procedure | procedure | [local](APEX_DG_DATA_GEN/GENERATE_DATA_INTO_COLLECTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GENERATE_DATA_INTO_COLLECTION-Procedure.html) |
+| GET_BLUEPRINT_ID Function | function | [local](APEX_DG_DATA_GEN/GET_BLUEPRINT_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BLUEPRINT_ID-Function.html) |
+| GET_BP_TABLE_ID Function | function | [local](APEX_DG_DATA_GEN/GET_BP_TABLE_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BP_TABLE_ID-Function.html) |
+| GET_EXAMPLE Function | function | [local](APEX_DG_DATA_GEN/GET_EXAMPLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EXAMPLE-Function.html) |
+| GET_WEIGHTED_INLINE_DATA Function | function | [local](APEX_DG_DATA_GEN/GET_WEIGHTED_INLINE_DATA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_WEIGHTED_INLINE_DATA-Function.html) |
+| IMPORT_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/IMPORT_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IMPORT_BLUEPRINT-Procedure.html) |
+| PREVIEW_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/PREVIEW_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PREVIEW_BLUEPRINT-Procedure.html) |
+| REMOVE_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/REMOVE_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_BLUEPRINT-Procedure.html) |
+| REMOVE_COLUMN Procedure | procedure | [local](APEX_DG_DATA_GEN/REMOVE_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_COLUMN-Procedure.html) |
+| REMOVE_DATA_SOURCE Procedure | procedure | [local](APEX_DG_DATA_GEN/REMOVE_DATA_SOURCE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_DATA_SOURCE-Procedure.html) |
+| REMOVE_TABLE Procedure | procedure | [local](APEX_DG_DATA_GEN/REMOVE_TABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_TABLE-Procedure.html) |
+| RESEQUENCE_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/RESEQUENCE_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESEQUENCE_BLUEPRINT-Procedure.html) |
+| STOP_DATA_GENERATION Procedure | procedure | [local](APEX_DG_DATA_GEN/STOP_DATA_GENERATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STOP_DATA_GENERATION-Procedure.html) |
+| UPDATE_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/UPDATE_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_BLUEPRINT-Procedure.html) |
+| UPDATE_COLUMN Procedure | procedure | [local](APEX_DG_DATA_GEN/UPDATE_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_COLUMN-Procedure.html) |
+| UPDATE_DATA_SOURCE Procedure | procedure | [local](APEX_DG_DATA_GEN/UPDATE_DATA_SOURCE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_DATA_SOURCE-Procedure.html) |
+| UPDATE_TABLE Procedure | procedure | [local](APEX_DG_DATA_GEN/UPDATE_TABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_TABLE-Procedure.html) |
+| VALIDATE_BLUEPRINT Procedure | procedure | [local](APEX_DG_DATA_GEN/VALIDATE_BLUEPRINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/VALIDATE_BLUEPRINT-Procedure.html) |
+| VALIDATE_INSTANCE_SETTING Procedure | procedure | [local](APEX_DG_DATA_GEN/VALIDATE_INSTANCE_SETTING_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/VALIDATE_INSTANCE_SETTING-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_DG_DATA_GEN.ADD_BLUEPRINT Procedure
 
@@ -22570,7 +22093,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.ADD_BLUEPRINT_FROM_FILE Procedure
 
@@ -22590,7 +22112,7 @@ Use this page when code needs the `APEX_DG_DATA_GEN.ADD_BLUEPRINT_FROM_FILE` pro
 
 ```sql
 APEX_DG_DATA_GEN.ADD_BLUEPRINT_FROM_FILE (
-    p_filename          IN VARCHAR2,                -- name of workspace or application file
+    p_filename          IN VARCHAR2,                -- name of workspace or application file   
     p_application_id    IN NUMBER   DEFAULT NULL,   -- Application ID of an Application File, or null if a workspace file
     p_override_name     IN VARCHAR2 DEFAULT NULL,   -- Name of blueprint, overrides the name provided in the file
     p_replace           IN BOOLEAN  DEFAULT FALSE,  -- return error if blueprint exist and p_replace=FALSE
@@ -22634,7 +22156,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.ADD_BLUEPRINT_FROM_TABLES Procedure
 
@@ -22660,7 +22181,7 @@ APEX_DG_DATA_GEN.ADD_BLUEPRINT_FROM_TABLES (
     p_exclude_columns   IN wwv_flow_t_varchar2 DEFAULT c_empty_t_varchar2,
     p_description       IN VARCHAR2 DEFAULT NULL,
     p_lang              IN VARCHAR2 DEFAULT 'en',
-    p_default_schema    IN VARCHAR2 DEFAULT NULL,
+    p_default_schema    IN VARCHAR2 DEFAULT NULL,   
     p_blueprint_id      OUT NUMBER );
 ```
 
@@ -22704,7 +22225,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.ADD_COLUMN Procedure
 
@@ -22843,7 +22363,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.ADD_DATA_SOURCE Procedure
 
@@ -22919,7 +22438,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.ADD_TABLE Procedure
 
@@ -23001,7 +22519,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.EXPORT_BLUEPRINT Function
 
@@ -23057,7 +22574,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GENERATE_DATA Procedure Signature 1
 
@@ -23130,7 +22646,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GENERATE_DATA Procedure Signature 2
 
@@ -23203,7 +22718,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GENERATE_DATA_INTO_COLLECTION Procedure
 
@@ -23267,7 +22781,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GET_BLUEPRINT_ID Function
 
@@ -23320,7 +22833,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GET_BP_TABLE_ID Function
 
@@ -23376,7 +22888,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GET_EXAMPLE Function
 
@@ -23431,7 +22942,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.GET_WEIGHTED_INLINE_DATA Function
 
@@ -23480,7 +22990,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.IMPORT_BLUEPRINT Procedure
 
@@ -23538,7 +23047,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.PREVIEW_BLUEPRINT Procedure
 
@@ -23597,7 +23105,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.REMOVE_BLUEPRINT Procedure
 
@@ -23646,7 +23153,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.REMOVE_COLUMN Procedure
 
@@ -23701,7 +23207,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.REMOVE_DATA_SOURCE Procedure
 
@@ -23753,7 +23258,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.REMOVE_TABLE Procedure
 
@@ -23805,7 +23309,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.RESEQUENCE_BLUEPRINT Procedure
 
@@ -23857,7 +23360,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.STOP_DATA_GENERATION Procedure
 
@@ -23906,7 +23408,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.UPDATE_BLUEPRINT Procedure
 
@@ -23969,7 +23470,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.UPDATE_COLUMN Procedure
 
@@ -24108,7 +23608,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.UPDATE_DATA_SOURCE Procedure
 
@@ -24184,7 +23683,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.UPDATE_TABLE Procedure
 
@@ -24260,7 +23758,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.VALIDATE_BLUEPRINT Procedure
 
@@ -24315,7 +23812,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_DG_DATA_GEN.VALIDATE_INSTANCE_SETTING Procedure
 
@@ -24370,7 +23866,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_ERROR
 
@@ -24478,11 +23973,29 @@ end;
 - Use item-associated errors for fields users can fix.
 - Use page-level notification errors for workflow-level problems.
 - Keep constraint-name mappings centralized in the application Error Handling Function.
----
 
-### Member Details: APEX_ERROR
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Attributes Used for Result Types | constants | [local](APEX_ERROR/Constants_and_Attributes_Used_for_Result_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Constants-and-Attributes-used-for-Result-Types.html) |
+| Example of an Error Handling Function | example | [local](APEX_ERROR/Example_of_an_Error_Handling_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Example-of-an-Error-Handling-Function.html) |
+| ADD_ERROR Procedure Signature 1 | procedure | [local](APEX_ERROR/ADD_ERROR_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ERROR-Procedure-Signature-1.html) |
+| ADD_ERROR Procedure Signature 2 | procedure | [local](APEX_ERROR/ADD_ERROR_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ERROR-Procedure-Signature-2.html) |
+| ADD_ERROR Procedure Signature 3 | procedure | [local](APEX_ERROR/ADD_ERROR_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ERROR-Procedure-Signature-3.html) |
+| ADD_ERROR Procedure Signature 4 | procedure | [local](APEX_ERROR/ADD_ERROR_Procedure_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ERROR-Procedure-Signature-4.html) |
+| ADD_ERROR Procedure Signature 5 | procedure | [local](APEX_ERROR/ADD_ERROR_Procedure_Signature_5.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ERROR-Procedure-Signature-5.html) |
+| AUTO_SET_ASSOCIATED_ITEM Procedure | procedure | [local](APEX_ERROR/AUTO_SET_ASSOCIATED_ITEM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/AUTO_SET_ASSOCIATED_ITEM-Procedure.html) |
+| EXTRACT_CONSTRAINT_NAME Function | function | [local](APEX_ERROR/EXTRACT_CONSTRAINT_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXTRACT_CONSTRAINT_NAME-Function.html) |
+| GET_FIRST_ORA_ERROR_TEXT Function | function | [local](APEX_ERROR/GET_FIRST_ORA_ERROR_TEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FIRST_ORA_ERROR_TEXT-Function.html) |
+| HAVE_ERRORS_OCCURRED Function | function | [local](APEX_ERROR/HAVE_ERRORS_OCCURRED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ERROR.HAVE_ERRORS_OCCURRED-Function.html) |
+| INIT_ERROR_RESULT Function | function | [local](APEX_ERROR/INIT_ERROR_RESULT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INIT_ERROR_RESULT-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_ERROR.Constants and Attributes Used for Result Types
 
@@ -24507,7 +24020,6 @@ Use this page when code needs the `APEX_ERROR.Constants and Attributes Used for 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_ERROR.Example of an Error Handling Function
 
@@ -24532,7 +24044,6 @@ Use this page when code needs the `APEX_ERROR.Example of an Error Handling Funct
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_ERROR.ADD_ERROR Procedure Signature 1
 
@@ -24590,7 +24101,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.ADD_ERROR Procedure Signature 2
 
@@ -24651,7 +24161,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.ADD_ERROR Procedure Signature 3
 
@@ -24726,7 +24235,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.ADD_ERROR Procedure Signature 4
 
@@ -24793,7 +24301,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.ADD_ERROR Procedure Signature 5
 
@@ -24874,7 +24381,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.AUTO_SET_ASSOCIATED_ITEM Procedure
 
@@ -24926,7 +24432,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.EXTRACT_CONSTRAINT_NAME Function
 
@@ -24978,7 +24483,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.GET_FIRST_ORA_ERROR_TEXT Function
 
@@ -25030,7 +24534,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.HAVE_ERRORS_OCCURRED Function
 
@@ -25070,7 +24573,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ERROR.INIT_ERROR_RESULT Function
 
@@ -25119,7 +24621,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_ESCAPE
 
@@ -25244,11 +24745,44 @@ Formula escaping helps protect spreadsheet users from cells beginning with formu
 - Do not concatenate user-controlled values into SQL or PL/SQL and call this "escaping"; use bind variables.
 - `STRIPHTML` is useful for plain text summaries, but it is not a complete sanitizer for rich content.
 - Use `APEX_JAVASCRIPT.ADD_VALUE` and `ADD_ATTRIBUTE` for JavaScript object snippets generated from PL/SQL.
----
 
-### Member Details: APEX_ESCAPE
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_ESCAPE/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ESCAPE-Constants.html) |
+| CSS_SELECTOR Function | function | [local](APEX_ESCAPE/CSS_SELECTOR_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CSS_SELECTOR-Function.html) |
+| CSV Function Signature 1 | function | [local](APEX_ESCAPE/CSV_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CSV-Function-Signature-1.html) |
+| CSV Function Signature 2 | function | [local](APEX_ESCAPE/CSV_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CSV-Function-Signature-2.html) |
+| GET_CSV_ENCLOSED_BY Function | function | [local](APEX_ESCAPE/GET_CSV_ENCLOSED_BY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CSV_ENCLOSED_BY-Function.html) |
+| GET_CSV_SEPARATED_BY Function | function | [local](APEX_ESCAPE/GET_CSV_SEPARATED_BY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CSV_SEPARATED_BY-Function.html) |
+| HTML Function | function | [local](APEX_ESCAPE/HTML_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML-Function.html) |
+| HTML_ALLOWLIST Function | function | [local](APEX_ESCAPE/HTML_ALLOWLIST_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_ALLOWLIST-Function.html) |
+| HTML_ALLOWLIST_CLOB Function | function | [local](APEX_ESCAPE/HTML_ALLOWLIST_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_ALLOWLIST_CLOB-Function.html) |
+| HTML_ATTRIBUTE Function | function | [local](APEX_ESCAPE/HTML_ATTRIBUTE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_ATTRIBUTE-Function.html) |
+| HTML_ATTRIBUTE_CLOB Function | function | [local](APEX_ESCAPE/HTML_ATTRIBUTE_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_ATTRIBUTE_CLOB-Function.html) |
+| HTML_CLOB Function | function | [local](APEX_ESCAPE/HTML_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_CLOB-Function.html) |
+| HTML_TRUNC Function Signature 1 | function | [local](APEX_ESCAPE/HTML_TRUNC_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_TRUNC-Function.html) |
+| HTML_TRUNC Function Signature 2 | function | [local](APEX_ESCAPE/HTML_TRUNC_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_TRUNC-Function-Signature-2.html) |
+| JS_LITERAL Function | function | [local](APEX_ESCAPE/JS_LITERAL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JS_LITERAL-Function.html) |
+| JS_LITERAL_CLOB Function | function | [local](APEX_ESCAPE/JS_LITERAL_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JS_LITERAL_CLOB-Function.html) |
+| JSON Function | function | [local](APEX_ESCAPE/JSON_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JSON-Function.html) |
+| JSON_CLOB Function | function | [local](APEX_ESCAPE/JSON_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JSON_CLOB-Function.html) |
+| LDAP_DN Function | function | [local](APEX_ESCAPE/LDAP_DN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LDAP_DN-Function.html) |
+| LDAP_SEARCH_FILTER Function | function | [local](APEX_ESCAPE/LDAP_SEARCH_FILTER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LDAP_SEARCH_FILTER-Function.html) |
+| NOOP Function Signature 1 | function | [local](APEX_ESCAPE/NOOP_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/NOOP-Function-Signature-1.html) |
+| NOOP Function Signature 2 | function | [local](APEX_ESCAPE/NOOP_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/NOOP-Function-Signature-2.html) |
+| REGEXP Function | function | [local](APEX_ESCAPE/REGEXP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REGEXP-Function.html) |
+| SET_CSV_PARAMETERS Procedure | procedure | [local](APEX_ESCAPE/SET_CSV_PARAMETERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_CSV_PARAMETERS-Procedure.html) |
+| SET_HTML_ESCAPING_MODE Procedure | procedure | [local](APEX_ESCAPE/SET_HTML_ESCAPING_MODE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_HTML_ESCAPING_MODE-Procedure.html) |
+| STRIPHTML Function Signature 1 | function | [local](APEX_ESCAPE/STRIPHTML_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRIPHTML-Function-Signature-1.html) |
+| STRIPHTML Function Signature 2 | function | [local](APEX_ESCAPE/STRIPHTML_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRIPHTML-Function-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_ESCAPE.Constants
 
@@ -25273,7 +24807,6 @@ Use this page when code needs the `APEX_ESCAPE.Constants` constants. Confirm sec
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_ESCAPE.CSS_SELECTOR Function
 
@@ -25322,7 +24855,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.CSV Function Signature 1
 
@@ -25377,7 +24909,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.CSV Function Signature 2
 
@@ -25432,7 +24963,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.GET_CSV_ENCLOSED_BY Function
 
@@ -25478,7 +25008,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.GET_CSV_SEPARATED_BY Function
 
@@ -25524,7 +25053,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML Function
 
@@ -25573,7 +25101,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_ALLOWLIST Function
 
@@ -25625,7 +25152,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_ALLOWLIST_CLOB Function
 
@@ -25677,7 +25203,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_ATTRIBUTE Function
 
@@ -25726,7 +25251,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_ATTRIBUTE_CLOB Function
 
@@ -25775,7 +25299,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_CLOB Function
 
@@ -25824,7 +25347,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_TRUNC Function Signature 1
 
@@ -25876,7 +25398,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.HTML_TRUNC Function Signature 2
 
@@ -25928,7 +25449,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.JS_LITERAL Function
 
@@ -25980,7 +25500,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.JS_LITERAL_CLOB Function
 
@@ -26030,7 +25549,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.JSON Function
 
@@ -26083,7 +25601,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.JSON_CLOB Function
 
@@ -26132,7 +25649,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.LDAP_DN Function
 
@@ -26187,7 +25703,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.LDAP_SEARCH_FILTER Function
 
@@ -26242,7 +25757,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.NOOP Function Signature 1
 
@@ -26291,7 +25805,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.NOOP Function Signature 2
 
@@ -26340,7 +25853,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.REGEXP Function
 
@@ -26388,7 +25900,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.SET_CSV_PARAMETERS Procedure
 
@@ -26443,7 +25954,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.SET_HTML_ESCAPING_MODE Procedure
 
@@ -26492,7 +26002,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.STRIPHTML Function Signature 1
 
@@ -26541,7 +26050,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ESCAPE.STRIPHTML Function Signature 2
 
@@ -26590,7 +26098,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_EXEC
 
@@ -26747,7 +26254,7 @@ end;
 /
 ```
 
-Use generated member detail sections for exact DML signatures and source-specific options.
+Use generated local member pages for exact DML signatures and source-specific options.
 
 ### Safety Guidance
 
@@ -26757,11 +26264,90 @@ Use generated member detail sections for exact DML signatures and source-specifi
 - Prefer non-deprecated REST Source APIs over Web Source APIs.
 - Enforce authorization before opening data sources that expose sensitive rows.
 - Log errors with enough context, but do not log secrets or full personal-data payloads.
----
 
-### Member Details: APEX_EXEC
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Call Sequences for APEX_EXEC | topic | [local](APEX_EXEC/Call_Sequences_for_APEX_EXEC.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/call-sequences-for-APEX_EXEC.html) |
+| Querying a Data Source with APEX_EXEC | topic | [local](APEX_EXEC/Querying_a_Data_Source_with_APEX_EXEC.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/call-sequences-for-APEX_EXEC.html) |
+| Executing a DML on a Data Source with APEX_EXEC | topic | [local](APEX_EXEC/Executing_a_DML_on_a_Data_Source_with_APEX_EXEC.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/call-sequences-for-APEX_EXEC.html) |
+| Executing a Remote Procedure or REST API with APEX_EXEC | procedure | [local](APEX_EXEC/Executing_a_Remote_Procedure_or_REST_API_with_APEX_EXEC.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/call-sequences-for-APEX_EXEC.html) |
+| Global Constants | constants | [local](APEX_EXEC/Global_Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.Global-Constants.html) |
+| Data Types | data types | [local](APEX_EXEC/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.Data-Types.html) |
+| ADD_COLUMN Procedure | procedure | [local](APEX_EXEC/ADD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ADD_COLUMN-Procedure.html) |
+| ADD_DML_ARRAY_ROW Procedure | procedure | [local](APEX_EXEC/ADD_DML_ARRAY_ROW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ADD_DML_ARRAY_ROW-Procedure.html) |
+| ADD_DML_ROW Procedure | procedure | [local](APEX_EXEC/ADD_DML_ROW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ADD_DML_ROW-Procedure.html) |
+| ADD_FILTER Procedures | topic | [local](APEX_EXEC/ADD_FILTER_Procedures.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ADD_FILTER-Procedure.html) |
+| ADD_ORDER_BY Procedure | procedure | [local](APEX_EXEC/ADD_ORDER_BY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ADD_ORDERBY-Procedure.html) |
+| ADD_PARAMETER Procedure | procedure | [local](APEX_EXEC/ADD_PARAMETER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ADD_ORDER_BY-Procedure.html) |
+| CLEAR_DML_ROWS Procedure | procedure | [local](APEX_EXEC/CLEAR_DML_ROWS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.CLEAR_DML_ROWS-Procedure.html) |
+| CLOSE Procedure | procedure | [local](APEX_EXEC/CLOSE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.CLOSE-Procedure.html) |
+| CLOSE_ARRAY Procedure | procedure | [local](APEX_EXEC/CLOSE_ARRAY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.CLOSE_ARRAY-Procedure.html) |
+| COLUMN_EXISTS Function | function | [local](APEX_EXEC/COLUMN_EXISTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.COLUMN_EXISTS-Function.html) |
+| COPY_DATA Procedure | procedure | [local](APEX_EXEC/COPY_DATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.COPY_DATA-Procedure.html) |
+| DESCRIBE_QUERY Function Signature 1 | function | [local](APEX_EXEC/DESCRIBE_QUERY_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.DESCRIBE_QUERY-Function-Signature-1.html) |
+| DESCRIBE_QUERY Function Signature 2 | function | [local](APEX_EXEC/DESCRIBE_QUERY_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.DESCRIBE_QUERY-Function-Signature-2.html) |
+| ENQUOTE_LITERAL Function | function | [local](APEX_EXEC/ENQUOTE_LITERAL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ENQUOTE_LITERAL-Function.html) |
+| ENQUOTE_NAME Function | function | [local](APEX_EXEC/ENQUOTE_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.ENQUOTE_NAME-Function.html) |
+| EXECUTE_DML Procedure | procedure | [local](APEX_EXEC/EXECUTE_DML_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_DML-Procedure.html) |
+| EXECUTE_PLSQL Procedure Signature 1 | procedure | [local](APEX_EXEC/EXECUTE_PLSQL_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_PLSQL-Procedure-Signature-1.html) |
+| EXECUTE_PLSQL Procedure Signature 2 | procedure | [local](APEX_EXEC/EXECUTE_PLSQL_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_PLSQL-Procedure-Signature-2.html) |
+| EXECUTE_REMOTE_PLSQL Procedure Signature 1 | procedure | [local](APEX_EXEC/EXECUTE_REMOTE_PLSQL_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_REMOTE_PLSQL-Procedure.html) |
+| EXECUTE_REMOTE_PLSQL Procedure Signature 2 | procedure | [local](APEX_EXEC/EXECUTE_REMOTE_PLSQL_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_REMOTE_PLSQL-Procedure-Signature-2.html) |
+| EXECUTE_REST_SOURCE Procedure Signature 1 | procedure | [local](APEX_EXEC/EXECUTE_REST_SOURCE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_REST_SOURCE-Procedure-Signature-1.html) |
+| EXECUTE_REST_SOURCE Procedure Signature 2 | procedure | [local](APEX_EXEC/EXECUTE_REST_SOURCE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_REST_SOURCE-Procedure-Signature-2.html) |
+| EXECUTE_WEB_SOURCE Procedure (Deprecated) | procedure | [local](APEX_EXEC/EXECUTE_WEB_SOURCE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_WEB_SOURCE-Procedure.html) |
+| GET Function | function | [local](APEX_EXEC/GET_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET-Functions.html) |
+| GET_ARRAY_ROW_DML_OPERATION Function | function | [local](APEX_EXEC/GET_ARRAY_ROW_DML_OPERATION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_ARRAY_ROW_DML_OPERATION-Function.html) |
+| GET_ARRAY_ROW_VERSION_CHECKSUM Function | function | [local](APEX_EXEC/GET_ARRAY_ROW_VERSION_CHECKSUM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_ARRAY_ROW_VERSION_CHECKSUM-Function.html) |
+| GET_COLUMN Function | function | [local](APEX_EXEC/GET_COLUMN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_COLUMN-FUNCTION.html) |
+| GET_COLUMNS Function | function | [local](APEX_EXEC/GET_COLUMNS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_COLUMNS-Function.html) |
+| GET_COLUMN_COUNT Function | function | [local](APEX_EXEC/GET_COLUMN_COUNT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_COLUMN_COUNT-FUNCTION.html) |
+| GET_COLUMN_POSITION Function | function | [local](APEX_EXEC/GET_COLUMN_POSITION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_COLUMN_POSITION-FUNCTION.html) |
+| GET_DATA_TYPE Function | function | [local](APEX_EXEC/GET_DATA_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_DATA_TYPE-Function.html) |
+| GET_DML_STATUS_CODE Function | function | [local](APEX_EXEC/GET_DML_STATUS_CODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_DML_STATUS_CODE-Function.html) |
+| GET_DML_STATUS_MESSAGE Function | function | [local](APEX_EXEC/GET_DML_STATUS_MESSAGE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_DML_STATUS_MESSAGE-Function.html) |
+| GET_PARAMETER Functions | topic | [local](APEX_EXEC/GET_PARAMETER_Functions.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_PARAMETERS-Function.html) |
+| GET_ROW_VERSION_CHECKSUM Function | function | [local](APEX_EXEC/GET_ROW_VERSION_CHECKSUM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_ROW_VERSION_CHECKSUM-Function.html) |
+| GET_TOTAL_ROW_COUNT Function | function | [local](APEX_EXEC/GET_TOTAL_ROW_COUNT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.GET_TOTAL_ROW_COUNT-FUNCTION.html) |
+| HAS_ERROR Function | function | [local](APEX_EXEC/HAS_ERROR_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.HAS_ERROR-Function.html) |
+| HAS_MORE_ARRAY_ROWS Function | function | [local](APEX_EXEC/HAS_MORE_ARRAY_ROWS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.HAS_MORE_ARRAY_ROWS-Function.html) |
+| HAS_MORE_ROWS Function | function | [local](APEX_EXEC/HAS_MORE_ROWS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.HAS_MORE_ROWS-Function.html) |
+| IS_GROUP_END Function | function | [local](APEX_EXEC/IS_GROUP_END_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.IS_GROUP_END-Function.html) |
+| IS_REMOTE_SQL_AUTH_VALID Function | function | [local](APEX_EXEC/IS_REMOTE_SQL_AUTH_VALID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.IS_REMOTE_SQL_AUTH_VALID-Function.html) |
+| NEXT_ARRAY_ROW Function | function | [local](APEX_EXEC/NEXT_ARRAY_ROW_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.NEXT_ARRAY_ROW-Function.html) |
+| NEXT_ROW Function | function | [local](APEX_EXEC/NEXT_ROW_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.NEXT_ROW-Function.html) |
+| OPEN_ARRAY Procedure Signature 1 | procedure | [local](APEX_EXEC/OPEN_ARRAY_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_ARRAY-Procedure-Signature-1.html) |
+| OPEN_ARRAY Procedure Signature 2 | procedure | [local](APEX_EXEC/OPEN_ARRAY_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_ARRAY-Procedure-Signature-2.html) |
+| OPEN_DUALITY_VIEW_DML_CONTEXT Function | function | [local](APEX_EXEC/OPEN_DUALITY_VIEW_DML_CONTEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_DUALITY_VIEW_DML_CONTEXT-Function.html) |
+| OPEN_JSON_SOURCE_DML_CONTEXT Function | function | [local](APEX_EXEC/OPEN_JSON_SOURCE_DML_CONTEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_JSON_SOURCE_DML_CONTEXT-Function.html) |
+| OPEN_LOCAL_DML_CONTEXT Function | function | [local](APEX_EXEC/OPEN_LOCAL_DML_CONTEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_LOCAL_DML_CONTEXT-Function.html) |
+| OPEN_QUERY_CONTEXT Function Signature 1 | function | [local](APEX_EXEC/OPEN_QUERY_CONTEXT_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_QUERY_CONTEXT-Function-1.html) |
+| OPEN_QUERY_CONTEXT Function Signature 2 | function | [local](APEX_EXEC/OPEN_QUERY_CONTEXT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC-OPEN_QUERY_CONTEXT-Function-2.html) |
+| OPEN_REMOTE_DML_CONTEXT Function | function | [local](APEX_EXEC/OPEN_REMOTE_DML_CONTEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_REMOTE_DML_CONTEXT-Function.html) |
+| OPEN_REMOTE_SQL_QUERY Function | function | [local](APEX_EXEC/OPEN_REMOTE_SQL_QUERY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_REMOTE_SQL_QUERY-Function.html) |
+| OPEN_REST_SOURCE_DML_CONTEXT Function | function | [local](APEX_EXEC/OPEN_REST_SOURCE_DML_CONTEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_REST_SOURCE_DML_CONTEXT-Function.html) |
+| OPEN_REST_SOURCE_QUERY Function | function | [local](APEX_EXEC/OPEN_REST_SOURCE_QUERY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_REST_SOURCE_QUERY-Function.html) |
+| OPEN_WEB_SOURCE_DML_CONTEXT Function (Deprecated) | function | [local](APEX_EXEC/OPEN_WEB_SOURCE_DML_CONTEXT_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_WEB_SOURCE_DML_CONTEXT-Function.html) |
+| OPEN_WEB_SOURCE_QUERY Function (Deprecated) | function | [local](APEX_EXEC/OPEN_WEB_SOURCE_QUERY_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_WEB_SOURCE_QUERY-Function.html) |
+| PURGE_DUALITY_VIEW_CACHE Procedure | procedure | [local](APEX_EXEC/PURGE_DUALITY_VIEW_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.PURGE_DUALITY_VIEW_CACHE-Procedure.html) |
+| PURGE_JSON_SOURCE_CACHE Procedure | procedure | [local](APEX_EXEC/PURGE_JSON_SOURCE_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.PURGE_JSON_SOURCE_CACHE-Procedure.html) |
+| PURGE_REST_SOURCE_CACHE Procedure | procedure | [local](APEX_EXEC/PURGE_REST_SOURCE_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.PURGE_REST_SOURCE_CACHE-procedure.html) |
+| PURGE_WEB_SOURCE_CACHE Procedure (Deprecated) | procedure | [local](APEX_EXEC/PURGE_WEB_SOURCE_CACHE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.PURGE_WEB_SOURCE_CACHE-Procedure.html) |
+| SET_ARRAY_CURRENT_ROW Procedure | procedure | [local](APEX_EXEC/SET_ARRAY_CURRENT_ROW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_ARRAY_CURRENT_ROW-Procedure.html) |
+| SET_ARRAY_ROW_VERSION_CHECKSUM Procedure | procedure | [local](APEX_EXEC/SET_ARRAY_ROW_VERSION_CHECKSUM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_ARRAY_ROW_VERSION_CHECKSUM-Procedure.html) |
+| SET_CURRENT_ROW Procedure | procedure | [local](APEX_EXEC/SET_CURRENT_ROW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_CURRENT_ROW-Procedure.html) |
+| SET_NULL Procedure | procedure | [local](APEX_EXEC/SET_NULL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_NULL-Procedure.html) |
+| SET_ROW_VERSION_CHECKSUM Procedure | procedure | [local](APEX_EXEC/SET_ROW_VERSION_CHECKSUM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_ROW_VERSION_CHECKSUM-Procedure.html) |
+| SET_VALUE Procedure | procedure | [local](APEX_EXEC/SET_VALUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_VALUE-Procedure.html) |
+| SET_VALUES Procedure | procedure | [local](APEX_EXEC/SET_VALUES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.SET_VALUES-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_EXEC.Call Sequences for APEX_EXEC
 
@@ -26786,7 +26372,6 @@ Use this page when code needs the `APEX_EXEC.Call Sequences for APEX_EXEC` topic
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.Querying a Data Source with APEX_EXEC
 
@@ -26811,7 +26396,6 @@ Use this page when code needs the `APEX_EXEC.Querying a Data Source with APEX_EX
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.Executing a DML on a Data Source with APEX_EXEC
 
@@ -26836,7 +26420,6 @@ Use this page when code needs the `APEX_EXEC.Executing a DML on a Data Source wi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.Executing a Remote Procedure or REST API with APEX_EXEC
 
@@ -26865,7 +26448,6 @@ This is a procedure and does not return a value.
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.Global Constants
 
@@ -26890,7 +26472,6 @@ Use this page when code needs the `APEX_EXEC.Global Constants` constants. Confir
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.Data Types
 
@@ -26915,7 +26496,6 @@ Use this page when code needs the `APEX_EXEC.Data Types` data types. Confirm sec
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.ADD_COLUMN Procedure
 
@@ -26991,7 +26571,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.ADD_DML_ARRAY_ROW Procedure
 
@@ -27049,7 +26628,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.ADD_DML_ROW Procedure
 
@@ -27101,7 +26679,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.ADD_FILTER Procedures
 
@@ -27166,7 +26743,6 @@ PROCEDURE ADD_FILTER (
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.ADD_ORDER_BY Procedure
 
@@ -27225,7 +26801,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.ADD_PARAMETER Procedure
 
@@ -27280,7 +26855,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.CLEAR_DML_ROWS Procedure
 
@@ -27329,7 +26903,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.CLOSE Procedure
 
@@ -27378,7 +26951,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.CLOSE_ARRAY Procedure
 
@@ -27427,7 +26999,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.COLUMN_EXISTS Function
 
@@ -27486,7 +27057,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.COPY_DATA Procedure
 
@@ -27541,7 +27111,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.DESCRIBE_QUERY Function Signature 1
 
@@ -27594,7 +27163,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.DESCRIBE_QUERY Function Signature 2
 
@@ -27699,7 +27267,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.ENQUOTE_LITERAL Function
 
@@ -27755,7 +27322,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.ENQUOTE_NAME Function
 
@@ -27811,7 +27377,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_DML Procedure
 
@@ -27863,7 +27428,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_PLSQL Procedure Signature 1
 
@@ -27918,7 +27482,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_PLSQL Procedure Signature 2
 
@@ -27967,7 +27530,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_REMOTE_PLSQL Procedure Signature 1
 
@@ -28025,7 +27587,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_REMOTE_PLSQL Procedure Signature 2
 
@@ -28077,7 +27638,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_REST_SOURCE Procedure Signature 1
 
@@ -28136,7 +27696,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.EXECUTE_REST_SOURCE Procedure Signature 2
 
@@ -28191,69 +27750,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_EXEC.EXECUTE_WEB_SOURCE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.EXECUTE_WEB_SOURCE-Procedure.html)
-
-Parent package: APEX_EXEC
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_EXEC.EXECUTE_WEB_SOURCE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_EXEC.EXECUTE_WEB_SOURCE (
-    p_module_static_id IN VARCHAR2,
-    p_operation        IN VARCHAR2,
-    p_url_pattern      IN VARCHAR2         DEFAULT NULL,
-    p_parameters       IN OUT t_parameters )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_module_static_id` | Static ID of the web source module. |
-| `p_operation` | Name of the operation (for example, POST, GET, DELETE). |
-| `p_url_pattern` | If multiple operations with the same name exist, specify the URL pattern, as defined in Shared Components, to identify the web source operation. |
-| `p_parameters` | Parameter values to pass to the external web source. Note that HTTP Headers, URL Patterns and other parameters being passed to a Web Source Module are typically strings. Oracle recommends to explicitly pass all values to VARCHAR2 before adding to the T_PARAMETERS array. |
-
-#### Returns
-
-Return Description p_parameters Array with OUT parameter values, received from the web source module.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_exec.EXECUTE_WEB_SOURCE(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_operation => 'EXAMPLE',
-        p_url_pattern => 'EXAMPLE',
-        p_parameters => null
-    );
-end;
-/
-```
----
 
 ### APEX_EXEC.GET Function
 
@@ -28275,7 +27771,7 @@ Use this page when code needs the `APEX_EXEC.GET` function. Confirm security, wo
 APEX_EXEC.GET_VARCHAR2 (
     p_context     IN t_context,
     p_column_idx  IN PLS_INTEGER ) RETURN VARCHAR2;
-
+	
 APEX_EXEC.GET_VARCHAR2 (
     p_context     IN t_context,
     p_column_name IN VARCHAR2 ) RETURN VARCHAR2;
@@ -28314,7 +27810,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_ARRAY_ROW_DML_OPERATION Function
 
@@ -28367,7 +27862,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_ARRAY_ROW_VERSION_CHECKSUM Function
 
@@ -28420,7 +27914,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_COLUMN Function
 
@@ -28476,7 +27969,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_COLUMNS Function
 
@@ -28529,7 +28021,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_COLUMN_COUNT Function
 
@@ -28582,7 +28073,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_COLUMN_POSITION Function
 
@@ -28602,7 +28092,7 @@ Use this page when code needs the `APEX_EXEC.GET_COLUMN_POSITION` function. Conf
 
 ```sql
 APEX_EXEC.GET_COLUMN_POSITION (
-    p_context               IN t_context,
+    p_context               IN t_context, 
     p_column_name           IN VARCHAR2,
     p_attribute_label       IN VARCHAR2  DEFAULT NULL,
     p_is_required           IN BOOLEAN   DEFAULT FALSE,
@@ -28650,7 +28140,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_DATA_TYPE Function
 
@@ -28669,7 +28158,7 @@ Use this page when code needs the `APEX_EXEC.GET_DATA_TYPE` function. Confirm se
 #### Signature
 
 ```sql
-APEX_EXEC.GET_DATA_TYPE (
+APEX_EXEC.GET_DATA_TYPE ( 
     p_datatype_num      IN apex_exec.t_data_type )
 RETURN VARCHAR2;
 ```
@@ -28704,7 +28193,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_DML_STATUS_CODE Function
 
@@ -28757,7 +28245,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_DML_STATUS_MESSAGE Function
 
@@ -28810,7 +28297,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_PARAMETER Functions
 
@@ -28888,7 +28374,6 @@ Parameter value. Parent topic: APEX_EXEC
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXEC.GET_ROW_VERSION_CHECKSUM Function
 
@@ -28941,7 +28426,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.GET_TOTAL_ROW_COUNT Function
 
@@ -28994,7 +28478,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.HAS_ERROR Function
 
@@ -29047,7 +28530,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.HAS_MORE_ARRAY_ROWS Function
 
@@ -29067,7 +28549,7 @@ Use this page when code needs the `APEX_EXEC.HAS_MORE_ARRAY_ROWS` function. Conf
 
 ```sql
 APEX_EXEC.HAS_MORE_ARRAY_ROWS (
-    p_context   IN t_context )
+    p_context   IN t_context ) 
     RETURN BOOLEAN;
 ```
 
@@ -29100,7 +28582,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.HAS_MORE_ROWS Function
 
@@ -29153,7 +28634,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.IS_GROUP_END Function
 
@@ -29206,7 +28686,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.IS_REMOTE_SQL_AUTH_VALID Function
 
@@ -29259,7 +28738,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.NEXT_ARRAY_ROW Function
 
@@ -29312,7 +28790,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.NEXT_ROW Function
 
@@ -29365,7 +28842,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_ARRAY Procedure Signature 1
 
@@ -29417,7 +28893,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_ARRAY Procedure Signature 2
 
@@ -29469,7 +28944,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_DUALITY_VIEW_DML_CONTEXT Function
 
@@ -29532,7 +29006,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_JSON_SOURCE_DML_CONTEXT Function
 
@@ -29595,7 +29068,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_LOCAL_DML_CONTEXT Function
 
@@ -29617,7 +29089,7 @@ Use this page when code needs the `APEX_EXEC.OPEN_LOCAL_DML_CONTEXT` function. C
 FUNCTION OPEN_LOCAL_DML_CONTEXT (
     p_columns                 IN t_columns               DEFAULT c_empty_columns,
     p_query_type              IN t_query_type,
-    --
+    --     
     p_table_owner             IN VARCHAR2                DEFAULT NULL,
     p_table_name              IN VARCHAR2                DEFAULT NULL,
     p_where_clause            IN VARCHAR2                DEFAULT NULL,
@@ -29705,7 +29177,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_QUERY_CONTEXT Function Signature 1
 
@@ -29870,7 +29341,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_QUERY_CONTEXT Function Signature 2
 
@@ -29954,7 +29424,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_REMOTE_DML_CONTEXT Function
 
@@ -29978,10 +29447,10 @@ APEX_EXEC.OPEN_REMOTE_DML_CONTEXT (
     --
     p_columns                 IN t_columns               DEFAULT c_empty_columns,
     p_query_type              IN t_query_type,
-    --
+    --     
     p_table_owner             IN VARCHAR2                DEFAULT NULL,
     p_table_name              IN VARCHAR2                DEFAULT NULL,
-    p_where_clause            IN VARCHAR2                DEFAULT NULL,
+    p_where_clause            IN VARCHAR2                DEFAULT NULL,  
     --
     p_sql_query               IN VARCHAR2                DEFAULT NULL,
     p_function_body           IN VARCHAR2                DEFAULT NULL,
@@ -30068,7 +29537,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_REMOTE_SQL_QUERY Function
 
@@ -30148,7 +29616,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_REST_SOURCE_DML_CONTEXT Function
 
@@ -30231,7 +29698,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.OPEN_REST_SOURCE_QUERY Function
 
@@ -30325,176 +29791,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_EXEC.OPEN_WEB_SOURCE_DML_CONTEXT Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_WEB_SOURCE_DML_CONTEXT-Function.html)
-
-Parent package: APEX_EXEC
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_EXEC.OPEN_WEB_SOURCE_DML_CONTEXT` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-FUNCTION OPEN_WEB_SOURCE_DML_CONTEXT (
-    p_module_static_id      IN VARCHAR2,
-    p_parameters            IN t_parameters            DEFAULT c_empty_parameters,
-    --
-    p_columns               IN t_columns               DEFAULT c_empty_columns,
-    p_lost_update_detection IN t_lost_update_detection DEFAULT NULL,
-    --
-    p_array_column_name     IN VARCHAR2                DEFAULT NULL )
-    RETURN t_context;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_module_static_id` | Static ID of the web source module to use. This web source module must have operations for at least one of the Insert Rows, Update Rows or Delete rows database actions. |
-| `p_parameters` | Web source parameter values to pass to the DML context. |
-| `p_columns` | DML columns to pass to the data source |
-| `p_lost_update_detection` | Lost-update detection type. Possible values are: c_lost_update_implicit : APEX calculates a checksum from the row values c_lost_update_explicit : One of the p_columns has the "is_checksum" attribute set c_lost_update_none : No lost update detection |
-| `p_array_column_name` | Name of an array column within the REST Source data profile. |
-
-#### Returns
-
-The context object representing the DML handle.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result T_CONTEXT;
-begin
-    l_result := apex_exec.OPEN_WEB_SOURCE_DML_CONTEXT(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_parameters => null,
-        p_columns => null,
-        p_lost_update_detection => sysdate,
-        p_array_column_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
-
-### APEX_EXEC.OPEN_WEB_SOURCE_QUERY Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.OPEN_WEB_SOURCE_QUERY-Function.html)
-
-Parent package: APEX_EXEC
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_EXEC.OPEN_WEB_SOURCE_QUERY` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-FUNCTION OPEN_WEB_SOURCE_QUERY (
-    p_module_static_id       IN VARCHAR2,
-    p_parameters             IN t_parameters     DEFAULT c_empty_parameters,
-    --
-    p_filters                IN t_filters        DEFAULT c_empty_filters,
-    p_order_bys              IN t_order_bys      DEFAULT c_empty_order_bys,
-    p_aggregation            IN t_aggregation    DEFAULT c_empty_aggregation,
-    p_control_break          IN t_control_break  DEFAULT c_empty_control_break,
-    p_columns                IN t_columns        DEFAULT c_empty_columns,
-    --
-    p_first_row              IN PLS_INTEGER      DEFAULT NULL,
-    p_max_rows               IN PLS_INTEGER      DEFAULT NULL,
-    --
-    p_external_filter_expr   IN VARCHAR2         DEFAULT NULL,
-    p_external_order_by_expr IN VARCHAR2         DEFAULT NULL,
-    --
-    p_total_row_count        IN BOOLEAN          DEFAULT FALSE,
-    --
-    p_array_column_name      IN VARCHAR2         DEFAULT NULL )
-    RETURN t_context;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_module_static_id` | Static ID of the web source module to invoke. |
-| `p_parameters` | Parameter values to be passed to the web source. |
-| `p_filters` | Filters to be passed to the web source. |
-| `p_order_bys` | Order by expressions to be passed to the web source. |
-| `p_aggregation` | Aggregation ( GROUP BY , DISTINCT ) to apply on top of the query. |
-| `p_control_break` | Whether to return control breaks when looping trough the context data. |
-| `p_columns` | Columns to be selected from the web source. |
-| `p_first_row` | First row to be fetched from the web source. |
-| `p_max_rows` | Maximum amount of rows to be fetched from the web source. |
-| `p_external_filter_expr` | Filter expression to be passed 1:1 to the external web service. Depends on the actual web service being used. |
-| `p_external_order_by_expr` | Order by expression to be passed 1:1 to the external web service. Depends on the actual web service being used. |
-| `p_total_row_count` | Whether to determine the total row count (only supported when the attribute "allow fetch all rows" equals Yes ). |
-| `p_array_column_name` | Name of an array column within the REST Source data profile. |
-
-#### Returns
-
-The context object representing a "cursor" for the web source query.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result T_CONTEXT;
-begin
-    l_result := apex_exec.OPEN_WEB_SOURCE_QUERY(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_parameters => null,
-        p_filters => null,
-        p_order_bys => null,
-        p_aggregation => null,
-        p_control_break => null,
-        p_columns => null,
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_external_filter_expr => 'EXAMPLE',
-        p_external_order_by_expr => 'EXAMPLE',
-        p_total_row_count => true,
-        p_array_column_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_EXEC.PURGE_DUALITY_VIEW_CACHE Procedure
 
@@ -30546,7 +29842,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.PURGE_JSON_SOURCE_CACHE Procedure
 
@@ -30598,7 +29893,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.PURGE_REST_SOURCE_CACHE Procedure
 
@@ -30650,63 +29944,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_EXEC.PURGE_WEB_SOURCE_CACHE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXEC.PURGE_WEB_SOURCE_CACHE-Procedure.html)
-
-Parent package: APEX_EXEC
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_EXEC.PURGE_WEB_SOURCE_CACHE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_EXEC.PURGE_WEB_SOURCE_CACHE (
-    p_module_static_id     IN VARCHAR2,
-    p_current_session_only IN BOOLEAN DEFAULT FALSE )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_module_static_id` | Static ID of the web source module to invoke. |
-| `p_current_session_only` | Specify TRUE to only purge entries that were saved for the current session. Default FALSE . |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_exec.PURGE_WEB_SOURCE_CACHE(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_current_session_only => true
-    );
-end;
-/
-```
----
 
 ### APEX_EXEC.SET_ARRAY_CURRENT_ROW Procedure
 
@@ -30758,7 +29995,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.SET_ARRAY_ROW_VERSION_CHECKSUM Procedure
 
@@ -30810,7 +30046,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.SET_CURRENT_ROW Procedure
 
@@ -30862,7 +30097,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.SET_NULL Procedure
 
@@ -30915,7 +30149,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.SET_ROW_VERSION_CHECKSUM Procedure
 
@@ -30967,7 +30200,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.SET_VALUE Procedure
 
@@ -31029,7 +30261,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXEC.SET_VALUES Procedure
 
@@ -31081,7 +30312,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_EXPORT
 
@@ -31225,18 +30455,31 @@ Use `UNZIP` to convert a BLOB archive back into `apex_t_export_files` before pas
 - Decide intentionally whether to include public/private Interactive Report saved reports, ACL assignments, runtime instances, translations, comments, and audit info.
 - Use `p_with_audit_info` carefully if export files go to source control.
 - Use checksums for comparison workflows, not as a substitute for signed release artifacts.
-- Split exports are easier for diffing and focused lookup; single-file exports are easier for direct install.
+- Split exports are easier for diffing and LLM retrieval; single-file exports are easier for direct install.
 
 ### Related APIs
 
-- APEX_APPLICATION_INSTALL for installing exported applications.
-- APEX_ZIP for generic zip operations.
-- APEX_UTIL or APEX_SESSION for session/workspace context in automation.
----
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) for installing exported applications.
+- [APEX_ZIP](APEX_ZIP.md) for generic zip operations.
+- [APEX_UTIL](APEX_UTIL.md) or [APEX_SESSION](APEX_SESSION.md) for session/workspace context in automation.
 
-### Member Details: APEX_EXPORT
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_EXPORT/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXPORT.Constants_Data_Types.html) |
+| GET_APPLICATION Function | function | [local](APEX_EXPORT/GET_APPLICATION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_APPLICATION_Function.html) |
+| GET_FEEDBACK Function | function | [local](APEX_EXPORT/GET_FEEDBACK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FEEDBACK_Function.html) |
+| GET_WORKSPACE Function | function | [local](APEX_EXPORT/GET_WORKSPACE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_WORKSPACE_Function.html) |
+| GET_WORKSPACE _FILES Function | function | [local](APEX_EXPORT/GET_WORKSPACE_FILES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_WORKSPACE.html) |
+| UNZIP Function | function | [local](APEX_EXPORT/UNZIP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UNZIP-Function.html) |
+| ZIP Function | function | [local](APEX_EXPORT/ZIP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ZIP-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_EXPORT.Constants and Data Types
 
@@ -31261,7 +30504,6 @@ Use this page when code needs the `APEX_EXPORT.Constants and Data Types` constan
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_EXPORT.GET_APPLICATION Function
 
@@ -31293,7 +30535,7 @@ APEX_EXPORT.GET_APPLICATION (
     p_with_no_subscriptions     IN BOOLEAN          DEFAULT FALSE,
     p_with_comments             IN BOOLEAN          DEFAULT FALSE,
     p_with_supporting_objects   IN VARCHAR2         DEFAULT NULL,
-    p_with_acl_assignments      IN BOOLEAN          DEFAULT FALSE,
+    p_with_acl_assignments      IN BOOLEAN          DEFAULT FALSE,  
     p_components                IN apex_t_varchar2  DEFAULT NULL,
     p_with_audit_info           IN t_audit_type     DEFAULT NULL,
     p_with_runtime_instances    IN apex_t_varchar2  DEFAULT NULL )
@@ -31359,7 +30601,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXPORT.GET_FEEDBACK Function
 
@@ -31421,7 +30662,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXPORT.GET_WORKSPACE Function
 
@@ -31483,7 +30723,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXPORT.GET_WORKSPACE _FILES Function
 
@@ -31539,7 +30778,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXPORT.UNZIP Function
 
@@ -31592,7 +30830,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXPORT.ZIP Function
 
@@ -31648,7 +30885,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_EXTENSION
 
@@ -31791,14 +31027,26 @@ After `SET_WORKSPACE`, application-related public APEX views are evaluated for t
 
 ### Related APIs
 
-- APEX_SESSION for creating APEX session context in jobs and database sessions.
-- APEX_APPLICATION_ADMIN and APEX_INSTANCE_ADMIN for broader administrative APIs.
-- APEX_PAGE for application page URL helpers outside Builder extension workflows.
----
+- [APEX_SESSION](APEX_SESSION.md) for creating APEX session context in jobs and database sessions.
+- [APEX_APPLICATION_ADMIN](APEX_APPLICATION_ADMIN.md) and [APEX_INSTANCE_ADMIN](APEX_INSTANCE_ADMIN.md) for broader administrative APIs.
+- [APEX_PAGE](APEX_PAGE.md) for application page URL helpers outside Builder extension workflows.
 
-### Member Details: APEX_EXTENSION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ADD_MENU_ENTRY Procedure | procedure | [local](APEX_EXTENSION/ADD_MENU_ENTRY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXTENSION.ADD_MENU_ENTRY-Procedure.html) |
+| GET_BUILDER_LINK Function | function | [local](APEX_EXTENSION/GET_BUILDER_LINK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXTENSION.GET_BUILDER_LINK-Function.html) |
+| GET_GRANTOR_WORKSPACE Function | function | [local](APEX_EXTENSION/GET_GRANTOR_WORKSPACE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXTENSION.GET_GRANTOR_WORKSPACE-Function.html) |
+| REMOVE_MENU_ENTRY Procedure | procedure | [local](APEX_EXTENSION/REMOVE_MENU_ENTRY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXTENSION.REMOVE_MENU_ENTRY-Procedure.html) |
+| SET_WORKSPACE Procedure Signature 1 | procedure | [local](APEX_EXTENSION/SET_WORKSPACE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXTENSION.SET_WORKSPACE-Procedure-Signature-1.html) |
+| SET_WORKSPACE Procedure Signature 2 | procedure | [local](APEX_EXTENSION/SET_WORKSPACE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_EXTENSION.SET_WORKSPACE-Procedure-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_EXTENSION.ADD_MENU_ENTRY Procedure
 
@@ -31865,7 +31113,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXTENSION.GET_BUILDER_LINK Function
 
@@ -31926,7 +31173,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXTENSION.GET_GRANTOR_WORKSPACE Function
 
@@ -31970,7 +31216,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXTENSION.REMOVE_MENU_ENTRY Procedure
 
@@ -32022,7 +31267,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXTENSION.SET_WORKSPACE Procedure Signature 1
 
@@ -32071,7 +31315,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_EXTENSION.SET_WORKSPACE Procedure Signature 2
 
@@ -32120,7 +31363,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_HTTP
 
@@ -32130,7 +31372,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 `APEX_HTTP` contains response-download helpers for sending BLOB or CLOB content to the browser. It is for returning files from APEX processes, not for making outbound HTTP calls.
 
-Use APEX_WEB_SERVICE for outbound REST/SOAP calls.
+Use [APEX_WEB_SERVICE](APEX_WEB_SERVICE.md) for outbound REST/SOAP calls.
 
 ### API Surface
 
@@ -32218,15 +31460,23 @@ end;
 
 ### Related APIs
 
-- APEX_WEB_SERVICE for outbound HTTP calls.
-- APEX_DATA_EXPORT for report-style exports.
-- APEX_PRINT for generated documents.
-- APEX_APPLICATION for `STOP_APEX_ENGINE`.
----
+- [APEX_WEB_SERVICE](APEX_WEB_SERVICE.md) for outbound HTTP calls.
+- [APEX_DATA_EXPORT](APEX_DATA_EXPORT.md) for report-style exports.
+- [APEX_PRINT](APEX_PRINT.md) for generated documents.
+- [APEX_APPLICATION](APEX_APPLICATION.md) for `STOP_APEX_ENGINE`.
 
-### Member Details: APEX_HTTP
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| DOWNLOAD Procedure Signature 1 | procedure | [local](APEX_HTTP/DOWNLOAD_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HTTP.DOWNLOAD-Procedure-Signature-1.html) |
+| DOWNLOAD Procedure Signature 2 | procedure | [local](APEX_HTTP/DOWNLOAD_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HTTP.DOWNLOAD-Procedure-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_HTTP.DOWNLOAD Procedure Signature 1
 
@@ -32284,7 +31534,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HTTP.DOWNLOAD Procedure Signature 2
 
@@ -32342,7 +31591,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_HUMAN_TASK
 
@@ -32518,11 +31766,55 @@ end;
 - Use `p_autoclaim => true` only when the UI intentionally supports one-click approve/reject.
 - Use task parameters only as defined by the task definition; not every parameter is updatable.
 - For new code, prefer `APEX_HUMAN_TASK` over legacy `APEX_APPROVAL`.
----
 
-### Member Details: APEX_HUMAN_TASK
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_HUMAN_TASK/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.Constants-and-Data-Types.html) |
+| ADD_TASK_COMMENT Procedure | procedure | [local](APEX_HUMAN_TASK/ADD_TASK_COMMENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.ADD_TASK_COMMENT-Procedure.html) |
+| ADD_TASK_POTENTIAL_OWNER Procedure | procedure | [local](APEX_HUMAN_TASK/ADD_TASK_POTENTIAL_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.ADD_TASK_POTENTIAL_OWNER-Procedure.html) |
+| ADD_TO_HISTORY Procedure | procedure | [local](APEX_HUMAN_TASK/ADD_TO_HISTORY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.ADD_TO_HISTORY-Procedure.html) |
+| APPROVE_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/APPROVE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.APPROVE_TASK-Procedure.html) |
+| CANCEL_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/CANCEL_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.CANCEL_TASK-Procedure.html) |
+| CLAIM_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/CLAIM_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.CLAIM_TASK-Procedure.html) |
+| COMPLETE_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/COMPLETE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.COMPLETE_TASK-Procedure.html) |
+| CREATE_TASK Function | function | [local](APEX_HUMAN_TASK/CREATE_TASK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.CREATE_TASK-Function.html) |
+| DELEGATE_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/DELEGATE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.DELEGATE_TASK-Procedure.html) |
+| DELETE_TASKS Procedure | procedure | [local](APEX_HUMAN_TASK/DELETE_TASKS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.DELETE_TASKS-Procedure.html) |
+| EXCLUDE_POTENTIAL_OWNER Procedure | procedure | [local](APEX_HUMAN_TASK/EXCLUDE_POTENTIAL_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.EXCLUDE_POTENTIAL_OWNER-Procedure.html) |
+| GET_LOV_PRIORITY Function | function | [local](APEX_HUMAN_TASK/GET_LOV_PRIORITY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_LOV_PRIORITY-Function.html) |
+| GET_LOV_STATE Function | function | [local](APEX_HUMAN_TASK/GET_LOV_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_LOV_STATE-Function.html) |
+| GET_LOV_TYPE Function | function | [local](APEX_HUMAN_TASK/GET_LOV_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_LOV_TYPE-Function.html) |
+| GET_NEXT_PURGE_TIMESTAMP Function | function | [local](APEX_HUMAN_TASK/GET_NEXT_PURGE_TIMESTAMP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_NEXT_PURGE_TIMESTAMP-Function.html) |
+| GET_TASK_DELEGATES Function | function | [local](APEX_HUMAN_TASK/GET_TASK_DELEGATES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_TASK_DELEGATES-Function.html) |
+| GET_TASK_HISTORY Function | function | [local](APEX_HUMAN_TASK/GET_TASK_HISTORY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_TASK_HISTORY-Function.html) |
+| GET_TASK_PARAMETER_OLD_VALUE Function | function | [local](APEX_HUMAN_TASK/GET_TASK_PARAMETER_OLD_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_TASK_PARAMETER_OLD_VALUE-Function.html) |
+| GET_TASK_PARAMETER_VALUE Function | function | [local](APEX_HUMAN_TASK/GET_TASK_PARAMETER_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_TASK_PARAMETER_VALUE-Function.html) |
+| GET_TASK_PRIORITIES Function | function | [local](APEX_HUMAN_TASK/GET_TASK_PRIORITIES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_TASK_PRIORITIES-Function.html) |
+| GET_TASKS Function | function | [local](APEX_HUMAN_TASK/GET_TASKS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.GET_TASKS-Function.html) |
+| HANDLE_TASK_DEADLINES Procedure | procedure | [local](APEX_HUMAN_TASK/HANDLE_TASK_DEADLINES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.HANDLE_TASK_DEADLINES-Procedure.html) |
+| HAS_TASK_PARAM_CHANGED Function | function | [local](APEX_HUMAN_TASK/HAS_TASK_PARAM_CHANGED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.HAS_TASK_PARAM_CHANGED-Function.html) |
+| IS_ALLOWED Function | function | [local](APEX_HUMAN_TASK/IS_ALLOWED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.IS_ALLOWED-Function.html) |
+| IS_BUSINESS_ADMIN Function | function | [local](APEX_HUMAN_TASK/IS_BUSINESS_ADMIN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.IS_BUSINESS_ADMIN-Function.html) |
+| IS_OF_PARTICIPANT_TYPE Function | function | [local](APEX_HUMAN_TASK/IS_OF_PARTICIPANT_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.IS_OF_PARTICIPANT_TYPE-Function.html) |
+| REFRESH_BUSINESS_ADMINS Procedure | procedure | [local](APEX_HUMAN_TASK/REFRESH_BUSINESS_ADMINS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.REFRESH_BUSINESS_ADMINS-Procedure.html) |
+| REJECT_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/REJECT_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.REJECT_TASK-Procedure.html) |
+| RELEASE_TASK Procedure | procedure | [local](APEX_HUMAN_TASK/RELEASE_TASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.RELEASE_TASK-Procedure.html) |
+| REMOVE_POTENTIAL_OWNER Procedure | procedure | [local](APEX_HUMAN_TASK/REMOVE_POTENTIAL_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.REMOVE_POTENTIAL_OWNER-Procedure.html) |
+| RENEW_TASK Function | function | [local](APEX_HUMAN_TASK/RENEW_TASK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.RENEW_TASK-Function.html) |
+| REQUEST_MORE_INFORMATION Procedure | procedure | [local](APEX_HUMAN_TASK/REQUEST_MORE_INFORMATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.REQUEST_MORE_INFORMATION-Procedure.html) |
+| SET_INITIATOR_CAN_COMPLETE Procedure | procedure | [local](APEX_HUMAN_TASK/SET_INITIATOR_CAN_COMPLETE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.SET_INITIATOR_CAN_COMPLETE-Procedure.html) |
+| SET_TASK_DUE Procedure | procedure | [local](APEX_HUMAN_TASK/SET_TASK_DUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.SET_TASK_DUE-Procedure.html) |
+| SET_TASK_PARAMETER_VALUES Procedure | procedure | [local](APEX_HUMAN_TASK/SET_TASK_PARAMETER_VALUES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.SET_TASK_PARAMETER_VALUES-Procedure.html) |
+| SET_TASK_PRIORITY Procedure | procedure | [local](APEX_HUMAN_TASK/SET_TASK_PRIORITY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.SET_TASK_PRIORITY-Procedure.html) |
+| SUBMIT_INFORMATION Procedure | procedure | [local](APEX_HUMAN_TASK/SUBMIT_INFORMATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.SUBMIT_INFORMATION-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_HUMAN_TASK.Constants and Data Types
 
@@ -32547,7 +31839,6 @@ Use this page when code needs the `APEX_HUMAN_TASK.Constants and Data Types` con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_HUMAN_TASK.ADD_TASK_COMMENT Procedure
 
@@ -32599,7 +31890,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.ADD_TASK_POTENTIAL_OWNER Procedure
 
@@ -32654,7 +31944,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.ADD_TO_HISTORY Procedure
 
@@ -32703,7 +31992,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.APPROVE_TASK Procedure
 
@@ -32755,7 +32043,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.CANCEL_TASK Procedure
 
@@ -32804,7 +32091,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.CLAIM_TASK Procedure
 
@@ -32853,7 +32139,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.COMPLETE_TASK Procedure
 
@@ -32908,7 +32193,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.CREATE_TASK Function
 
@@ -32986,7 +32270,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.DELEGATE_TASK Procedure
 
@@ -33038,7 +32321,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.DELETE_TASKS Procedure
 
@@ -33096,7 +32378,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.EXCLUDE_POTENTIAL_OWNER Procedure
 
@@ -33148,7 +32429,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_LOV_PRIORITY Function
 
@@ -33192,7 +32472,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_LOV_STATE Function
 
@@ -33236,7 +32515,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_LOV_TYPE Function
 
@@ -33280,7 +32558,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_NEXT_PURGE_TIMESTAMP Function
 
@@ -33324,7 +32601,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_TASK_DELEGATES Function
 
@@ -33377,7 +32653,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_TASK_HISTORY Function
 
@@ -33433,7 +32708,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_TASK_PARAMETER_OLD_VALUE Function
 
@@ -33491,7 +32765,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_TASK_PARAMETER_VALUE Function
 
@@ -33550,7 +32823,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_TASK_PRIORITIES Function
 
@@ -33603,7 +32875,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.GET_TASKS Function
 
@@ -33668,7 +32939,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.HANDLE_TASK_DEADLINES Procedure
 
@@ -33714,7 +32984,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.HAS_TASK_PARAM_CHANGED Function
 
@@ -33766,7 +33035,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.IS_ALLOWED Function
 
@@ -33828,7 +33096,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.IS_BUSINESS_ADMIN Function
 
@@ -33884,7 +33151,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.IS_OF_PARTICIPANT_TYPE Function
 
@@ -33945,7 +33211,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.REFRESH_BUSINESS_ADMINS Procedure
 
@@ -33994,7 +33259,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.REJECT_TASK Procedure
 
@@ -34046,7 +33310,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.RELEASE_TASK Procedure
 
@@ -34095,7 +33358,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.REMOVE_POTENTIAL_OWNER Procedure
 
@@ -34147,7 +33409,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.RENEW_TASK Function
 
@@ -34206,7 +33467,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.REQUEST_MORE_INFORMATION Procedure
 
@@ -34261,7 +33521,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.SET_INITIATOR_CAN_COMPLETE Procedure
 
@@ -34313,7 +33572,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.SET_TASK_DUE Procedure
 
@@ -34365,7 +33623,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.SET_TASK_PARAMETER_VALUES Procedure
 
@@ -34420,7 +33677,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.SET_TASK_PRIORITY Procedure
 
@@ -34472,7 +33728,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_HUMAN_TASK.SUBMIT_INFORMATION Procedure
 
@@ -34524,7 +33779,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_INSTANCE_ADMIN
 
@@ -34666,15 +33920,59 @@ Use reservations to keep CI/CD application IDs predictable across workspaces.
 
 ### Related APIs
 
-- APEX_APPLICATION_ADMIN for installed app administration.
-- APEX_APPLICATION_INSTALL for import-time settings.
-- APEX_EXTENSION for extension app workspace context.
-- APEX_INSTANCE_DEBUG for instance-level debug listing.
----
+- [APEX_APPLICATION_ADMIN](APEX_APPLICATION_ADMIN.md) for installed app administration.
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) for import-time settings.
+- [APEX_EXTENSION](APEX_EXTENSION.md) for extension app workspace context.
+- [APEX_INSTANCE_DEBUG](APEX_INSTANCE_DEBUG.md) for instance-level debug listing.
 
-### Member Details: APEX_INSTANCE_ADMIN
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Available Parameter Values | topic | [local](APEX_INSTANCE_ADMIN/Available_Parameter_Values.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_ADMIN.Available-Parameter-Values.html) |
+| ADD_AUTO_PROV_RESTRICTIONS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/ADD_AUTO_PROV_RESTRICTIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_AUTO_PROV_RESTRICTIONS-Procedure.html) |
+| ADD_SCHEMA Procedure | procedure | [local](APEX_INSTANCE_ADMIN/ADD_SCHEMA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_SCHEMA-Procedure.html) |
+| ADD_WEB_ENTRY_POINT Procedure | procedure | [local](APEX_INSTANCE_ADMIN/ADD_WEB_ENTRY_POINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_WEB_ENTRY_POINT-procedure.html) |
+| ADD_WORKSPACE Procedure | procedure | [local](APEX_INSTANCE_ADMIN/ADD_WORKSPACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_WORKSPACE-Procedure.html) |
+| CREATE_CLOUD_CREDENTIAL Procedure | procedure | [local](APEX_INSTANCE_ADMIN/CREATE_CLOUD_CREDENTIAL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_CLOUD_CREDENTIAL-Procedure.html) |
+| CREATE_OR_UPDATE_ADMIN_USER Procedure | procedure | [local](APEX_INSTANCE_ADMIN/CREATE_OR_UPDATE_ADMIN_USER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_OR_UPDATE_ADMIN_USER-Procedure.html) |
+| CREATE_SCHEMA_EXCEPTION Procedure | procedure | [local](APEX_INSTANCE_ADMIN/CREATE_SCHEMA_EXCEPTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_SCHEMA_EXCEPTION-Procedure.html) |
+| DB_SIGNATURE Function | function | [local](APEX_INSTANCE_ADMIN/DB_SIGNATURE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DB_SIGNATURE-Function.html) |
+| DROP_CLOUD_CREDENTIAL Procedure | procedure | [local](APEX_INSTANCE_ADMIN/DROP_CLOUD_CREDENTIAL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DROP_CLOUD_CREDENTIAL-Procedure.html) |
+| FREE_WORKSPACE_APP_IDS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/FREE_WORKSPACE_APP_IDS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FREE_WORKSPACE_APP_IDS-Procedure.html) |
+| GET_PARAMETER Function | function | [local](APEX_INSTANCE_ADMIN/GET_PARAMETER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PARAMETER-Function.html) |
+| GET_SCHEMAS Function | function | [local](APEX_INSTANCE_ADMIN/GET_SCHEMAS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SCHEMAS-Function.html) |
+| GET_WORKSPACE_PARAMETER Procedure | procedure | [local](APEX_INSTANCE_ADMIN/GET_WORKSPACE_PARAMETER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_WORKSPACE_PARAMETER.html) |
+| GRANT_EXTENSION_WORKSPACE Procedure | procedure | [local](APEX_INSTANCE_ADMIN/GRANT_EXTENSION_WORKSPACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GRANT_EXTENSION_WORKSPACE-Procedure.html) |
+| IS_DB_SIGNATURE_VALID Function | function | [local](APEX_INSTANCE_ADMIN/IS_DB_SIGNATURE_VALID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_DB_SIGNATURE_VALID-Function.html) |
+| REMOVE_APPLICATION Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_APPLICATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_APPLICATION-Procedure.html) |
+| REMOVE_AUTO_PROV_RESTRICTIONS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_AUTO_PROV_RESTRICTIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_AUTO_PROV_RESTRICTIONS-Procedure.html) |
+| REMOVE_SAVED_REPORT Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_SAVED_REPORT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SAVED_REPORT-Procedure.html) |
+| REMOVE_SAVED_REPORTS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_SAVED_REPORTS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SAVED_REPORTS-Procedure.html) |
+| REMOVE_SCHEMA Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_SCHEMA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SCHEMA-Procedure.html) |
+| REMOVE_SCHEMA_EXCEPTION Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_SCHEMA_EXCEPTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SCHEMA_EXCEPTION-Procedure.html) |
+| REMOVE_SCHEMA_EXCEPTIONS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_SCHEMA_EXCEPTIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SCHEMA_EXCEPTIONS-Procedure.html) |
+| REMOVE_SUBSCRIPTION Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_SUBSCRIPTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SUBSCRIPTION-Procedure.html) |
+| REMOVE_WEB_ENTRY_POINT Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_WEB_ENTRY_POINT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_WEB_ENTRY_POINT-Procedure.html) |
+| REMOVE_WORKSPACE Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_WORKSPACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_WORKSPACE-Procedure.html) |
+| REMOVE_WORKSPACE_EXCEPTIONS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REMOVE_WORKSPACE_EXCEPTIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_WORKSPACE_EXCEPTIONS-Procedure.html) |
+| RESERVE_WORKSPACE_APP_IDS Procedure | procedure | [local](APEX_INSTANCE_ADMIN/RESERVE_WORKSPACE_APP_IDS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESERVE_WORKSPACE_APP_IDS-Procedure.html) |
+| RESTRICT_SCHEMA Procedure | procedure | [local](APEX_INSTANCE_ADMIN/RESTRICT_SCHEMA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESTRICT_SCHEMA-Procedure.html) |
+| REVOKE_EXTENSION_WORKSPACE Procedure | procedure | [local](APEX_INSTANCE_ADMIN/REVOKE_EXTENSION_WORKSPACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REVOKE_EXTENSION_WORKSPACE-Procedure.html) |
+| SET_LOG_SWITCH_INTERVAL Procedure | procedure | [local](APEX_INSTANCE_ADMIN/SET_LOG_SWITCH_INTERVAL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_LOG_SWITCH_INTERVAL-Procedure.html) |
+| SET_PARAMETER Procedure | procedure | [local](APEX_INSTANCE_ADMIN/SET_PARAMETER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PARAMETER-Procedure.html) |
+| SET_WORKSPACE_CONSUMER_GROUP Procedure | procedure | [local](APEX_INSTANCE_ADMIN/SET_WORKSPACE_CONSUMER_GROUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_WORKSPACE_CONSUMER_GROUP-Procedure.html) |
+| SET_WORKSPACE_PARAMETER Procedure | procedure | [local](APEX_INSTANCE_ADMIN/SET_WORKSPACE_PARAMETER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_WORKSPACE_PARAMETER.html) |
+| TRUNCATE_LOG Procedure | procedure | [local](APEX_INSTANCE_ADMIN/TRUNCATE_LOG_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TRUNCATE_LOG-Procedure.html) |
+| UNLOCK_USER Procedure | procedure | [local](APEX_INSTANCE_ADMIN/UNLOCK_USER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UNLOCK_USER-Procedure.html) |
+| UNRESTRICT_SCHEMA Procedure | procedure | [local](APEX_INSTANCE_ADMIN/UNRESTRICT_SCHEMA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UNRESTRICT_SCHEMA-Procedure.html) |
+| VALIDATE_EMAIL_CONFIG Procedure | procedure | [local](APEX_INSTANCE_ADMIN/VALIDATE_EMAIL_CONFIG_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/VALIDATE_EMAIL_CONFIG-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_INSTANCE_ADMIN.Available Parameter Values
 
@@ -34699,7 +33997,6 @@ Use this page when code needs the `APEX_INSTANCE_ADMIN.Available Parameter Value
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_INSTANCE_ADMIN.ADD_AUTO_PROV_RESTRICTIONS Procedure
 
@@ -34748,7 +34045,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.ADD_SCHEMA Procedure
 
@@ -34803,7 +34099,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.ADD_WEB_ENTRY_POINT Procedure
 
@@ -34855,7 +34150,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.ADD_WORKSPACE Procedure
 
@@ -34922,7 +34216,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.CREATE_CLOUD_CREDENTIAL Procedure
 
@@ -34983,7 +34276,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.CREATE_OR_UPDATE_ADMIN_USER Procedure
 
@@ -35032,7 +34324,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.CREATE_SCHEMA_EXCEPTION Procedure
 
@@ -35077,7 +34368,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.DB_SIGNATURE Function
 
@@ -35117,7 +34407,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.DROP_CLOUD_CREDENTIAL Procedure
 
@@ -35166,7 +34455,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.FREE_WORKSPACE_APP_IDS Procedure
 
@@ -35215,7 +34503,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.GET_PARAMETER Function
 
@@ -35264,7 +34551,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.GET_SCHEMAS Function
 
@@ -35313,7 +34599,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.GET_WORKSPACE_PARAMETER Procedure
 
@@ -35365,7 +34650,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.GRANT_EXTENSION_WORKSPACE Procedure
 
@@ -35423,7 +34707,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.IS_DB_SIGNATURE_VALID Function
 
@@ -35463,7 +34746,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_APPLICATION Procedure
 
@@ -35512,7 +34794,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_AUTO_PROV_RESTRICTIONS Procedure
 
@@ -35561,7 +34842,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_SAVED_REPORT Procedure
 
@@ -35613,7 +34893,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_SAVED_REPORTS Procedure
 
@@ -35662,7 +34941,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_SCHEMA Procedure
 
@@ -35714,7 +34992,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_SCHEMA_EXCEPTION Procedure
 
@@ -35759,7 +35036,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_SCHEMA_EXCEPTIONS Procedure
 
@@ -35802,7 +35078,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_SUBSCRIPTION Procedure
 
@@ -35851,7 +35126,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_WEB_ENTRY_POINT Procedure
 
@@ -35900,7 +35174,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_WORKSPACE Procedure
 
@@ -35955,7 +35228,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REMOVE_WORKSPACE_EXCEPTIONS Procedure
 
@@ -35998,7 +35270,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.RESERVE_WORKSPACE_APP_IDS Procedure
 
@@ -36047,7 +35318,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.RESTRICT_SCHEMA Procedure
 
@@ -36090,7 +35360,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.REVOKE_EXTENSION_WORKSPACE Procedure
 
@@ -36142,7 +35411,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.SET_LOG_SWITCH_INTERVAL Procedure
 
@@ -36194,7 +35462,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.SET_PARAMETER Procedure
 
@@ -36249,7 +35516,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.SET_WORKSPACE_CONSUMER_GROUP Procedure
 
@@ -36301,7 +35567,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.SET_WORKSPACE_PARAMETER Procedure
 
@@ -36356,7 +35621,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.TRUNCATE_LOG Procedure
 
@@ -36405,7 +35669,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.UNLOCK_USER Procedure
 
@@ -36460,7 +35723,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.UNRESTRICT_SCHEMA Procedure
 
@@ -36503,7 +35765,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_ADMIN.VALIDATE_EMAIL_CONFIG Procedure
 
@@ -36543,7 +35804,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_INSTANCE_DEBUG
 
@@ -36553,7 +35813,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 `APEX_INSTANCE_DEBUG` controls and lists APEX instance-level debug information. It can enable or disable instance debug, check whether instance debug is enabled, and list activity, debug messages, and page views.
 
-Use it for administrator diagnostics, not for normal application logging. For application code, use APEX_DEBUG.
+Use it for administrator diagnostics, not for normal application logging. For application code, use [APEX_DEBUG](APEX_DEBUG.md).
 
 ### When To Use
 
@@ -36647,13 +35907,25 @@ For production, keep the enabled window short and controlled.
 
 ### Related APIs
 
-- APEX_DEBUG for application debug messages.
-- APEX_INSTANCE_ADMIN for instance administration.
----
+- [APEX_DEBUG](APEX_DEBUG.md) for application debug messages.
+- [APEX_INSTANCE_ADMIN](APEX_INSTANCE_ADMIN.md) for instance administration.
 
-### Member Details: APEX_INSTANCE_DEBUG
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| DISABLE Procedure | procedure | [local](APEX_INSTANCE_DEBUG/DISABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.DISABLE-Procedure.html) |
+| ENABLE Procedure | procedure | [local](APEX_INSTANCE_DEBUG/ENABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.ENABLE-Procedure.html) |
+| IS_ENABLED Function | function | [local](APEX_INSTANCE_DEBUG/IS_ENABLED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.IS_ENABLED-Function.html) |
+| LIST_ACTIVITY Procedure | procedure | [local](APEX_INSTANCE_DEBUG/LIST_ACTIVITY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.LIST_ACTIVITY-Procedure.html) |
+| LIST_MESSAGES Procedure | procedure | [local](APEX_INSTANCE_DEBUG/LIST_MESSAGES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.LIST_MESSAGES-Procedure.html) |
+| LIST_PAGE_VIEWS Procedure | procedure | [local](APEX_INSTANCE_DEBUG/LIST_PAGE_VIEWS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_INSTANCE_DEBUG.DISABLE Procedure
 
@@ -36693,7 +35965,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_DEBUG.ENABLE Procedure
 
@@ -36733,7 +36004,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_DEBUG.IS_ENABLED Function
 
@@ -36773,7 +36043,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_DEBUG.LIST_ACTIVITY Procedure
 
@@ -36836,7 +36105,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_DEBUG.LIST_MESSAGES Procedure
 
@@ -36885,7 +36153,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS Procedure
 
@@ -36940,7 +36207,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_IG
 
@@ -37054,11 +36320,29 @@ Protect delete and ownership changes with authorization checks and audit logging
 - `ADD_FILTER` uses `P_COLUMN_NAME`; `APEX_IR.ADD_FILTER` uses `P_REPORT_COLUMN`.
 - Use `APEX_REGION.OPEN_QUERY_CONTEXT` or `APEX_REGION.EXPORT_DATA` to read/export IG region data from PL/SQL.
 - Use JavaScript `interactiveGrid` APIs for selected records, models, edit mode, actions, and toolbar behavior.
----
 
-### Member Details: APEX_IG
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ADD_FILTER Procedure Signature 1 | procedure | [local](APEX_IG/ADD_FILTER_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-ADD_FILTER-Procedure-Signature-1.html) |
+| ADD_FILTER Procedure Signature 2 (Deprecated) | procedure | [local](APEX_IG/ADD_FILTER_Procedure_Signature_2_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-ADD_FILTER-Procedure-Signature-2.html) |
+| ADD_FILTER Procedure Signature 3 | procedure | [local](APEX_IG/ADD_FILTER_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-ADD_FILTER-Procedure-Signature-3.html) |
+| CHANGE_REPORT_OWNER Procedure | procedure | [local](APEX_IG/CHANGE_REPORT_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-CHANGE_REPORT_OWNER-Procedure.html) |
+| CLEAR_REPORT Procedure Signature 1 | procedure | [local](APEX_IG/CLEAR_REPORT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-CLEAR_REPORT-Procedure-Signature-1.html) |
+| CLEAR_REPORT Procedure Signature 2 | procedure | [local](APEX_IG/CLEAR_REPORT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-CLEAR_REPORT-Procedure-Signature-2.html) |
+| CLEAR_REPORT Procedure Signature 3 | procedure | [local](APEX_IG/CLEAR_REPORT_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-CLEAR_REPORT-Procedure-Signature-3.html) |
+| DELETE_REPORT Procedure | procedure | [local](APEX_IG/DELETE_REPORT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-DELETE_REPORT-Procedure.html) |
+| GET_LAST_VIEWED_REPORT_ID Function | function | [local](APEX_IG/GET_LAST_VIEWED_REPORT_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-GET_LAST_VIEWED_REPORT_ID-Function-Signature-1.html) |
+| RESET_REPORT Procedure Signature 1 | procedure | [local](APEX_IG/RESET_REPORT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-RESET_REPORT-Procedure-Signature-1.html) |
+| RESET_REPORT Procedure Signature 2 | procedure | [local](APEX_IG/RESET_REPORT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-RESET_REPORT-Procedure-Signature-2.html) |
+| RESET_REPORT Procedure Signature 3 | procedure | [local](APEX_IG/RESET_REPORT_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-RESET_REPORT-Procedure-Signature-3.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_IG.ADD_FILTER Procedure Signature 1
 
@@ -37082,7 +36366,7 @@ APEX_IG.ADD_FILTER (
     p_region_id         IN NUMBER,
     p_filter_value      IN VARCHAR2,
     p_column_name       IN VARCHAR2 DEFAULT NULL,
-    p_operator_abbr     IN VARCHAR2 DEFAULT NULL,
+    p_operator_abbr     IN VARCHAR2 DEFAULT NULL, 
     p_is_case_sensitive IN BOOLEAN  DEFAULT FALSE,
     p_report_id         IN NUMBER   DEFAULT NULL )
 ```
@@ -37125,78 +36409,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_IG.ADD_FILTER Procedure Signature 2 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG-ADD_FILTER-Procedure-Signature-2.html)
-
-Parent package: APEX_IG
-
-#### Purpose
-
-This procedure creates a filter on an interactive grid using a report name.
-
-#### When To Use
-
-Use this page when code needs the `APEX_IG.ADD_FILTER` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_IG.ADD_FILTER (
-    p_page_id           IN NUMBER,
-    p_region_id         IN NUMBER,
-    p_filter_value      IN VARCHAR2,
-    p_column_name       IN VARCHAR2 DEFAULT NULL,
-    p_operator_abbr     IN VARCHAR2 DEFAULT NULL,
-    p_is_case_sensitive IN BOOLEAN  DEFAULT FALSE,
-    p_report_name       IN VARCHAR2 DEFAULT NULL )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_page_id` | Page of the current Oracle APEX application that contains an interactive grid. |
-| `p_region_id` | The interactive grid region (ID). |
-| `p_filter_value` | This is the filter value. This value is not used for N and NN . |
-| `p_column_name` | Name of the report SQL column, or column alias, to be filtered. |
-| `p_operator_abbr` | Filter type. Valid values are as follows: EQ = Equals NEQ = Not Equals LT = Less than LTE = Less than or equal to GT = Greater Than GTE = Greater than or equal to N = Null NN = Not Null C = Contains NC = Not Contains IN = SQL In Operator NIN = SQL Not In Operator |
-| `p_is_case_sensitive` | Case sensitivity of the row search filter. This value is not used for a column filter, where p_report_column is set. Valid values are as follows: TRUE FALSE (This is the default value.) |
-| `p_report_name` | The saved report name within the current application page. If p_report_name is NULL, it adds the filter to the last viewed report settings. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_ig.ADD_FILTER(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_filter_value => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_operator_abbr => 'EXAMPLE',
-        p_is_case_sensitive => true,
-        p_report_name => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_IG.ADD_FILTER Procedure Signature 3
 
@@ -37266,7 +36478,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.CHANGE_REPORT_OWNER Procedure
 
@@ -37324,7 +36535,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.CLEAR_REPORT Procedure Signature 1
 
@@ -37379,7 +36589,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.CLEAR_REPORT Procedure Signature 2
 
@@ -37434,7 +36643,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.CLEAR_REPORT Procedure Signature 3
 
@@ -37489,7 +36697,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.DELETE_REPORT Procedure
 
@@ -37509,7 +36716,7 @@ Use this page when code needs the `APEX_IG.DELETE_REPORT` procedure. Confirm sec
 
 ```sql
 APEX_IG.DELETE_REPORT (
-    p_application_id IN NUMBER DEFAULT apex_application.g_flow_id,
+    p_application_id IN NUMBER DEFAULT apex_application.g_flow_id,    
     p_report_id      IN NUMBER )
 ```
 
@@ -37541,7 +36748,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.GET_LAST_VIEWED_REPORT_ID Function
 
@@ -37593,7 +36799,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.RESET_REPORT Procedure Signature 1
 
@@ -37648,7 +36853,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.RESET_REPORT Procedure Signature 2
 
@@ -37703,7 +36907,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IG.RESET_REPORT Procedure Signature 3
 
@@ -37758,7 +36961,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_IR
 
@@ -37883,11 +37085,59 @@ Administrative routines should be protected by authorization checks and audit lo
 - `ADD_FILTER` uses `P_REPORT_COLUMN`; `APEX_IG.ADD_FILTER` uses `P_COLUMN_NAME`.
 - `GET_REPORT` is deprecated; use supported report/export/query patterns instead.
 - Chapter 37 functions are legacy rendering helpers and are not Interactive Report management APIs.
----
 
-### Member Details: APEX_IR
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_IR/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IR.Constants-Data-Types.html) |
+| ADD_FILTER Procedure Signature 1 | procedure | [local](APEX_IR/ADD_FILTER_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_FILTER-Procedure-Signature-1.html) |
+| ADD_FILTER Procedure Signature 2 | procedure | [local](APEX_IR/ADD_FILTER_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_FILTER-Procedure-Signature-2.html) |
+| ADD_FILTER Procedure Signature 3 | procedure | [local](APEX_IR/ADD_FILTER_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_FILTER-Procedure-Signature-3.html) |
+| CHANGE_REPORT_OWNER Procedure | procedure | [local](APEX_IR/CHANGE_REPORT_OWNER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHANGE_REPORT_OWNER-Procedure.html) |
+| CHANGE_SUBSCRIPTION_EMAIL Procedure | procedure | [local](APEX_IR/CHANGE_SUBSCRIPTION_EMAIL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHANGE_SUBSCRIPTION_EMAIL-Procedure.html) |
+| CHANGE_SUBSCRIPTION_LANG Procedure | procedure | [local](APEX_IR/CHANGE_SUBSCRIPTION_LANG_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHANGE_SUBSCRIPTION_LANG-Procedure.html) |
+| CLEAR_REPORT Procedure Signature 1 | procedure | [local](APEX_IR/CLEAR_REPORT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_REPORT-Procedure-Signature-1.html) |
+| CLEAR_REPORT Procedure Signature 2 | procedure | [local](APEX_IR/CLEAR_REPORT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_REPORT-Procedure-Signature-2.html) |
+| CLEAR_REPORT Procedure Signature 3 | procedure | [local](APEX_IR/CLEAR_REPORT_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_REPORT-Procedure-Signature-3.html) |
+| CLONE_REPORT Function | function | [local](APEX_IR/CLONE_REPORT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLONE_REPORT-Function.html) |
+| DELETE_REPORT Procedure | procedure | [local](APEX_IR/DELETE_REPORT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_REPORT-Procedure.html) |
+| DELETE_SUBSCRIPTION Procedure | procedure | [local](APEX_IR/DELETE_SUBSCRIPTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_SUBSCRIPTION-Procedure.html) |
+| EXPORT_SAVED_REPORTS Function | function | [local](APEX_IR/EXPORT_SAVED_REPORTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXPORT_SAVED_REPORTS-Function.html) |
+| GET_LAST_VIEWED_REPORT_ID Function | function | [local](APEX_IR/GET_LAST_VIEWED_REPORT_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LAST_VIEWED_REPORT_ID-Function-Signature-1.html) |
+| GET_REPORT Function (Deprecated) | function | [local](APEX_IR/GET_REPORT_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REPORT-Function.html) |
+| IMPORT_SAVED_REPORTS Procedure | procedure | [local](APEX_IR/IMPORT_SAVED_REPORTS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IMPORT_SAVED_REPORTS-Procedure.html) |
+| RESET_REPORT Procedure Signature 1 | procedure | [local](APEX_IR/RESET_REPORT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_REPORT-Procedure-Signature-1.html) |
+| RESET_REPORT Procedure Signature 2 | procedure | [local](APEX_IR/RESET_REPORT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_REPORT-Procedure-Signature-2.html) |
+| RESET_REPORT Procedure Signature 3 | procedure | [local](APEX_IR/RESET_REPORT_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_REPORT-Procedure-Signature-3.html) |
+| CHECKBOX2 Function | function | [local](APEX_IR/CHECKBOX2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHECKBOX2-Function.html) |
+| DATE_POPUP Function | function | [local](APEX_IR/DATE_POPUP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DATE_POPUP-Function.html) |
+| DATE_POPUP2 Function | function | [local](APEX_IR/DATE_POPUP2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DATE_POPUP2-Function.html) |
+| DISPLAY_AND_SAVE Function | function | [local](APEX_IR/DISPLAY_AND_SAVE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DISPLAY_AND_SAVE-Function.html) |
+| HIDDEN Function | function | [local](APEX_IR/HIDDEN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HIDDEN-Function.html) |
+| MD5_CHECKSUM Function | function | [local](APEX_IR/MD5_CHECKSUM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MD5_CHECKSUM-Function.html) |
+| MD5_HIDDEN Function | function | [local](APEX_IR/MD5_HIDDEN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MD5_HIDDEN-Function.html) |
+| POPUP_FROM_LOV Function | function | [local](APEX_IR/POPUP_FROM_LOV_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POPUP_FROM_LOV-Function.html) |
+| POPUP_FROM_QUERY Function | function | [local](APEX_IR/POPUP_FROM_QUERY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POPUP_FROM_QUERY-Function.html) |
+| POPUPKEY_FROM_LOV Function | function | [local](APEX_IR/POPUPKEY_FROM_LOV_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POPUPKEY_FROM_LOV-Function.html) |
+| POPUPKEY_FROM_QUERY Function | function | [local](APEX_IR/POPUPKEY_FROM_QUERY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POPUPKEY_FROM_QUERY-Function.html) |
+| RADIOGROUP Function | function | [local](APEX_IR/RADIOGROUP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RADIOGROUP-Function.html) |
+| SELECT_LIST Function | function | [local](APEX_IR/SELECT_LIST_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SELECT_LIST-Function.html) |
+| SELECT_LIST_FROM_LOV Function | function | [local](APEX_IR/SELECT_LIST_FROM_LOV_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SELECT_LIST_FROM_LOV-Function.html) |
+| SELECT_LIST_FROM_LOV_XL Function | function | [local](APEX_IR/SELECT_LIST_FROM_LOV_XL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SELECT_LIST_FROM_LOV_XL-Function.html) |
+| SELECT_LIST_FROM_QUERY Function | function | [local](APEX_IR/SELECT_LIST_FROM_QUERY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SELECT_LIST_FROM_QUERY-Function.html) |
+| SELECT_LIST_FROM_QUERY_XL Function | function | [local](APEX_IR/SELECT_LIST_FROM_QUERY_XL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SELECT_LIST_FROM_QUERY_XL-Function.html) |
+| SWITCH Function | function | [local](APEX_IR/SWITCH_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SWITCH-Function.html) |
+| TEXT Function | function | [local](APEX_IR/TEXT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TEXT-Function.html) |
+| TEXTAREA Function | function | [local](APEX_IR/TEXTAREA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TEXTAREA-Function.html) |
+| TEXT_FROM_LOV Function | function | [local](APEX_IR/TEXT_FROM_LOV_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TEXT_FROM_LOV-Function.html) |
+| TEXT_FROM_LOV_QUERY Function | function | [local](APEX_IR/TEXT_FROM_LOV_QUERY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TEXT_FROM_LOV_QUERY-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_IR.Constants and Data Types
 
@@ -37912,7 +37162,6 @@ Use this page when code needs the `APEX_IR.Constants and Data Types` constants. 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_IR.ADD_FILTER Procedure Signature 1
 
@@ -37935,8 +37184,8 @@ APEX_IR.ADD_FILTER (
     p_page_id       IN NUMBER,
     p_region_id     IN NUMBER,
     p_report_column IN VARCHAR2,
-    p_filter_value  IN VARCHAR2,
-    p_operator_abbr IN VARCHAR2 DEFAULT NULL,
+    p_filter_value  IN VARCHAR2, 
+    p_operator_abbr IN VARCHAR2 DEFAULT NULL, 
     p_report_id     IN NUMBER   DEFAULT NULL )
 ```
 
@@ -37976,7 +37225,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.ADD_FILTER Procedure Signature 2
 
@@ -37999,8 +37247,8 @@ APEX_IR.ADD_FILTER (
     p_page_id       IN NUMBER,
     p_region_id     IN NUMBER,
     p_report_column IN VARCHAR2,
-    p_filter_value  IN VARCHAR2,
-    p_operator_abbr IN VARCHAR2 DEFAULT NULL,
+    p_filter_value  IN VARCHAR2, 
+    p_operator_abbr IN VARCHAR2 DEFAULT NULL, 
     p_report_alias  IN VARCHAR2 DEFAULT NULL );
 ```
 
@@ -38040,7 +37288,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.ADD_FILTER Procedure Signature 3
 
@@ -38104,7 +37351,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CHANGE_REPORT_OWNER Procedure
 
@@ -38159,7 +37405,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CHANGE_SUBSCRIPTION_EMAIL Procedure
 
@@ -38211,7 +37456,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CHANGE_SUBSCRIPTION_LANG Procedure
 
@@ -38263,7 +37507,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CLEAR_REPORT Procedure Signature 1
 
@@ -38318,7 +37561,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CLEAR_REPORT Procedure Signature 2
 
@@ -38373,7 +37615,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CLEAR_REPORT Procedure Signature 3
 
@@ -38428,7 +37669,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CLONE_REPORT Function
 
@@ -38492,7 +37732,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.DELETE_REPORT Procedure
 
@@ -38541,7 +37780,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.DELETE_SUBSCRIPTION Procedure
 
@@ -38590,7 +37828,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.EXPORT_SAVED_REPORTS Function
 
@@ -38646,7 +37883,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.GET_LAST_VIEWED_REPORT_ID Function
 
@@ -38698,69 +37934,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_IR.GET_REPORT Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REPORT-Function.html)
-
-Parent package: APEX_IR
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_IR.GET_REPORT` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_IR.GET_REPORT(
-    p_page_id   IN NUMBER,
-    p_region_id IN NUMBER,
-    p_report_id IN NUMBER   DEFAULT NULL,
-    p_view      IN VARCHAR2 DEFAULT c_view_report )
-    RETURN t_report;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_page_id` | Page of the current Oracle APEX application that contains an interactive report. |
-| `p_region_id` | The interactive report region ID. |
-| `p_report_id` | The saved report ID within the current application page. If p_report_id is NULL, retrieves last viewed report query. |
-| `p_view` | The view type available for the report. The values can be APEX_IR.C_VIEW_REPORT , APEX_IR.C_VIEW_GROUPBY , or APEX_IR.C_VIEW_PIVOT . If p_view is NULL, retrieves the view currently used by the report. If the p_view passed does not exist for the current report, an error raises. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result T_REPORT;
-begin
-    l_result := apex_ir.GET_REPORT(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_report_id => 1,
-        p_view => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_IR.IMPORT_SAVED_REPORTS Procedure
 
@@ -38821,7 +37994,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.RESET_REPORT Procedure Signature 1
 
@@ -38876,7 +38048,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.RESET_REPORT Procedure Signature 2
 
@@ -38931,7 +38102,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.RESET_REPORT Procedure Signature 3
 
@@ -38986,7 +38156,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.CHECKBOX2 Function
 
@@ -39053,7 +38222,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.DATE_POPUP Function
 
@@ -39126,7 +38294,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.DATE_POPUP2 Function
 
@@ -39220,7 +38387,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.DISPLAY_AND_SAVE Function
 
@@ -39278,7 +38444,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.HIDDEN Function
 
@@ -39339,7 +38504,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.MD5_CHECKSUM Function
 
@@ -39401,7 +38565,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.MD5_HIDDEN Function
 
@@ -39466,7 +38629,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.POPUP_FROM_LOV Function
 
@@ -39548,7 +38710,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.POPUP_FROM_QUERY Function
 
@@ -39630,7 +38791,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.POPUPKEY_FROM_LOV Function
 
@@ -39712,7 +38872,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.POPUPKEY_FROM_QUERY Function
 
@@ -39794,7 +38953,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.RADIOGROUP Function
 
@@ -39870,7 +39028,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.SELECT_LIST Function
 
@@ -39946,7 +39103,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.SELECT_LIST_FROM_LOV Function
 
@@ -40022,7 +39178,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.SELECT_LIST_FROM_LOV_XL Function
 
@@ -40098,7 +39253,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.SELECT_LIST_FROM_QUERY Function
 
@@ -40174,7 +39328,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.SELECT_LIST_FROM_QUERY_XL Function
 
@@ -40250,7 +39403,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.SWITCH Function
 
@@ -40323,7 +39475,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.TEXT Function
 
@@ -40390,7 +39541,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.TEXTAREA Function
 
@@ -40457,7 +39607,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.TEXT_FROM_LOV Function
 
@@ -40512,7 +39661,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_IR.TEXT_FROM_LOV_QUERY Function
 
@@ -40567,7 +39715,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_JAVASCRIPT
 
@@ -40675,11 +39822,34 @@ Prefer structured JSON or `ADD_ATTRIBUTE` for larger configuration objects.
 - `ADD_ONLOAD_CODE` runs during APEX page-load behavior; avoid long-running synchronous work.
 - The deprecated third-party library routine remains indexed for legacy maintenance.
 - For client-side runtime calls, open the JavaScript namespace pages such as `apex.server`, `apex.item`, and `apex.region`.
----
 
-### Member Details: APEX_JAVASCRIPT
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Data Types | data types | [local](APEX_JAVASCRIPT/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_JAVASCRIPT.Data-Types.html) |
+| ADD_3RD_PARTY_LIBRARY_FILE Procedure (Deprecated) | procedure | [local](APEX_JAVASCRIPT/ADD_3RD_PARTY_LIBRARY_FILE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_3RD_PARTY_LIBRARY_FILE-Procedure-2.html) |
+| ADD_ATTRIBUTE Function Signature 1 | function | [local](APEX_JAVASCRIPT/ADD_ATTRIBUTE_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ATTRIBUTE-Function-Signature-1.html) |
+| ADD_ATTRIBUTE Function Signature 2 | function | [local](APEX_JAVASCRIPT/ADD_ATTRIBUTE_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ATTRIBUTE-Function-Signature-2.html) |
+| ADD_ATTRIBUTE Function Signature 3 | function | [local](APEX_JAVASCRIPT/ADD_ATTRIBUTE_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ATTRIBUTE-Function-Signature-3.html) |
+| ADD_ATTRIBUTE Function Signature 4 | function | [local](APEX_JAVASCRIPT/ADD_ATTRIBUTE_Function_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ATTRIBUTE-Function-Signature-4.html) |
+| ADD_INLINE_CODE Procedure | procedure | [local](APEX_JAVASCRIPT/ADD_INLINE_CODE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_INLINE_CODE-Procedure.html) |
+| ADD_JET Procedure | procedure | [local](APEX_JAVASCRIPT/ADD_JET_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_JET-Procedure.html) |
+| ADD_LIBRARY Procedure | procedure | [local](APEX_JAVASCRIPT/ADD_LIBRARY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_LIBRARY-Procedure.html) |
+| ADD_REQUIREJS Procedure | procedure | [local](APEX_JAVASCRIPT/ADD_REQUIREJS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_REQUIREJS-Procedure.html) |
+| ADD_REQUIREJS_DEFINE Procedure | procedure | [local](APEX_JAVASCRIPT/ADD_REQUIREJS_DEFINE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_REQUIREJS_DEFINE-Procedure.html) |
+| ADD_ONLOAD_CODE Procedure | procedure | [local](APEX_JAVASCRIPT/ADD_ONLOAD_CODE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ONLOAD_CODE-Procedure.html) |
+| ADD_VALUE Function Signature 1 | function | [local](APEX_JAVASCRIPT/ADD_VALUE_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_VALUE-Function-Signature-1.html) |
+| ADD_VALUE Function Signature 2 | function | [local](APEX_JAVASCRIPT/ADD_VALUE_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_VALUE-Function-Signature-2.html) |
+| ADD_VALUE Function Signature 3 | function | [local](APEX_JAVASCRIPT/ADD_VALUE_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_VALUE-Function-Signature-3.html) |
+| ADD_VALUE Function Signature 4 | function | [local](APEX_JAVASCRIPT/ADD_VALUE_Function_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_VALUE-Function-Signature-4.html) |
+| Escape Function | function | [local](APEX_JAVASCRIPT/Escape_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Escape-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_JAVASCRIPT.Data Types
 
@@ -40704,72 +39874,6 @@ Use this page when code needs the `APEX_JAVASCRIPT.Data Types` data types. Confi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
-
-### APEX_JAVASCRIPT.ADD_3RD_PARTY_LIBRARY_FILE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_3RD_PARTY_LIBRARY_FILE-Procedure-2.html)
-
-Parent package: APEX_JAVASCRIPT
-
-#### Purpose
-
-Caution:
-
-#### When To Use
-
-Use this page when code needs the `APEX_JAVASCRIPT.ADD_3RD_PARTY_LIBRARY_FILE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_JAVASCRIPT.ADD_3RD_PARTY_LIBRARY_FILE (
-    p_library    IN VARCHAR2,
-    p_file_name  IN VARCHAR2 DEFAULT NULL,
-    p_directory  IN VARCHAR2 DEFAULT NULL,
-    p_version    IN VARCHAR2 DEFAULT NULL,
-    p_attributes IN VARCHAR2 DEFAULT NULL );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_library` | Use one of the c_library_* constants. |
-| `p_file_name` | Specifies the file name excluding version, .min , and .js . |
-| `p_directory` | (Optional) Directory where the file p_file_name is located. |
-| `p_version` | (Optional) If no value is provided, then uses the same version shipped with APEX . |
-| `p_attributes` | Extra attributes to add to the script tag. Note: Callers are responsible for escaping this parameter. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_javascript.ADD_3RD_PARTY_LIBRARY_FILE(
-        p_library => 'EXAMPLE',
-        p_file_name => 'EXAMPLE',
-        p_directory => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_attributes => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_JAVASCRIPT.ADD_ATTRIBUTE Function Signature 1
 
@@ -40827,7 +39931,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_ATTRIBUTE Function Signature 2
 
@@ -40885,7 +39988,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_ATTRIBUTE Function Signature 3
 
@@ -40943,7 +40045,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_ATTRIBUTE Function Signature 4
 
@@ -41001,7 +40102,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_INLINE_CODE Procedure
 
@@ -41053,7 +40153,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_JET Procedure
 
@@ -41093,7 +40192,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_LIBRARY Procedure
 
@@ -41181,7 +40279,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_REQUIREJS Procedure
 
@@ -41221,7 +40318,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_REQUIREJS_DEFINE Procedure
 
@@ -41273,7 +40369,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_ONLOAD_CODE Procedure
 
@@ -41325,7 +40420,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_VALUE Function Signature 1
 
@@ -41377,7 +40471,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_VALUE Function Signature 2
 
@@ -41429,7 +40522,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_VALUE Function Signature 3
 
@@ -41481,7 +40573,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.ADD_VALUE Function Signature 4
 
@@ -41533,7 +40624,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JAVASCRIPT.Escape Function
 
@@ -41582,7 +40672,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_JSON
 
@@ -41747,11 +40836,75 @@ end;
 - Do not assume browser-provided JSON is trustworthy.
 - Keep JSON property names stable because JavaScript and PL/SQL both depend on them.
 - For large SQL-derived payloads, consider SQL JSON generation for efficiency.
----
 
-### Member Details: APEX_JSON
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| APEX_JSON Overview and Examples | examples | [local](APEX_JSON/APEX_JSON_Overview_and_Examples.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Package-Overview-and-Examples.html) |
+| Constants and Data Types | constants | [local](APEX_JSON/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_JSON-Constants-and-Data-Types.html) |
+| CLOSE_ALL Procedure | procedure | [local](APEX_JSON/CLOSE_ALL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLOSE_ALL-Procedure.html) |
+| CLOSE_ARRAY Procedure | procedure | [local](APEX_JSON/CLOSE_ARRAY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLOSE_ARRAY-Procedure.html) |
+| CLOSE_OBJECT Procedure | procedure | [local](APEX_JSON/CLOSE_OBJECT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLOSE_OBJECT-Procedure.html) |
+| DOES_EXIST Function | function | [local](APEX_JSON/DOES_EXIST_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DOES_EXIST-Function.html) |
+| FIND_PATHS_LIKE Function | function | [local](APEX_JSON/FIND_PATHS_LIKE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_PATHS_LIKE-Function.html) |
+| FLUSH Procedure | procedure | [local](APEX_JSON/FLUSH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FLUSH-Procedure.html) |
+| FREE_OUTPUT Procedure | procedure | [local](APEX_JSON/FREE_OUTPUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FREE_OUTPUT-Procedure.html) |
+| GET_BOOLEAN Function | function | [local](APEX_JSON/GET_BOOLEAN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BOOLEAN-Function.html) |
+| GET_CLOB Function | function | [local](APEX_JSON/GET_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_JSON.GET_CLOB-Function.html) |
+| GET_CLOB_OUTPUT Function | function | [local](APEX_JSON/GET_CLOB_OUTPUT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CLOB_OUTPUT-Function.html) |
+| GET_COUNT Function | function | [local](APEX_JSON/GET_COUNT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_COUNT-Function.html) |
+| GET_DATE Function | function | [local](APEX_JSON/GET_DATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DATE-Function.html) |
+| GET_MEMBERS Function | function | [local](APEX_JSON/GET_MEMBERS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBERS-Function.html) |
+| GET_NUMBER Function | function | [local](APEX_JSON/GET_NUMBER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_JSON.GET_NUMBER-Function.html) |
+| GET_SDO_GEOMETRY Function | function | [local](APEX_JSON/GET_SDO_GEOMETRY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SDO_GEOMETRY-Function.html) |
+| GET_T_NUMBER Function | function | [local](APEX_JSON/GET_T_NUMBER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_T_NUMBER-Function.html) |
+| GET_T_VARCHAR2 Function | function | [local](APEX_JSON/GET_T_VARCHAR2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_T_VARCHAR2-Function.html) |
+| GET_VALUE Function | function | [local](APEX_JSON/GET_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_JSON.GET_VALUE-Function.html) |
+| GET_VALUE_KIND Function | function | [local](APEX_JSON/GET_VALUE_KIND_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_VALUE_KIND-Function.html) |
+| GET_VARCHAR2 Function | function | [local](APEX_JSON/GET_VARCHAR2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_JSON.GET_VARCHAR2-Function.html) |
+| INITIALIZE_CLOB_OUTPUT Procedure | procedure | [local](APEX_JSON/INITIALIZE_CLOB_OUTPUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INITIALIZE_CLOB_OUTPUT-Procedure.html) |
+| INITIALIZE_OUTPUT Procedure | procedure | [local](APEX_JSON/INITIALIZE_OUTPUT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INITIALIZE_OUTPUT-Procedure.html) |
+| OPEN_ARRAY Procedure | procedure | [local](APEX_JSON/OPEN_ARRAY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OPEN_ARRAY-Procedure.html) |
+| OPEN_OBJECT Procedure | procedure | [local](APEX_JSON/OPEN_OBJECT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OPEN_OBJECT-Procedure.html) |
+| PARSE Procedure Signature 1 | procedure | [local](APEX_JSON/PARSE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE-Procedure-Signature-1.html) |
+| PARSE Procedure Signature 2 | procedure | [local](APEX_JSON/PARSE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE-Procedure-Signature-2.html) |
+| STRINGIFY Function Signature 1 | function | [local](APEX_JSON/STRINGIFY_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRINGIFY-Function-Signature-1.html) |
+| STRINGIFY Function Signature 2 | function | [local](APEX_JSON/STRINGIFY_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRINGIFY-Function-Signature-2.html) |
+| STRINGIFY Function Signature 3 | function | [local](APEX_JSON/STRINGIFY_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRINGIFY-Function-Signature-3.html) |
+| STRINGIFY Function Signature 4 | function | [local](APEX_JSON/STRINGIFY_Function_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRINGIFY-Function-Signature-4.html) |
+| STRINGIFY Function Signature 5 | function | [local](APEX_JSON/STRINGIFY_Function_Signature_5.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRINGIFY-Function-Signature-5.html) |
+| TO_MEMBER_NAME Function | function | [local](APEX_JSON/TO_MEMBER_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/To_MEMBER_NAME-Function.html) |
+| TO_XMLTYPE Function | function | [local](APEX_JSON/TO_XMLTYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TO_XMLTYPE-Function.html) |
+| TO_XMLTYPE_SQL Function | function | [local](APEX_JSON/TO_XMLTYPE_SQL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TO_XMLTYPE_SQL-Function.html) |
+| WRITE Procedure Signature 1 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-1.html) |
+| WRITE Procedure Signature 2 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-2.html) |
+| WRITE Procedure Signature 3 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-3.html) |
+| WRITE Procedure Signature 4 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-4.html) |
+| WRITE Procedure Signature 5 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_5.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-5.html) |
+| WRITE Procedure Signature 6 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_6.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-6.html) |
+| WRITE Procedure Signature 7 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_7.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-7.html) |
+| WRITE Procedure Signature 8 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_8.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-8.html) |
+| WRITE Procedure Signature 9 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_9.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-9.html) |
+| WRITE Procedure Signature 10 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_10.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-10.html) |
+| WRITE Procedure Signature 11 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_11.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-11.html) |
+| WRITE Procedure Signature 12 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_12.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-12.html) |
+| WRITE Procedure Signature 13 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_13.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-13.html) |
+| WRITE Procedure Signature 14 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_14.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-14.html) |
+| WRITE Procedure Signature 15 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_15.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-15.html) |
+| WRITE Procedure Signature 16 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_16.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-16.html) |
+| WRITE Procedure Signature 17 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_17.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-17.html) |
+| WRITE Procedure Signature 18 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_18.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-18.html) |
+| WRITE Procedure Signature 19 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_19.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-19.html) |
+| WRITE Procedure Signature 20 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_20.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-20.html) |
+| WRITE Procedure Signature 21 | procedure | [local](APEX_JSON/WRITE_Procedure_Signature_21.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE-Procedure-Signature-21.html) |
+| WRITE_CONTEXT Procedure | procedure | [local](APEX_JSON/WRITE_CONTEXT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WRITE_CONTEXT-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_JSON.APEX_JSON Overview and Examples
 
@@ -41776,7 +40929,6 @@ Use this page when code needs the `APEX_JSON.APEX_JSON` examples. Confirm securi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_JSON.Constants and Data Types
 
@@ -41801,7 +40953,6 @@ Use this page when code needs the `APEX_JSON.Constants and Data Types` constants
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_JSON.CLOSE_ALL Procedure
 
@@ -41841,7 +40992,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.CLOSE_ARRAY Procedure
 
@@ -41881,7 +41031,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.CLOSE_OBJECT Procedure
 
@@ -41921,7 +41070,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.DOES_EXIST Function
 
@@ -41947,7 +41095,7 @@ APEX_JSON.DOES_EXIST (
    p2                 IN VARCHAR2 DEFAULT NULL,
    p3                 IN VARCHAR2 DEFAULT NULL,
    p4                 IN VARCHAR2 DEFAULT NULL,
-   p_values           IN t_values DEFAULT g_values )
+   p_values           IN t_values DEFAULT g_values ) 
 RETURN BOOLEAN;
 ```
 
@@ -41983,7 +41131,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.FIND_PATHS_LIKE Function
 
@@ -42041,7 +41188,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.FLUSH Procedure
 
@@ -42081,7 +41227,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.FREE_OUTPUT Procedure
 
@@ -42121,7 +41266,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_BOOLEAN Function
 
@@ -42186,7 +41330,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_CLOB Function
 
@@ -42247,7 +41390,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_CLOB_OUTPUT Function
 
@@ -42296,7 +41438,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_COUNT Function
 
@@ -42354,7 +41495,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_DATE Function
 
@@ -42418,7 +41558,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_MEMBERS Function
 
@@ -42476,7 +41615,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_NUMBER Function
 
@@ -42537,7 +41675,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_SDO_GEOMETRY Function
 
@@ -42602,7 +41739,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_T_NUMBER Function
 
@@ -42664,7 +41800,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_T_VARCHAR2 Function
 
@@ -42726,7 +41861,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_VALUE Function
 
@@ -42784,7 +41918,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_VALUE_KIND Function
 
@@ -42842,7 +41975,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.GET_VARCHAR2 Function
 
@@ -42903,7 +42035,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.INITIALIZE_CLOB_OUTPUT Procedure
 
@@ -42961,7 +42092,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.INITIALIZE_OUTPUT Procedure
 
@@ -42983,7 +42113,7 @@ Use this page when code needs the `APEX_JSON.INITIALIZE_OUTPUT` procedure. Confi
 APEX_JSON.INITIALIZE_OUTPUT (
     p_http_header     IN BOOLEAN     DEFAULT TRUE,
     p_http_cache      IN BOOLEAN     DEFAULT FALSE,
-    p_http_cache_etag IN VARCHAR2    DEFAULT NULL,
+    p_http_cache_etag IN VARCHAR2    DEFAULT NULL, 
     p_indent          IN PLS_INTEGER DEFAULT NULL )
 ```
 
@@ -43019,7 +42149,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.OPEN_ARRAY Procedure
 
@@ -43068,7 +42197,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.OPEN_OBJECT Procedure
 
@@ -43117,7 +42245,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.PARSE Procedure Signature 1
 
@@ -43177,7 +42304,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.PARSE Procedure Signature 2
 
@@ -43233,7 +42359,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.STRINGIFY Function Signature 1
 
@@ -43286,7 +42411,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.STRINGIFY Function Signature 2
 
@@ -43339,7 +42463,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.STRINGIFY Function Signature 3
 
@@ -43394,7 +42517,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.STRINGIFY Function Signature 4
 
@@ -43447,7 +42569,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.STRINGIFY Function Signature 5
 
@@ -43500,7 +42621,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.TO_MEMBER_NAME Function
 
@@ -43553,7 +42673,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.TO_XMLTYPE Function
 
@@ -43614,7 +42733,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.TO_XMLTYPE_SQL Function
 
@@ -43675,7 +42793,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 1
 
@@ -43724,7 +42841,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 2
 
@@ -43773,7 +42889,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 3
 
@@ -43822,7 +42937,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 4
 
@@ -43874,7 +42988,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 5
 
@@ -43923,7 +43036,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 6
 
@@ -43972,7 +43084,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 7
 
@@ -44021,7 +43132,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 8
 
@@ -44070,7 +43180,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 9
 
@@ -44125,7 +43234,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 10
 
@@ -44180,7 +43288,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 11
 
@@ -44235,7 +43342,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 12
 
@@ -44293,7 +43399,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 13
 
@@ -44348,7 +43453,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 14
 
@@ -44400,7 +43504,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 15
 
@@ -44455,7 +43558,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 16
 
@@ -44513,7 +43615,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 17
 
@@ -44577,7 +43678,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 18
 
@@ -44632,7 +43732,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 19
 
@@ -44687,7 +43786,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 20
 
@@ -44742,7 +43840,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE Procedure Signature 21
 
@@ -44797,7 +43894,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JSON.WRITE_CONTEXT Procedure
 
@@ -44852,7 +43948,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_JWT
 
@@ -44948,14 +44043,24 @@ Do not authorize access from unsigned or unvalidated token content.
 
 ### Related APIs
 
-- APEX_CREDENTIAL for secret-backed configuration.
-- APEX_JSON for claim parsing and JSON construction.
-- APEX_AUTHENTICATION for authentication flows.
----
+- [APEX_CREDENTIAL](APEX_CREDENTIAL.md) for secret-backed configuration.
+- [APEX_JSON](APEX_JSON.md) for claim parsing and JSON construction.
+- [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md) for authentication flows.
 
-### Member Details: APEX_JWT
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| t_token Record | topic | [local](APEX_JWT/t_token_Record.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/T_TOKEN.html) |
+| ENCODE Function | function | [local](APEX_JWT/ENCODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ENCODE.html) |
+| DECODE Function | function | [local](APEX_JWT/DECODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DECODE.html) |
+| VALIDATE Procedure | procedure | [local](APEX_JWT/VALIDATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/VALIDATE.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_JWT.t_token Record
 
@@ -44997,7 +44102,6 @@ type t_token is record (
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_JWT.ENCODE Function
 
@@ -45074,7 +44178,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JWT.DECODE Function
 
@@ -45130,7 +44233,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_JWT.VALIDATE Procedure
 
@@ -45188,7 +44290,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_LANG
 
@@ -45261,7 +44362,7 @@ end;
 /
 ```
 
-When `p_used_in_javascript` is true, use the client-side apex.lang APIs from JavaScript.
+When `p_used_in_javascript` is true, use the client-side [apex.lang](../JavaScript/apex.lang.md) APIs from JavaScript.
 
 ### Update A Message
 
@@ -45349,14 +44450,41 @@ Use `GET_LANGUAGE_SELECTOR_LIST` instead when the calling code needs to inspect 
 
 ### Related APIs
 
-- apex.lang for translated JavaScript messages.
-- APEX_ESCAPE for output escaping.
-- APEX_APPLICATION_INSTALL and APEX_EXPORT for deployment flows that include translations.
----
+- [apex.lang](../JavaScript/apex.lang.md) for translated JavaScript messages.
+- [APEX_ESCAPE](APEX_ESCAPE.md) for output escaping.
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) and [APEX_EXPORT](APEX_EXPORT.md) for deployment flows that include translations.
 
-### Member Details: APEX_LANG
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| APPLY_XLIFF_DOCUMENT Procedure | procedure | [local](APEX_LANG/APPLY_XLIFF_DOCUMENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APPLY_XLIFF_DOCUMENT-Procedure.html) |
+| CREATE_LANGUAGE_MAPPING Procedure | procedure | [local](APEX_LANG/CREATE_LANGUAGE_MAPPING_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_LANGUAGE_MAPPING-Procedure.html) |
+| CREATE_MESSAGE Procedure | procedure | [local](APEX_LANG/CREATE_MESSAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.CREATE_MESSAGE-Procedure.html) |
+| DELETE_LANGUAGE_MAPPING Procedure | procedure | [local](APEX_LANG/DELETE_LANGUAGE_MAPPING_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_LANGUAGE_MAPPING-Procedure.html) |
+| DELETE_MESSAGE Procedure | procedure | [local](APEX_LANG/DELETE_MESSAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_MESSAGE-Procedure.html) |
+| EMIT_LANGUAGE_SELECTOR_LIST Procedure | procedure | [local](APEX_LANG/EMIT_LANGUAGE_SELECTOR_LIST_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EMIT_LANGUAGE_SELECTOR_LIST-Procedure.html) |
+| EXPORT_TEXT_MESSAGES Function Signature 1 | function | [local](APEX_LANG/EXPORT_TEXT_MESSAGES_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.EXPORT_TEXT_MESSAGES-Function-Signature-1.html) |
+| EXPORT_TEXT_MESSAGES Function Signature 2 | function | [local](APEX_LANG/EXPORT_TEXT_MESSAGES_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.EXPORT_TEXT_MESSAGES-Function-Signature-2.html) |
+| GET_LANGUAGE_SELECTOR_LIST Function | function | [local](APEX_LANG/GET_LANGUAGE_SELECTOR_LIST_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LANGUAGE_SELECTOR_LIST-Function.html) |
+| GET_MESSAGE Function | function | [local](APEX_LANG/GET_MESSAGE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.GET_MESSAGE-Function.html) |
+| GET_XLIFF_DOCUMENT Function | function | [local](APEX_LANG/GET_XLIFF_DOCUMENT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_XLIFF_DOCUMENT-Function.html) |
+| IMPORT_TEXT_MESSAGES Procedure Signature 1 | procedure | [local](APEX_LANG/IMPORT_TEXT_MESSAGES_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.IMPORT_TEXT_MESSAGES-Procedure-Signature-1.html) |
+| IMPORT_TEXT_MESSAGES Procedure Signature 2 | procedure | [local](APEX_LANG/IMPORT_TEXT_MESSAGES_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.IMPORT_TEXT_MESSAGES-Procedure-Signature-2.html) |
+| LANG Function | function | [local](APEX_LANG/LANG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LANG_Function.html) |
+| MESSAGE Function (Deprecated) | function | [local](APEX_LANG/MESSAGE_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MESSAGE-Function.html) |
+| PUBLISH_APPLICATION Procedure | procedure | [local](APEX_LANG/PUBLISH_APPLICATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUBLISH_APPLICATION-Procedure.html) |
+| SEED_TRANSLATIONS Procedure | procedure | [local](APEX_LANG/SEED_TRANSLATIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEED_TRANSLATIONS-Procedure.html) |
+| UPDATE_LANGUAGE_MAPPING Procedure | procedure | [local](APEX_LANG/UPDATE_LANGUAGE_MAPPING_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_LANGUAGE_MAPPING-Procedure.html) |
+| UPDATE_MESSAGE Procedure Signature 1 | procedure | [local](APEX_LANG/UPDATE_MESSAGE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.UPDATE_MESSAGE-Procedure-Signature-1.html) |
+| UPDATE_MESSAGE Procedure Signature 2 | procedure | [local](APEX_LANG/UPDATE_MESSAGE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LANG.UPDATE_MESSAGE-Procedure-Signature-2.html) |
+| UPDATE_TRANSLATED_STRING Procedure | procedure | [local](APEX_LANG/UPDATE_TRANSLATED_STRING_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_TRANSLATED_STRING-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_LANG.APPLY_XLIFF_DOCUMENT Procedure
 
@@ -45411,7 +44539,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.CREATE_LANGUAGE_MAPPING Procedure
 
@@ -45472,7 +44599,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.CREATE_MESSAGE Procedure
 
@@ -45539,7 +44665,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.DELETE_LANGUAGE_MAPPING Procedure
 
@@ -45591,7 +44716,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.DELETE_MESSAGE Procedure
 
@@ -45640,7 +44764,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.EMIT_LANGUAGE_SELECTOR_LIST Procedure
 
@@ -45680,7 +44803,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.EXPORT_TEXT_MESSAGES Function Signature 1
 
@@ -45739,7 +44861,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.EXPORT_TEXT_MESSAGES Function Signature 2
 
@@ -45795,7 +44916,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.GET_LANGUAGE_SELECTOR_LIST Function
 
@@ -45839,7 +44959,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.GET_MESSAGE Function
 
@@ -45897,7 +45016,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.GET_XLIFF_DOCUMENT Function
 
@@ -45955,7 +45073,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.IMPORT_TEXT_MESSAGES Procedure Signature 1
 
@@ -46010,7 +45127,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.IMPORT_TEXT_MESSAGES Procedure Signature 2
 
@@ -46062,7 +45178,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.LANG Function
 
@@ -46120,72 +45235,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_LANG.MESSAGE Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MESSAGE-Function.html)
-
-Parent package: APEX_LANG
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_LANG.MESSAGE` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_LANG.MESSAGE (
-    p_name            IN VARCHAR2 DEFAULT NULL,
-    p0                IN VARCHAR2 DEFAULT NULL,
-    p1                IN VARCHAR2 DEFAULT NULL,
-    p2                IN VARCHAR2 DEFAULT NULL,
-    ...
-    p9                IN VARCHAR2 DEFAULT NULL,
-    p_lang            IN VARCHAR2 DEFAULT NULL,
-    p_application_id  IN NUMBER   DEFAULT NULL )
-RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_name` | Name of the message as defined in Text Messages under Shared Components of your application in Oracle APEX . |
-| `p0 through p9` | Dynamic substitution value: p0 corresponds to %0 in the translation string; p1 corresponds to %1 in the translation string; p2 corresponds to %2 in the translation string, and so on. |
-| `p_lang` | Language code for the message to be retrieved. If not specified, APEX uses the current language for the user as defined in the Application Language Derived From attribute. See also Specifying the Primary Language for an Application in Oracle APEX App Builder User’s Guide . |
-| `p_application_id` | Used to specify the application ID within the current workspace that owns the translated message you wish to return. Useful when coding packages that might be called outside of the scope of APEX such as packages called from a database job. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_lang.MESSAGE(
-        p_name => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_LANG.PUBLISH_APPLICATION Procedure
 
@@ -46240,7 +45289,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.SEED_TRANSLATIONS Procedure
 
@@ -46292,7 +45340,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.UPDATE_LANGUAGE_MAPPING Procedure
 
@@ -46347,7 +45394,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.UPDATE_MESSAGE Procedure Signature 1
 
@@ -46399,7 +45445,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.UPDATE_MESSAGE Procedure Signature 2
 
@@ -46466,7 +45511,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LANG.UPDATE_TRANSLATED_STRING Procedure
 
@@ -46521,7 +45565,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_LDAP
 
@@ -46533,7 +45576,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 ### When To Use
 
-Use it when an application must authenticate against LDAP, search directory attributes, or check group membership from PL/SQL. Prefer declarative authentication schemes and APEX_AUTHENTICATION where possible.
+Use it when an application must authenticate against LDAP, search directory attributes, or check group membership from PL/SQL. Prefer declarative authentication schemes and [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md) where possible.
 
 ### API Surface
 
@@ -46604,20 +45647,33 @@ end;
 ### Notes
 
 - Prefer SSL mode `A` when the LDAP server certificate is configured in an Oracle wallet.
-- Escape user-controlled LDAP filter fragments with APEX_ESCAPE LDAP helpers.
+- Escape user-controlled LDAP filter fragments with [APEX_ESCAPE](APEX_ESCAPE.md) LDAP helpers.
 - Use Web Credentials instead of hard-coded bind passwords.
 - Keep timeouts short for page-request searches; move slow directory sync to jobs or background processing.
 
 ### Related APIs
 
-- APEX_AUTHENTICATION for modern auth callbacks.
-- APEX_CREDENTIAL for credential-backed directory binds.
-- APEX_ESCAPE for LDAP-safe escaping.
----
+- [APEX_AUTHENTICATION](APEX_AUTHENTICATION.md) for modern auth callbacks.
+- [APEX_CREDENTIAL](APEX_CREDENTIAL.md) for credential-backed directory binds.
+- [APEX_ESCAPE](APEX_ESCAPE.md) for LDAP-safe escaping.
 
-### Member Details: APEX_LDAP
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| AUTHENTICATE Function | function | [local](APEX_LDAP/AUTHENTICATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/AUTHENTICATE-Function.html) |
+| GET_ALL_USER_ATTRIBUTES Procedure | procedure | [local](APEX_LDAP/GET_ALL_USER_ATTRIBUTES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_ALL_USER_ATTRIBUTES-Procedure.html) |
+| GET_USER_ATTRIBUTES Procedure | procedure | [local](APEX_LDAP/GET_USER_ATTRIBUTES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USER_ATTRIBUTES-Procedure.html) |
+| IS_MEMBER Function | function | [local](APEX_LDAP/IS_MEMBER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_MEMBER-Function.html) |
+| MEMBER_OF Function | function | [local](APEX_LDAP/MEMBER_OF_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MEMBER_OF-Function.html) |
+| MEMBER_OF2 Function | function | [local](APEX_LDAP/MEMBER_OF2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MEMBER_OF2-Function.html) |
+| SEARCH Function | function | [local](APEX_LDAP/SEARCH_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_LDAP.SEARCH-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_LDAP.AUTHENTICATE Function
 
@@ -46681,7 +45737,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LDAP.GET_ALL_USER_ATTRIBUTES Procedure
 
@@ -46754,7 +45809,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LDAP.GET_USER_ATTRIBUTES Procedure
 
@@ -46827,7 +45881,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LDAP.IS_MEMBER Function
 
@@ -46900,7 +45953,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LDAP.MEMBER_OF Function
 
@@ -46967,7 +46019,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LDAP.MEMBER_OF2 Function
 
@@ -47034,7 +46085,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_LDAP.SEARCH Function
 
@@ -47117,7 +46167,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_MAIL
 
@@ -47260,11 +46309,28 @@ end;
 - Attach only files the current user is authorized to receive.
 - Keep large attachments under instance/provider limits.
 - Configure APEX instance mail settings before relying on delivery.
----
 
-### Member Details: APEX_MAIL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Configuring Oracle APEX to Send Email | topic | [local](APEX_MAIL/Configuring_Oracle_APEX_to_Send_Email.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Configuring-Oracle-Application-Express-to-Send-Email.html) |
+| ADD_ATTACHMENT Procedure Signature 1 | procedure | [local](APEX_MAIL/ADD_ATTACHMENT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ATTACHMENT-Procedure-Signature-1.html) |
+| ADD_ATTACHMENT Procedure Signature 2 | procedure | [local](APEX_MAIL/ADD_ATTACHMENT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_ATTACHMENT-Procedure-Signature-2.html) |
+| GET_IMAGES_URL Function | function | [local](APEX_MAIL/GET_IMAGES_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_IMAGES_URL-Function.html) |
+| GET_INSTANCE_URL Function | function | [local](APEX_MAIL/GET_INSTANCE_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_INSTANCE_URL-Function.html) |
+| PREPARE_TEMPLATE Procedure | procedure | [local](APEX_MAIL/PREPARE_TEMPLATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PREPARE_TEMPLATE_Procedure.html) |
+| PUSH_QUEUE Procedure | procedure | [local](APEX_MAIL/PUSH_QUEUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH_QUEUE-Procedure.html) |
+| SEND Function Signature 1 | function | [local](APEX_MAIL/SEND_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND-Function-Signature-1.html) |
+| SEND Function Signature 2 | function | [local](APEX_MAIL/SEND_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND-Function-Signature-2.html) |
+| SEND Procedure Signature 1 | procedure | [local](APEX_MAIL/SEND_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND-Procedure-Signature-1.html) |
+| SEND Procedure Signature 2 | procedure | [local](APEX_MAIL/SEND_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND-Procedure-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_MAIL.Configuring Oracle APEX to Send Email
 
@@ -47289,7 +46355,6 @@ Use this page when code needs the `APEX_MAIL.Configuring Oracle APEX to Send Ema
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_MAIL.ADD_ATTACHMENT Procedure Signature 1
 
@@ -47350,7 +46415,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.ADD_ATTACHMENT Procedure Signature 2
 
@@ -47408,7 +46472,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.GET_IMAGES_URL Function
 
@@ -47447,7 +46510,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.GET_INSTANCE_URL Function
 
@@ -47486,7 +46548,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.PREPARE_TEMPLATE Procedure
 
@@ -47508,7 +46569,7 @@ Use this page when code needs the `APEX_MAIL.PREPARE_TEMPLATE` procedure. Confir
 APEX_MAIL.PREPARE_TEMPLATE (
     p_static_id         IN  VARCHAR2,
     p_placeholders      IN  CLOB,
-    p_application_id    IN  NUMBER   DEFAULT apex_application.g_flow_id,
+    p_application_id    IN  NUMBER   DEFAULT apex_application.g_flow_id, 
     p_subject           OUT VARCHAR2,
     p_html              OUT CLOB,
     p_text              OUT CLOB,
@@ -47553,7 +46614,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.PUSH_QUEUE Procedure
 
@@ -47605,7 +46665,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.SEND Function Signature 1
 
@@ -47675,7 +46734,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.SEND Function Signature 2
 
@@ -47748,7 +46806,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.SEND Procedure Signature 1
 
@@ -47818,7 +46875,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_MAIL.SEND Procedure Signature 2
 
@@ -47838,7 +46894,7 @@ Use this page when code needs the `APEX_MAIL.SEND` procedure. Confirm security, 
 
 ```sql
 APEX_MAIL.SEND (
-    p_template_static_id IN VARCHAR2,
+    p_template_static_id IN VARCHAR2,    
     p_placeholders       IN CLOB,
     p_to                 IN VARCHAR2,
     p_cc                 IN VARCHAR2 DEFAULT NULL,
@@ -47888,7 +46944,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_MARKDOWN
 
@@ -47988,14 +47043,22 @@ end;
 
 ### Related APIs
 
-- APEX_ESCAPE for other output contexts.
-- APEX_AI for AI responses that may contain Markdown.
-- htmlBuilder for small client-side HTML fragments.
----
+- [APEX_ESCAPE](APEX_ESCAPE.md) for other output contexts.
+- [APEX_AI](APEX_AI.md) for AI responses that may contain Markdown.
+- [htmlBuilder](../JavaScript/htmlBuilder.md) for small client-side HTML fragments.
 
-### Member Details: APEX_MARKDOWN
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_MARKDOWN/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_MARKDOWN-Constants.html) |
+| TO_HTML Function | function | [local](APEX_MARKDOWN/TO_HTML_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TO_HTML-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_MARKDOWN.Constants
 
@@ -48020,7 +47083,6 @@ Use this page when code needs the `APEX_MARKDOWN.Constants` constants. Confirm s
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_MARKDOWN.TO_HTML Function
 
@@ -48079,7 +47141,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_PAGE
 
@@ -48190,11 +47251,25 @@ Pass `P_PAGE_ID => NULL` only when intentionally purging all cached pages in the
 - Use `P_PLAIN_URL => TRUE` when generating a plain link from modal-dialog context and the dialog close wrapper is not wanted.
 - Use `P_ABSOLUTE_URL => TRUE` for links sent outside the current browser context, such as email.
 - Deprecated UI-type helpers remain indexed for legacy maintenance only.
----
 
-### Member Details: APEX_PAGE
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Global Constants | constants | [local](APEX_PAGE/Global_Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PAGE-Global-Constants.html) |
+| GET_CACHE_DATE Function | function | [local](APEX_PAGE/GET_CACHE_DATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PAGE.GET_CACHE_DATA-Function.html) |
+| GET_PAGE_MODE Function | function | [local](APEX_PAGE/GET_PAGE_MODE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PAGE_MODE-Function.html) |
+| GET_UI_TYPE Function (Deprecated) | function | [local](APEX_PAGE/GET_UI_TYPE_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_UI_TYPE-Function.html) |
+| GET_URL Function | function | [local](APEX_PAGE/GET_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_URL-Function.html) |
+| IS_DESKTOP_UI Function (Deprecated) | function | [local](APEX_PAGE/IS_DESKTOP_UI_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_DESKTOP_UI-Function.html) |
+| IS_READ_ONLY Function | function | [local](APEX_PAGE/IS_READ_ONLY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PAGE-IS_READ_ONLY-Function.html) |
+| PURGE_CACHE Procedure | procedure | [local](APEX_PAGE/PURGE_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PURGE_CACHE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_PAGE.Global Constants
 
@@ -48219,7 +47294,6 @@ Use this page when code needs the `APEX_PAGE.Global Constants` constants. Confir
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PAGE.GET_CACHE_DATE Function
 
@@ -48271,7 +47345,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PAGE.GET_PAGE_MODE Function
 
@@ -48323,51 +47396,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PAGE.GET_UI_TYPE Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_UI_TYPE-Function.html)
-
-Parent package: APEX_PAGE
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PAGE.GET_UI_TYPE` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-FUNCTION GET_UI_TYPE
-RETURN VARCHAR2;
-```
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_page.GET_UI_TYPE;
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_PAGE.GET_URL Function
 
@@ -48458,51 +47486,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PAGE.IS_DESKTOP_UI Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_DESKTOP_UI-Function.html)
-
-Parent package: APEX_PAGE
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PAGE.IS_DESKTOP_UI` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-FUNCTION IS_DESKTOP_UI
-RETURN BOOLEAN;
-```
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result BOOLEAN;
-begin
-    l_result := apex_page.IS_DESKTOP_UI;
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_PAGE.IS_READ_ONLY Function
 
@@ -48542,7 +47525,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PAGE.PURGE_CACHE Procedure
 
@@ -48600,7 +47582,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_PLUGIN
 
@@ -48838,17 +47819,66 @@ end;
 
 ### Related APIs
 
-- APEX_PLUGIN_UTIL for rendering, LOV, SQL, debug, and REST helper functions.
-- APEX_JAVASCRIPT for registering plug-in JavaScript.
-- APEX_CSS for registering plug-in CSS.
-- apex.item and item for custom item client interfaces.
-- apex.region and region for custom region client interfaces.
-- apex.server for client Ajax calls.
----
+- [APEX_PLUGIN_UTIL](APEX_PLUGIN_UTIL.md) for rendering, LOV, SQL, debug, and REST helper functions.
+- [APEX_JAVASCRIPT](APEX_JAVASCRIPT.md) for registering plug-in JavaScript.
+- [APEX_CSS](APEX_CSS.md) for registering plug-in CSS.
+- [apex.item](../JavaScript/apex.item.md) and [item](../JavaScript/item.md) for custom item client interfaces.
+- [apex.region](../JavaScript/apex.region.md) and [region](../JavaScript/region.md) for custom region client interfaces.
+- [apex.server](../JavaScript/apex.server.md) for client Ajax calls.
 
-### Member Details: APEX_PLUGIN
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| About Configuring Flexible Remote Servers in APEX | about | [local](APEX_PLUGIN/About_Configuring_Flexible_Remote_Servers_in_APEX.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-Configuring-Flexible-Remote-Servers.html) |
+| Constants | constants | [local](APEX_PLUGIN/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Constants.html) |
+| Data Types | data types | [local](APEX_PLUGIN/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| c_inline_in_notification | topic | [local](APEX_PLUGIN/c_inline_in_notification.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| c_inline_with_field | topic | [local](APEX_PLUGIN/c_inline_with_field.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| c_inline_with_field_and_notif | topic | [local](APEX_PLUGIN/c_inline_with_field_and_notif.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| c_on_error_page | topic | [local](APEX_PLUGIN/c_on_error_page.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authentication | topic | [local](APEX_PLUGIN/t_authentication.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authentication_ajax_result | topic | [local](APEX_PLUGIN/t_authentication_ajax_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authentication_auth_result | topic | [local](APEX_PLUGIN/t_authentication_auth_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authentication_inval_result | topic | [local](APEX_PLUGIN/t_authentication_inval_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authentication_logout_result | topic | [local](APEX_PLUGIN/t_authentication_logout_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authentication_sentry_result | topic | [local](APEX_PLUGIN/t_authentication_sentry_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authorization | topic | [local](APEX_PLUGIN/t_authorization.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_authorization_exec_result | topic | [local](APEX_PLUGIN/t_authorization_exec_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_dynamic_action | topic | [local](APEX_PLUGIN/t_dynamic_action.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_dynamic_action_ajax_param | topic | [local](APEX_PLUGIN/t_dynamic_action_ajax_param.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_dynamic_action_ajax_result | topic | [local](APEX_PLUGIN/t_dynamic_action_ajax_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_dynamic_action_render_param | topic | [local](APEX_PLUGIN/t_dynamic_action_render_param.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_dynamic_action_render_result | topic | [local](APEX_PLUGIN/t_dynamic_action_render_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_escape_mode | topic | [local](APEX_PLUGIN/t_escape_mode.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_item | topic | [local](APEX_PLUGIN/t_item.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_item_ajax_result | topic | [local](APEX_PLUGIN/t_item_ajax_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_item_meta_data_result | topic | [local](APEX_PLUGIN/t_item_meta_data_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_item_render_param | topic | [local](APEX_PLUGIN/t_item_render_param.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_item_render_result | topic | [local](APEX_PLUGIN/t_item_render_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_item_validation_result | topic | [local](APEX_PLUGIN/t_item_validation_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_plugin | topic | [local](APEX_PLUGIN/t_plugin.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_plugin_attributes | topic | [local](APEX_PLUGIN/t_plugin_attributes.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_process | topic | [local](APEX_PLUGIN/t_process.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_process_exec_result | topic | [local](APEX_PLUGIN/t_process_exec_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_region | topic | [local](APEX_PLUGIN/t_region.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_region_ajax_result | topic | [local](APEX_PLUGIN/t_region_ajax_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_region_column | topic | [local](APEX_PLUGIN/t_region_column.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_region_columns | topic | [local](APEX_PLUGIN/t_region_columns.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_region_render_param | topic | [local](APEX_PLUGIN/t_region_render_param.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_region_render_result | topic | [local](APEX_PLUGIN/t_region_render_result.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_remote_server_config | topic | [local](APEX_PLUGIN/t_remote_server_config.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| t_remote_server_info | topic | [local](APEX_PLUGIN/t_remote_server_info.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN-Data-Types.html) |
+| GET_AJAX_IDENTIFIER Function | function | [local](APEX_PLUGIN/GET_AJAX_IDENTIFIER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_AJAX_IDENTIFIER-Function.html) |
+| GET_KEEP_BACKGROUND_EXECS Function | function | [local](APEX_PLUGIN/GET_KEEP_BACKGROUND_EXECS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN.html) |
+| GET_INPUT_NAME_FOR_ITEM Function | function | [local](APEX_PLUGIN/GET_INPUT_NAME_FOR_ITEM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PLUGIN_UTIL.GET_INPUT_NAME_FOR_ITEM-Function.html) |
+| GET_INPUT_NAME_FOR_PAGE_ITEM Function (Deprecated) | function | [local](APEX_PLUGIN/GET_INPUT_NAME_FOR_PAGE_ITEM_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_INPUT_NAME_FOR_PAGE_ITEM-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_PLUGIN.About Configuring Flexible Remote Servers in APEX
 
@@ -48873,7 +47903,6 @@ Use this page when code needs the `APEX_PLUGIN.About Configuring Flexible Remote
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.Constants
 
@@ -48898,7 +47927,6 @@ Use this page when code needs the `APEX_PLUGIN.Constants` constants. Confirm sec
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.Data Types
 
@@ -48923,7 +47951,6 @@ Use this page when code needs the `APEX_PLUGIN.Data Types` data types. Confirm s
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.c_inline_in_notification
 
@@ -48948,7 +47975,6 @@ Use this page when code needs the `APEX_PLUGIN.c_inline_in_notification` topic. 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.c_inline_with_field
 
@@ -48973,7 +47999,6 @@ Use this page when code needs the `APEX_PLUGIN.c_inline_with_field` topic. Confi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.c_inline_with_field_and_notif
 
@@ -48998,7 +48023,6 @@ Use this page when code needs the `APEX_PLUGIN.c_inline_with_field_and_notif` to
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.c_on_error_page
 
@@ -49023,7 +48047,6 @@ Use this page when code needs the `APEX_PLUGIN.c_on_error_page` topic. Confirm s
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authentication
 
@@ -49048,7 +48071,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication` topic. Confirm 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authentication_ajax_result
 
@@ -49073,7 +48095,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication_ajax_result` top
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authentication_auth_result
 
@@ -49098,7 +48119,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication_auth_result` top
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authentication_inval_result
 
@@ -49123,7 +48143,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication_inval_result` to
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authentication_logout_result
 
@@ -49148,7 +48167,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication_logout_result` t
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authentication_sentry_result
 
@@ -49173,7 +48191,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication_sentry_result` t
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authorization
 
@@ -49198,7 +48215,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authorization` topic. Confirm s
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_authorization_exec_result
 
@@ -49223,7 +48239,6 @@ Use this page when code needs the `APEX_PLUGIN.t_authorization_exec_result` topi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_dynamic_action
 
@@ -49248,7 +48263,6 @@ Use this page when code needs the `APEX_PLUGIN.t_dynamic_action` topic. Confirm 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_dynamic_action_ajax_param
 
@@ -49273,7 +48287,6 @@ Use this page when code needs the `APEX_PLUGIN.t_dynamic_action_ajax_param` topi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_dynamic_action_ajax_result
 
@@ -49298,7 +48311,6 @@ Use this page when code needs the `APEX_PLUGIN.t_dynamic_action_ajax_result` top
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_dynamic_action_render_param
 
@@ -49323,7 +48335,6 @@ Use this page when code needs the `APEX_PLUGIN.t_dynamic_action_render_param` to
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_dynamic_action_render_result
 
@@ -49348,7 +48359,6 @@ Use this page when code needs the `APEX_PLUGIN.t_dynamic_action_render_result` t
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_escape_mode
 
@@ -49373,7 +48383,6 @@ Use this page when code needs the `APEX_PLUGIN.t_escape_mode` topic. Confirm sec
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_item
 
@@ -49398,7 +48407,6 @@ Use this page when code needs the `APEX_PLUGIN.t_item` topic. Confirm security, 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_item_ajax_result
 
@@ -49423,7 +48431,6 @@ Use this page when code needs the `APEX_PLUGIN.t_item_ajax_result` topic. Confir
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_item_meta_data_result
 
@@ -49448,7 +48455,6 @@ Use this page when code needs the `APEX_PLUGIN.t_item_meta_data_result` topic. C
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_item_render_param
 
@@ -49473,7 +48479,6 @@ Use this page when code needs the `APEX_PLUGIN.t_item_render_param` topic. Confi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_item_render_result
 
@@ -49498,7 +48503,6 @@ Use this page when code needs the `APEX_PLUGIN.t_item_render_result` topic. Conf
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_item_validation_result
 
@@ -49523,7 +48527,6 @@ Use this page when code needs the `APEX_PLUGIN.t_item_validation_result` topic. 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_plugin
 
@@ -49548,7 +48551,6 @@ Use this page when code needs the `APEX_PLUGIN.t_plugin` topic. Confirm security
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_plugin_attributes
 
@@ -49573,7 +48575,6 @@ Use this page when code needs the `APEX_PLUGIN.t_plugin_attributes` topic. Confi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_process
 
@@ -49598,7 +48599,6 @@ Use this page when code needs the `APEX_PLUGIN.t_process` topic. Confirm securit
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_process_exec_result
 
@@ -49623,7 +48623,6 @@ Use this page when code needs the `APEX_PLUGIN.t_process_exec_result` topic. Con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_region
 
@@ -49648,7 +48647,6 @@ Use this page when code needs the `APEX_PLUGIN.t_region` topic. Confirm security
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_region_ajax_result
 
@@ -49673,7 +48671,6 @@ Use this page when code needs the `APEX_PLUGIN.t_region_ajax_result` topic. Conf
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_region_column
 
@@ -49698,7 +48695,6 @@ Use this page when code needs the `APEX_PLUGIN.t_region_column` topic. Confirm s
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_region_columns
 
@@ -49723,7 +48719,6 @@ Use this page when code needs the `APEX_PLUGIN.t_region_columns` topic. Confirm 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_region_render_param
 
@@ -49748,7 +48743,6 @@ Use this page when code needs the `APEX_PLUGIN.t_region_render_param` topic. Con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_region_render_result
 
@@ -49773,7 +48767,6 @@ Use this page when code needs the `APEX_PLUGIN.t_region_render_result` topic. Co
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_remote_server_config
 
@@ -49798,7 +48791,6 @@ Use this page when code needs the `APEX_PLUGIN.t_remote_server_config` topic. Co
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.t_remote_server_info
 
@@ -49823,7 +48815,6 @@ Use this page when code needs the `APEX_PLUGIN.t_remote_server_info` topic. Conf
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.GET_AJAX_IDENTIFIER Function
 
@@ -49863,7 +48854,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN.GET_KEEP_BACKGROUND_EXECS Function
 
@@ -49888,7 +48878,6 @@ Use this page when code needs the `APEX_PLUGIN.GET_KEEP_BACKGROUND_EXECS` functi
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PLUGIN.GET_INPUT_NAME_FOR_ITEM Function
 
@@ -49928,60 +48917,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PLUGIN.GET_INPUT_NAME_FOR_PAGE_ITEM Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_INPUT_NAME_FOR_PAGE_ITEM-Function.html)
-
-Parent package: APEX_PLUGIN
-
-#### Purpose
-
-Caution:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN.GET_INPUT_NAME_FOR_PAGE_ITEM` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN.GET_INPUT_NAME_FOR_PAGE_ITEM (
-    p_is_multi_value    IN BOOLEAN )
-    RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_is_multi_value` | If the HTML input element has multiple values, such as a select list with multiple= "multiple" , then set p_is_multi_value to TRUE . |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_plugin.GET_INPUT_NAME_FOR_PAGE_ITEM(
-        p_is_multi_value => true
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ## APEX_PLUGIN_UTIL
 
@@ -50176,20 +49111,80 @@ Prefer narrow return-type helpers such as `GET_PLSQL_EXPR_RESULT_BOOLEAN` when t
 - Use `GET_ATTRIBUTE_AS_NUMBER` for NUMBER attributes rather than `TO_NUMBER`.
 - Prefer current non-deprecated helpers; generated member pages clearly mark deprecated APIs.
 - For REST Data Source plug-ins, use the REST source metadata and web credentials configured in APEX.
-- Open member detail sections for exact signatures because several APIs have multiple signatures and `IN OUT NOCOPY` parameters.
+- Open local member pages for exact signatures because several APIs have multiple signatures and `IN OUT NOCOPY` parameters.
 
 ### Related APIs
 
-- APEX_PLUGIN for plug-in callback types and result records.
-- APEX_ESCAPE for context-specific escaping outside plug-in utility output helpers.
-- APEX_DEBUG for general debug logging.
-- APEX_WEB_SERVICE for direct REST/SOAP calls outside REST Data Source plug-ins.
-- APEX_EXEC for declarative/local/remote query contexts.
----
+- [APEX_PLUGIN](APEX_PLUGIN.md) for plug-in callback types and result records.
+- [APEX_ESCAPE](APEX_ESCAPE.md) for context-specific escaping outside plug-in utility output helpers.
+- [APEX_DEBUG](APEX_DEBUG.md) for general debug logging.
+- [APEX_WEB_SERVICE](APEX_WEB_SERVICE.md) for direct REST/SOAP calls outside REST Data Source plug-ins.
+- [APEX_EXEC](APEX_EXEC.md) for declarative/local/remote query contexts.
 
-### Member Details: APEX_PLUGIN_UTIL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| BUILD_REQUEST_BODY Procedure | procedure | [local](APEX_PLUGIN_UTIL/BUILD_REQUEST_BODY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/BUILD_REQUEST_BODY-Procedure.html) |
+| CLEAR_COMPONENT_VALUES Procedure | procedure | [local](APEX_PLUGIN_UTIL/CLEAR_COMPONENT_VALUES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_COMPONENT_VALUES-Procedure.html) |
+| CURRENT_ROW_CHANGED Function | function | [local](APEX_PLUGIN_UTIL/CURRENT_ROW_CHANGED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CURRENT_ROW_CHANGED-Function.html) |
+| DB_OPERATION_ALLOWED Function | function | [local](APEX_PLUGIN_UTIL/DB_OPERATION_ALLOWED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DB_OPERATION_ALLOWED-Function.html) |
+| DEBUG_DYNAMIC _ACTION Procedure | procedure | [local](APEX_PLUGIN_UTIL/DEBUG_DYNAMIC_ACTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_DYNAMIC-_ACTION-Procedure.html) |
+| DEBUG_PAGE_ITEM Procedure Signature 1 (Deprecated) | procedure | [local](APEX_PLUGIN_UTIL/DEBUG_PAGE_ITEM_Procedure_Signature_1_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_PAGE_ITEM-Procedure-Signature-1.html) |
+| DEBUG_PAGE_ITEM Procedure Signature 2 (Deprecated) | procedure | [local](APEX_PLUGIN_UTIL/DEBUG_PAGE_ITEM_Procedure_Signature_2_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_PAGE_ITEM-Procedure-Signature-2.html) |
+| DEBUG_PROCESS Procedure | procedure | [local](APEX_PLUGIN_UTIL/DEBUG_PROCESS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_PROCESS-Procedure.html) |
+| DEBUG_REGION Procedure Signature 1 | procedure | [local](APEX_PLUGIN_UTIL/DEBUG_REGION_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_REGION-Procedure-Signature-1.html) |
+| DEBUG_REGION Procedure Signature 2 | procedure | [local](APEX_PLUGIN_UTIL/DEBUG_REGION_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_REGION-Procedure-Signature-2.html) |
+| ESCAPE Function | function | [local](APEX_PLUGIN_UTIL/ESCAPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ESCAPE-Function-2.html) |
+| EXECUTE_PLSQL_CODE Procedure (Deprecated) | procedure | [local](APEX_PLUGIN_UTIL/EXECUTE_PLSQL_CODE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXECUTE_PLSQL_CODE-Procedure.html) |
+| GET_ATTRIBUTE_AS_NUMBER Function | function | [local](APEX_PLUGIN_UTIL/GET_ATTRIBUTE_AS_NUMBER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_ATTRIBUTE_AS_NUMBER-Function.html) |
+| GET_CURRENT_DATABASE_TYPE Function | function | [local](APEX_PLUGIN_UTIL/GET_CURRENT_DATABASE_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CURRENT_DATABASE_TYPE-Function.html) |
+| GET_DATA Function Signature 1 | function | [local](APEX_PLUGIN_UTIL/GET_DATA_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DATA-Function-Signature-1.html) |
+| GET_DATA Function Signature 2 | function | [local](APEX_PLUGIN_UTIL/GET_DATA_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DATA-Function-Signature-2.html) |
+| GET_DATA2 Function Signature 1 | function | [local](APEX_PLUGIN_UTIL/GET_DATA2_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DATA2-Function-Signature-1.html) |
+| GET_DATA2 Function Signature 2 | function | [local](APEX_PLUGIN_UTIL/GET_DATA2_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DATA2-Function-Signature-2.html) |
+| GET_DISPLAY_DATA Function Signature 1 | function | [local](APEX_PLUGIN_UTIL/GET_DISPLAY_DATA_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DISPLAY_DATA-Function-Signature-1.html) |
+| GET_DISPLAY_DATA Function Signature 2 | function | [local](APEX_PLUGIN_UTIL/GET_DISPLAY_DATA_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DISPLAY_DATA-Function-Signature-2.html) |
+| GET_ELEMENT_ATTRIBUTES Function | function | [local](APEX_PLUGIN_UTIL/GET_ELEMENT_ATTRIBUTES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_ELEMENT_ATTRIBUTES-Function.html) |
+| GET_HTML_ATTR Function | function | [local](APEX_PLUGIN_UTIL/GET_HTML_ATTR_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_HTML_ATTR-Function.html) |
+| GET_ORDERBY_NULLS_SUPPORT Function | function | [local](APEX_PLUGIN_UTIL/GET_ORDERBY_NULLS_SUPPORT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_ORDERBY_NULLS_SUPPORT-Function.html) |
+| GET_PLSQL_EXPR_RESULT_BOOLEAN Function | function | [local](APEX_PLUGIN_UTIL/GET_PLSQL_EXPR_RESULT_BOOLEAN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PLSQL_EXPR_RESULT_BOOLEAN-Function.html) |
+| GET_PLSQL_EXPR_RESULT_CLOB Function | function | [local](APEX_PLUGIN_UTIL/GET_PLSQL_EXPR_RESULT_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PLSQL_EXPR_RESULT_CLOB-Function.html) |
+| GET_PLSQL_EXPRESSION_RESULT Function | function | [local](APEX_PLUGIN_UTIL/GET_PLSQL_EXPRESSION_RESULT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PLSQL_EXPRESSION_RESULT-Function.html) |
+| GET_PLSQL_FUNC_RESULT_BOOLEAN Function | function | [local](APEX_PLUGIN_UTIL/GET_PLSQL_FUNC_RESULT_BOOLEAN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PLSQL_FUNC_RESULT_BOOLEAN-Function.html) |
+| GET_PLSQL_FUNC_RESULT_CLOB Function | function | [local](APEX_PLUGIN_UTIL/GET_PLSQL_FUNC_RESULT_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PLSQL_FUNC_RESULT_CLOB-Function.html) |
+| GET_PLSQL_FUNCTION_RESULT Function | function | [local](APEX_PLUGIN_UTIL/GET_PLSQL_FUNCTION_RESULT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PLSQL_FUNCTION_RESULT-Function.html) |
+| GET_POSITION_IN_LIST Function (Deprecated) | function | [local](APEX_PLUGIN_UTIL/GET_POSITION_IN_LIST_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_POSITION_IN_LIST-Function.html) |
+| GET_SEARCH_STRING Function | function | [local](APEX_PLUGIN_UTIL/GET_SEARCH_STRING_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SEARCH_STRING-Function.html) |
+| GET_VALUE_AS_VARCHAR2 Function | function | [local](APEX_PLUGIN_UTIL/GET_VALUE_AS_VARCHAR2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_VALUE_AS_VARCHAR2-Function.html) |
+| GET_WEB_SOURCE_OPERATION Function | function | [local](APEX_PLUGIN_UTIL/GET_WEB_SOURCE_OPERATION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_WEB_SOURCE_OPERATION-Function.html) |
+| IS_EQUAL Function | function | [local](APEX_PLUGIN_UTIL/IS_EQUAL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_EQUAL-Function.html) |
+| IS_COMPONENT_USED Function | function | [local](APEX_PLUGIN_UTIL/IS_COMPONENT_USED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_COMPONENT_USED-Function.html) |
+| MAKE_REST_REQUEST Procedure Signature 1 | procedure | [local](APEX_PLUGIN_UTIL/MAKE_REST_REQUEST_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REST_REQUEST-Procedure-Signature-1.html) |
+| MAKE_REST_REQUEST Procedure Signature 2 | procedure | [local](APEX_PLUGIN_UTIL/MAKE_REST_REQUEST_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REST_REQUEST-Procedure-Signature-2.html) |
+| PAGE_ITEM_NAMES_TO_JQUERY Function (Deprecated) | function | [local](APEX_PLUGIN_UTIL/PAGE_ITEM_NAMES_TO_JQUERY_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PAGE_ITEM_NAMES_TO_JQUERY-Function.html) |
+| PARSE_REFETCH_RESPONSE Function | function | [local](APEX_PLUGIN_UTIL/PARSE_REFETCH_RESPONSE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE_REFETCH_RESPONSE-Function.html) |
+| PRINT_DISPLAY_ONLY Procedure Signature 1 (Deprecated) | procedure | [local](APEX_PLUGIN_UTIL/PRINT_DISPLAY_ONLY_Procedure_Signature_1_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_DISPLAY_ONLY-Procedure-Signature-1.html) |
+| PRINT_DISPLAY_ONLY Procedure Signature 2 (Deprecated) | procedure | [local](APEX_PLUGIN_UTIL/PRINT_DISPLAY_ONLY_Procedure_Signature_2_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_DISPLAY_ONLY-Procedure-Signature-2.html) |
+| PRINT_ESCAPED_VALUE Procedure Signature 1 | procedure | [local](APEX_PLUGIN_UTIL/PRINT_ESCAPED_VALUE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_ESCAPED_VALUE-Procedure.html) |
+| PRINT_ESCAPED_VALUE Procedure Signature 2 | procedure | [local](APEX_PLUGIN_UTIL/PRINT_ESCAPED_VALUE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_ESCAPED_VALUE-Procedure-Signature-2.html) |
+| PRINT_HIDDEN Procedure | procedure | [local](APEX_PLUGIN_UTIL/PRINT_HIDDEN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_HIDDEN-Procedure.html) |
+| PRINT_HIDDEN_IF_READONLY Procedure | procedure | [local](APEX_PLUGIN_UTIL/PRINT_HIDDEN_IF_READONLY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_HIDDEN_IF_READONLY-Procedure.html) |
+| PRINT_JSON_HTTP_HEADER Procedure | procedure | [local](APEX_PLUGIN_UTIL/PRINT_JSON_HTTP_HEADER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_JSON_HTTP_HEADER-Procedure.html) |
+| PRINT_LOV_AS_JSON Procedure | procedure | [local](APEX_PLUGIN_UTIL/PRINT_LOV_AS_JSON_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_LOV_AS_JSON-Procedure.html) |
+| PRINT_OPTION Procedure | procedure | [local](APEX_PLUGIN_UTIL/PRINT_OPTION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_OPTION-Procedure.html) |
+| PRINT_READ_ONLY Procedure Signature 1 | procedure | [local](APEX_PLUGIN_UTIL/PRINT_READ_ONLY_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_READ_ONLY-Procedure-Signature-1.html) |
+| PRINT_READ_ONLY Procedure Signature 2 | procedure | [local](APEX_PLUGIN_UTIL/PRINT_READ_ONLY_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_READ_ONLY-Procedure-Signature-2.html) |
+| PROCESS_DML_RESPONSE Procedure | procedure | [local](APEX_PLUGIN_UTIL/PROCESS_DML_RESPONSE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PROCESS_DML_RESPONSE-Procedure.html) |
+| REPLACE_SUBSTITUTIONS Function | function | [local](APEX_PLUGIN_UTIL/REPLACE_SUBSTITUTIONS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REPLACE_SUBSTITUTIONS-Function.html) |
+| SET_COMPONENT_VALUES Procedure | procedure | [local](APEX_PLUGIN_UTIL/SET_COMPONENT_VALUES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_COMPONENT_VALUES-Procedure.html) |
+| SPLIT_MUTLIPLE_VALUE_TO_TABLE Function | function | [local](APEX_PLUGIN_UTIL/SPLIT_MUTLIPLE_VALUE_TO_TABLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SPLIT_MUTLIPLE_VALUE_TO_TABLE-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_PLUGIN_UTIL.BUILD_REQUEST_BODY Procedure
 
@@ -50251,7 +49246,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.CLEAR_COMPONENT_VALUES Procedure
 
@@ -50291,7 +49285,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.CURRENT_ROW_CHANGED Function
 
@@ -50347,7 +49340,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.DB_OPERATION_ALLOWED Function
 
@@ -50406,7 +49398,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.DEBUG_DYNAMIC _ACTION Procedure
 
@@ -50458,128 +49449,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PLUGIN_UTIL.DEBUG_PAGE_ITEM Procedure Signature 1 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_PAGE_ITEM-Procedure-Signature-1.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.DEBUG_PAGE_ITEM` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.DEBUG_PAGE_ITEM (
-    p_plugin    IN apex_plugin.t_plugin,
-    p_page_item IN apex_plugin.t_page_item );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_plugin` | This is the p_plugin parameter of your plug-in function. |
-| `p_page_item` | This is the p_page_item parameter of your plug-in function. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_plugin_util.DEBUG_PAGE_ITEM(
-        p_plugin => null,
-        p_page_item => null
-    );
-end;
-/
-```
----
-
-### APEX_PLUGIN_UTIL.DEBUG_PAGE_ITEM Procedure Signature 2 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEBUG_PAGE_ITEM-Procedure-Signature-2.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.DEBUG_PAGE_ITEM` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.DEBUG_PAGE_ITEM (
-    p_plugin              IN apex_plugin.t_plugin,
-    p_page_item           IN apex_plugin.t_page_item,
-    p_value               IN VARCHAR2,
-    p_is_readonly         IN BOOLEAN,
-    p_is_printer_friendly IN BOOLEAN );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_plugin` | This is the p_plugin parameter of your plug-in function. |
-| `p_page_item` | This is the p_page_item parameter of your plug-in function. |
-| `p_value` | This is the p_value parameter of your plug-in function. |
-| `p_is_readonly` | This is the p_is_readonly parameter of your plug-in function. |
-| `p_is_printer_friendly` | This is the p_is_printer_friendly parameter of your plug-in function. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_plugin_util.DEBUG_PAGE_ITEM(
-        p_plugin => null,
-        p_page_item => null,
-        p_value => 'EXAMPLE',
-        p_is_readonly => true,
-        p_is_printer_friendly => true
-    );
-end;
-/
-```
----
 
 ### APEX_PLUGIN_UTIL.DEBUG_PROCESS Procedure
 
@@ -50631,7 +49500,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.DEBUG_REGION Procedure Signature 1
 
@@ -50683,7 +49551,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.DEBUG_REGION Procedure Signature 2
 
@@ -50738,7 +49605,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.ESCAPE Function
 
@@ -50790,66 +49656,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PLUGIN_UTIL.EXECUTE_PLSQL_CODE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXECUTE_PLSQL_CODE-Procedure.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.EXECUTE_PLSQL_CODE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.EXECUTE_PLSQL_CODE (
-    p_plsql_code      IN VARCHAR2,
-    p_auto_bind_items IN BOOLEAN     DEFAULT TRUE,
-    p_bind_list       IN t_bind_list DEFAULT c_empty_bind_list );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_plsql_code` | PL/SQL code to be executed. |
-| `p_auto_bind_items` | Whether to auto-bind APEX items (page and application items). |
-| `p_bind_list` | Additional bind variables to be used for the SQL query. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_plugin_util.EXECUTE_PLSQL_CODE(
-        p_plsql_code => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-end;
-/
-```
----
 
 ### APEX_PLUGIN_UTIL.GET_ATTRIBUTE_AS_NUMBER Function
 
@@ -50901,7 +49707,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_CURRENT_DATABASE_TYPE Function
 
@@ -50954,7 +49759,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_DATA Function Signature 1
 
@@ -51033,7 +49837,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_DATA Function Signature 2
 
@@ -51112,7 +49915,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_DATA2 Function Signature 1
 
@@ -51194,7 +49996,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_DATA2 Function Signature 2
 
@@ -51276,7 +50077,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_DISPLAY_DATA Function Signature 1
 
@@ -51355,7 +50155,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_DISPLAY_DATA Function Signature 2
 
@@ -51434,7 +50233,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_ELEMENT_ATTRIBUTES Function
 
@@ -51461,7 +50259,7 @@ APEX_PLUGIN_UTIL.GET_ELEMENT_ATTRIBUTES (
     p_add_required           IN BOOLEAN  DEFAULT TRUE,
     p_add_labelledby         IN BOOLEAN  DEFAULT TRUE,
     p_aria_describedby_id    IN VARCHAR2 DEFAULT NULL,
-    p_add_multi_value        IN BOOLEAN  DEFAULT FALSE )
+    p_add_multi_value        IN BOOLEAN  DEFAULT FALSE ) 
 RETURN VARCHAR2;
 ```
 
@@ -51504,7 +50302,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_HTML_ATTR Function
 
@@ -51556,7 +50353,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_ORDERBY_NULLS_SUPPORT Function
 
@@ -51600,7 +50396,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_PLSQL_EXPR_RESULT_BOOLEAN Function
 
@@ -51655,7 +50450,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_PLSQL_EXPR_RESULT_CLOB Function
 
@@ -51710,7 +50504,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_PLSQL_EXPRESSION_RESULT Function
 
@@ -51765,7 +50558,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_PLSQL_FUNC_RESULT_BOOLEAN Function
 
@@ -51820,7 +50612,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_PLSQL_FUNC_RESULT_CLOB Function
 
@@ -51875,7 +50666,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_PLSQL_FUNCTION_RESULT Function
 
@@ -51930,63 +50720,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PLUGIN_UTIL.GET_POSITION_IN_LIST Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_POSITION_IN_LIST-Function.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.GET_POSITION_IN_LIST` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.GET_POSITION_IN_LIST (
-    p_list  IN apex_application_global.vc_arr2,
-    p_value IN VARCHAR2 )
-RETURN NUMBER;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_list` | Array of type apex_application_global.vc_arr2 that contains entries of type VARCHAR2. |
-| `p_value` | Value located in the p_list array. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result NUMBER;
-begin
-    l_result := apex_plugin_util.GET_POSITION_IN_LIST(
-        p_list => null,
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_PLUGIN_UTIL.GET_SEARCH_STRING Function
 
@@ -52038,7 +50771,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_VALUE_AS_VARCHAR2 Function
 
@@ -52093,7 +50825,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.GET_WEB_SOURCE_OPERATION Function
 
@@ -52155,7 +50886,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.IS_EQUAL Function
 
@@ -52211,7 +50941,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.IS_COMPONENT_USED Function
 
@@ -52264,7 +50993,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.MAKE_REST_REQUEST Procedure Signature 1
 
@@ -52328,7 +51056,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.MAKE_REST_REQUEST Procedure Signature 2
 
@@ -52349,7 +51076,7 @@ Use this page when code needs the `APEX_PLUGIN_UTIL.MAKE_REST_REQUEST` procedure
 ```sql
 APEX_PLUGIN_UTIL.MAKE_REST_REQUEST (
     p_web_source_operation IN            apex_plugin.t_web_source_operation,
-    --
+    -- 
     p_request_body         IN            CLOB DEFAULT NULL,
     --
     p_response             IN OUT NOCOPY CLOB,
@@ -52387,60 +51114,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PLUGIN_UTIL.PAGE_ITEM_NAMES_TO_JQUERY Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PAGE_ITEM_NAMES_TO_JQUERY-Function.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.PAGE_ITEM_NAMES_TO_JQUERY` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.PAGE_ITEM_NAMES_TO_JQUERY (
-    p_page_item_names   IN VARCHAR2 )
-RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_page_item_names` | Comma-delimited list of page item names. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_plugin_util.PAGE_ITEM_NAMES_TO_JQUERY(
-        p_page_item_names => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_PLUGIN_UTIL.PARSE_REFETCH_RESPONSE Function
 
@@ -52503,140 +51176,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_PLUGIN_UTIL.PRINT_DISPLAY_ONLY Procedure Signature 1 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_DISPLAY_ONLY-Procedure-Signature-1.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Caution:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.PRINT_DISPLAY_ONLY` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.PRINT_DISPLAY_ONLY (
-    p_item_name        IN VARCHAR2,
-    p_display_value    IN VARCHAR2,
-    p_show_line_breaks IN BOOLEAN,
-    p_attributes       IN VARCHAR2,
-    p_id_postfix       IN VARCHAR2 DEFAULT '_DISPLAY' );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_item_name` | Name of the page item. This parameter should be called with p_item.name . |
-| `p_display_value` | Text to be displayed. |
-| `p_show_line_breaks` | If set to TRUE line breaks in p_display_value are changed to so that the browser renders them as line breaks. |
-| `p_attributes` | Additional attributes added to the SPAN tag. |
-| `p_id_postfix` | Postfix which is getting added to the value in p_item_name to get the ID for the SPAN tag. Default is _DISPLAY . |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_plugin_util.PRINT_DISPLAY_ONLY(
-        p_item_name => 'EXAMPLE',
-        p_display_value => 'EXAMPLE',
-        p_show_line_breaks => true,
-        p_attributes => 'EXAMPLE',
-        p_id_postfix => 'EXAMPLE'
-    );
-end;
-/
-```
----
-
-### APEX_PLUGIN_UTIL.PRINT_DISPLAY_ONLY Procedure Signature 2 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRINT_DISPLAY_ONLY-Procedure-Signature-2.html)
-
-Parent package: APEX_PLUGIN_UTIL
-
-#### Purpose
-
-Caution:
-
-#### When To Use
-
-Use this page when code needs the `APEX_PLUGIN_UTIL.PRINT_DISPLAY_ONLY` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_PLUGIN_UTIL.PRINT_DISPLAY_ONLY (
-    p_item             IN apex_plugin_util.t_item,
-    p_display_value    IN apex_session_state.t_value,
-    p_show_line_breaks IN BOOLEAN,
-    p_escape           IN BOOLEAN  DEFAULT NULL,
-    p_id_postfix       IN VARCHAR2 DEFAULT '_DISPLAY',
-    p_show_icon        IN BOOLEAN  DEFAULT TRUE );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_item` | The p_item record to be passed in. |
-| `p_display_value` | Text to be displayed. p_param.session_state_value should be passed in. |
-| `p_show_line_breaks` | If set to TRUE line breaks in p_display_value are changed to so that the browser renders them as line breaks. |
-| `p_escape` | Whether to escape the value. If p_escape is unspecified, the value from p_item is used. |
-| `p_id_postfix` | Postfix which is getting added to the value in p_item.name to get the ID for the SPAN tag. Default is _DISPLAY . |
-| `p_show_icon` | Whether to render the item icon. Default is TRUE . |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_plugin_util.PRINT_DISPLAY_ONLY(
-        p_item => null,
-        p_display_value => null,
-        p_show_line_breaks => true,
-        p_escape => true,
-        p_id_postfix => 'EXAMPLE',
-        p_show_icon => true
-    );
-end;
-/
-```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_ESCAPED_VALUE Procedure Signature 1
 
@@ -52685,7 +51224,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_ESCAPED_VALUE Procedure Signature 2
 
@@ -52734,7 +51272,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_HIDDEN Procedure
 
@@ -52792,7 +51329,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_HIDDEN_IF_READONLY Procedure
 
@@ -52853,7 +51389,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_JSON_HTTP_HEADER Procedure
 
@@ -52893,7 +51428,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_LOV_AS_JSON Procedure
 
@@ -52951,7 +51485,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_OPTION Procedure
 
@@ -53012,7 +51545,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_READ_ONLY Procedure Signature 1
 
@@ -53088,7 +51620,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PRINT_READ_ONLY Procedure Signature 2
 
@@ -53165,7 +51696,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.PROCESS_DML_RESPONSE Procedure
 
@@ -53231,7 +51761,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.REPLACE_SUBSTITUTIONS Function
 
@@ -53283,7 +51812,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.SET_COMPONENT_VALUES Procedure
 
@@ -53335,7 +51863,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PLUGIN_UTIL.SPLIT_MUTLIPLE_VALUE_TO_TABLE Function
 
@@ -53391,7 +51918,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_PRINT
 
@@ -53491,14 +52017,29 @@ Only remove templates when no active process depends on them.
 
 ### Related APIs
 
-- APEX_HTTP for downloading generated documents.
-- APEX_DATA_EXPORT for report exports.
-- APEX_JSON for JSON data construction.
----
+- [APEX_HTTP](APEX_HTTP.md) for downloading generated documents.
+- [APEX_DATA_EXPORT](APEX_DATA_EXPORT.md) for report exports.
+- [APEX_JSON](APEX_JSON.md) for JSON data construction.
 
-### Member Details: APEX_PRINT
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants | constants | [local](APEX_PRINT/Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.Constants.html) |
+| GENERATE_DOCUMENT Function Signature 1 | function | [local](APEX_PRINT/GENERATE_DOCUMENT_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-1.html) |
+| GENERATE_DOCUMENT Function Signature 2 | function | [local](APEX_PRINT/GENERATE_DOCUMENT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-2.html) |
+| GENERATE_DOCUMENT Function Signature 3 | function | [local](APEX_PRINT/GENERATE_DOCUMENT_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-3.html) |
+| GENERATE_DOCUMENT Function Signature 4 | function | [local](APEX_PRINT/GENERATE_DOCUMENT_Function_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-4.html) |
+| GENERATE_DOCUMENT Function Signature 5 | function | [local](APEX_PRINT/GENERATE_DOCUMENT_Function_Signature_5.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-5.html) |
+| GENERATE_DOCUMENT Function Signature 6 | function | [local](APEX_PRINT/GENERATE_DOCUMENT_Function_Signature_6.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-6.html) |
+| REMOVE_TEMPLATE Procedure | procedure | [local](APEX_PRINT/REMOVE_TEMPLATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.REMOVE_TEMPLATE-Procedure.html) |
+| UPLOAD_TEMPLATE Function | function | [local](APEX_PRINT/UPLOAD_TEMPLATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PRINT.UPLOAD_TEMPLATE-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_PRINT.Constants
 
@@ -53523,7 +52064,6 @@ Use this page when code needs the `APEX_PRINT.Constants` constants. Confirm secu
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_PRINT.GENERATE_DOCUMENT Function Signature 1
 
@@ -53588,7 +52128,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.GENERATE_DOCUMENT Function Signature 2
 
@@ -53653,7 +52192,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.GENERATE_DOCUMENT Function Signature 3
 
@@ -53718,7 +52256,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.GENERATE_DOCUMENT Function Signature 4
 
@@ -53741,7 +52278,7 @@ APEX_PRINT.GENERATE_DOCUMENT (
     p_data            IN CLOB,
     p_template_id     IN NUMBER,
     p_output_type     IN t_output_type    DEFAULT c_output_pdf,
-    p_output_password IN VARCHAR2         DEFAULT NULL )
+    p_output_password IN VARCHAR2         DEFAULT NULL ) 
     RETURN BLOB;
 ```
 
@@ -53780,7 +52317,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.GENERATE_DOCUMENT Function Signature 5
 
@@ -53847,7 +52383,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.GENERATE_DOCUMENT Function Signature 6
 
@@ -53917,7 +52452,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.REMOVE_TEMPLATE Procedure
 
@@ -53966,7 +52500,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PRINT.UPLOAD_TEMPLATE Function
 
@@ -54022,7 +52555,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_PWA
 
@@ -54032,7 +52564,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 `APEX_PWA` provides server-side utilities for APEX applications that have Progressive Web App features enabled. It manages push notification credentials, subscriptions, queue processing, and sending push notifications to subscribed users.
 
-Pair this package with the client-side apex.pwa namespace.
+Pair this package with the client-side [apex.pwa](../JavaScript/apex.pwa.md) namespace.
 
 ### When To Use
 
@@ -54163,14 +52695,26 @@ end;
 
 ### Related APIs
 
-- apex.pwa for install and subscription UI.
-- APEX_PAGE for target URLs.
-- APEX_DEBUG for diagnostics.
----
+- [apex.pwa](../JavaScript/apex.pwa.md) for install and subscription UI.
+- [APEX_PAGE](APEX_PAGE.md) for target URLs.
+- [APEX_DEBUG](APEX_DEBUG.md) for diagnostics.
 
-### Member Details: APEX_PWA
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| GENERATE_PUSH_CREDENTIALS Procedure | procedure | [local](APEX_PWA/GENERATE_PUSH_CREDENTIALS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PWA.GENERATE_PUSH_CREDENTIALS-Procedure.html) |
+| HAS_PUSH_SUBSCRIPTION Function | function | [local](APEX_PWA/HAS_PUSH_SUBSCRIPTION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PWA.HAS_PUSH_SUBSCRIPTION-Function.html) |
+| PUSH_QUEUE Procedure | procedure | [local](APEX_PWA/PUSH_QUEUE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PWA.PUSH_QUEUE-Procedure.html) |
+| SEND_PUSH_NOTIFICATION Procedure | procedure | [local](APEX_PWA/SEND_PUSH_NOTIFICATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PWA.SEND_PUSH_NOTIFICATION-Procedure.html) |
+| SUBSCRIBE_PUSH_NOTIFICATIONS Procedure | procedure | [local](APEX_PWA/SUBSCRIBE_PUSH_NOTIFICATIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PWA.SUBSCRIBE_PUSH_NOTIFICATIONS-Procedure.html) |
+| UNSUBSCRIBE_PUSH_NOTIFICATIONS Procedure | procedure | [local](APEX_PWA/UNSUBSCRIBE_PUSH_NOTIFICATIONS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_PWA.UNSUBSCRIBE_PUSH_NOTIFICATIONS-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_PWA.GENERATE_PUSH_CREDENTIALS Procedure
 
@@ -54219,7 +52763,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PWA.HAS_PUSH_SUBSCRIPTION Function
 
@@ -54275,7 +52818,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PWA.PUSH_QUEUE Procedure
 
@@ -54315,7 +52857,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PWA.SEND_PUSH_NOTIFICATION Procedure
 
@@ -54379,7 +52920,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PWA.SUBSCRIBE_PUSH_NOTIFICATIONS Procedure
 
@@ -54434,7 +52974,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_PWA.UNSUBSCRIBE_PUSH_NOTIFICATIONS Procedure
 
@@ -54489,7 +53028,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_REGION
 
@@ -54608,11 +53146,30 @@ end;
 - `P_OUTER_SQL` wraps the region SQL and should reference `#APEX$SOURCE_DATA#` for the source data placeholder.
 - Use `P_PARENT_COLUMN_VALUES` for detail grids in Interactive Grid master-detail relationships.
 - Enforce authorization before exporting or iterating region data that may include sensitive rows.
----
 
-### Member Details: APEX_REGION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| CLEAR Procedure Signature 1 | procedure | [local](APEX_REGION/CLEAR_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.CLEAR-Procedure-Signature-1.html) |
+| CLEAR Procedure Signature 2 | procedure | [local](APEX_REGION/CLEAR_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.CLEAR-Procedure-Signature-2.html) |
+| EXPORT_DATA Function | function | [local](APEX_REGION/EXPORT_DATA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION-EXPORT_DATA-Function.html) |
+| GET_CACHE_DATE Function | function | [local](APEX_REGION/GET_CACHE_DATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.GET_CACHE_DATE-Function.html) |
+| GET_ID Function Signature 1 | function | [local](APEX_REGION/GET_ID_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.GET_ID-Function-Signature-1.html) |
+| GET_ID Function Signature 2 | function | [local](APEX_REGION/GET_ID_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.GET_ID-Function-Signature-2.html) |
+| IS_READ_ONLY Function | function | [local](APEX_REGION/IS_READ_ONLY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION-IS_READ_ONLY-Function.html) |
+| OPEN_QUERY_CONTEXT Function Signature 1 | function | [local](APEX_REGION/OPEN_QUERY_CONTEXT_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION-OPEN_QUERY_CONTEXT-Function-Signature-1.html) |
+| OPEN_QUERY_CONTEXT Function Signature 2 | function | [local](APEX_REGION/OPEN_QUERY_CONTEXT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION-OPEN_QUERY_CONTEXT-Function-Signature-2.html) |
+| PURGE_CACHE Procedure Signature 1 | procedure | [local](APEX_REGION/PURGE_CACHE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.PURGE_CACHE-Procedure-Signature-1.html) |
+| PURGE_CACHE Procedure Signature 2 | procedure | [local](APEX_REGION/PURGE_CACHE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.PURGE_CACHE-Procedure-Signature-2.html) |
+| RESET Procedure Signature 1 | procedure | [local](APEX_REGION/RESET_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.RESET-Procedure-Signature-1.html) |
+| RESET Procedure Signature 2 | procedure | [local](APEX_REGION/RESET_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REGION.RESET-Procedure-Signature-2.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_REGION.CLEAR Procedure Signature 1
 
@@ -54670,7 +53227,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.CLEAR Procedure Signature 2
 
@@ -54728,7 +53284,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.EXPORT_DATA Function
 
@@ -54769,7 +53324,7 @@ APEX_REGION.EXPORT_DATA (
     --
     p_pdf_accessible            IN BOOLEAN                          DEFAULT FALSE,
     --
-    p_xml_include_declaration   IN BOOLEAN                          DEFAULT TRUE )
+    p_xml_include_declaration   IN BOOLEAN                          DEFAULT TRUE ) 
     RETURN apex_data_export.t_export;
 ```
 
@@ -54830,7 +53385,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.GET_CACHE_DATE Function
 
@@ -54852,7 +53406,7 @@ Use this page when code needs the `APEX_REGION.GET_CACHE_DATE` function. Confirm
 APEX_REGION.GET_CACHE_DATE (
     p_application_id     IN   NUMBER,
     p_page_id            IN   NUMBER,
-    p_static_id          IN   VARCHAR2 )
+    p_static_id          IN   VARCHAR2 )  
     RETURN DATE;
 ```
 
@@ -54885,7 +53439,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.GET_ID Function Signature 1
 
@@ -54940,7 +53493,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.GET_ID Function Signature 2
 
@@ -54995,7 +53547,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.IS_READ_ONLY Function
 
@@ -55014,7 +53565,7 @@ Use this page when code needs the `APEX_REGION.IS_READ_ONLY` function. Confirm s
 #### Signature
 
 ```sql
-FUNCTION IS_READ_ONLY
+FUNCTION IS_READ_ONLY 
 RETURN BOOLEAN;
 ```
 
@@ -55035,7 +53586,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.OPEN_QUERY_CONTEXT Function Signature 1
 
@@ -55117,7 +53667,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.OPEN_QUERY_CONTEXT Function Signature 2
 
@@ -55196,7 +53745,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.PURGE_CACHE Procedure Signature 1
 
@@ -55254,7 +53802,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.PURGE_CACHE Procedure Signature 2
 
@@ -55312,7 +53859,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.RESET Procedure Signature 1
 
@@ -55370,7 +53916,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REGION.RESET Procedure Signature 2
 
@@ -55428,7 +53973,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_REST_SOURCE_SYNC
 
@@ -55442,7 +53986,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 Use this package when a PL/SQL process, automation, admin page, or deployment script needs to manage a REST Source synchronization defined in APEX Builder.
 
-Use APEX_WEB_SERVICE for direct one-off HTTP calls and APEX_EXEC for querying REST Sources; use this package specifically for synchronized local-table copies.
+Use [APEX_WEB_SERVICE](APEX_WEB_SERVICE.md) for direct one-off HTTP calls and [APEX_EXEC](APEX_EXEC.md) for querying REST Sources; use this package specifically for synchronized local-table copies.
 
 ### API Surface
 
@@ -55514,14 +54058,29 @@ end;
 
 ### Related APIs
 
-- APEX_EXEC for querying REST Sources.
-- APEX_WEB_SERVICE for direct REST calls.
-- APEX_AUTOMATION for scheduled orchestration.
----
+- [APEX_EXEC](APEX_EXEC.md) for querying REST Sources.
+- [APEX_WEB_SERVICE](APEX_WEB_SERVICE.md) for direct REST calls.
+- [APEX_AUTOMATION](APEX_AUTOMATION.md) for scheduled orchestration.
 
-### Member Details: APEX_REST_SOURCE_SYNC
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| DISABLE Procedure | procedure | [local](APEX_REST_SOURCE_SYNC/DISABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REST_SOURCE_SYNC-DISABLE-Procedure.html) |
+| DYNAMIC_SYNCHRONIZE_DATA Procedure | procedure | [local](APEX_REST_SOURCE_SYNC/DYNAMIC_SYNCHRONIZE_DATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DYNAMIC_SYNCHRONIZE_DATA-Procedure.html) |
+| ENABLE Procedure | procedure | [local](APEX_REST_SOURCE_SYNC/ENABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REST_SOURCE_SYNC-ENABLE-Procedure.html) |
+| GET_LAST_SYNC_TIMESTAMP Function | function | [local](APEX_REST_SOURCE_SYNC/GET_LAST_SYNC_TIMESTAMP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LAST_SYNC_TIMESTAMP-Function.html) |
+| GET_SYNC_TABLE_DEFINITION_SQL Function | function | [local](APEX_REST_SOURCE_SYNC/GET_SYNC_TABLE_DEFINITION_SQL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SYNC_TABLE_DEFINITION_SQL-Function.html) |
+| IS_RUNNING Function | function | [local](APEX_REST_SOURCE_SYNC/IS_RUNNING_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REST_SOURCE_SYNC-IS_RUNNING-Function.html) |
+| RESCHEDULE Procedure | procedure | [local](APEX_REST_SOURCE_SYNC/RESCHEDULE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_REST_SOURCE_SYNC-RESCHEDULE-Procedure.html) |
+| SYNCHRONIZE_DATA Procedure | procedure | [local](APEX_REST_SOURCE_SYNC/SYNCHRONIZE_DATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SYNCHRONIZE_DATA-Procedure.html) |
+| SYNCHRONIZE_TABLE_DEFINITION Procedure | procedure | [local](APEX_REST_SOURCE_SYNC/SYNCHRONIZE_TABLE_DEFINITION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SYNCHRONIZE_TABLE_DEFINITION-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_REST_SOURCE_SYNC.DISABLE Procedure
 
@@ -55573,7 +54132,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.DYNAMIC_SYNCHRONIZE_DATA Procedure
 
@@ -55636,7 +54194,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.ENABLE Procedure
 
@@ -55688,7 +54245,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.GET_LAST_SYNC_TIMESTAMP Function
 
@@ -55744,7 +54300,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.GET_SYNC_TABLE_DEFINITION_SQL Function
 
@@ -55799,7 +54354,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.IS_RUNNING Function
 
@@ -55855,7 +54409,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.RESCHEDULE Procedure
 
@@ -55910,7 +54463,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.SYNCHRONIZE_DATA Procedure
 
@@ -55965,7 +54517,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_REST_SOURCE_SYNC.SYNCHRONIZE_TABLE_DEFINITION Procedure
 
@@ -56020,7 +54571,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_SEARCH
 
@@ -56110,14 +54660,23 @@ Use total row counts only when the UI needs them; counts can make searches more 
 
 ### Related APIs
 
-- APEX_JSON for Ajax search responses.
-- apex.server for calling search processes.
-- APEX_REGION for region-based query/export behavior.
----
+- [APEX_JSON](APEX_JSON.md) for Ajax search responses.
+- [apex.server](../JavaScript/apex.server.md) for calling search processes.
+- [APEX_REGION](APEX_REGION.md) for region-based query/export behavior.
 
-### Member Details: APEX_SEARCH
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| QUERY_EXPERT_SEARCH Function | function | [local](APEX_SEARCH/QUERY_EXPERT_SEARCH_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/QUERY_EXPERT_SEARCH-Function.html) |
+| QUERY_SEARCH_ENGINE Function | function | [local](APEX_SEARCH/QUERY_SEARCH_ENGINE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/QUERY_SEARCH_ENGINE-Function.html) |
+| SEARCH Function | function | [local](APEX_SEARCH/SEARCH_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SEARCH.SEARCH-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_SEARCH.QUERY_EXPERT_SEARCH Function
 
@@ -56170,7 +54729,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SEARCH.QUERY_SEARCH_ENGINE Function
 
@@ -56223,7 +54781,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SEARCH.SEARCH Function
 
@@ -56286,7 +54843,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_SESSION
 
@@ -56350,13 +54906,13 @@ Prefer `DELETE_SESSION` after `CREATE_SESSION` when the script owns the temporar
 
 | Member | Use | Local detail | Source |
 | --- | --- | --- | --- |
-| `ATTACH` | Attach the database session to an existing APEX app/session/page context. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ATTACH-Procedure.html) |
-| `CREATE_SESSION` | Create a new APEX session, set APEX environment, and run app initialization code. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_SESSION-Procedure.html) |
-| `DETACH` | Detach from current session, reset environment, and run app cleanup code. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DETACH-Procedure.html) |
-| `DELETE_SESSION` | Delete a session. If attached, cleanup code runs and environment is reset. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_SESSION-Procedure.html) |
-| `SET_DEBUG` | Enable or disable debug for future requests in a session. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_DEBUG-Procedure.html) |
-| `SET_TENANT_ID` | Associate a tenant ID with the current session for multitenant apps. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TENANT_ID.html) |
-| `SET_TRACE` | Enable or disable trace mode for future requests in a session. | local | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TRACE-Procedure.html) |
+| `ATTACH` | Attach the database session to an existing APEX app/session/page context. | [local](APEX_SESSION/ATTACH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ATTACH-Procedure.html) |
+| `CREATE_SESSION` | Create a new APEX session, set APEX environment, and run app initialization code. | [local](APEX_SESSION/CREATE_SESSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_SESSION-Procedure.html) |
+| `DETACH` | Detach from current session, reset environment, and run app cleanup code. | [local](APEX_SESSION/DETACH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DETACH-Procedure.html) |
+| `DELETE_SESSION` | Delete a session. If attached, cleanup code runs and environment is reset. | [local](APEX_SESSION/DELETE_SESSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_SESSION-Procedure.html) |
+| `SET_DEBUG` | Enable or disable debug for future requests in a session. | [local](APEX_SESSION/SET_DEBUG_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_DEBUG-Procedure.html) |
+| `SET_TENANT_ID` | Associate a tenant ID with the current session for multitenant apps. | [local](APEX_SESSION/SET_TENANT_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TENANT_ID.html) |
+| `SET_TRACE` | Enable or disable trace mode for future requests in a session. | [local](APEX_SESSION/SET_TRACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TRACE-Procedure.html) |
 
 ### `CREATE_SESSION`
 
@@ -56556,11 +55112,24 @@ After setting the tenant ID, application code can refer to the built-in tenant c
 - Do not use arbitrary user input as a session ID.
 - Enable debug and trace only when needed; turn them off after diagnosis.
 - Remember that initialization and cleanup PL/SQL code can have side effects.
----
 
-### Member Details: APEX_SESSION
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ATTACH Procedure | procedure | [local](APEX_SESSION/ATTACH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ATTACH-Procedure.html) |
+| CREATE_SESSION Procedure | procedure | [local](APEX_SESSION/CREATE_SESSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_SESSION-Procedure.html) |
+| DETACH Procedure | procedure | [local](APEX_SESSION/DETACH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DETACH-Procedure.html) |
+| DELETE_SESSION Procedure | procedure | [local](APEX_SESSION/DELETE_SESSION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_SESSION-Procedure.html) |
+| SET_DEBUG Procedure | procedure | [local](APEX_SESSION/SET_DEBUG_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_DEBUG-Procedure.html) |
+| SET_TENANT_ID Procedure | procedure | [local](APEX_SESSION/SET_TENANT_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TENANT_ID.html) |
+| SET_TRACE Procedure | procedure | [local](APEX_SESSION/SET_TRACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TRACE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_SESSION.ATTACH Procedure
 
@@ -56615,7 +55184,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION.CREATE_SESSION Procedure
 
@@ -56673,7 +55241,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION.DETACH Procedure
 
@@ -56713,7 +55280,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION.DELETE_SESSION Procedure
 
@@ -56762,7 +55328,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION.SET_DEBUG Procedure
 
@@ -56814,7 +55379,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION.SET_TENANT_ID Procedure
 
@@ -56863,7 +55427,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION.SET_TRACE Procedure
 
@@ -56915,7 +55478,354 @@ begin
 end;
 /
 ```
----
+
+### APEX_SESSION.ATTACH Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ATTACH-Procedure.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure sets the environment and runs the Initialization PL/SQL Code based on the given application and current session.
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.ATTACH` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.ATTACH (
+    p_app_id        IN  NUMBER,
+    p_page_id       IN  NUMBER,
+    p_session_id    IN  NUMBER );
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_app_id` | The application ID. |
+| `p_page_id` | The application page. |
+| `p_session_id` | The session ID. |
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.ATTACH(
+        p_app_id => 1,
+        p_page_id => 1,
+        p_session_id => 1
+    );
+end;
+/
+```
+
+### APEX_SESSION.CREATE_SESSION Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_SESSION-Procedure.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure creates a new session for the given application, sets the environment, and runs the application's Initialization PL/SQL Code.
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.CREATE_SESSION` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.CREATE_SESSION (
+   p_app_id                   IN NUMBER,
+   p_page_id                  IN NUMBER,
+   p_username                 IN VARCHAR2,
+   p_call_post_authentication IN BOOLEAN DEFAULT FALSE );
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_app_id` | The application id. |
+| `p_page_id` | The application page. |
+| `p_username` | The session user. |
+| `p_call_post_authentication` | If true, call post-authentication procedure. The default is false. |
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.CREATE_SESSION(
+        p_app_id => 1,
+        p_page_id => 1,
+        p_username => 'USER',
+        p_call_post_authentication => true
+    );
+end;
+/
+```
+
+### APEX_SESSION.DETACH Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DETACH-Procedure.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure detaches from the current session, resets the environment and runs the application's Cleanup PL/SQL Code. This procedure does nothing if no session is attached.
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.DETACH` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.DETACH;
+```
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.DETACH;
+end;
+/
+```
+
+### APEX_SESSION.DELETE_SESSION Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_SESSION-Procedure.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure deletes the session with the given ID. If the session is currently attached, call the application's Cleanup PL/SQL Code and reset the environment.
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.DELETE_SESSION` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.DELETE_SESSION (
+    p_session_id    IN  NUMBER  DEFAULT apex_application.g_instance );
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_session_id` | The session ID. |
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.DELETE_SESSION(
+        p_session_id => 1
+    );
+end;
+/
+```
+
+### APEX_SESSION.SET_DEBUG Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_DEBUG-Procedure.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure sets debug level for all future requests in a session.
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.SET_DEBUG` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.SET_DEBUG (
+    p_session_id    IN NUMBER DEFAULT apex_application.g_instance,
+    p_level         IN apex_debug.t_log_level );
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_session_id` | The session ID. Note : The session must belong to the current workspace or the caller must be able to set the session's workspace. |
+| `p_level` | The debug level. NULL disables debug, 1-9 sets a debug level. |
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.SET_DEBUG(
+        p_session_id => 1,
+        p_level => null
+    );
+end;
+/
+```
+
+### APEX_SESSION.SET_TENANT_ID Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TENANT_ID.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure is used to associate a session with a tenant ID which can be used for building multitenant Oracle APEX applications. Once set, the value of the current tenant can be retrieved using the built-in APP_TENANT_ID .
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.SET_TENANT_ID` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.SET_TENANT_ID (
+    p_tenant_id IN VARCHAR2 );
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_tenant_id` | The tenant ID to associate with a session |
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.SET_TENANT_ID(
+        p_tenant_id => 'EXAMPLE'
+    );
+end;
+/
+```
+
+### APEX_SESSION.SET_TRACE Procedure
+
+Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TRACE-Procedure.html)
+
+Parent package: APEX_SESSION
+
+#### Purpose
+
+This procedure sets trace mode in all future requests of a session.
+
+#### When To Use
+
+Use this page when code needs the `APEX_SESSION.SET_TRACE` procedure. Confirm security, workspace, and session requirements for your calling context.
+
+#### Signature
+
+```sql
+APEX_SESSION.SET_TRACE (
+    p_session_id    IN NUMBER  DEFAULT apex_application.g_instance,
+    p_mode          IN VARCHAR2 );
+```
+
+#### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `p_session_id` | The session ID. The session must belong to the current workspace or the caller must be able to set the session's workspace. |
+| `p_level` | The trace mode. NULL disables trace, SQL enables SQL trace. |
+
+#### Returns
+
+This is a procedure and does not return a value.
+
+#### Important Notes
+
+- Most APEX APIs assume the correct APEX workspace, application, and session context.
+- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
+- Use the source link for exact behavior, defaults, and version-specific caveats.
+
+#### Simple Example
+
+```sql
+begin
+    apex_session.SET_TRACE(
+        p_session_id => 1,
+        p_mode => 'EXAMPLE'
+    );
+end;
+/
+```
 
 ## APEX_SESSION_STATE
 
@@ -57024,11 +55934,29 @@ end;
 - Session state can be stale if the browser has changed an item value but not submitted or sent it with Ajax.
 - For browser-side values, use `apex.item` and submit/send the item before PL/SQL reads it.
 - Use authorization checks before acting on IDs or flags stored in session state.
----
 
-### Member Details: APEX_SESSION_STATE
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Global Constants | constants | [local](APEX_SESSION_STATE/Global_Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE-Global-Constants.html) |
+| Data Types | data types | [local](APEX_SESSION_STATE/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE-Data-Types.html) |
+| GET_BOOLEAN Function | function | [local](APEX_SESSION_STATE/GET_BOOLEAN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.GET_BOOLEAN-Function.html) |
+| GET_CLOB Function | function | [local](APEX_SESSION_STATE/GET_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.GET_CLOB-Function.html) |
+| GET_NUMBER Function | function | [local](APEX_SESSION_STATE/GET_NUMBER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.GET_NUMBER-Function.html) |
+| GET_TIMESTAMP Function | function | [local](APEX_SESSION_STATE/GET_TIMESTAMP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.GET_TIMESTAMP-Function.html) |
+| GET_VALUE Function | function | [local](APEX_SESSION_STATE/GET_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.GET_VALUE-Function.html) |
+| GET_VARCHAR2 Function | function | [local](APEX_SESSION_STATE/GET_VARCHAR2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.GET_VARCHAR2-Function.html) |
+| SET_VALUE Procedure Signature 1 | procedure | [local](APEX_SESSION_STATE/SET_VALUE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-1.html) |
+| SET_VALUE Procedure Signature 2 | procedure | [local](APEX_SESSION_STATE/SET_VALUE_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-2.html) |
+| SET_VALUE Procedure Signature 3 | procedure | [local](APEX_SESSION_STATE/SET_VALUE_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-3.html) |
+| SET_VALUE Procedure Signature 4 | procedure | [local](APEX_SESSION_STATE/SET_VALUE_Procedure_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-4.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_SESSION_STATE.Global Constants
 
@@ -57053,7 +55981,6 @@ Use this page when code needs the `APEX_SESSION_STATE.Global Constants` constant
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_SESSION_STATE.Data Types
 
@@ -57078,7 +56005,6 @@ Use this page when code needs the `APEX_SESSION_STATE.Data Types` data types. Co
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_SESSION_STATE.GET_BOOLEAN Function
 
@@ -57125,7 +56051,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.GET_CLOB Function
 
@@ -57172,7 +56097,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.GET_NUMBER Function
 
@@ -57219,7 +56143,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.GET_TIMESTAMP Function
 
@@ -57266,7 +56189,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.GET_VALUE Function
 
@@ -57313,7 +56235,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.GET_VARCHAR2 Function
 
@@ -57360,7 +56281,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.SET_VALUE Procedure Signature 1
 
@@ -57415,7 +56335,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.SET_VALUE Procedure Signature 2
 
@@ -57470,7 +56389,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.SET_VALUE Procedure Signature 3
 
@@ -57525,7 +56443,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SESSION_STATE.SET_VALUE Procedure Signature 4
 
@@ -57580,7 +56497,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_SHARED_COMPONENT
 
@@ -57635,20 +56551,29 @@ end;
 
 ### Notes
 
-- Use the Global Constants member page to choose valid component type constants.
+- Use the [Global Constants](APEX_SHARED_COMPONENT/Global_Constants.md) member page to choose valid component type constants.
 - Component IDs should come from trusted metadata lookup, not free-form user input.
 - This package mutates application metadata; restrict execution to admins and deployment scripts.
 
 ### Related APIs
 
-- APEX_APPLICATION_ADMIN for broader application administration.
-- APEX_EXPORT for preserving metadata before changes.
-- APEX_LANG for translation publishing flows.
----
+- [APEX_APPLICATION_ADMIN](APEX_APPLICATION_ADMIN.md) for broader application administration.
+- [APEX_EXPORT](APEX_EXPORT.md) for preserving metadata before changes.
+- [APEX_LANG](APEX_LANG.md) for translation publishing flows.
 
-### Member Details: APEX_SHARED_COMPONENT
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Global Constants | constants | [local](APEX_SHARED_COMPONENT/Global_Constants.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SHARED_COMPONENT.Global-Constants.html) |
+| PUBLISH Procedure | procedure | [local](APEX_SHARED_COMPONENT/PUBLISH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SHARED_COMPONENT.PUBLISH-Procedure.html) |
+| REFRESH Procedure | procedure | [local](APEX_SHARED_COMPONENT/REFRESH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SHARED_COMPONENT.REFRESH-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_SHARED_COMPONENT.Global Constants
 
@@ -57673,7 +56598,6 @@ Use this page when code needs the `APEX_SHARED_COMPONENT.Global Constants` const
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_SHARED_COMPONENT.PUBLISH Procedure
 
@@ -57725,7 +56649,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SHARED_COMPONENT.REFRESH Procedure
 
@@ -57777,7 +56700,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_SPATIAL
 
@@ -57852,14 +56774,29 @@ end;
 
 ### Related APIs
 
-- mapRegion for client-side APEX Map region control.
-- APEX_EXEC for spatial query contexts.
-- APEX_REGION for exporting/reporting region data.
----
+- [mapRegion](../JavaScript/mapRegion.md) for client-side APEX Map region control.
+- [APEX_EXEC](APEX_EXEC.md) for spatial query contexts.
+- [APEX_REGION](APEX_REGION.md) for exporting/reporting region data.
 
-### Member Details: APEX_SPATIAL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Data Types | data types | [local](APEX_SPATIAL/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_SPATIAL-Data-Types.html) |
+| CHANGE_GEOM_METADATA Procedure | procedure | [local](APEX_SPATIAL/CHANGE_GEOM_METADATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHANGE_GEOM_METADATA-Procedure.html) |
+| CIRCLE_POLYGON Function | function | [local](APEX_SPATIAL/CIRCLE_POLYGON_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CIRCLE_POLYGON-Function.html) |
+| DELETE_GEOM_METADATA Procedure | procedure | [local](APEX_SPATIAL/DELETE_GEOM_METADATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_GEOM_METADATA-Procedure.html) |
+| INSERT_GEOM_METADATA Procedure | procedure | [local](APEX_SPATIAL/INSERT_GEOM_METADATA_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INSERT_GEOM_METADATA-Procedure.html) |
+| INSERT_GEOM_METADATA_LONLAT Procedure | procedure | [local](APEX_SPATIAL/INSERT_GEOM_METADATA_LONLAT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INSERT_GEOM_METADATA_LONLAT-Procedure.html) |
+| POINT Function | function | [local](APEX_SPATIAL/POINT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POINT-Function.html) |
+| RECTANGLE Function | function | [local](APEX_SPATIAL/RECTANGLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RECTANGLE-Function.html) |
+| SPATIAL_IS_AVAILABLE Function | function | [local](APEX_SPATIAL/SPATIAL_IS_AVAILABLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SPATIAL_IS_AVAILABLE-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_SPATIAL.Data Types
 
@@ -57884,7 +56821,6 @@ Use this page when code needs the `APEX_SPATIAL.Data Types` data types. Confirm 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_SPATIAL.CHANGE_GEOM_METADATA Procedure
 
@@ -57948,7 +56884,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.CIRCLE_POLYGON Function
 
@@ -58013,7 +56948,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.DELETE_GEOM_METADATA Procedure
 
@@ -58068,7 +57002,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.INSERT_GEOM_METADATA Procedure
 
@@ -58129,7 +57062,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.INSERT_GEOM_METADATA_LONLAT Procedure
 
@@ -58187,7 +57119,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.POINT Function
 
@@ -58246,7 +57177,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.RECTANGLE Function
 
@@ -58311,7 +57241,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_SPATIAL.SPATIAL_IS_AVAILABLE Function
 
@@ -58356,7 +57285,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_STRING
 
@@ -58501,11 +57429,53 @@ Check the local member page for the exact `NEXT_CHUNK` signature before use.
 - Do not use string formatting as a substitute for SQL bind variables.
 - Use CLOB helpers when output might exceed `VARCHAR2` limits.
 - Keep separators explicit for multi-value APEX items.
----
 
-### Member Details: APEX_STRING
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| FORMAT Function | function | [local](APEX_STRING/FORMAT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FORMAT-Function.html) |
+| GET_INITIALS Function | function | [local](APEX_STRING/GET_INITIALS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_INITIALS-Function.html) |
+| GET_SEARCHABLE_PHRASES Function | function | [local](APEX_STRING/GET_SEARCHABLE_PHRASES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SEARCHABLE_PHRASES-Function.html) |
+| GREP Function Signature 1 | function | [local](APEX_STRING/GREP_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GREP-Function-Signature-1.html) |
+| GREP Function Signature 2 | function | [local](APEX_STRING/GREP_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GREP-Function-Signature-2.html) |
+| GREP Function Signature 3 | function | [local](APEX_STRING/GREP_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GREP-Function-Signature-3.html) |
+| INDEX_OF Function Signature 1 | function | [local](APEX_STRING/INDEX_OF_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INDEX_OF-Function-Signature-1.html) |
+| INDEX_OF Function Signature 2 | function | [local](APEX_STRING/INDEX_OF_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INDEX_OF-Function-Signature-2.html) |
+| JOIN_CLOB Function | function | [local](APEX_STRING/JOIN_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JOIN_CLOB-Function.html) |
+| JOIN_CLOBS Function | function | [local](APEX_STRING/JOIN_CLOBS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JOIN_CLOBS-Function.html) |
+| JOIN Function Signature 1 | function | [local](APEX_STRING/JOIN_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JOIN-Function-Signature-1.html) |
+| JOIN Function Signature 2 | function | [local](APEX_STRING/JOIN_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JOIN-Function-Signature-2.html) |
+| NEXT_CHUNK Function | function | [local](APEX_STRING/NEXT_CHUNK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/NEXT_CHUNK-Function.html) |
+| PLIST_DELETE Procedure | procedure | [local](APEX_STRING/PLIST_DELETE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PLIST_DELETE-Procedure.html) |
+| PLIST_EXISTS Function | function | [local](APEX_STRING/PLIST_EXISTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_STRING.PLIST_EXISTS-Function.html) |
+| PLIST_GET Function | function | [local](APEX_STRING/PLIST_GET_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PLIST_GET-Function.html) |
+| PLIST_GET_KEY Function | function | [local](APEX_STRING/PLIST_GET_KEY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_STRING.PLIST_GET_KEY-Function.html) |
+| PLIST_PUSH Procedure | procedure | [local](APEX_STRING/PLIST_PUSH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PLIST_PUSH-Procedure.html) |
+| PLIST_PUT Function | function | [local](APEX_STRING/PLIST_PUT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PLIST_PUT-Function.html) |
+| PLIST_TO_JSON_CLOB Function | function | [local](APEX_STRING/PLIST_TO_JSON_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PLIST_TO_JSON_CLOB-Function.html) |
+| PUSH Procedure Signature 1 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-1.html) |
+| PUSH Procedure Signature 2 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-2.html) |
+| PUSH Procedure Signature 3 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-3.html) |
+| PUSH Procedure Signature 4 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-4.html) |
+| PUSH Procedure Signature 5 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_5.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-5.html) |
+| PUSH Procedure Signature 6 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_6.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-6.html) |
+| PUSH Procedure Signature 7 | procedure | [local](APEX_STRING/PUSH_Procedure_Signature_7.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUSH-Procedure-Signature-7.html) |
+| SHUFFLE Function | function | [local](APEX_STRING/SHUFFLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SHUFFLE-Function.html) |
+| SHUFFLE Procedure | procedure | [local](APEX_STRING/SHUFFLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SHUFFLE-Procedure.html) |
+| SPLIT Function Signature 1 | function | [local](APEX_STRING/SPLIT_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SPLIT-Function-Signature-1.html) |
+| SPLIT Function Signature 2 | function | [local](APEX_STRING/SPLIT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SPLIT-Function-Signature-2.html) |
+| SPLIT_CLOBS Function | function | [local](APEX_STRING/SPLIT_CLOBS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SPLIT_CLOBS-Function.html) |
+| SPLIT_NUMBERS Function | function | [local](APEX_STRING/SPLIT_NUMBERS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SPLIT_NUMBERS-Function.html) |
+| STRING_TO_TABLE Function | function | [local](APEX_STRING/STRING_TO_TABLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRING_TO_TABLE-1-Function.html) |
+| TABLE_TO_CLOB Function | function | [local](APEX_STRING/TABLE_TO_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TABLE_TO_CLOB-Function.html) |
+| TABLE_TO_STRING Function | function | [local](APEX_STRING/TABLE_TO_STRING_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TABLE_TO_STRING-1-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_STRING.FORMAT Function
 
@@ -58581,7 +57551,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.GET_INITIALS Function
 
@@ -58633,7 +57602,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.GET_SEARCHABLE_PHRASES Function
 
@@ -58688,7 +57656,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.GREP Function Signature 1
 
@@ -58749,7 +57716,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.GREP Function Signature 2
 
@@ -58810,7 +57776,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.GREP Function Signature 3
 
@@ -58871,7 +57836,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.INDEX_OF Function Signature 1
 
@@ -58927,7 +57891,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.INDEX_OF Function Signature 2
 
@@ -58983,7 +57946,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.JOIN_CLOB Function
 
@@ -59038,7 +58000,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.JOIN_CLOBS Function
 
@@ -59093,7 +58054,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.JOIN Function Signature 1
 
@@ -59145,7 +58105,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.JOIN Function Signature 2
 
@@ -59197,7 +58156,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.NEXT_CHUNK Function
 
@@ -59259,7 +58217,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_DELETE Procedure
 
@@ -59311,7 +58268,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_EXISTS Function
 
@@ -59363,7 +58319,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_GET Function
 
@@ -59415,7 +58370,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_GET_KEY Function
 
@@ -59467,7 +58421,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_PUSH Procedure
 
@@ -59522,7 +58475,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_PUT Function
 
@@ -59576,7 +58528,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PLIST_TO_JSON_CLOB Function
 
@@ -59629,7 +58580,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 1
 
@@ -59681,7 +58631,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 2
 
@@ -59733,7 +58682,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 3
 
@@ -59785,7 +58733,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 4
 
@@ -59837,7 +58784,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 5
 
@@ -59889,7 +58835,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 6
 
@@ -59941,7 +58886,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.PUSH Procedure Signature 7
 
@@ -59996,7 +58940,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.SHUFFLE Function
 
@@ -60045,7 +58988,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.SHUFFLE Procedure
 
@@ -60094,7 +59036,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.SPLIT Function Signature 1
 
@@ -60149,7 +59090,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.SPLIT Function Signature 2
 
@@ -60201,7 +59141,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.SPLIT_CLOBS Function
 
@@ -60256,7 +59195,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.SPLIT_NUMBERS Function
 
@@ -60308,7 +59246,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.STRING_TO_TABLE Function
 
@@ -60360,7 +59297,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.TABLE_TO_CLOB Function
 
@@ -60415,7 +59351,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING.TABLE_TO_STRING Function
 
@@ -60467,7 +59402,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_STRING_UTIL
 
@@ -60475,11 +59409,11 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 ### Purpose
 
-`APEX_STRING_UTIL` contains higher-level text helpers that complement APEX_STRING: extracting emails/links/tags/phrases, generating slugs, displaying file sizes, parsing mail-like fields, and producing line diffs.
+`APEX_STRING_UTIL` contains higher-level text helpers that complement [APEX_STRING](APEX_STRING.md): extracting emails/links/tags/phrases, generating slugs, displaying file sizes, parsing mail-like fields, and producing line diffs.
 
 ### When To Use
 
-Use it for common application text cleanup/extraction tasks where a built-in utility avoids writing brittle regular expressions. Use APEX_STRING for lower-level split/join/format routines.
+Use it for common application text cleanup/extraction tasks where a built-in utility avoids writing brittle regular expressions. Use [APEX_STRING](APEX_STRING.md) for lower-level split/join/format routines.
 
 ### API Surface
 
@@ -60548,14 +59482,34 @@ end;
 
 ### Related APIs
 
-- APEX_STRING for split/join/string formatting.
-- APEX_ESCAPE for safe rendering.
-- APEX_MAIL for email workflows that may use extracted addresses.
----
+- [APEX_STRING](APEX_STRING.md) for split/join/string formatting.
+- [APEX_ESCAPE](APEX_ESCAPE.md) for safe rendering.
+- [APEX_MAIL](APEX_MAIL.md) for email workflows that may use extracted addresses.
 
-### Member Details: APEX_STRING_UTIL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| DIFF Function | function | [local](APEX_STRING_UTIL/DIFF_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_STRING_UTIL-DIFF-Function.html) |
+| FIND_EMAIL_ADDRESSES Function | function | [local](APEX_STRING_UTIL/FIND_EMAIL_ADDRESSES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_EMAIL_ADDRESSES-Function.html) |
+| FIND_EMAIL_FROM Function | function | [local](APEX_STRING_UTIL/FIND_EMAIL_FROM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_EMAIL_FROM-Function.html) |
+| FIND_EMAIL_SUBJECT Function | function | [local](APEX_STRING_UTIL/FIND_EMAIL_SUBJECT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_EMAIL_SUBJECT-Function.html) |
+| FIND_IDENTIFIERS Function | function | [local](APEX_STRING_UTIL/FIND_IDENTIFIERS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_IDENTIFIERS-Function.html) |
+| FIND_LINKS Function | function | [local](APEX_STRING_UTIL/FIND_LINKS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_LINKS-Function.html) |
+| FIND_PHRASES Function | function | [local](APEX_STRING_UTIL/FIND_PHRASES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_PHRASES-Function.html) |
+| FIND_TAGS Function | function | [local](APEX_STRING_UTIL/FIND_TAGS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_TAGS-Function.html) |
+| GET_DOMAIN Function | function | [local](APEX_STRING_UTIL/GET_DOMAIN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DOMAIN-Function.html) |
+| GET_FILE_EXTENSION Function | function | [local](APEX_STRING_UTIL/GET_FILE_EXTENSION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FILE_EXTENSION-Function.html) |
+| GET_SLUG Function | function | [local](APEX_STRING_UTIL/GET_SLUG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SLUG-Function.html) |
+| PHRASE_EXISTS Function | function | [local](APEX_STRING_UTIL/PHRASE_EXISTS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PHRASE_EXISTS-Function.html) |
+| REPLACE_WHITESPACE Function | function | [local](APEX_STRING_UTIL/REPLACE_WHITESPACE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REPLACE_WHITESPACE-Function.html) |
+| TO_DISPLAY_FILESIZE Function | function | [local](APEX_STRING_UTIL/TO_DISPLAY_FILESIZE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TO_DISPLAY_FILESIZE-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_STRING_UTIL.DIFF Function
 
@@ -60614,7 +59568,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_EMAIL_ADDRESSES Function
 
@@ -60667,7 +59620,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_EMAIL_FROM Function
 
@@ -60720,7 +59672,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_EMAIL_SUBJECT Function
 
@@ -60773,7 +59724,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_IDENTIFIERS Function
 
@@ -60829,7 +59779,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_LINKS Function
 
@@ -60885,7 +59834,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_PHRASES Function
 
@@ -60941,7 +59889,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.FIND_TAGS Function
 
@@ -61000,7 +59947,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.GET_DOMAIN Function
 
@@ -61053,7 +59999,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.GET_FILE_EXTENSION Function
 
@@ -61072,7 +60017,7 @@ Use this page when code needs the `APEX_STRING_UTIL.GET_FILE_EXTENSION` function
 #### Signature
 
 ```sql
-FUNCTION GET_FILE_EXTENSION (
+FUNCTION GET_FILE_EXTENSION ( 
     p_filename      IN VARCHAR2 )
     RETURN VARCHAR2;
 ```
@@ -61106,7 +60051,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.GET_SLUG Function
 
@@ -61158,7 +60102,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.PHRASE_EXISTS Function
 
@@ -61178,7 +60121,7 @@ Use this page when code needs the `APEX_STRING_UTIL.PHRASE_EXISTS` function. Con
 
 ```sql
 APEX_STRING_UTIL.PHRASE_EXISTS (
-    p_phrase   IN VARCHAR2,
+    p_phrase   IN VARCHAR2,    
     p_string   IN VARCHAR2 )
 RETURN BOOLEAN;
 ```
@@ -61214,7 +60157,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.REPLACE_WHITESPACE Function
 
@@ -61233,7 +60175,7 @@ Use this page when code needs the `APEX_STRING_UTIL.REPLACE_WHITESPACE` function
 #### Signature
 
 ```sql
-APEX_STRING_UTIL.REPLACE_WHITESPACE (
+APEX_STRING_UTIL.REPLACE_WHITESPACE ( 
     p_string               IN VARCHAR,
     p_original_find        IN VARCHAR2 DEFAULT NULL,
     p_whitespace_character IN VARCHAR2 DEFAULT '|')
@@ -61273,7 +60215,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_STRING_UTIL.TO_DISPLAY_FILESIZE Function
 
@@ -61326,7 +60267,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_THEME
 
@@ -61338,7 +60278,7 @@ Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/ora
 
 ### When To Use
 
-Use it for theme-style switching, user preference management, and post-login style selection. Use APEX_CSS when you only need to add CSS files or inline CSS to a page.
+Use it for theme-style switching, user preference management, and post-login style selection. Use [APEX_CSS](APEX_CSS.md) when you only need to add CSS files or inline CSS to a page.
 
 ### API Surface
 
@@ -61403,14 +60343,29 @@ end;
 
 ### Related APIs
 
-- APEX_CSS for page-level CSS registration.
-- apex.theme for client-side theme helpers.
-- APEX_UTIL for generic user preferences.
----
+- [APEX_CSS](APEX_CSS.md) for page-level CSS registration.
+- [apex.theme](../JavaScript/apex.theme.md) for client-side theme helpers.
+- [APEX_UTIL](APEX_UTIL.md) for generic user preferences.
 
-### Member Details: APEX_THEME
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| CLEAR_ALL_USERS_STYLE Procedure | procedure | [local](APEX_THEME/CLEAR_ALL_USERS_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_ALL_USERS_STYLE-Procedure.html) |
+| CLEAR_USER_STYLE Procedure | procedure | [local](APEX_THEME/CLEAR_USER_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_USER_STYLE-Procedure.html) |
+| DISABLE_USER_STYLE Procedure | procedure | [local](APEX_THEME/DISABLE_USER_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DISABLE_USER_STYLE-Procedure.html) |
+| ENABLE_USER_STYLE Procedure | procedure | [local](APEX_THEME/ENABLE_USER_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ENABLE_USER_STYLE-Procedure.html) |
+| GET_USER_STYLE Function | function | [local](APEX_THEME/GET_USER_STYLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USER_STYLE-Function.html) |
+| SET_CURRENT_STYLE Procedure | procedure | [local](APEX_THEME/SET_CURRENT_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_CURRENT_STYLE-Procedure.html) |
+| SET_SESSION_STYLE Procedure | procedure | [local](APEX_THEME/SET_SESSION_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_STYLE-Procedure.html) |
+| SET_SESSION_STYLE_CSS Procedure | procedure | [local](APEX_THEME/SET_SESSION_STYLE_CSS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_STYLE_CSS-Procedure.html) |
+| SET_USER_STYLE Procedure | procedure | [local](APEX_THEME/SET_USER_STYLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_USER_STYLE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_THEME.CLEAR_ALL_USERS_STYLE Procedure
 
@@ -61462,7 +60417,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.CLEAR_USER_STYLE Procedure
 
@@ -61483,7 +60437,7 @@ Use this page when code needs the `APEX_THEME.CLEAR_USER_STYLE` procedure. Confi
 ```sql
 APEX_THEME.CLEAR_USER_STYLE (
     p_application_id IN NUMBER   DEFAULT {current application id},
-    p_user           IN VARCHAR2 DEFAULT {current user},
+    p_user           IN VARCHAR2 DEFAULT {current user},   
     p_theme_number   IN NUMBER   DEFAULT {current theme number} );
 ```
 
@@ -61517,7 +60471,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.DISABLE_USER_STYLE Procedure
 
@@ -61537,8 +60490,8 @@ Use this page when code needs the `APEX_THEME.DISABLE_USER_STYLE` procedure. Con
 
 ```sql
 APEX_THEME.DISABLE_USER_STYLE (
-    p_application_id  IN NUMBER           DEFAULT {current application id},
-    p_theme_number    IN NUMBER           DEFAULT {current theme number}
+    p_application_id  IN NUMBER           DEFAULT {current application id}, 
+    p_theme_number    IN NUMBER           DEFAULT {current theme number} 
 );
 ```
 
@@ -61570,7 +60523,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.ENABLE_USER_STYLE Procedure
 
@@ -61622,7 +60574,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.GET_USER_STYLE Function
 
@@ -61681,7 +60632,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.SET_CURRENT_STYLE Procedure
 
@@ -61736,7 +60686,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.SET_SESSION_STYLE Procedure
 
@@ -61791,7 +60740,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.SET_SESSION_STYLE_CSS Procedure
 
@@ -61849,7 +60797,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_THEME.SET_USER_STYLE Procedure
 
@@ -61907,7 +60854,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_UI_DEFAULT_UPDATE
 
@@ -61992,14 +60938,44 @@ end;
 
 ### Related APIs
 
-- APEX_APPLICATION_INSTALL for install-time setup.
-- APEX_EXPORT for capturing metadata changes.
-- APEX_APPLICATION_ADMIN for broader application administration.
----
+- [APEX_APPLICATION_INSTALL](APEX_APPLICATION_INSTALL.md) for install-time setup.
+- [APEX_EXPORT](APEX_EXPORT.md) for capturing metadata changes.
+- [APEX_APPLICATION_ADMIN](APEX_APPLICATION_ADMIN.md) for broader application administration.
 
-### Member Details: APEX_UI_DEFAULT_UPDATE
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| ADD_AD_COLUMN Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/ADD_AD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_AD_COLUMN-Procedure.html) |
+| ADD_AD_SYNONYM Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/ADD_AD_SYNONYM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_AD_SYNONYM-Procedure.html) |
+| DEL_AD_COLUMN Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/DEL_AD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEL_AD_COLUMN-Procedure.html) |
+| DEL_AD_SYNONYM Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/DEL_AD_SYNONYM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEL_AD_SYNONYM-Procedure.html) |
+| DEL_COLUMN Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/DEL_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEL_COLUMN-Procedure.html) |
+| DEL_GROUP Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/DEL_GROUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEL_GROUP-Procedure.html) |
+| DEL_TABLE Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/DEL_TABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEL_TABLE-Procedure.html) |
+| SYNCH_TABLE Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/SYNCH_TABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SYNCH_TABLE-Procedure.html) |
+| UPD_AD_COLUMN Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_AD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_AD_COLUMN-Procedure.html) |
+| UPD_AD_SYNONYM Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_AD_SYNONYM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_AD_SYNONYM-Procedure.html) |
+| UPD_COLUMN Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_COLUMN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_COLUMN-Procedure.html) |
+| UPD_DISPLAY_IN_FORM Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_DISPLAY_IN_FORM_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_DISPLAY_IN_FORM-Procedure.html) |
+| UPD_DISPLAY_IN_REPORT Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_DISPLAY_IN_REPORT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_DISPLAY_IN_REPORT-Procedure.html) |
+| UPD_FORM_REGION_TITLE Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_FORM_REGION_TITLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_FORM_REGION_TITLE-Procedure.html) |
+| UPD_GROUP Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_GROUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_GROUP-Procedure.html) |
+| UPD_ITEM_DISPLAY_HEIGHT Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_ITEM_DISPLAY_HEIGHT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_ITEM_DISPLAY_HEIGHT-Procedure.html) |
+| UPD_ITEM_DISPLAY_WIDTH Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_ITEM_DISPLAY_WIDTH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_ITEM_DISPLAY_WIDTH-Procedure.html) |
+| UPD_ITEM_FORMAT_MASK Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_ITEM_FORMAT_MASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_ITEM_FORMAT_MASK-Procedure.html) |
+| UPD_ITEM_HELP Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_ITEM_HELP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_ITEM_HELP-Procedure.html) |
+| UPD_LABEL Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_LABEL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_LABEL-Procedure.html) |
+| UPD_REPORT_ALIGNMENT Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_REPORT_ALIGNMENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_REPORT_ALIGNMENT-Procedure.html) |
+| UPD_REPORT_FORMAT_MASK Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_REPORT_FORMAT_MASK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_REPORT_FORMAT_MASK-Procedure.html) |
+| UPD_REPORT_REGION_TITLE Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_REPORT_REGION_TITLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_REPORT_REGION_TITLE-Procedure.html) |
+| UPD_TABLE Procedure | procedure | [local](APEX_UI_DEFAULT_UPDATE/UPD_TABLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPD_TABLE-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_UI_DEFAULT_UPDATE.ADD_AD_COLUMN Procedure
 
@@ -62087,7 +61063,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.ADD_AD_SYNONYM Procedure
 
@@ -62139,7 +61114,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.DEL_AD_COLUMN Procedure
 
@@ -62188,7 +61162,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.DEL_AD_SYNONYM Procedure
 
@@ -62237,7 +61210,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.DEL_COLUMN Procedure
 
@@ -62289,7 +61261,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.DEL_GROUP Procedure
 
@@ -62341,7 +61312,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.DEL_TABLE Procedure
 
@@ -62390,7 +61360,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.SYNCH_TABLE Procedure
 
@@ -62439,7 +61408,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_AD_COLUMN Procedure
 
@@ -62521,7 +61489,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_AD_SYNONYM Procedure
 
@@ -62573,7 +61540,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_COLUMN Procedure
 
@@ -62670,7 +61636,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_DISPLAY_IN_FORM Procedure
 
@@ -62725,7 +61690,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_DISPLAY_IN_REPORT Procedure
 
@@ -62780,7 +61744,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_FORM_REGION_TITLE Procedure
 
@@ -62832,7 +61795,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_GROUP Procedure
 
@@ -62893,7 +61855,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_ITEM_DISPLAY_HEIGHT Procedure
 
@@ -62948,7 +61909,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_ITEM_DISPLAY_WIDTH Procedure
 
@@ -63003,7 +61963,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_ITEM_FORMAT_MASK Procedure
 
@@ -63058,7 +62017,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_ITEM_HELP Procedure
 
@@ -63113,7 +62071,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_LABEL Procedure
 
@@ -63168,7 +62125,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_REPORT_ALIGNMENT Procedure
 
@@ -63223,7 +62179,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_REPORT_FORMAT_MASK Procedure
 
@@ -63278,7 +62233,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_REPORT_REGION_TITLE Procedure
 
@@ -63330,7 +62284,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UI_DEFAULT_UPDATE.UPD_TABLE Procedure
 
@@ -63385,7 +62338,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_UTIL
 
@@ -63537,11 +62489,173 @@ Before exposing user operations in an app, enforce authorization with an authori
 - Use `APEX_SESSION` when a script needs APEX context.
 - Never concatenate untrusted values into URLs without escaping/checksum handling.
 - Do not expose user-management operations without strict authorization.
----
 
-### Member Details: APEX_UTIL
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| BLOB_TO_CLOB Function | function | [local](APEX_UTIL/BLOB_TO_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/BLOB_TO_CLOB-Function.html) |
+| CACHE_GET_DATE_OF_PAGE_CACHE Function | function | [local](APEX_UTIL/CACHE_GET_DATE_OF_PAGE_CACHE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CACHE_GET_DATE_OF_PAGE_CACHE-Function.html) |
+| CACHE_GET_DATE_OF_REGION_CACHE Function | function | [local](APEX_UTIL/CACHE_GET_DATE_OF_REGION_CACHE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CACHE_GET_DATE_OF_REGION_CACHE-Function.html) |
+| CACHE_PURGE_BY_APPLICATION Procedure | procedure | [local](APEX_UTIL/CACHE_PURGE_BY_APPLICATION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CACHE_PURGE_BY_APPLICATION-Procedure.html) |
+| CACHE_PURGE_BY_PAGE Procedure | procedure | [local](APEX_UTIL/CACHE_PURGE_BY_PAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CACHE_PURGE_BY_PAGE-Procedure.html) |
+| CACHE_PURGE_STALE Procedure | procedure | [local](APEX_UTIL/CACHE_PURGE_STALE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CACHE_PURGE_STALE-Procedure.html) |
+| CHANGE_CURRENT_USER_PW Procedure | procedure | [local](APEX_UTIL/CHANGE_CURRENT_USER_PW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHANGE_CURRENT_USER_PW-Procedure.html) |
+| CHANGE_PASSWORD_ON_FIRST_USE Function | function | [local](APEX_UTIL/CHANGE_PASSWORD_ON_FIRST_USE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CHANGE_PASSWORD_ON_FIRST_USE-Function.html) |
+| CLOB_TO_BLOB Function | function | [local](APEX_UTIL/CLOB_TO_BLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLOB_TO_BLOB-Function.html) |
+| CLOSE_OPEN_DB_LINKS Procedure | procedure | [local](APEX_UTIL/CLOSE_OPEN_DB_LINKS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLOSE_OPEN_DB_LINKS-Procedure.html) |
+| CLEAR_APP_CACHE Procedure | procedure | [local](APEX_UTIL/CLEAR_APP_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_APP_CACHE-Procedure.html) |
+| CLEAR_PAGE_CACHE Procedure | procedure | [local](APEX_UTIL/CLEAR_PAGE_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_PAGE_CACHE-Procedure.html) |
+| CLEAR_USER_CACHE Procedure | procedure | [local](APEX_UTIL/CLEAR_USER_CACHE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_USER_CACHE-Procedure.html) |
+| COUNT_CLICK Procedure | procedure | [local](APEX_UTIL/COUNT_CLICK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COUNT_CLICK-Procedure.html) |
+| CREATE_USER Procedure | procedure | [local](APEX_UTIL/CREATE_USER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_USER-Procedure.html) |
+| CREATE_USER_GROUP Procedure | procedure | [local](APEX_UTIL/CREATE_USER_GROUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_USER_GROUP-Procedure.html) |
+| CURRENT_USER_IN_GROUP Function | function | [local](APEX_UTIL/CURRENT_USER_IN_GROUP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CURRENT_USER_IN_GROUP-Function.html) |
+| CUSTOM_CALENDAR Procedure (Deprecated) | procedure | [local](APEX_UTIL/CUSTOM_CALENDAR_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CUSTOM_CALENDAR-Procedure.html) |
+| DELETE_FEEDBACK Procedure | procedure | [local](APEX_UTIL/DELETE_FEEDBACK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_UTIL.DELETE_FEEDBACK-Procedure.html) |
+| DELETE_FEEDBACK_ATTACHMENT Procedure | procedure | [local](APEX_UTIL/DELETE_FEEDBACK_ATTACHMENT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_UTIL.DELETE_FEEDBACK_ATTACHMENT-Procedure.html) |
+| DELETE_USER_GROUP Procedure Signature 1 | procedure | [local](APEX_UTIL/DELETE_USER_GROUP_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_USER_GROUP-Procedure-Signature-1.html) |
+| DELETE_USER_GROUP Procedure Signature 2 | procedure | [local](APEX_UTIL/DELETE_USER_GROUP_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_USER_GROUP-Procedure-Signature-2.html) |
+| DOWNLOAD_PRINT_DOCUMENT Procedure Signature 1 | procedure | [local](APEX_UTIL/DOWNLOAD_PRINT_DOCUMENT_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-1.html) |
+| DOWNLOAD_PRINT_DOCUMENT Procedure Signature 2 | procedure | [local](APEX_UTIL/DOWNLOAD_PRINT_DOCUMENT_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-2.html) |
+| DOWNLOAD_PRINT_DOCUMENT Procedure Signature 3 | procedure | [local](APEX_UTIL/DOWNLOAD_PRINT_DOCUMENT_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-3.html) |
+| DOWNLOAD_PRINT_DOCUMENT Procedure Signature 4 | procedure | [local](APEX_UTIL/DOWNLOAD_PRINT_DOCUMENT_Procedure_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-4.html) |
+| EDIT_USER Procedure | procedure | [local](APEX_UTIL/EDIT_USER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EDIT_USER-Procedure.html) |
+| END_USER_ACCOUNT_DAYS_LEFT Function | function | [local](APEX_UTIL/END_USER_ACCOUNT_DAYS_LEFT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/END_USER_ACCOUNT_DAYS_LEFT-Function.html) |
+| EXPIRE_END_USER_ACCOUNT Procedure | procedure | [local](APEX_UTIL/EXPIRE_END_USER_ACCOUNT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXPIRE_END_USER_ACCOUNT-Procedure.html) |
+| EXPIRE_WORKSPACE_ACCOUNT Procedure | procedure | [local](APEX_UTIL/EXPIRE_WORKSPACE_ACCOUNT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXPIRE_WORKSPACE_ACCOUNT-Procedure.html) |
+| EXPORT_USERS Procedure | procedure | [local](APEX_UTIL/EXPORT_USERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/EXPORT_USERS-Procedure.html) |
+| FEEDBACK_ENABLED Function | function | [local](APEX_UTIL/FEEDBACK_ENABLED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FEEDBACK_ENABLED-Function.html) |
+| FETCH_APP_ITEM Function | function | [local](APEX_UTIL/FETCH_APP_ITEM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FETCH_APP_ITEM-Function.html) |
+| FETCH_USER Procedure Signature 1 | procedure | [local](APEX_UTIL/FETCH_USER_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FETCH_USER-Procedure-Signature-1.html) |
+| FETCH_USER Procedure Signature 2 | procedure | [local](APEX_UTIL/FETCH_USER_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FETCH_USER-Procedure-Signature-2.html) |
+| FETCH_USER Procedure Signature 3 | procedure | [local](APEX_UTIL/FETCH_USER_Procedure_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FETCH_USER-Procedure-Signature-3.html) |
+| FIND_SECURITY_GROUP_ID Function | function | [local](APEX_UTIL/FIND_SECURITY_GROUP_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_SECURITY_GROUP_ID-Function.html) |
+| FIND_WORKSPACE Function | function | [local](APEX_UTIL/FIND_WORKSPACE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/FIND_WORKSPACE-Function.html) |
+| GET_ACCOUNT_LOCKED_STATUS Function | function | [local](APEX_UTIL/GET_ACCOUNT_LOCKED_STATUS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_ACCOUNT_LOCKED_STATUS-Function.html) |
+| GET_APEX_OWNER Function | function | [local](APEX_UTIL/GET_APEX_OWNER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_UTIL.GET_APEX_OWNER-Function.html) |
+| GET_APPLICATION_STATUS Function (Deprecated) | function | [local](APEX_UTIL/GET_APPLICATION_STATUS_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_APPLICATION_STATUS-Function.html) |
+| GET_ATTRIBUTE Function | function | [local](APEX_UTIL/GET_ATTRIBUTE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_ATTRIBUTE-Function.html) |
+| GET_AUTHENTICATION_RESULT Function | function | [local](APEX_UTIL/GET_AUTHENTICATION_RESULT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_AUTHENTICATION_RESULT-Function.html) |
+| GET_BLOB_FILE_SRC Function | function | [local](APEX_UTIL/GET_BLOB_FILE_SRC_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BLOB_FILE_SRC-Function.html) |
+| GET_BUILD_OPTION_STATUS Function Signature 1 (Deprecated) | function | [local](APEX_UTIL/GET_BUILD_OPTION_STATUS_Function_Signature_1_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BUILD_OPTION_STATUS-Function-Signature-1.html) |
+| GET_BUILD_OPTION_STATUS Function Signature 2 (Deprecated) | function | [local](APEX_UTIL/GET_BUILD_OPTION_STATUS_Function_Signature_2_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BUILD_OPTION_STATUS-Function-Signature-2.html) |
+| GET_CURRENT_USER_ID Function | function | [local](APEX_UTIL/GET_CURRENT_USER_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CURRENT_USER_ID-Function.html) |
+| GET_DEFAULT_SCHEMA Function | function | [local](APEX_UTIL/GET_DEFAULT_SCHEMA_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_DEFAULT_SCHEMA-Function.html) |
+| GET_EDITION Function | function | [local](APEX_UTIL/GET_EDITION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EDITION-Function.html) |
+| GET_EMAIL Function | function | [local](APEX_UTIL/GET_EMAIL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EMAIL-Function.html) |
+| GET_FEEDBACK_FOLLOW_UP Function | function | [local](APEX_UTIL/GET_FEEDBACK_FOLLOW_UP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FEEDBACK_FOLLOW_UP-Function.html) |
+| GET_FILE Procedure | procedure | [local](APEX_UTIL/GET_FILE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FILE-Procedure.html) |
+| GET_FILE_ID Function | function | [local](APEX_UTIL/GET_FILE_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FILE_ID-Function.html) |
+| GET_FIRST_NAME Function | function | [local](APEX_UTIL/GET_FIRST_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FIRST_NAME-Function.html) |
+| GET_GLOBAL_NOTIFICATION Function (Deprecated) | function | [local](APEX_UTIL/GET_GLOBAL_NOTIFICATION_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_GLOBAL_NOTIFICATION-Function.html) |
+| GET_GROUPS_USER_BELONGS_TO Function | function | [local](APEX_UTIL/GET_GROUPS_USER_BELONGS_TO_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_GROUPS_USER_BELONGS_TO-Function.html) |
+| GET_GROUP_ID Function | function | [local](APEX_UTIL/GET_GROUP_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_GROUP_ID-Function.html) |
+| GET_GROUP_NAME Function | function | [local](APEX_UTIL/GET_GROUP_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_GROUP_NAME-Function.html) |
+| GET_HASH Function | function | [local](APEX_UTIL/GET_HASH_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_HASH-Function.html) |
+| GET_HIGH_CONTRAST_MODE_TOGGLE Function | function | [local](APEX_UTIL/GET_HIGH_CONTRAST_MODE_TOGGLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_HIGH_CONTRAST_MODE_TOGGLE-Function.html) |
+| GET_LAST_NAME Function | function | [local](APEX_UTIL/GET_LAST_NAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LAST_NAME-Function.html) |
+| GET_NUMERIC_SESSION_STATE Function | function | [local](APEX_UTIL/GET_NUMERIC_SESSION_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_NUMERIC_SESSION_STATE-Function.html) |
+| GET_PREFERENCE Function | function | [local](APEX_UTIL/GET_PREFERENCE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PREFERENCE-Function.html) |
+| GET_PRINT_DOCUMENT Function Signature 1 | function | [local](APEX_UTIL/GET_PRINT_DOCUMENT_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PRINT_DOCUMENT-Function-Signature-1.html) |
+| GET_PRINT_DOCUMENT Function Signature 2 | function | [local](APEX_UTIL/GET_PRINT_DOCUMENT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PRINT_DOCUMENT-Function-Signature-2.html) |
+| GET_PRINT_DOCUMENT Function Signature 3 | function | [local](APEX_UTIL/GET_PRINT_DOCUMENT_Function_Signature_3.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PRINT_DOCUMENT-Function-Signature-3.html) |
+| GET_PRINT_DOCUMENT Function Signature 4 | function | [local](APEX_UTIL/GET_PRINT_DOCUMENT_Function_Signature_4.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_PRINT_DOCUMENT-Function-Signature-4.html) |
+| GET_SCREEN_READER_MODE_TOGGLE Function | function | [local](APEX_UTIL/GET_SCREEN_READER_MODE_TOGGLE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SCREEN_READER_MODE_TOGGLE-Function.html) |
+| GET_SESSION_LANG Function | function | [local](APEX_UTIL/GET_SESSION_LANG_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_LANG-Function.html) |
+| GET_SESSION_STATE Function | function | [local](APEX_UTIL/GET_SESSION_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_STATE-Function.html) |
+| GET_SESSION_TERRITORY Function | function | [local](APEX_UTIL/GET_SESSION_TERRITORY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_TERRITORY-Function.html) |
+| GET_SESSION_TIME_ZONE Function | function | [local](APEX_UTIL/GET_SESSION_TIME_ZONE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_TIME_ZONE-Function.html) |
+| GET_SINCE Function Signature 1 | function | [local](APEX_UTIL/GET_SINCE_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SINCE-Function-Signature-1.html) |
+| GET_SINCE Function Signature 2 | function | [local](APEX_UTIL/GET_SINCE_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SINCE-Function-Signature-2.html) |
+| GET_SUPPORTING_OBJECT_SCRIPT Function | function | [local](APEX_UTIL/GET_SUPPORTING_OBJECT_SCRIPT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SUPPORTING_OBJECT_SCRIPT-Function.html) |
+| GET_SUPPORTING_OBJECT_SCRIPT Procedure | procedure | [local](APEX_UTIL/GET_SUPPORTING_OBJECT_SCRIPT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SUPPORTING_OBJECT_SCRIPT-Procedure.html) |
+| GET_USER_ID Function | function | [local](APEX_UTIL/GET_USER_ID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USER_ID-Function.html) |
+| GET_USER_ROLES Function | function | [local](APEX_UTIL/GET_USER_ROLES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USER_ROLES-Function.html) |
+| GET_USERNAME Function | function | [local](APEX_UTIL/GET_USERNAME_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USERNAME-Function-2.html) |
+| HOST_URL Function | function | [local](APEX_UTIL/HOST_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HOST_URL-Function.html) |
+| HTML_PCT_GRAPH_MASK Function | function | [local](APEX_UTIL/HTML_PCT_GRAPH_MASK_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HTML_PCT_GRAPH_MASK-Function.html) |
+| INCREMENT_CALENDAR Procedure (Deprecated) | procedure | [local](APEX_UTIL/INCREMENT_CALENDAR_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INCREMENT_CALENDAR-Procedure.html) |
+| IR_CLEAR Procedure (Deprecated) | procedure | [local](APEX_UTIL/IR_CLEAR_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_CLEAR-Procedure-DEPRECATED.html) |
+| IR_DELETE_REPORT Procedure (Deprecated) | procedure | [local](APEX_UTIL/IR_DELETE_REPORT_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_DELETE_REPORT-Procedure-DEPRECATED.html) |
+| IR_DELETE_SUBSCRIPTION Procedure (Deprecated) | procedure | [local](APEX_UTIL/IR_DELETE_SUBSCRIPTION_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_DELETE_SUBSCRIPTION-Procedure-DEPRECATED.html) |
+| IR_FILTER Procedure (Deprecated) | procedure | [local](APEX_UTIL/IR_FILTER_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_FILTER-Procedure-DEPRECATED.html) |
+| IR_RESET Procedure (Deprecated) | procedure | [local](APEX_UTIL/IR_RESET_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_RESET-Procedure-DEPRECATED.html) |
+| IS_HIGH_CONTRAST_SESSION Function | function | [local](APEX_UTIL/IS_HIGH_CONTRAST_SESSION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_HIGH_CONTRAST_SESSION-Function.html) |
+| IS_HIGH_CONTRAST_SESSION_YN Function | function | [local](APEX_UTIL/IS_HIGH_CONTRAST_SESSION_YN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_HIGH_CONTRAST_SESSION_YN-Function.html) |
+| IS_LOGIN_PASSWORD_VALID Function | function | [local](APEX_UTIL/IS_LOGIN_PASSWORD_VALID_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_LOGIN_PASSWORD_VALID-Function.html) |
+| IS_SCREEN_READER_SESSION Function | function | [local](APEX_UTIL/IS_SCREEN_READER_SESSION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_SCREEN_READER_SESSION-Function.html) |
+| IS_SCREEN_READER_SESSION_YN Function | function | [local](APEX_UTIL/IS_SCREEN_READER_SESSION_YN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_SCREEN_READER_SESSION_YN-Function.html) |
+| IS_USERNAME_UNIQUE Function | function | [local](APEX_UTIL/IS_USERNAME_UNIQUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_USERNAME_UNIQUE-Function.html) |
+| KEYVAL_NUM Function | function | [local](APEX_UTIL/KEYVAL_NUM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/KEYVAL_NUM-Function.html) |
+| KEYVAL_VC2 Function | function | [local](APEX_UTIL/KEYVAL_VC2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/KEYVAL_VC2-Function.html) |
+| LOCK_ACCOUNT Procedure | procedure | [local](APEX_UTIL/LOCK_ACCOUNT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOCK_ACCOUNT-Procedure.html) |
+| PASSWORD_FIRST_USE_OCCURRED Function | function | [local](APEX_UTIL/PASSWORD_FIRST_USE_OCCURRED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PASSWORD_FIRST_USE_OCCURRED-Function.html) |
+| PREPARE_URL Function | function | [local](APEX_UTIL/PREPARE_URL_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PREPARE_URL-Function.html) |
+| PRN Procedure | procedure | [local](APEX_UTIL/PRN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PRN-Procedure.html) |
+| PUBLIC_CHECK_AUTHORIZATION Function (Deprecated) | function | [local](APEX_UTIL/PUBLIC_CHECK_AUTHORIZATION_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUBLIC_CHECK_AUTHORIZATION-Function-DEPRECATED.html) |
+| PURGE_REGIONS_BY_APP Procedure | procedure | [local](APEX_UTIL/PURGE_REGIONS_BY_APP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PURGE_REGIONS_BY_APP-Procedure.html) |
+| PURGE_REGIONS_BY_NAME Procedure | procedure | [local](APEX_UTIL/PURGE_REGIONS_BY_NAME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PURGE_REGIONS_BY_NAME-Procedure.html) |
+| PURGE_REGIONS_BY_PAGE Procedure | procedure | [local](APEX_UTIL/PURGE_REGIONS_BY_PAGE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PURGE_REGIONS_BY_PAGE-Procedure.html) |
+| REDIRECT_URL Procedure | procedure | [local](APEX_UTIL/REDIRECT_URL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REDIRECT_URL-Procedure.html) |
+| REMOVE_PREFERENCE Procedure | procedure | [local](APEX_UTIL/REMOVE_PREFERENCE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_PREFERENCE-Procedure.html) |
+| REMOVE_SORT_PREFERENCES Procedure | procedure | [local](APEX_UTIL/REMOVE_SORT_PREFERENCES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_SORT_PREFERENCES-Procedure.html) |
+| REMOVE_USER Procedure Signature 1 | procedure | [local](APEX_UTIL/REMOVE_USER_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_USER-Signature-1-Procedure.html) |
+| REMOVE_USER Procedure Signature 2 | procedure | [local](APEX_UTIL/REMOVE_USER_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_USER-Signature-2-Procedure.html) |
+| REPLY_TO_FEEDBACK Procedure | procedure | [local](APEX_UTIL/REPLY_TO_FEEDBACK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_UTIL.REPLY_TO_FEEDBACK-Procedure.html) |
+| RESET_AUTHORIZATIONS Procedure (Deprecated) | procedure | [local](APEX_UTIL/RESET_AUTHORIZATIONS_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_AUTHORIZATIONS-Procedure-DEPRECATED.html) |
+| RESET_PASSWORD Procedure | procedure | [local](APEX_UTIL/RESET_PASSWORD_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_PASSWORD-Procedure.html) |
+| RESET_PW Procedure | procedure | [local](APEX_UTIL/RESET_PW_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_PW-Procedure.html) |
+| SAVEKEY_NUM Function | function | [local](APEX_UTIL/SAVEKEY_NUM_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SAVEKEY_NUM-Function.html) |
+| SAVEKEY_VC2 Function | function | [local](APEX_UTIL/SAVEKEY_VC2_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SAVEKEY_VC2-Function.html) |
+| SET_APP_BUILD_STATUS Procedure (Deprecated) | procedure | [local](APEX_UTIL/SET_APP_BUILD_STATUS_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_APP_BUILD_STATUS_Procedure.html) |
+| SET_APPLICATION_STATUS Procedure (Deprecated) | procedure | [local](APEX_UTIL/SET_APPLICATION_STATUS_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_APPLICATION_STATUS-Procedure.html) |
+| SET_ATTRIBUTE Procedure | procedure | [local](APEX_UTIL/SET_ATTRIBUTE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_ATTRIBUTE-Procedure.html) |
+| SET_AUTHENTICATION_RESULT Procedure | procedure | [local](APEX_UTIL/SET_AUTHENTICATION_RESULT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_AUTHENTICATION_RESULT-Procedure.html) |
+| SET_BUILD_OPTION_STATUS Procedure (Deprecated) | procedure | [local](APEX_UTIL/SET_BUILD_OPTION_STATUS_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_BUILD_OPTION_STATUS-Procedure.html) |
+| SET_CURRENT_THEME_STYLE Procedure (Deprecated) | procedure | [local](APEX_UTIL/SET_CURRENT_THEME_STYLE_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_CURRENT_THEME_STYLE-Procedure.html) |
+| SET_CUSTOM_AUTH_STATUS Procedure | procedure | [local](APEX_UTIL/SET_CUSTOM_AUTH_STATUS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_CUSTOM_AUTH_STATUS-Procedure.html) |
+| SET_EDITION Procedure | procedure | [local](APEX_UTIL/SET_EDITION_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_EDITION-Procedure.html) |
+| SET_EMAIL Procedure | procedure | [local](APEX_UTIL/SET_EMAIL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_EMAIL-Procedure.html) |
+| SET_FIRST_NAME Procedure | procedure | [local](APEX_UTIL/SET_FIRST_NAME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_FIRST_NAME-Procedure.html) |
+| SET_GLOBAL_NOTIFICATION Procedure (Deprecated) | procedure | [local](APEX_UTIL/SET_GLOBAL_NOTIFICATION_Procedure_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_GLOBAL_NOTIFICATION-Procedure.html) |
+| SET_GROUP_GROUP_GRANTS Procedure | procedure | [local](APEX_UTIL/SET_GROUP_GROUP_GRANTS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_GROUP_GROUP_GRANTS-Procedure.html) |
+| SET_GROUP_USER_GRANTS Procedure | procedure | [local](APEX_UTIL/SET_GROUP_USER_GRANTS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_GROUP_USER_GRANTS-Procedure.html) |
+| SET_LAST_NAME Procedure | procedure | [local](APEX_UTIL/SET_LAST_NAME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_LAST_NAME-Procedure.html) |
+| SET_PARSING_SCHEMA_FOR _REQUEST Procedure | procedure | [local](APEX_UTIL/SET_PARSING_SCHEMA_FOR_REQUEST_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PARSING_SCHEMA_FOR_REQUEST-Procedure.html) |
+| SET_PREFERENCE Procedure | procedure | [local](APEX_UTIL/SET_PREFERENCE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_PREFERENCE-Procedure.html) |
+| SET_SECURITY_GROUP_ID Procedure | procedure | [local](APEX_UTIL/SET_SECURITY_GROUP_ID_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SECURITY_GROUP_ID-Procedure.html) |
+| SET_SESSION_HIGH_CONTRAST_OFF Procedure | procedure | [local](APEX_UTIL/SET_SESSION_HIGH_CONTRAST_OFF_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_HIGH_CONTRAST_OFF-Procedure.html) |
+| SET_SESSION_HIGH_CONTRAST_ON Procedure | procedure | [local](APEX_UTIL/SET_SESSION_HIGH_CONTRAST_ON_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_HIGH_CONTRAST_ON-Procedure.html) |
+| SET_SESSION_LANG Procedure | procedure | [local](APEX_UTIL/SET_SESSION_LANG_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_LANG-Procedure.html) |
+| SET_SESSION_LIFETIME_SECONDS Procedure | procedure | [local](APEX_UTIL/SET_SESSION_LIFETIME_SECONDS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_LIFETIME_SECONDS-Procedure.html) |
+| SET_SESSION_MAX_IDLE_SECONDS Procedure | procedure | [local](APEX_UTIL/SET_SESSION_MAX_IDLE_SECONDS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_MAX_IDLE_SECONDS-Procedure.html) |
+| SET_SESSION_SCREEN_READER_OFF Procedure | procedure | [local](APEX_UTIL/SET_SESSION_SCREEN_READER_OFF_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_SCREEN_READER_OFF-Procedure.html) |
+| SET_SESSION_SCREEN_READER_ON Procedure | procedure | [local](APEX_UTIL/SET_SESSION_SCREEN_READER_ON_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_SCREEN_READER_ON-Procedure.html) |
+| SET_SESSION_STATE Procedure | procedure | [local](APEX_UTIL/SET_SESSION_STATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_STATE-Procedure.html) |
+| SET_SESSION_TERRITORY Procedure | procedure | [local](APEX_UTIL/SET_SESSION_TERRITORY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_TERRITORY-Procedure.html) |
+| SET_SESSION_TIME_ZONE Procedure | procedure | [local](APEX_UTIL/SET_SESSION_TIME_ZONE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_TIME_ZONE-Procedure.html) |
+| SET_USERNAME Procedure | procedure | [local](APEX_UTIL/SET_USERNAME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_USERNAME-Procedure.html) |
+| SET_WORKSPACE Procedure | procedure | [local](APEX_UTIL/SET_WORKSPACE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_UTIL.SET_WORKSPACE_Procedure-2.html) |
+| SHOW_HIGH_CONTRAST_MODE_TOGGLE Procedure | procedure | [local](APEX_UTIL/SHOW_HIGH_CONTRAST_MODE_TOGGLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SHOW_HIGH_CONTRAST_MODE_TOGGLE-Procedure.html) |
+| SHOW_SCREEN_READER_MODE_TOGGLE Procedure | procedure | [local](APEX_UTIL/SHOW_SCREEN_READER_MODE_TOGGLE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SHOW_SCREEN_READER_MODE_TOGGLE-Procedure.html) |
+| STRING_TO_TABLE Function (Deprecated) | function | [local](APEX_UTIL/STRING_TO_TABLE_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRING_TO_TABLE-Function.html) |
+| STRONG_PASSWORD_CHECK Procedure | procedure | [local](APEX_UTIL/STRONG_PASSWORD_CHECK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRONG_PASSWORD_CHECK-Procedure.html) |
+| STRONG_PASSWORD_VALIDATION Function | function | [local](APEX_UTIL/STRONG_PASSWORD_VALIDATION_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRONG_PASSWORD_VALIDATION-Function.html) |
+| SUBMIT_FEEDBACK Procedure | procedure | [local](APEX_UTIL/SUBMIT_FEEDBACK_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SUBMIT_FEEDBACK-Procedure.html) |
+| SUBMIT_FEEDBACK_FOLLOWUP Procedure | procedure | [local](APEX_UTIL/SUBMIT_FEEDBACK_FOLLOWUP_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SUBMIT_FEEDBACK_FOLLOWUP-Procedure.html) |
+| TABLE_TO_STRING Function (Deprecated) | function | [local](APEX_UTIL/TABLE_TO_STRING_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TABLE_TO_STRING-Function.html) |
+| UNEXPIRE_END_USER_ACCOUNT Procedure | procedure | [local](APEX_UTIL/UNEXPIRE_END_USER_ACCOUNT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UNEXPIRE_END_USER_ACCOUNT-Procedure.html) |
+| UNEXPIRE_WORKSPACE_ACCOUNT Procedure | procedure | [local](APEX_UTIL/UNEXPIRE_WORKSPACE_ACCOUNT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UNEXPIRE_WORKSPACE_ACCOUNT-Procedure.html) |
+| UNLOCK_ACCOUNT Procedure | procedure | [local](APEX_UTIL/UNLOCK_ACCOUNT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UNLOCK_ACCOUNT-Procedure.html) |
+| URL_ENCODE Function (Deprecated) | function | [local](APEX_UTIL/URL_ENCODE_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/URL_ENCODE-Function.html) |
+| WORKSPACE_ACCOUNT_DAYS_LEFT Function | function | [local](APEX_UTIL/WORKSPACE_ACCOUNT_DAYS_LEFT_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/WORKSPACE_ACCOUNT_DAYS_LEFT-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_UTIL.BLOB_TO_CLOB Function
 
@@ -63604,7 +62718,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CACHE_GET_DATE_OF_PAGE_CACHE Function
 
@@ -63656,7 +62769,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CACHE_GET_DATE_OF_REGION_CACHE Function
 
@@ -63711,7 +62823,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CACHE_PURGE_BY_APPLICATION Procedure
 
@@ -63760,7 +62871,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CACHE_PURGE_BY_PAGE Procedure
 
@@ -63815,7 +62925,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CACHE_PURGE_STALE Procedure
 
@@ -63864,7 +62973,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CHANGE_CURRENT_USER_PW Procedure
 
@@ -63913,7 +63021,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CHANGE_PASSWORD_ON_FIRST_USE Function
 
@@ -63962,7 +63069,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CLOB_TO_BLOB Function
 
@@ -64028,7 +63134,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CLOSE_OPEN_DB_LINKS Procedure
 
@@ -64068,7 +63173,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CLEAR_APP_CACHE Procedure
 
@@ -64117,7 +63221,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CLEAR_PAGE_CACHE Procedure
 
@@ -64166,7 +63269,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CLEAR_USER_CACHE Procedure
 
@@ -64206,7 +63308,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.COUNT_CLICK Procedure
 
@@ -64270,7 +63371,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CREATE_USER Procedure
 
@@ -64403,7 +63503,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CREATE_USER_GROUP Procedure
 
@@ -64452,7 +63551,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.CURRENT_USER_IN_GROUP Function
 
@@ -64507,60 +63605,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.CUSTOM_CALENDAR Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CUSTOM_CALENDAR-Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.CUSTOM_CALENDAR` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.CUSTOM_CALENDAR(
-    p_date_type_field IN VARCHAR2 );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_date_type_field` | Identifies the item name used to define the type of calendar to be displayed. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.CUSTOM_CALENDAR(
-        p_date_type_field => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_UTIL.DELETE_FEEDBACK Procedure
 
@@ -64609,7 +63653,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DELETE_FEEDBACK_ATTACHMENT Procedure
 
@@ -64658,7 +63701,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DELETE_USER_GROUP Procedure Signature 1
 
@@ -64701,7 +63743,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DELETE_USER_GROUP Procedure Signature 2
 
@@ -64744,7 +63785,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DOWNLOAD_PRINT_DOCUMENT Procedure Signature 1
 
@@ -64811,7 +63851,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DOWNLOAD_PRINT_DOCUMENT Procedure Signature 2
 
@@ -64881,7 +63920,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DOWNLOAD_PRINT_DOCUMENT Procedure Signature 3
 
@@ -64951,7 +63989,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.DOWNLOAD_PRINT_DOCUMENT Procedure Signature 4
 
@@ -65018,7 +64055,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.EDIT_USER Procedure
 
@@ -65127,7 +64163,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.END_USER_ACCOUNT_DAYS_LEFT Function
 
@@ -65176,7 +64211,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.EXPIRE_END_USER_ACCOUNT Procedure
 
@@ -65225,7 +64259,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.EXPIRE_WORKSPACE_ACCOUNT Procedure
 
@@ -65274,7 +64307,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.EXPORT_USERS Procedure
 
@@ -65323,7 +64355,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FEEDBACK_ENABLED Function
 
@@ -65363,7 +64394,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FETCH_APP_ITEM Function
 
@@ -65418,7 +64448,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FETCH_USER Procedure Signature 1
 
@@ -65512,7 +64541,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FETCH_USER Procedure Signature 2
 
@@ -65582,7 +64610,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FETCH_USER Procedure Signature 3
 
@@ -65691,7 +64718,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FIND_SECURITY_GROUP_ID Function
 
@@ -65740,7 +64766,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.FIND_WORKSPACE Function
 
@@ -65789,7 +64814,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_ACCOUNT_LOCKED_STATUS Function
 
@@ -65838,7 +64862,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_APEX_OWNER Function
 
@@ -65881,59 +64904,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.GET_APPLICATION_STATUS Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_APPLICATION_STATUS-Function.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.GET_APPLICATION_STATUS` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.GET_APPLICATION_STATUS (
-    p_application_id IN NUMBER ) RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The application ID. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_util.GET_APPLICATION_STATUS(
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.GET_ATTRIBUTE Function
 
@@ -65985,7 +64955,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_AUTHENTICATION_RESULT Function
 
@@ -66025,7 +64994,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_BLOB_FILE_SRC Function
 
@@ -66083,119 +65051,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.GET_BUILD_OPTION_STATUS Function Signature 1 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BUILD_OPTION_STATUS-Function-Signature-1.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.GET_BUILD_OPTION_STATUS` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-FUNCTION get_build_option_status(
-    p_application_id   IN NUMBER,
-    p_id               IN NUMBER )
-    RETURN varchar2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The ID of the application that owns the build option under shared components. |
-| `p_id` | The ID of the build option in the application. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_util.GET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
-
-### APEX_UTIL.GET_BUILD_OPTION_STATUS Function Signature 2 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_BUILD_OPTION_STATUS-Function-Signature-2.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.GET_BUILD_OPTION_STATUS` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-FUNCTION get_build_option_status (
-    p_application_id     IN NUMBER
-    p_build_option_name  IN VARCHAR2 )
-    return VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The ID of the application that owns the build option under shared components. |
-| `p_build_option_name` | The name of the build option in the application. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_util.GET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_build_option_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.GET_CURRENT_USER_ID Function
 
@@ -66235,7 +65090,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_DEFAULT_SCHEMA Function
 
@@ -66275,7 +65129,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_EDITION Function
 
@@ -66315,7 +65168,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_EMAIL Function
 
@@ -66364,7 +65216,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_FEEDBACK_FOLLOW_UP Function
 
@@ -66420,7 +65271,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_FILE Procedure
 
@@ -66472,7 +65322,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_FILE_ID Function
 
@@ -66521,7 +65370,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_FIRST_NAME Function
 
@@ -66570,59 +65418,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.GET_GLOBAL_NOTIFICATION Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_GLOBAL_NOTIFICATION-Function.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.GET_GLOBAL_NOTIFICATION` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.GET_GLOBAL_NOTIFICATION (
-   p_application_id IN NUMBER ) RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The application ID. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_util.GET_GLOBAL_NOTIFICATION(
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.GET_GROUPS_USER_BELONGS_TO Function
 
@@ -66671,7 +65466,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_GROUP_ID Function
 
@@ -66720,7 +65514,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_GROUP_NAME Function
 
@@ -66769,7 +65562,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_HASH Function
 
@@ -66821,7 +65613,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_HIGH_CONTRAST_MODE_TOGGLE Function
 
@@ -66873,7 +65664,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_LAST_NAME Function
 
@@ -66922,7 +65712,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_NUMERIC_SESSION_STATE Function
 
@@ -66971,7 +65760,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_PREFERENCE Function
 
@@ -67023,7 +65811,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_PRINT_DOCUMENT Function Signature 1
 
@@ -67084,7 +65871,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_PRINT_DOCUMENT Function Signature 2
 
@@ -67148,7 +65934,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_PRINT_DOCUMENT Function Signature 3
 
@@ -67212,7 +65997,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_PRINT_DOCUMENT Function Signature 4
 
@@ -67273,7 +66057,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SCREEN_READER_MODE_TOGGLE Function
 
@@ -67325,7 +66108,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SESSION_LANG Function
 
@@ -67365,7 +66147,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SESSION_STATE Function
 
@@ -67414,7 +66195,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SESSION_TERRITORY Function
 
@@ -67454,7 +66234,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SESSION_TIME_ZONE Function
 
@@ -67494,7 +66273,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SINCE Function Signature 1
 
@@ -67515,7 +66293,7 @@ Use this page when code needs the `APEX_UTIL.GET_SINCE` function. Confirm securi
 ```sql
 APEX_UTIL.GET_SINCE (
    p_date  DATE )
-   p_short IN [ BOOLEAN DEFAULT FALSE | VARCHAR2 DEFAULT 'N' ] )
+   p_short IN [ BOOLEAN DEFAULT FALSE | VARCHAR2 DEFAULT 'N' ] )  
 RETURN VARCHAR2;
 ```
 
@@ -67546,7 +66324,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SINCE Function Signature 2
 
@@ -67598,7 +66375,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SUPPORTING_OBJECT_SCRIPT Function
 
@@ -67650,7 +66426,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_SUPPORTING_OBJECT_SCRIPT Procedure
 
@@ -67705,7 +66480,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_USER_ID Function
 
@@ -67754,7 +66528,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_USER_ROLES Function
 
@@ -67803,7 +66576,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.GET_USERNAME Function
 
@@ -67852,7 +66624,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.HOST_URL Function
 
@@ -67901,7 +66672,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.HTML_PCT_GRAPH_MASK Function
 
@@ -67968,334 +66738,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.INCREMENT_CALENDAR Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/INCREMENT_CALENDAR-Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.INCREMENT_CALENDAR` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.INCREMENT_CALENDAR;
-```
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.INCREMENT_CALENDAR;
-end;
-/
-```
----
-
-### APEX_UTIL.IR_CLEAR Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_CLEAR-Procedure-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.IR_CLEAR` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.IR_CLEAR (
-    p_page_id       IN NUMBER,
-    p_report_alias  IN VARCHAR2 DEFAULT NULL );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_page_id` | Page of the current Oracle APEX application that contains an interactive report. |
-| `p_report_alias` | Identifies the saved report alias within the current application page. To clear a Primary report, set p_report_alias to PRIMARY or leave as NULL. To clear a saved report, p_report_alias must be the name of the saved report. For example, to clear report 1234 , set p_report_alias to 1234 . |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.IR_CLEAR(
-        p_page_id => 1,
-        p_report_alias => 'EXAMPLE'
-    );
-end;
-/
-```
----
-
-### APEX_UTIL.IR_DELETE_REPORT Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_DELETE_REPORT-Procedure-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.IR_DELETE_REPORT` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.IR_DELETE_REPORT (
-    p_report_id     IN NUMBER );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_report_id` | Report ID to delete within the current Oracle APEX application. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.IR_DELETE_REPORT(
-        p_report_id => 1
-    );
-end;
-/
-```
----
-
-### APEX_UTIL.IR_DELETE_SUBSCRIPTION Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_DELETE_SUBSCRIPTION-Procedure-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.IR_DELETE_SUBSCRIPTION` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.IR_DELETE_SUBSCRIPTION(
-    p_subscription_id IN NUMBER);
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_subscription_id` | Subscription ID to delete within the current workspace. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.IR_DELETE_SUBSCRIPTION(
-        p_subscription_id => 1
-    );
-end;
-/
-```
----
-
-### APEX_UTIL.IR_FILTER Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_FILTER-Procedure-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.IR_FILTER` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.IR_FILTER (
-    p_page_id       IN NUMBER,
-    p_report_column IN VARCHAR2,
-    p_operator_abbr IN VARCHAR2 DEFAULT NULL,
-    p_filter_value  IN VARCHAR2,
-    p_report_alias  IN VARCHAR2 DEFAULT NULL );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_page_id` | Page of the current Oracle APEX application that contains an interactive report. |
-| `p_report_column` | Name of the report SQL column, or column alias, to be filtered. |
-| `p_operator_abbr` | Filter type. Valid values are as follows: EQ = Equals NEQ = Not Equals LT = Less than LTE = Less then or equal to GT = Greater Than GTE = Greater than or equal to LIKE = SQL Like operator N = Null NN = Not Null C = Contains NC = Not Contains IN = SQL In Operator NIN = SQL Not In Operator |
-| `p_filter_value` | Filter value. This value is not used for N and NN . |
-| `p_report_alias` | Identifies the saved report alias within the current application page. To create a filter on a Primary report, p_report_alias must be PRIMARY or leave as NULL. To create a filter on a saved report, p_report_alias must be the name of the saved report. For example, to create a filter on report 1234 , p_report_alias must be 1234 . |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.IR_FILTER(
-        p_page_id => 1,
-        p_report_column => 'EXAMPLE',
-        p_operator_abbr => 'EXAMPLE',
-        p_filter_value => 'EXAMPLE',
-        p_report_alias => 'EXAMPLE'
-    );
-end;
-/
-```
----
-
-### APEX_UTIL.IR_RESET Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IR_RESET-Procedure-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.IR_RESET` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.IR_RESET(
-    p_page_id IN NUMBER,
-    p_report_alias IN VARCHAR2 DEFAULT NULL);
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_page_id` | Page of the current Oracle APEX application that contains an interactive report. |
-| `p_report_alias` | Identifies the saved report alias within the current application page. To reset a Primary report, p_report_alias must be 'PRIMARY' or leave as NULL. To reset a saved report, p_report_alias must be the name of the saved report. For example, to reset report '1234', p_report_alias must be '1234'. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.IR_RESET(
-        p_page_id => 1,
-        p_report_alias => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_UTIL.IS_HIGH_CONTRAST_SESSION Function
 
@@ -68335,7 +66777,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.IS_HIGH_CONTRAST_SESSION_YN Function
 
@@ -68375,7 +66816,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.IS_LOGIN_PASSWORD_VALID Function
 
@@ -68431,7 +66871,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.IS_SCREEN_READER_SESSION Function
 
@@ -68471,7 +66910,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.IS_SCREEN_READER_SESSION_YN Function
 
@@ -68511,7 +66949,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.IS_USERNAME_UNIQUE Function
 
@@ -68560,7 +66997,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.KEYVAL_NUM Function
 
@@ -68600,7 +67036,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.KEYVAL_VC2 Function
 
@@ -68639,7 +67074,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.LOCK_ACCOUNT Procedure
 
@@ -68688,7 +67122,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.PASSWORD_FIRST_USE_OCCURRED Function
 
@@ -68737,7 +67170,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.PREPARE_URL Function
 
@@ -68798,7 +67230,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.PRN Procedure
 
@@ -68850,60 +67281,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.PUBLIC_CHECK_AUTHORIZATION Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PUBLIC_CHECK_AUTHORIZATION-Function-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.PUBLIC_CHECK_AUTHORIZATION` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.PUBLIC_CHECK_AUTHORIZATION (
-    p_security_scheme    IN    VARCHAR2 )
-RETURN BOOLEAN;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_security_scheme` | The name of the authorization scheme that determines if the user passes the security check. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result BOOLEAN;
-begin
-    l_result := apex_util.PUBLIC_CHECK_AUTHORIZATION(
-        p_security_scheme => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.PURGE_REGIONS_BY_APP Procedure
 
@@ -68952,7 +67329,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.PURGE_REGIONS_BY_NAME Procedure
 
@@ -69007,7 +67383,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.PURGE_REGIONS_BY_PAGE Procedure
 
@@ -69059,7 +67434,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.REDIRECT_URL Procedure
 
@@ -69111,7 +67485,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.REMOVE_PREFERENCE Procedure
 
@@ -69163,7 +67536,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.REMOVE_SORT_PREFERENCES Procedure
 
@@ -69212,7 +67584,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.REMOVE_USER Procedure Signature 1
 
@@ -69261,7 +67632,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.REMOVE_USER Procedure Signature 2
 
@@ -69310,7 +67680,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.REPLY_TO_FEEDBACK Procedure
 
@@ -69377,51 +67746,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.RESET_AUTHORIZATIONS Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_AUTHORIZATIONS-Procedure-DEPRECATED.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.RESET_AUTHORIZATIONS` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.RESET_AUTHORIZATIONS;
-```
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.RESET_AUTHORIZATIONS;
-end;
-/
-```
----
 
 ### APEX_UTIL.RESET_PASSWORD Procedure
 
@@ -69479,7 +67803,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.RESET_PW Procedure
 
@@ -69531,7 +67854,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SAVEKEY_NUM Function
 
@@ -69580,7 +67902,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SAVEKEY_VC2 Function
 
@@ -69629,125 +67950,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.SET_APP_BUILD_STATUS Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_APP_BUILD_STATUS_Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.SET_APP_BUILD_STATUS` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.SET_APP_BUILD_STATUS (
-    p_application_id  IN NUMBER,
-    p_build_status    IN VARCHAR2 )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The ID of the application. |
-| `p_build_status` | The new build status of the application. Values include: RUN_ONLY - The application can be run but cannot be edited by developers. RUN_AND_BUILD - The application can be run and can also be edited by developers. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.SET_APP_BUILD_STATUS(
-        p_application_id => 1,
-        p_build_status => 'EXAMPLE'
-    );
-end;
-/
-```
----
-
-### APEX_UTIL.SET_APPLICATION_STATUS Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_APPLICATION_STATUS-Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.SET_APPLICATION_STATUS` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.SET_APPLICATION_STATUS (
-   p_application_id        IN NUMBER,
-   p_application_status    IN VARCHAR2,
-   p_unavailable_value     IN VARCHAR2,
-   p_restricted_user_list  IN VARCHAR2 )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The Application ID. |
-| `p_application_status` | New application status. Values include: AVAILABLE - Application is available with no restrictions. AVAILABLE_W_EDIT_LINK - Application is available with no restrictions. Developer Toolbar shown to developers. DEVELOPERS_ONLY - Application only available to developers. RESTRICTED_ACCESS - Application only available to users in p_restricted_user_list . UNAVAILABLE - Application unavailable. Message shown in p_unavailable_value . UNAVAILABLE_PLSQL - Application unavailable. Message shown from PL/SQL block in p_unavailable_value . UNAVAILABLE_URL - Application unavailable. Redirected to URL provided in p_unavailable_value . |
-| `p_unavailable_value` | Value used when application is unavailable. This value has different semantics dependent upon value for p_application_status . |
-| `p_restricted_user_list` | Comma separated list of users permitted to access application, when p_application_status = RESTRICTED_ACCESS . |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.SET_APPLICATION_STATUS(
-        p_application_id => 1,
-        p_application_status => 'EXAMPLE',
-        p_unavailable_value => 'EXAMPLE',
-        p_restricted_user_list => 'USER'
-    );
-end;
-/
-```
----
 
 ### APEX_UTIL.SET_ATTRIBUTE Procedure
 
@@ -69802,7 +68004,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_AUTHENTICATION_RESULT Procedure
 
@@ -69851,122 +68052,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.SET_BUILD_OPTION_STATUS Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_BUILD_OPTION_STATUS-Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.SET_BUILD_OPTION_STATUS` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.SET_BUILD_OPTION_STATUS (
-    p_application_id IN NUMBER,
-    p_id             IN NUMBER,
-    p_build_status   IN VARCHAR2 )
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The ID of the application that owns the build option under shared components. |
-| `p_id` | The ID of the build option in the application. |
-| `p_build _status` | The new status of the build option. Possible values are INCLUDE , EXCLUDE both upper case. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.SET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_id => 1,
-        p_build_status => 'EXAMPLE'
-    );
-end;
-/
-```
----
-
-### APEX_UTIL.SET_CURRENT_THEME_STYLE Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_CURRENT_THEME_STYLE-Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.SET_CURRENT_THEME_STYLE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.SET_CURRENT_THEME_STYLE(
-    p_theme_number   IN NUMBER,
-    p_theme_style_id IN NUMBER );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_theme_number` | The current theme number of the application. This can be retrieved from APEX_APPLICATION_THEMES view. |
-| `p_theme_style_id` | The numeric ID of theme style. You can get available theme styles for an application from APEX_APPLICATION_THEME_STYLES view. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.SET_CURRENT_THEME_STYLE(
-        p_theme_number => 1,
-        p_theme_style_id => 1
-    );
-end;
-/
-```
----
 
 ### APEX_UTIL.SET_CUSTOM_AUTH_STATUS Procedure
 
@@ -70015,7 +68100,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_EDITION Procedure
 
@@ -70064,7 +68148,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_EMAIL Procedure
 
@@ -70109,7 +68192,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_FIRST_NAME Procedure
 
@@ -70161,63 +68243,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.SET_GLOBAL_NOTIFICATION Procedure (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_GLOBAL_NOTIFICATION-Procedure.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.SET_GLOBAL_NOTIFICATION` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.SET_GLOBAL_NOTIFICATION (
-   p_application_id              IN NUMBER,
-   p_global_notification_message IN VARCHAR2 );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_application_id` | The Application ID. |
-| `p_global_notification_message` | Text string to be used for the global notification message. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_util.SET_GLOBAL_NOTIFICATION(
-        p_application_id => 1,
-        p_global_notification_message => to_clob('Example text')
-    );
-end;
-/
-```
----
 
 ### APEX_UTIL.SET_GROUP_GROUP_GRANTS Procedure
 
@@ -70269,7 +68294,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_GROUP_USER_GRANTS Procedure
 
@@ -70321,7 +68345,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_LAST_NAME Procedure
 
@@ -70373,7 +68396,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_PARSING_SCHEMA_FOR _REQUEST Procedure
 
@@ -70422,7 +68444,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_PREFERENCE Procedure
 
@@ -70477,7 +68498,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SECURITY_GROUP_ID Procedure
 
@@ -70496,7 +68516,7 @@ Use this page when code needs the `APEX_UTIL.SET_SECURITY_GROUP_ID` procedure. C
 #### Signature
 
 ```sql
-APEX_UTIL.SET_SECURITY_GROUP_ID (
+APEX_UTIL.SET_SECURITY_GROUP_ID ( 
     p_security_group_id  IN NUMBER);
 ```
 
@@ -70526,7 +68546,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_HIGH_CONTRAST_OFF Procedure
 
@@ -70566,7 +68585,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_HIGH_CONTRAST_ON Procedure
 
@@ -70606,7 +68624,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_LANG Procedure
 
@@ -70655,7 +68672,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_LIFETIME_SECONDS Procedure
 
@@ -70707,7 +68723,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_MAX_IDLE_SECONDS Procedure
 
@@ -70759,7 +68774,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_SCREEN_READER_OFF Procedure
 
@@ -70799,7 +68813,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_SCREEN_READER_ON Procedure
 
@@ -70839,7 +68852,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_STATE Procedure
 
@@ -70894,7 +68906,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_TERRITORY Procedure
 
@@ -70943,7 +68954,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_SESSION_TIME_ZONE Procedure
 
@@ -70992,7 +69002,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_USERNAME Procedure
 
@@ -71044,7 +69053,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SET_WORKSPACE Procedure
 
@@ -71093,7 +69101,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SHOW_HIGH_CONTRAST_MODE_TOGGLE Procedure
 
@@ -71145,7 +69152,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SHOW_SCREEN_READER_MODE_TOGGLE Procedure
 
@@ -71197,63 +69203,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.STRING_TO_TABLE Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRING_TO_TABLE-Function.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.STRING_TO_TABLE` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.STRING_TO_TABLE (
-    p_string       IN VARCHAR2,
-    p_separator    IN VARCHAR2 DEFAULT ':' )
-    RETURN APEX_APPLICATION_GLOBAL.VC_ARR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_string` | String to be converted into a PL/SQL table of type APEX_APPLICATION_GLOBAL.VC_ARR2 . |
-| `p_separator` | String separator. The default is a colon. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result APEX_APPLICATION_GLOBAL.VC_ARR2;
-begin
-    l_result := apex_util.STRING_TO_TABLE(
-        p_string => 'EXAMPLE',
-        p_separator => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.STRONG_PASSWORD_CHECK Procedure
 
@@ -71347,7 +69296,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.STRONG_PASSWORD_VALIDATION Function
 
@@ -71405,7 +69353,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SUBMIT_FEEDBACK Procedure
 
@@ -71526,7 +69473,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.SUBMIT_FEEDBACK_FOLLOWUP Procedure
 
@@ -71581,63 +69527,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.TABLE_TO_STRING Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TABLE_TO_STRING-Function.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.TABLE_TO_STRING` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.TABLE_TO_STRING (
-    p_table     IN      apex_application_global.vc_arr2,
-    p_string    IN      VARCHAR2 DEFAULT ':' )
-RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_string` | String separator. Default separator is a colon (:). |
-| `p_table` | PL/SQL table that is to be converted into a delimited string. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_util.TABLE_TO_STRING(
-        p_table => null,
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.UNEXPIRE_END_USER_ACCOUNT Procedure
 
@@ -71686,7 +69575,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.UNEXPIRE_WORKSPACE_ACCOUNT Procedure
 
@@ -71735,7 +69623,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_UTIL.UNLOCK_ACCOUNT Procedure
 
@@ -71784,60 +69671,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_UTIL.URL_ENCODE Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/URL_ENCODE-Function.html)
-
-Parent package: APEX_UTIL
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_UTIL.URL_ENCODE` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_UTIL.URL_ENCODE (
-    p_url   IN    VARCHAR2)
-    RETURN VARCHAR2;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_url` | The string to be encoded. |
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_util.URL_ENCODE(
-        p_url => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_UTIL.WORKSPACE_ACCOUNT_DAYS_LEFT Function
 
@@ -71886,7 +69719,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_WEB_SERVICE
 
@@ -72033,7 +69865,7 @@ end;
 /
 ```
 
-Use the member detail sections for exact multipart signatures and required headers.
+Use the local detail pages for exact multipart signatures and required headers.
 
 ### Response Parsing
 
@@ -72065,11 +69897,51 @@ For XML/SOAP responses, use the parse helpers or XML DB APIs, depending on the r
 - Validate response status and payload before using external data.
 - Use network ACLs and wallet/certificate setup appropriate for the database environment.
 - For modeled REST Data Sources, consider `APEX_EXEC` instead of hand-built HTTP calls.
----
 
-### Member Details: APEX_WEB_SERVICE
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| About the APEX_WEB_SERVICE API | about | [local](APEX_WEB_SERVICE/About_the_APEX_WEB_SERVICE_API.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-the-APEX_WEB_SERVICE-API.html) |
+| Invoking a SOAP-style Web Service | topic | [local](APEX_WEB_SERVICE/Invoking_a_SOAP-style_Web_Service.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Invoking-a-SOAP-Style-Web-Service.html) |
+| Invoking a RESTful-style Web Service | topic | [local](APEX_WEB_SERVICE/Invoking_a_RESTful-style_Web_Service.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Invoking-a-RESTful-Style-Web-Service.html) |
+| Setting Cookies and HTTP Headers | topic | [local](APEX_WEB_SERVICE/Setting_Cookies_and_HTTP_Headers.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Setting-Cookies-and-HTTP-Headers.html) |
+| Retrieving Cookies and HTTP Headers | topic | [local](APEX_WEB_SERVICE/Retrieving_Cookies_and_HTTP_Headers.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Retrieving-Cookies-and-HTTP-Headers.html) |
+| About Web Credentials and APEX_WEB_SERVICE | about | [local](APEX_WEB_SERVICE/About_Web_Credentials_and_APEX_WEB_SERVICE.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/about-web-credentials-APEX_WEB_SERVICE.html) |
+| Data Types | data types | [local](APEX_WEB_SERVICE/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WEB_SERVICE.Data-Types.html) |
+| Global Variables | topic | [local](APEX_WEB_SERVICE/Global_Variables.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WEB_SERVICE.Global-Variables.html) |
+| APPEND_TO_MULTIPART Procedure Signature 1 | procedure | [local](APEX_WEB_SERVICE/APPEND_TO_MULTIPART_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WEB_SERVICE.APPEND_TO_MULTIPART-Procedure-1.html) |
+| APPEND_TO_MULTIPART Procedure Signature 2 | procedure | [local](APEX_WEB_SERVICE/APPEND_TO_MULTIPART_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WEB_SERVICE.APPEND_TO_MULTIPART-Procedure-2.html) |
+| BLOB2CLOBBASE64 Function | function | [local](APEX_WEB_SERVICE/BLOB2CLOBBASE64_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/BLOB2CLOBBASE64-Function.html) |
+| CLEAR_REQUEST_COOKIES Procedure | procedure | [local](APEX_WEB_SERVICE/CLEAR_REQUEST_COOKIES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_REQUEST_COOKIES-Procedure.html) |
+| CLEAR_REQUEST_HEADERS Procedure | procedure | [local](APEX_WEB_SERVICE/CLEAR_REQUEST_HEADERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLEAR_REQUEST_HEADERS-Procedure.html) |
+| CLOBBASE642BLOB Function | function | [local](APEX_WEB_SERVICE/CLOBBASE642BLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLOBBASE642BLOB-Function.html) |
+| GENERATE_REQUEST_BODY Function | function | [local](APEX_WEB_SERVICE/GENERATE_REQUEST_BODY_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GENERATE_REQUEST_BODY-Function.html) |
+| GET_REQUEST_HEADER Function | function | [local](APEX_WEB_SERVICE/GET_REQUEST_HEADER_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_REQUEST_HEADER-Function.html) |
+| MAKE_REQUEST Function Signature 1 | function | [local](APEX_WEB_SERVICE/MAKE_REQUEST_Function_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REQUEST-Function.html) |
+| MAKE_REQUEST Function Signature 2 | function | [local](APEX_WEB_SERVICE/MAKE_REQUEST_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REQUEST-Function-Signature-2.html) |
+| MAKE_REQUEST Procedure Signature 1 | procedure | [local](APEX_WEB_SERVICE/MAKE_REQUEST_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REQUEST-Procedure.html) |
+| MAKE_REQUEST Procedure Signature 2 | procedure | [local](APEX_WEB_SERVICE/MAKE_REQUEST_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REQUEST-Procedure-Signature-2.html) |
+| MAKE_REST_REQUEST Function | function | [local](APEX_WEB_SERVICE/MAKE_REST_REQUEST_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REST_REQUEST-Function.html) |
+| MAKE_REST_REQUEST_B Function | function | [local](APEX_WEB_SERVICE/MAKE_REST_REQUEST_B_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MAKE_REST_REQUEST_B-Function.html) |
+| OAUTH_AUTHENTICATE Procedure Signature 1 | procedure | [local](APEX_WEB_SERVICE/OAUTH_AUTHENTICATE_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OAUTH_AUTHENTICATE-Procedure-Signature-1.html) |
+| OAUTH_AUTHENTICATE Procedure Signature 2 (Deprecated) | procedure | [local](APEX_WEB_SERVICE/OAUTH_AUTHENTICATE_Procedure_Signature_2_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OAUTH_AUTHENTICATE-Procedure-Signature-2.html) |
+| OAUTH_AUTHENTICATE_CREDENTIAL Procedure | procedure | [local](APEX_WEB_SERVICE/OAUTH_AUTHENTICATE_CREDENTIAL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OAUTH_AUTHENTICATE_CREDENTIAL.html) |
+| OAUTH_GET_LAST_TOKEN Function | function | [local](APEX_WEB_SERVICE/OAUTH_GET_LAST_TOKEN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OAUTH_GET_LAST_TOKEN-Function.html) |
+| OAUTH_SET_TOKEN Procedure | procedure | [local](APEX_WEB_SERVICE/OAUTH_SET_TOKEN_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OAUTH_SET_TOKEN-Procedure.html) |
+| PARSE_RESPONSE Function | function | [local](APEX_WEB_SERVICE/PARSE_RESPONSE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE_RESPONSE-Function.html) |
+| PARSE_RESPONSE_CLOB Function | function | [local](APEX_WEB_SERVICE/PARSE_RESPONSE_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE_RESPONSE_CLOB-Function.html) |
+| PARSE_XML Function | function | [local](APEX_WEB_SERVICE/PARSE_XML_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE_XML-Function.html) |
+| PARSE_XML_CLOB Function | function | [local](APEX_WEB_SERVICE/PARSE_XML_CLOB_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PARSE_XML_CLOB-Function.html) |
+| REMOVE_REQUEST_HEADER Procedure | procedure | [local](APEX_WEB_SERVICE/REMOVE_REQUEST_HEADER_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_REQUEST_HEADER-Procedure.html) |
+| SET_REQUEST_ECID_CONTEXT Procedure | procedure | [local](APEX_WEB_SERVICE/SET_REQUEST_ECID_CONTEXT_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_REQUEST_ECID_CONTEXT-Procedure.html) |
+| SET_REQUEST_HEADERS Procedure | procedure | [local](APEX_WEB_SERVICE/SET_REQUEST_HEADERS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_REQUEST_HEADERS-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_WEB_SERVICE.About the APEX_WEB_SERVICE API
 
@@ -72094,7 +69966,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.About the APEX_WEB_SERVICE A
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.Invoking a SOAP-style Web Service
 
@@ -72119,7 +69990,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.Invoking a SOAP-style Web Se
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.Invoking a RESTful-style Web Service
 
@@ -72144,7 +70014,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.Invoking a RESTful-style Web
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.Setting Cookies and HTTP Headers
 
@@ -72169,7 +70038,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.Setting Cookies and HTTP Hea
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.Retrieving Cookies and HTTP Headers
 
@@ -72194,7 +70062,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.Retrieving Cookies and HTTP 
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.About Web Credentials and APEX_WEB_SERVICE
 
@@ -72219,7 +70086,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.About Web Credentials and AP
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.Data Types
 
@@ -72244,7 +70110,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.Data Types` data types. Conf
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.Global Variables
 
@@ -72269,7 +70134,6 @@ Use this page when code needs the `APEX_WEB_SERVICE.Global Variables` topic. Con
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WEB_SERVICE.APPEND_TO_MULTIPART Procedure Signature 1
 
@@ -72330,7 +70194,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.APPEND_TO_MULTIPART Procedure Signature 2
 
@@ -72391,7 +70254,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.BLOB2CLOBBASE64 Function
 
@@ -72411,7 +70273,7 @@ Use this page when code needs the `APEX_WEB_SERVICE.BLOB2CLOBBASE64` function. C
 
 ```sql
 APEX_WEB_SERVICE.BLOB2CLOBBASE64 (
-    p_blob      IN BLOB,
+    p_blob      IN BLOB,    
     p_newlines  IN VARCHAR2 DEFAULT 'Y',
     p_padding   IN VARCHAR2 DEFAULT 'N' )
 RETURN CLOB;
@@ -72446,7 +70308,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.CLEAR_REQUEST_COOKIES Procedure
 
@@ -72486,7 +70347,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.CLEAR_REQUEST_HEADERS Procedure
 
@@ -72526,7 +70386,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.CLOBBASE642BLOB Function
 
@@ -72575,7 +70434,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.GENERATE_REQUEST_BODY Function
 
@@ -72627,7 +70485,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.GET_REQUEST_HEADER Function
 
@@ -72676,7 +70533,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.MAKE_REQUEST Function Signature 1
 
@@ -72762,7 +70618,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.MAKE_REQUEST Function Signature 2
 
@@ -72850,7 +70705,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.MAKE_REQUEST Procedure Signature 1
 
@@ -72935,7 +70789,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.MAKE_REQUEST Procedure Signature 2
 
@@ -73022,7 +70875,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.MAKE_REST_REQUEST Function
 
@@ -73121,7 +70973,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.MAKE_REST_REQUEST_B Function
 
@@ -73155,8 +71006,8 @@ APEX_WEB_SERVICE.MAKE_REST_REQUEST_B (
     p_parm_value            IN  apex_application_global.vc_arr2
                                          DEFAULT empty_vc_arr,
     p_wallet_path           IN  VARCHAR2 DEFAULT NULL,
-    p_wallet_pwd            IN  VARCHAR2 DEFAULT NULL,
-    p_https_host            IN  VARCHAR2 DEFAULT NULL,
+    p_wallet_pwd            IN  VARCHAR2 DEFAULT NULL, 
+    p_https_host            IN  VARCHAR2 DEFAULT NULL, 
     p_credential_static_id  IN  VARCHAR2 DEFAULT NULL,
     p_token_url             IN  VARCHAR2 DEFAULT NULL,
     p_oauth_scope           IN  VARCHAR2 DEFAULT NULL )
@@ -73220,7 +71071,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.OAUTH_AUTHENTICATE Procedure Signature 1
 
@@ -73296,81 +71146,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_WEB_SERVICE.OAUTH_AUTHENTICATE Procedure Signature 2 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/OAUTH_AUTHENTICATE-Procedure-Signature-2.html)
-
-Parent package: APEX_WEB_SERVICE
-
-#### Purpose
-
-Note:
-
-#### When To Use
-
-Use this page when code needs the `APEX_WEB_SERVICE.OAUTH_AUTHENTICATE` procedure. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_WEB_SERVICE.OAUTH_AUTHENTICATE(
-    p_token_url              IN VARCHAR2,
-    p_credential_static_id   IN VARCHAR2,
-    p_proxy_override         IN VARCHAR2 DEFAULT NULL,
-    p_transfer_timeout       IN NUMBER   DEFAULT 180,
-    p_wallet_path            IN VARCHAR2
-    p_wallet_pwd             IN VARCHAR2
-    p_https_host             IN VARCHAR2 DEFAULT NULL,
-    p_scope                  IN VARCHAR2 DEFAULT NULL );
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_token_url` | The url endpoint of the OAuth token service. |
-| `p_credential_static_id` | The name of the Web Credentials to be used. Web Credentials are configured in Workspace Utilities. |
-| `p_proxy_override` | The proxy to use for the request. |
-| `p_transfer_timeout` | The amount of time in seconds to wait for a response. |
-| `p_wallet_path` | The filesystem path to a wallet if request is https. For example: file:/usr/home/oracle/WALLETS |
-| `p_wallet_pwd` | The password to access the wallet. |
-| `p_https_host` | The host name to be matched against the common name (CN) of the remote server's certificate for an HTTPS request. |
-| `p_scope` | The OAuth scope to be used for this request. APEX uses or requests an access token with the specified scope. Separate multiple scopes with blanks. |
-
-#### Returns
-
-This is a procedure and does not return a value.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-begin
-    apex_web_service.OAUTH_AUTHENTICATE(
-        p_token_url => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_proxy_override => 'EXAMPLE',
-        p_transfer_timeout => 1,
-        p_wallet_path => 'EXAMPLE',
-        p_wallet_pwd => 'EXAMPLE',
-        p_https_host => 'EXAMPLE',
-        p_scope => 'EXAMPLE'
-    );
-end;
-/
-```
----
 
 ### APEX_WEB_SERVICE.OAUTH_AUTHENTICATE_CREDENTIAL Procedure
 
@@ -73390,7 +71165,7 @@ Use this page when code needs the `APEX_WEB_SERVICE.OAUTH_AUTHENTICATE_CREDENTIA
 
 ```sql
 APEX_WEB_SERVICE.OAUTH_AUTHENTICATE_CREDENTIAL (
-    p_token_url              IN VARCHAR2,
+    p_token_url              IN VARCHAR2,    
     p_credential_static_id   IN VARCHAR2,
     p_proxy_override         IN VARCHAR2 DEFAULT NULL,
     p_transfer_timeout       IN NUMBER   DEFAULT 180,
@@ -73440,7 +71215,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.OAUTH_GET_LAST_TOKEN Function
 
@@ -73483,7 +71257,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.OAUTH_SET_TOKEN Procedure
 
@@ -73535,7 +71308,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.PARSE_RESPONSE Function
 
@@ -73557,7 +71329,7 @@ Use this page when code needs the `APEX_WEB_SERVICE.PARSE_RESPONSE` function. Co
 APEX_WEB_SERVICE.PARSE_RESPONSE (
     p_collection_name   IN VARCHAR2,
     p_xpath             IN VARCHAR2,
-    p_ns                IN VARCHAR2 DEFAULT NULL )
+    p_ns                IN VARCHAR2 DEFAULT NULL ) 
 RETURN VARCHAR2;
 ```
 
@@ -73590,7 +71362,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.PARSE_RESPONSE_CLOB Function
 
@@ -73612,7 +71383,7 @@ Use this page when code needs the `APEX_WEB_SERVICE.PARSE_RESPONSE_CLOB` functio
 APEX_WEB_SERVICE.PARSE_RESPONSE_CLOB (
     p_collection_name   IN VARCHAR2,
     p_xpath             IN VARCHAR2,
-    p_ns                IN VARCHAR2 DEFAULT NULL )
+    p_ns                IN VARCHAR2 DEFAULT NULL ) 
 RETURN CLOB;
 ```
 
@@ -73645,7 +71416,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.PARSE_XML Function
 
@@ -73667,7 +71437,7 @@ Use this page when code needs the `APEX_WEB_SERVICE.PARSE_XML` function. Confirm
 APEX_WEB_SERVICE.PARSE_XML (
     p_xml               IN XMLTYPE,
     p_xpath             IN VARCHAR2,
-    p_ns                IN VARCHAR2 DEFAULT NULL )
+    p_ns                IN VARCHAR2 DEFAULT NULL ) 
 RETURN VARCHAR2;
 ```
 
@@ -73700,7 +71470,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.PARSE_XML_CLOB Function
 
@@ -73722,7 +71491,7 @@ Use this page when code needs the `APEX_WEB_SERVICE.PARSE_XML_CLOB` function. Co
 APEX_WEB_SERVICE.PARSE_XML_CLOB (
     p_xml               IN XMLTYPE,
     p_xpath             IN VARCHAR2,
-    p_ns                IN VARCHAR2 DEFAULT NULL )
+    p_ns                IN VARCHAR2 DEFAULT NULL ) 
 RETURN CLOB;
 ```
 
@@ -73755,7 +71524,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.REMOVE_REQUEST_HEADER Procedure
 
@@ -73804,7 +71572,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.SET_REQUEST_ECID_CONTEXT Procedure
 
@@ -73853,7 +71620,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WEB_SERVICE.SET_REQUEST_HEADERS Procedure
 
@@ -73935,7 +71701,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_WORKFLOW
 
@@ -74098,12 +71863,43 @@ Use `RETRY` for faulted workflow instances when the underlying cause is fixed. U
 - Do not expose lifecycle controls without server-side authorization.
 - Treat workflow variables as business data; validate values before updates.
 - Use `APEX_SESSION` when scripts need APEX context outside a browser request.
-- Use member detail sections below for exact type details and operation constants.
----
+- Use local member pages below for exact type details and operation constants.
 
-### Member Details: APEX_WORKFLOW
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Constants and Data Types | constants | [local](APEX_WORKFLOW/Constants_and_Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.Constants-and-Data-Types.html) |
+| CONTINUE_ACTIVITY Procedure Signature 1 | procedure | [local](APEX_WORKFLOW/CONTINUE_ACTIVITY_Procedure_Signature_1.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.CONTINUE_ACTIVITY-Procedure-Signature-1.html) |
+| CONTINUE_ACTIVITY Procedure Signature 2 | procedure | [local](APEX_WORKFLOW/CONTINUE_ACTIVITY_Procedure_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.CONTINUE_ACTIVITY-Procedure-Signature-2.html) |
+| DELETE_WORKFLOWS Procedure | procedure | [local](APEX_WORKFLOW/DELETE_WORKFLOWS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.DELETE_WORKFLOWS-Procedure.html) |
+| GET_LOV_ACTIVITY_STATE Function | function | [local](APEX_WORKFLOW/GET_LOV_ACTIVITY_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_LOV_ACTIVITY_STATE-Function.html) |
+| GET_LOV_WORKFLOW_STATE Function | function | [local](APEX_WORKFLOW/GET_LOV_WORKFLOW_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_LOV_WORKFLOW_STATE-Function.html) |
+| GET_NEXT_PURGE_TIMESTAMP Function | function | [local](APEX_WORKFLOW/GET_NEXT_PURGE_TIMESTAMP_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_NEXT_PURGE_TIMESTAMP-Function.html) |
+| GET_VARIABLE_CLOB_VALUE Function | function | [local](APEX_WORKFLOW/GET_VARIABLE_CLOB_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_VARIABLE_CLOB_VALUE-Function.html) |
+| GET_VARIABLE_VALUE Function | function | [local](APEX_WORKFLOW/GET_VARIABLE_VALUE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_VARIABLE_VALUE-Function.html) |
+| GET_WORKFLOW_STATE Function | function | [local](APEX_WORKFLOW/GET_WORKFLOW_STATE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_WORKFLOW_STATE-Function.html) |
+| GET_WORKFLOWS Function | function | [local](APEX_WORKFLOW/GET_WORKFLOWS_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.GET_WORKFLOWS-Function.html) |
+| IS_ADMIN Function | function | [local](APEX_WORKFLOW/IS_ADMIN_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.IS_ADMIN-Function.html) |
+| IS_ALLOWED Function | function | [local](APEX_WORKFLOW/IS_ALLOWED_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.IS_ALLOWED-Function.html) |
+| IS_OF_PARTICIPANT_TYPE Function | function | [local](APEX_WORKFLOW/IS_OF_PARTICIPANT_TYPE_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.IS_OF_PARTICIPANT_TYPE-Function.html) |
+| REFRESH_PARTICIPANTS Procedure | procedure | [local](APEX_WORKFLOW/REFRESH_PARTICIPANTS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.REFRESH_PARTICIPANTS-Procedure.html) |
+| REMOVE_DEVELOPMENT_INSTANCES Procedure | procedure | [local](APEX_WORKFLOW/REMOVE_DEVELOPMENT_INSTANCES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.REMOVE_DEVELOPMENT_INSTANCES-Procedure.html) |
+| RESUME Procedure | procedure | [local](APEX_WORKFLOW/RESUME_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.RESUME-Procedure.html) |
+| RETRY Procedure | procedure | [local](APEX_WORKFLOW/RETRY_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.RETRY-Procedure.html) |
+| SET_ACTIVITY_DUE_DATE Procedure | procedure | [local](APEX_WORKFLOW/SET_ACTIVITY_DUE_DATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.SET_ACTIVITY_DUE_DATE-Procedure.html) |
+| SET_LOG_LEVEL Procedure | procedure | [local](APEX_WORKFLOW/SET_LOG_LEVEL_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.SET_LOG_LEVEL-Procedure.html) |
+| START_WORKFLOW Function | function | [local](APEX_WORKFLOW/START_WORKFLOW_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.START_WORKFLOW-Function.html) |
+| SUSPEND Procedure | procedure | [local](APEX_WORKFLOW/SUSPEND_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.SUSPEND-Procedure.html) |
+| TERMINATE Procedure | procedure | [local](APEX_WORKFLOW/TERMINATE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.TERMINATE-Procedure.html) |
+| TERMINATE_FAULTED_WORKFLOWS Procedure | procedure | [local](APEX_WORKFLOW/TERMINATE_FAULTED_WORKFLOWS_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.TERMINATE_FAULTED_WORKFLOWS-Procedure.html) |
+| UPDATE_VARIABLES Procedure | procedure | [local](APEX_WORKFLOW/UPDATE_VARIABLES_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_WORKFLOW.UPDATE_VARIABLES-Procedure.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_WORKFLOW.Constants and Data Types
 
@@ -74128,7 +71924,6 @@ Use this page when code needs the `APEX_WORKFLOW.Constants and Data Types` const
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_WORKFLOW.CONTINUE_ACTIVITY Procedure Signature 1
 
@@ -74187,7 +71982,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.CONTINUE_ACTIVITY Procedure Signature 2
 
@@ -74246,7 +72040,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.DELETE_WORKFLOWS Procedure
 
@@ -74304,7 +72097,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_LOV_ACTIVITY_STATE Function
 
@@ -74348,7 +72140,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_LOV_WORKFLOW_STATE Function
 
@@ -74392,7 +72183,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_NEXT_PURGE_TIMESTAMP Function
 
@@ -74436,7 +72226,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_VARIABLE_CLOB_VALUE Function
 
@@ -74492,7 +72281,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_VARIABLE_VALUE Function
 
@@ -74548,7 +72336,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_WORKFLOW_STATE Function
 
@@ -74601,7 +72388,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.GET_WORKFLOWS Function
 
@@ -74621,7 +72407,7 @@ Use this page when code needs the `APEX_WORKFLOW.GET_WORKFLOWS` function. Confir
 
 ```sql
 APEX_WORKFLOW.GET_WORKFLOWS (
-    p_context            IN VARCHAR2 DEFAULT
+    p_context            IN VARCHAR2 DEFAULT 
                                    apex_workflow_api.c_context_my_workflows,
     p_user               IN VARCHAR2 DEFAULT apex_security.g_user,
     p_workflow_id        IN NUMBER   DEFAULT NULL,
@@ -74664,7 +72450,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.IS_ADMIN Function
 
@@ -74720,7 +72505,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.IS_ALLOWED Function
 
@@ -74779,7 +72563,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.IS_OF_PARTICIPANT_TYPE Function
 
@@ -74838,7 +72621,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.REFRESH_PARTICIPANTS Procedure
 
@@ -74887,7 +72669,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.REMOVE_DEVELOPMENT_INSTANCES Procedure
 
@@ -74939,7 +72720,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.RESUME Procedure
 
@@ -74991,7 +72771,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.RETRY Procedure
 
@@ -75040,7 +72819,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.SET_ACTIVITY_DUE_DATE Procedure
 
@@ -75095,7 +72873,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.SET_LOG_LEVEL Procedure
 
@@ -75147,7 +72924,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.START_WORKFLOW Function
 
@@ -75217,7 +72993,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.SUSPEND Procedure
 
@@ -75266,7 +73041,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.TERMINATE Procedure
 
@@ -75315,7 +73089,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.TERMINATE_FAULTED_WORKFLOWS Procedure
 
@@ -75364,7 +73137,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_WORKFLOW.UPDATE_VARIABLES Procedure
 
@@ -75416,7 +73188,6 @@ begin
 end;
 /
 ```
----
 
 ## APEX_ZIP
 
@@ -75532,11 +73303,24 @@ Check the local member page for the exact current `GET_FILE_CONTENT` signature.
 - Enforce file size and entry count limits.
 - Avoid processing untrusted ZIPs without validation.
 - Call `FINISH` after adding files before storing, downloading, or attaching the ZIP.
----
 
-### Member Details: APEX_ZIP
+<!-- BEGIN GENERATED MEMBER LINKS -->
 
----
+### Local Member Detail Pages
+
+Generated navigation for LLM retrieval. Use the local detail page first, then follow the Oracle source link when exact wording or edge-case behavior must be verified.
+
+| Member | Kind | Local detail | Source |
+| --- | --- | --- | --- |
+| Data Types | data types | [local](APEX_ZIP/Data_Types.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.Data-Types.html) |
+| ADD_FILE Procedure | procedure | [local](APEX_ZIP/ADD_FILE_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.ADD_FILE-Procedure-2.html) |
+| FINISH Procedure | procedure | [local](APEX_ZIP/FINISH_Procedure.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.FINISH-Procedure.html) |
+| GET_DIR_ENTRIES Function | function | [local](APEX_ZIP/GET_DIR_ENTRIES_Function.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.GET_DIR_ENTRIES-Function.html) |
+| GET_FILE_CONTENT Function Signature 1 (Deprecated) | function | [local](APEX_ZIP/GET_FILE_CONTENT_Function_Signature_1_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.GET_FILE_CONTENT-Function-Signature-1.html) |
+| GET_FILE_CONTENT Function Signature 2 | function | [local](APEX_ZIP/GET_FILE_CONTENT_Function_Signature_2.md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.GET_FILE_CONTENT-Function-Signature-2.html) |
+| GET_FILES Function (Deprecated) | function | [local](APEX_ZIP/GET_FILES_Function_(Deprecated).md) | [Oracle](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.GET_FILES-Function.html) |
+
+<!-- END GENERATED MEMBER LINKS -->
 
 ### APEX_ZIP.Data Types
 
@@ -75561,7 +73345,6 @@ Use this page when code needs the `APEX_ZIP.Data Types` data types. Confirm secu
 #### Example
 
 This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
----
 
 ### APEX_ZIP.ADD_FILE Procedure
 
@@ -75616,7 +73399,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ZIP.FINISH Procedure
 
@@ -75665,7 +73447,6 @@ begin
 end;
 /
 ```
----
 
 ### APEX_ZIP.GET_DIR_ENTRIES Function
 
@@ -75687,7 +73468,7 @@ Use this page when code needs the `APEX_ZIP.GET_DIR_ENTRIES` function. Confirm s
 APEX_ZIP.GET_DIR_ENTRIES (
     p_zipped_blob IN BLOB,
     p_only_files  IN BOOLEAN  DEFAULT TRUE,
-    p_encoding    IN VARCHAR2 DEFAULT NULL )
+    p_encoding    IN VARCHAR2 DEFAULT NULL ) 
     RETURN t_dir_entries;
 ```
 
@@ -75724,70 +73505,6 @@ begin
 end;
 /
 ```
----
-
-### APEX_ZIP.GET_FILE_CONTENT Function Signature 1 (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.GET_FILE_CONTENT-Function-Signature-1.html)
-
-Parent package: APEX_ZIP
-
-#### Purpose
-
-Caution:
-
-#### When To Use
-
-Use this page when code needs the `APEX_ZIP.GET_FILE_CONTENT` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_ZIP.GET_FILE_CONTENT (
-    p_zipped_blob IN BLOB,
-    p_file_name   IN VARCHAR2,
-    p_encoding    IN VARCHAR2 DEFAULT NULL )
-RETURN BLOB;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_zipped_blob` | This is the BLOB containing the zip file. |
-| `p_file_name` | File name, including path, of a file located in the zip file. |
-| `p_encoding` | Encoding used to zip the file. |
-
-#### Returns
-
-Return Description BLOB BLOB of the file specified in p_file_name .
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result BLOB;
-begin
-    l_result := apex_zip.GET_FILE_CONTENT(
-        p_zipped_blob => null,
-        p_file_name => 'EXAMPLE',
-        p_encoding => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
 
 ### APEX_ZIP.GET_FILE_CONTENT Function Signature 2
 
@@ -75838,69 +73555,6 @@ begin
     l_result := apex_zip.GET_FILE_CONTENT(
         p_zipped_blob => null,
         p_dir_entry => null
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
----
-
-### APEX_ZIP.GET_FILES Function (Deprecated)
-
-Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ZIP.GET_FILES-Function.html)
-
-Parent package: APEX_ZIP
-
-#### Purpose
-
-Caution:
-
-#### When To Use
-
-Use this page when code needs the `APEX_ZIP.GET_FILES` function. Confirm security, workspace, and session requirements for your calling context.
-
-#### Deprecation
-
-This member is marked deprecated in the APEX 26.1 documentation. Prefer the documented replacement when available.
-
-#### Signature
-
-```sql
-APEX_ZIP.GET_FILES (
-    p_zipped_blob IN BLOB,
-    p_only_files  IN BOOLEAN DEFAULT TRUE,
-    p_encoding    IN VARCHAR2 DEFAULT NULL )
-RETURN t_files;
-```
-
-#### Parameters
-
-| Parameter | Description |
-| --- | --- |
-| `p_zipped_blob` | This is the zip file containing the BLOB. |
-| `p_only_files` | If set to TRUE , empty directory entries are not included in the returned array. Otherwise, set to FALSE to include empty directory entries. |
-| `p_encoding` | This is the encoding used to zip the file. |
-
-#### Returns
-
-Return Description t_files A table of file names and path. See " Data Types " for more details.
-
-#### Important Notes
-
-- Most APEX APIs assume the correct APEX workspace, application, and session context.
-- Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
-- Use the source link for exact behavior, defaults, and version-specific caveats.
-
-#### Simple Example
-
-```sql
-declare
-    l_result T_FILES;
-begin
-    l_result := apex_zip.GET_FILES(
-        p_zipped_blob => null,
-        p_only_files => true,
-        p_encoding => 'EXAMPLE'
     );
     sys.dbms_output.put_line('Result captured.');
 end;

@@ -41,9 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.RESET_COLLECTION_CHANGED(
-        p_collection_name => 'EXAMPLE'
-    );
+    apex_collection.reset_collection_changed('ORDER_LINES');
 end;
 /
 ```

@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_DATASET_IMPORT_MODE(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_mode => null
+    apex_application_install.set_dataset_import_mode(
+        p_static_id => 'SALES_SAMPLE',
+        p_mode      => apex_application_install.c_dataset_overwrite
     );
 end;
 /
 ```
-

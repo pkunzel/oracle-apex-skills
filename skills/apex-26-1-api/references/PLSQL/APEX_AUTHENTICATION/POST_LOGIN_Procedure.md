@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authentication.POST_LOGIN(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
+    apex_authentication.post_login(
+        p_username           => :P101_USERNAME,
+        p_password           => :P101_EXTERNAL_TOKEN,
         p_uppercase_username => true
     );
 end;
 /
 ```
-

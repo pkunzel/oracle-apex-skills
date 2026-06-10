@@ -106,8 +106,8 @@ Assuming a build option static ID `FEATURE_AI_CHAT` exists in app `100`:
 begin
     apex_application_admin.set_build_option_status(
         p_application_id         => 100,
-        p_build_option_static_id => 'FEATURE_AI_CHAT',
-        p_build_status           => 'INCLUDE');
+        p_static_id              => 'FEATURE_AI_CHAT',
+        p_build_status           => apex_application_admin.c_build_option_status_include);
 end;
 /
 ```
@@ -119,12 +119,12 @@ Use the ID-based signature when automation has a component ID from APEX metadata
 ```sql
 begin
     apex_application_admin.set_application_version(
-        p_application_id      => 100,
-        p_application_version => '2026.06.09');
+        p_application_id => 100,
+        p_version        => '2026.06.10');
 
     apex_application_admin.set_global_notification(
-        p_application_id      => 100,
-        p_global_notification => 'New release deployed.');
+        p_application_id              => 100,
+        p_global_notification_message => 'New release deployed.');
 end;
 /
 ```

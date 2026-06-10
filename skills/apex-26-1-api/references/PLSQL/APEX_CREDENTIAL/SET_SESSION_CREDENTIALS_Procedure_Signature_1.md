@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_username => 'USER',
-        p_password => 'EXAMPLE'
+    apex_credential.set_session_credentials(
+        p_credential_static_id => 'USER_SUPPLIED_BASIC',
+        p_username             => :P10_USERNAME,
+        p_password             => :P10_PASSWORD
     );
 end;
 /

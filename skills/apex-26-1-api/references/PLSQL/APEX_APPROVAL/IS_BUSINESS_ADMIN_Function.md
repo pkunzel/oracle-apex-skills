@@ -44,14 +44,16 @@ TRUE if the user given by p_user is at least in one task definition configured a
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_admin boolean;
 begin
-    l_result := apex_approval.IS_BUSINESS_ADMIN(
-        p_user => 'USER',
-        p_application_id => 1
+    l_is_admin := apex_approval.is_business_admin(
+        p_user           => :APP_USER,
+        p_application_id => apex_application.g_flow_id
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_is_admin then
+        sys.dbms_output.put_line(:APP_USER || ' can administer approval tasks.');
+    end if;
 end;
 /
 ```
-

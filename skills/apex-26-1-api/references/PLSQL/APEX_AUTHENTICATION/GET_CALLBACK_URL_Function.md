@@ -49,23 +49,15 @@ APEX_AUTHENTICATION.GET_CALLBACK_URL (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_callback_url varchar2(32767);
 begin
-    l_result := apex_authentication.GET_CALLBACK_URL(
-        p_x01 => 'EXAMPLE',
-        p_x02 => 'EXAMPLE',
-        p_x03 => 'EXAMPLE',
-        p_x04 => 'EXAMPLE',
-        p_x05 => 'EXAMPLE',
-        p_x06 => 'EXAMPLE',
-        p_x07 => 'EXAMPLE',
-        p_x08 => 'EXAMPLE',
-        p_x09 => 'EXAMPLE',
-        p_x10 => 'EXAMPLE',
-        p_callback_name => 'EXAMPLE'
+    l_callback_url := apex_authentication.get_callback_url(
+        p_x01           => :APP_SESSION,
+        p_x02           => :P101_RETURN_URL,
+        p_callback_name => 'OAUTH2_CALLBACK'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.redirect_url(l_callback_url);
 end;
 /
 ```
-

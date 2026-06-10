@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_ALLOWED_URLS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_allowed_urls => 'EXAMPLE',
-        p_client_secret => 'EXAMPLE'
+    apex_credential.set_allowed_urls(
+        p_credential_static_id => 'PAYMENTS_API',
+        p_allowed_urls         => apex_t_varchar2('https://payments.example.com/'),
+        p_client_secret        => :P50_CLIENT_SECRET
     );
 end;
 /

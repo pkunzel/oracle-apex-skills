@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_OFFSET(
-        p_offset => 1
+    apex_application_install.set_offset(
+        p_offset => 100000
     );
 end;
 /
 ```
-

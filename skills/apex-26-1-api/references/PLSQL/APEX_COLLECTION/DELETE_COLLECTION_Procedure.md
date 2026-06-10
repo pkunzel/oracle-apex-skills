@@ -41,9 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_COLLECTION(
-        p_collection_name => 'EXAMPLE'
-    );
+    apex_collection.delete_collection('ORDER_LINES');
 end;
 /
 ```

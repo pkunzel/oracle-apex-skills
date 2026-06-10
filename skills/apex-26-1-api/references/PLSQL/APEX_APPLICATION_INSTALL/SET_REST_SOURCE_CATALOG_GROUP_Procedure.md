@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_REST_SOURCE_CATALOG_GROUP(
-        p_name => 'EXAMPLE'
+    apex_application_install.set_rest_source_catalog_group(
+        p_name => 'Sales APIs'
     );
 end;
 /
 ```
-

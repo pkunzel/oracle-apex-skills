@@ -44,13 +44,14 @@ This function returns t_execution record with current status information for thi
 
 ```sql
 declare
-    l_result T_EXECUTION;
+    l_execution apex_background_process.t_execution;
 begin
-    l_result := apex_background_process.GET_EXECUTION(
-        p_application_id => 1,
-        p_execution_id => 1
+    l_execution := apex_background_process.get_execution(
+        p_application_id => apex_application.g_flow_id,
+        p_execution_id   => :P50_EXECUTION_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Background execution captured.');
 end;
 /
 ```

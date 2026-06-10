@@ -49,12 +49,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_PERSISTENT_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_client_id => 'EXAMPLE',
-        p_client_secret => 'EXAMPLE',
-        p_namespace => 'EXAMPLE',
-        p_fingerprint => 'EXAMPLE'
+    apex_credential.set_persistent_credentials(
+        p_credential_static_id => 'OCI_OBJECT_STORAGE',
+        p_client_id            => :P50_USER_OCID,
+        p_client_secret        => :P50_PRIVATE_KEY,
+        p_namespace            => :P50_TENANCY_OCID,
+        p_fingerprint          => :P50_FINGERPRINT
     );
 end;
 /

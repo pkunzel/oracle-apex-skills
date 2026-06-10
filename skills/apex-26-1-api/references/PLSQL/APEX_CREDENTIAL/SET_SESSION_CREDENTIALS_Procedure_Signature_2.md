@@ -49,12 +49,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.SET_SESSION_CREDENTIALS(
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_client_id => 'EXAMPLE',
-        p_client_secret => 'EXAMPLE',
-        p_namespace => 'EXAMPLE',
-        p_fingerprint => 'EXAMPLE'
+    apex_credential.set_session_credentials(
+        p_credential_static_id => 'OCI_OBJECT_STORAGE',
+        p_client_id            => :P10_USER_OCID,
+        p_client_secret        => :P10_PRIVATE_KEY,
+        p_namespace            => :P10_TENANCY_OCID,
+        p_fingerprint          => :P10_FINGERPRINT
     );
 end;
 /

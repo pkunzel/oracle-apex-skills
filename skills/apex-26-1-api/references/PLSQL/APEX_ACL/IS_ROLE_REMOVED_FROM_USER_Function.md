@@ -48,16 +48,18 @@ Returns TRUE when p_user_name currently has the role identified by p_role_static
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_role_removed boolean;
 begin
-    l_result := apex_acl.IS_ROLE_REMOVED_FROM_USER(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_role_static_id => 'EXAMPLE_STATIC_ID',
-        p_role_ids => 1
+    l_role_removed := apex_acl.is_role_removed_from_user(
+        p_application_id => apex_application.g_flow_id,
+        p_user_name => upper(:P10_USER_NAME),
+        p_role_static_id => 'CONTRIBUTOR',
+        p_role_ids => apex_t_number(100100, 100300)
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_role_removed then
+        apex_debug.info('Contributor role removed for %s.', :P10_USER_NAME);
+    end if;
 end;
 /
 ```
-

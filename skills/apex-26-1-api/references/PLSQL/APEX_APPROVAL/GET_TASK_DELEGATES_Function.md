@@ -42,13 +42,13 @@ A table of apex_t_temp_lov_data .
 
 ```sql
 declare
-    l_result APEX_T_TEMP_LOV_DATA;
+    l_delegates apex_t_temp_lov_data;
 begin
-    l_result := apex_approval.GET_TASK_DELEGATES(
-        p_task_id => 1
+    l_delegates := apex_approval.get_task_delegates(
+        p_task_id => :P20_TASK_ID
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Delegate rows: ' || l_delegates.count);
 end;
 /
 ```
-

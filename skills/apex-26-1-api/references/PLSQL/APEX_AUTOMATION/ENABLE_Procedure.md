@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.ENABLE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    apex_automation.enable(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
 end;
 /

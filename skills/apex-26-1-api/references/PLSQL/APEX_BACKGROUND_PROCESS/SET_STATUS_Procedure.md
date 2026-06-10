@@ -41,8 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_background_process.SET_STATUS(
-        p_message => to_clob('Example text')
+    apex_background_process.set_status(
+        p_message => 'Importing order batch ' || :P50_BATCH_ID
     );
 end;
 /

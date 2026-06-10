@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_approval.ADD_TO_HISTORY(
-        p_message => to_clob('Example text')
+    apex_approval.add_to_history(
+        p_message => 'Reviewer requested the invoice attachment.'
     );
 end;
 /
 ```
-

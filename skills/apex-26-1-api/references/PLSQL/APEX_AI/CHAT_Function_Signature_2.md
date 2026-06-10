@@ -56,20 +56,18 @@ The response for the given prompt.
 
 ```sql
 declare
-    l_result CLOB;
+    l_messages apex_ai.t_chat_messages := apex_ai.c_chat_messages;
+    l_answer   clob;
 begin
-    l_result := apex_ai.CHAT(
-        p_prompt => to_clob('Example text'),
-        p_system_prompt => to_clob('Example text'),
+    l_answer := apex_ai.chat(
+        p_prompt => to_clob('Explain why order ' || :P10_ORDER_ID || ' is delayed.'),
+        p_system_prompt => to_clob('Answer as a concise support analyst.'),
         p_service_static_id => 'MY_AI_SERVICE',
         p_temperature => 0.2,
-        p_messages => to_clob('Example text'),
-        p_tools => null,
-        p_response_handler_procedure => 'EXAMPLE',
-        p_max_tool_roundtrips => 3
+        p_messages => l_messages
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('AI response length: %s', dbms_lob.getlength(l_answer));
 end;
 /
 ```
-

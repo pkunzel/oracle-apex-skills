@@ -35,10 +35,11 @@ Return Description * Timestamp of the previous automation run.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_last_run_at timestamp with time zone;
 begin
-    l_result := apex_automation.GET_LAST_RUN;
-    sys.dbms_output.put_line('Result captured.');
+    l_last_run_at := apex_automation.get_last_run;
+
+    apex_debug.info('Previous automation run: %s', l_last_run_at);
 end;
 /
 ```

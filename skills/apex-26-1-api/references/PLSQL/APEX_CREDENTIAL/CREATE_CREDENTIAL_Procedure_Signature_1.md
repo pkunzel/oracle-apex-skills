@@ -53,14 +53,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.CREATE_CREDENTIAL(
-        p_credential_name => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_authentication_type => 'EXAMPLE',
-        p_scope => 'EXAMPLE',
-        p_allowed_urls => 'EXAMPLE',
-        p_prompt_on_install => true,
-        p_credential_comment => 'EXAMPLE'
+    apex_credential.create_credential(
+        p_credential_name      => 'Payments API Key',
+        p_credential_static_id => 'PAYMENTS_API',
+        p_authentication_type  => apex_credential.c_type_http_header,
+        p_allowed_urls         => apex_t_varchar2('https://payments.example.com/'),
+        p_prompt_on_install    => true,
+        p_credential_comment   => 'Used for server-side payment status calls.'
     );
 end;
 /

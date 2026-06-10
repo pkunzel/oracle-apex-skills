@@ -43,11 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.INSTALL(
-        p_source => null,
+    apex_application_install.install(
         p_overwrite_existing => true
     );
 end;
 /
 ```
-

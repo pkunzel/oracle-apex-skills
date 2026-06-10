@@ -64,19 +64,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_credential.CREATE_CREDENTIAL(
-        p_credential_name => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_authentication_type => 'EXAMPLE',
-        p_scope => 'EXAMPLE',
-        p_allowed_urls => 'EXAMPLE',
-        p_prompt_on_install => true,
-        p_credential_comment => 'EXAMPLE',
-        p_db_credential_name => 'EXAMPLE',
-        p_db_credential_is_instance => true,
-        p_named_scopes => 'EXAMPLE',
-        p_referenced_static_id => 'EXAMPLE_STATIC_ID',
-        p_oauth_token_request_type => 'EXAMPLE'
+    apex_credential.create_credential(
+        p_credential_name           => 'Object Storage Credential',
+        p_credential_static_id      => 'OCI_OBJECT_STORAGE',
+        p_authentication_type       => apex_credential.c_type_oci,
+        p_allowed_urls              => apex_t_varchar2('https://objectstorage.us-ashburn-1.oraclecloud.com/'),
+        p_prompt_on_install         => true,
+        p_db_credential_name        => 'OCI_OBJECT_STORAGE_CRED',
+        p_db_credential_is_instance => false,
+        p_credential_comment        => 'Uses an Oracle Database credential for OCI REST calls.'
     );
 end;
 /

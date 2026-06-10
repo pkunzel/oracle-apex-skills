@@ -44,13 +44,14 @@ The name of the the scheduler job which is generated to execute this automation.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_job_name varchar2(261);
 begin
-    l_result := apex_automation.GET_SCHEDULER_JOB_NAME(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_job_name := apex_automation.get_scheduler_job_name(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Scheduler job: %s', l_job_name);
 end;
 /
 ```

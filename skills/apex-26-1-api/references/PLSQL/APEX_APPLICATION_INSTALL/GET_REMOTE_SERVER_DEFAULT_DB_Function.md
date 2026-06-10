@@ -40,11 +40,10 @@ APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_DEFAULT_DB (
 declare
     l_result VARCHAR2;
 begin
-    l_result := apex_application_install.GET_REMOTE_SERVER_DEFAULT_DB(
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_result := apex_application_install.get_remote_server_default_db(
+        p_static_id => 'ORDERS_API'
     );
     sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

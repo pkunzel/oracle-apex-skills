@@ -43,9 +43,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.CREATE_COLLECTION(
-        p_collection_name => 'EXAMPLE',
-        p_truncate_if_exists => 'EXAMPLE'
+    apex_collection.create_collection(
+        p_collection_name => 'ORDER_LINES'
     );
 end;
 /

@@ -48,15 +48,14 @@ The Code 128 barcode PNG image file.
 
 ```sql
 declare
-    l_result BLOB;
+    l_png blob;
 begin
-    l_result := apex_barcode.GET_CODE128_PNG(
-        p_value => 'EXAMPLE',
-        p_scale => 1,
-        p_foreground_color => 'EXAMPLE',
-        p_background_color => 'EXAMPLE'
+    l_png := apex_barcode.get_code128_png(
+        p_value            => 'ORD-10045',
+        p_scale            => 2,
+        p_foreground_color => '#111827',
+        p_background_color => '#FFFFFF'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```

@@ -46,15 +46,15 @@ The task parameter value for the given static ID or null.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_amount varchar2(32767);
 begin
-    l_result := apex_approval.GET_TASK_PARAMETER_VALUE(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID',
+    l_amount := apex_approval.get_task_parameter_value(
+        p_task_id => :P20_TASK_ID,
+        p_param_static_id => 'AMOUNT',
         p_ignore_not_found => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Current amount: ' || l_amount);
 end;
 /
 ```
-

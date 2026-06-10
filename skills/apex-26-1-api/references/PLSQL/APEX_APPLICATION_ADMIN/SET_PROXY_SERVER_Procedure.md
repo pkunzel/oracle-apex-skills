@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_admin.SET_PROXY_SERVER(
-        p_application_id => 1,
-        p_proxy_server => 'EXAMPLE',
-        p_no_proxy_domains => 'EXAMPLE'
+    apex_application_admin.set_proxy_server(
+        p_application_id => 100,
+        p_proxy_server => 'www-proxy.example.com',
+        p_no_proxy_domains => 'localhost,internal.example.com'
     );
 end;
 /
 ```
-

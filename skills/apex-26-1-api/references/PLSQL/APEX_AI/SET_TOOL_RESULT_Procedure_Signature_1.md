@@ -47,13 +47,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_ai.SET_TOOL_RESULT(
-        p_result => to_clob('Example text'),
-        p_notification_message => to_clob('Example text'),
-        p_notification_type => null,
+    apex_ai.set_tool_result(
+        p_result => to_clob('{"status":"approved","orderId":"' || :P10_ORDER_ID || '"}'),
+        p_notification_message => 'Order approval tool completed.',
         p_early_exit => true
     );
 end;
 /
 ```
-

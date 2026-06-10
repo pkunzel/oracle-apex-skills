@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_application_install.SET_MAX_SCHEDULER_JOBS(
-        p_max_scheduler_jobs => 1
+    apex_application_install.set_max_scheduler_jobs(
+        p_max_scheduler_jobs => 4
     );
 end;
 /
 ```
-

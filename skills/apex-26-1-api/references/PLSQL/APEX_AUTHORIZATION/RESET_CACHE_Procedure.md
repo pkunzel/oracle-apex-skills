@@ -34,7 +34,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authorization.RESET_CACHE;
+    apex_authorization.reset_cache;
 end;
 /
 ```

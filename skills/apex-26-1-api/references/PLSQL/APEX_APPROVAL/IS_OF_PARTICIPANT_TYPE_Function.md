@@ -48,15 +48,18 @@ TRUE if the user given by p_user is a participant of given participant type for 
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_potential_owner boolean;
 begin
-    l_result := apex_approval.IS_OF_PARTICIPANT_TYPE(
-        p_task_id => 1,
-        p_participant_type => null,
-        p_user => 'USER'
+    l_is_potential_owner := apex_approval.is_of_participant_type(
+        p_task_id          => :P20_TASK_ID,
+        p_participant_type => apex_approval.c_task_potential_owner,
+        p_user             => :APP_USER
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_is_potential_owner then
+        apex_approval.claim_task(
+            p_task_id => :P20_TASK_ID);
+    end if;
 end;
 /
 ```
-

@@ -41,9 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.EXIT(
-        p_log_message => to_clob('Example text')
-    );
+    apex_automation.exit;
 end;
 /
 ```

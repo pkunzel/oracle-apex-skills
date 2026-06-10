@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_collection.DELETE_MEMBERS(
-        p_collection_name => 'EXAMPLE',
-        p_attr_number => 1,
-        p_attr_value => 'EXAMPLE'
+    apex_collection.delete_members(
+        p_collection_name => 'ORDER_LINES',
+        p_attr_number     => 1,
+        p_attr_value      => :P20_PRODUCT_ID
     );
 end;
 /

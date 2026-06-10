@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_automation.RESCHEDULE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_next_run_at => sysdate
+    apex_automation.reschedule(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'SYNC_ORDERS',
+        p_next_run_at    => systimestamp + interval '15' minute
     );
 end;
 /

@@ -41,8 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_authorization.ENABLE_DYNAMIC_GROUPS(
-        p_group_names => 'EXAMPLE'
+    apex_authorization.enable_dynamic_groups(
+        p_group_names => 'SALES_MANAGERS:FINANCE_REVIEWERS'
     );
 end;
 /
