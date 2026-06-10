@@ -145,9 +145,11 @@ The compact formatted number. Type string Examples Format the large number 12345
 ### Simple Example
 
 ```javascript
-apex.locale.formatCompactNumber(
-    "Example",
-    {}
+const compactTotal = apex.locale.formatCompactNumber(
+    123456789.12,
+    {
+        maximumFractionDigits: 1
+    }
 );
 ```
 

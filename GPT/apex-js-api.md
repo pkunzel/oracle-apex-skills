@@ -2720,9 +2720,11 @@ The compact formatted number. Type string Examples Format the large number 12345
 #### Simple Example
 
 ```javascript
-apex.locale.formatCompactNumber(
-    "Example",
-    {}
+const compactTotal = apex.locale.formatCompactNumber(
+    123456789.12,
+    {
+        maximumFractionDigits: 1
+    }
 );
 ```
 
@@ -3583,9 +3585,13 @@ Registers the internal "close" event of a dialog. The event will be triggered by
 #### Simple Example
 
 ```javascript
-apex.navigation.dialog.registerCloseHandler(
-    {}
-);
+apex.navigation.dialog.registerCloseHandler( {
+    handler$: apex.jQuery( "#customDialog" ),
+    dialog: apex.jQuery( "#customDialog" ),
+    closeFunction: function() {
+        apex.jQuery( "#customDialog" ).dialog( "close" );
+    }
+} );
 ```
 
 ### Notes
@@ -4426,9 +4432,7 @@ The string value of the cookie. Type string Example Returns the value of the coo
 #### Simple Example
 
 ```javascript
-apex.storage.getCookie(
-    "MY_PROCESS"
-);
+const lastTab = apex.storage.getCookie( "AI_DEMO_LAST_TAB" );
 ```
 
 ### getScopedLocalStorage
@@ -4461,9 +4465,14 @@ A localStorage wrapper object. Type localStorage Example Creates a local storage
 #### Simple Example
 
 ```javascript
-apex.storage.getScopedLocalStorage(
-    {}
-);
+const prefs = apex.storage.getScopedLocalStorage( {
+    prefix: "ai-agent",
+    useAppId: true,
+    usePageId: true,
+    regionId: "agent_console"
+} );
+
+prefs.setItem( "density", "compact" );
 ```
 
 ### getScopedSessionStorage
@@ -4496,9 +4505,13 @@ A sessionStorage wrapper object. Type sessionStorage Example Creates a session s
 #### Simple Example
 
 ```javascript
-apex.storage.getScopedSessionStorage(
-    {}
-);
+const draftState = apex.storage.getScopedSessionStorage( {
+    prefix: "agent-draft",
+    useAppId: true,
+    usePageId: true
+} );
+
+draftState.setItem( "lastPrompt", apex.item( "P10_PROMPT" ).getValue() );
 ```
 
 ### hasLocalStorageSupport
@@ -4555,10 +4568,7 @@ Sets a cookie to the specified value.
 #### Simple Example
 
 ```javascript
-apex.storage.setCookie(
-    "MY_PROCESS",
-    "Example"
-);
+apex.storage.setCookie( "AI_DEMO_LAST_TAB", "settings" );
 ```
 
 ### storageWrapper
@@ -8410,10 +8420,15 @@ Set the instance of this Interactive Grid to correspond to the specified master 
 #### Simple Example
 
 ```javascript
-interactiveGrid.setMasterRecord(
-    {},
-    {}
-);
+const master$ = apex.region( "orders_ig" ).widget();
+const detail$ = apex.region( "order_lines_ig" ).widget();
+const masterView = master$.interactiveGrid( "getCurrentView" );
+const masterModel = masterView.model;
+const masterRecord = master$.interactiveGrid( "getSelectedRecords" )[0];
+
+if ( masterRecord ) {
+    detail$.interactiveGrid( "setMasterRecord", masterModel, masterRecord );
+}
 ```
 
 ### setSelectedRecords

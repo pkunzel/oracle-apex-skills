@@ -142,9 +142,13 @@ Registers the internal "close" event of a dialog. The event will be triggered by
 ### Simple Example
 
 ```javascript
-apex.navigation.dialog.registerCloseHandler(
-    {}
-);
+apex.navigation.dialog.registerCloseHandler( {
+    handler$: apex.jQuery( "#customDialog" ),
+    dialog: apex.jQuery( "#customDialog" ),
+    closeFunction: function() {
+        apex.jQuery( "#customDialog" ).dialog( "close" );
+    }
+} );
 ```
 
 ## Notes

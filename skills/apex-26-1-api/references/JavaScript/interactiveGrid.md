@@ -733,10 +733,15 @@ Set the instance of this Interactive Grid to correspond to the specified master 
 ### Simple Example
 
 ```javascript
-interactiveGrid.setMasterRecord(
-    {},
-    {}
-);
+const master$ = apex.region( "orders_ig" ).widget();
+const detail$ = apex.region( "order_lines_ig" ).widget();
+const masterView = master$.interactiveGrid( "getCurrentView" );
+const masterModel = masterView.model;
+const masterRecord = master$.interactiveGrid( "getSelectedRecords" )[0];
+
+if ( masterRecord ) {
+    detail$.interactiveGrid( "setMasterRecord", masterModel, masterRecord );
+}
 ```
 
 ## setSelectedRecords

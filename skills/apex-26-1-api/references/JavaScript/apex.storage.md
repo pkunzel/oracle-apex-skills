@@ -109,9 +109,7 @@ The string value of the cookie. Type string Example Returns the value of the coo
 ### Simple Example
 
 ```javascript
-apex.storage.getCookie(
-    "MY_PROCESS"
-);
+const lastTab = apex.storage.getCookie( "AI_DEMO_LAST_TAB" );
 ```
 
 ## getScopedLocalStorage
@@ -144,9 +142,14 @@ A localStorage wrapper object. Type localStorage Example Creates a local storage
 ### Simple Example
 
 ```javascript
-apex.storage.getScopedLocalStorage(
-    {}
-);
+const prefs = apex.storage.getScopedLocalStorage( {
+    prefix: "ai-agent",
+    useAppId: true,
+    usePageId: true,
+    regionId: "agent_console"
+} );
+
+prefs.setItem( "density", "compact" );
 ```
 
 ## getScopedSessionStorage
@@ -179,9 +182,13 @@ A sessionStorage wrapper object. Type sessionStorage Example Creates a session s
 ### Simple Example
 
 ```javascript
-apex.storage.getScopedSessionStorage(
-    {}
-);
+const draftState = apex.storage.getScopedSessionStorage( {
+    prefix: "agent-draft",
+    useAppId: true,
+    usePageId: true
+} );
+
+draftState.setItem( "lastPrompt", apex.item( "P10_PROMPT" ).getValue() );
 ```
 
 ## hasLocalStorageSupport
@@ -238,10 +245,7 @@ Sets a cookie to the specified value.
 ### Simple Example
 
 ```javascript
-apex.storage.setCookie(
-    "MY_PROCESS",
-    "Example"
-);
+apex.storage.setCookie( "AI_DEMO_LAST_TAB", "settings" );
 ```
 
 ## storageWrapper
