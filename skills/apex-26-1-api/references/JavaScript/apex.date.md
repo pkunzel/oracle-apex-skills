@@ -132,7 +132,21 @@ Constants for the different date/time units used by apex.date functions.
 ### Simple Example
 
 ```javascript
-apex.date.UNIT;
+apex.date.UNIT = {
+    MILLISECOND: "millisecond",
+    SECOND: "second",
+    MINUTE: "minute",
+    HOUR: "hour",
+    DAY: "day",
+    WEEK: "week",
+    MONTH: "month",
+    YEAR: "year"
+};
+
+apex.date.add( myDate, 2, apex.date.UNIT.DAY );
+apex.date.add( myDate, 1, apex.date.UNIT.YEAR );
+apex.date.subtract( myDate, 30, apex.date.UNIT.MINUTE );
+apex.date.subtract( myDate, 6, apex.date.UNIT.HOUR );
 ```
 
 ## ISOWeek
@@ -156,9 +170,7 @@ The week number Type number Example Returns the ISO-8601 week number.
 ### Simple Example
 
 ```javascript
-apex.date.ISOWeek(
-    null
-);
+var weekNumber = apex.date.ISOWeek( myDate );
 ```
 
 ## add
@@ -184,11 +196,9 @@ The modified date object Type Date Example Returns the modified date object.
 ### Simple Example
 
 ```javascript
-apex.date.add(
-    null,
-    null,
-    null
-);
+var myDate = new Date( "2021-06-20" );
+myDate = apex.date.add( myDate, 2, apex.date.UNIT.DAY );
+// myDate is now "2021-06-21"
 ```
 
 ## clone
@@ -212,9 +222,8 @@ The cloned date object Type Date Example Returns the clone of a given date objec
 ### Simple Example
 
 ```javascript
-apex.date.clone(
-    null
-);
+var myDate = new Date();
+var clonedDate = apex.date.clone( myDate );
 ```
 
 ## dayOfWeek
@@ -238,9 +247,7 @@ The day number Type number Example Returns the day number of given week.
 ### Simple Example
 
 ```javascript
-apex.date.dayOfWeek(
-    null
-);
+var weekDay = apex.date.dayOfWeek( myDate );
 ```
 
 ## daysInMonth
@@ -264,9 +271,7 @@ The days count Type number Example Returns the day count of given month.
 ### Simple Example
 
 ```javascript
-apex.date.daysInMonth(
-    null
-);
+var dayCount = apex.date.daysInMonth( myDate );
 ```
 
 ## endOfDay
@@ -290,9 +295,8 @@ The end date of a day Type Date Example Returns the end date of a given day.
 ### Simple Example
 
 ```javascript
-apex.date.endOfDay(
-    null
-);
+var dayEndDate = apex.date.endOfDay( myDate );
+// output: "2021-JUN-29 23:59:59" (as date object)
 ```
 
 ## firstOfMonth
@@ -316,9 +320,8 @@ The first day as date Type Date Example Returns the first day of a given month a
 ### Simple Example
 
 ```javascript
-apex.date.firstOfMonth(
-    null
-);
+var firstDayDate = apex.date.firstOfMonth( myDate );
+// output: "2021-JUN-01" (as date object)
 ```
 
 ## format
@@ -344,11 +347,14 @@ The formatted date string Type string Example Returns the formatted date string.
 ### Simple Example
 
 ```javascript
-apex.date.format(
-    null,
-    null,
-    null
-);
+var dateString = apex.date.format( myDate, "YYYY-MM-DD HH24:MI" );
+// output: "2021-06-29 15:30"
+
+var dateString = apex.date.format( myDate, "Day, DD Month YYYY" );
+// output: "Wednesday, 29 June 2021"
+
+var dateString = apex.date.format( myDate, "Day, DD Month YYYY", "de" );
+// output: "Mittwoch, 29 Juni 2021"
 ```
 
 ## getDayOfYear
@@ -372,9 +378,7 @@ The day number Type number Example Returns the day number of given year.
 ### Simple Example
 
 ```javascript
-apex.date.getDayOfYear(
-    null
-);
+var dayNumber = apex.date.getDayOfYear( myDate );
 ```
 
 ## isAfter
@@ -400,11 +404,7 @@ is the date after Type boolean Example Returns if a date object is before anothe
 ### Simple Example
 
 ```javascript
-apex.date.isAfter(
-    null,
-    null,
-    null
-);
+var isDateAfter = apex.date.isAfter( myDate1, myDate2, apex.date.UNIT.SECOND );
 ```
 
 ## isBefore
@@ -430,11 +430,7 @@ is the date before Type boolean Example Returns if a date object is before anoth
 ### Simple Example
 
 ```javascript
-apex.date.isBefore(
-    null,
-    null,
-    null
-);
+var isDateBefore = apex.date.isBefore( myDate1, myDate2, apex.date.UNIT.SECOND );
 ```
 
 ## isBetween
@@ -461,12 +457,7 @@ is the date between Type boolean Example Returns if a date object is between 2 a
 ### Simple Example
 
 ```javascript
-apex.date.isBetween(
-    null,
-    null,
-    null,
-    null
-);
+var isDateBetween = apex.date.isBetween( myDate1, myDate2, myDate3, apex.date.UNIT.SECOND );
 ```
 
 ## isLeapYear
@@ -490,9 +481,7 @@ is a leap year Type boolean Example Returns if it's a leap year for a given date
 ### Simple Example
 
 ```javascript
-apex.date.isLeapYear(
-    null
-);
+var isLeapYear = apex.date.isLeapYear( myDate );
 ```
 
 ## isSame
@@ -518,11 +507,7 @@ is the date same Type boolean Example Returns if a date object is the same as an
 ### Simple Example
 
 ```javascript
-apex.date.isSame(
-    null,
-    null,
-    null
-);
+var isDateSame = apex.date.isSame( myDate1, myDate2, apex.date.UNIT.SECOND );
 ```
 
 ## isSameOrAfter
@@ -548,11 +533,7 @@ is the date same/after Type boolean Example Returns if a date object is the same
 ### Simple Example
 
 ```javascript
-apex.date.isSameOrAfter(
-    null,
-    null,
-    null
-);
+var isDateSameAfter = apex.date.isSameOrAfter( myDate1, myDate2, apex.date.UNIT.SECOND );
 ```
 
 ## isSameOrBefore
@@ -578,11 +559,7 @@ is the date same/before Type boolean Example Returns if a date object is the sam
 ### Simple Example
 
 ```javascript
-apex.date.isSameOrBefore(
-    null,
-    null,
-    null
-);
+var isDateSameBefore = apex.date.isSameOrBefore( myDate1, myDate2, apex.date.UNIT.SECOND );
 ```
 
 ## isValid
@@ -606,9 +583,7 @@ is it a valid date Type boolean Example Returns if a date object is valid.
 ### Simple Example
 
 ```javascript
-apex.date.isValid(
-    null
-);
+var isDateValid = apex.date.isValid( myDate );
 ```
 
 ## isValidString
@@ -632,9 +607,7 @@ is it a valid date Type boolean Example Returns if a date string is valid.
 ### Simple Example
 
 ```javascript
-apex.date.isValidString(
-    null
-);
+var isDateValid = apex.date.isValidString( "2021-06-29 15:30" );
 ```
 
 ## lastOfMonth
@@ -658,9 +631,8 @@ The last day as date Type Date Example Returns the last day of a given month as 
 ### Simple Example
 
 ```javascript
-apex.date.lastOfMonth(
-    null
-);
+var lastDayDate = apex.date.lastOfMonth( myDate );
+// output: "2021-JUN-30" (as date object)
 ```
 
 ## max
@@ -684,9 +656,7 @@ The max date object Type Date Example Returns the maximum (most distant future) 
 ### Simple Example
 
 ```javascript
-apex.date.max(
-    null
-);
+var maxDate = apex.date.max( myDate1, myDate2, myDate3 );
 ```
 
 ## min
@@ -710,9 +680,7 @@ The min date object Type Date Example Returns the minimum (most distant future) 
 ### Simple Example
 
 ```javascript
-apex.date.min(
-    null
-);
+var minDate = apex.date.min( myDate1, myDate2, myDate3 );
 ```
 
 ## monthsBetween
@@ -737,10 +705,7 @@ The month count Type number Example Returns the count of months between 2 dates.
 ### Simple Example
 
 ```javascript
-apex.date.monthsBetween(
-    null,
-    null
-);
+var months = apex.date.monthsBetween( myDate1, myDate2 );
 ```
 
 ## parse
@@ -765,10 +730,8 @@ The date object Type Date Example Returns the parsed date object.
 ### Simple Example
 
 ```javascript
-apex.date.parse(
-    null,
-    null
-);
+var date = apex.date.parse( "2021-06-29 15:30", "YYYY-MM-DD HH24:MI" );
+var date = apex.date.parse( "2021-JUN-29 08:30 am", "YYYY-MON-DD HH12:MI AM" );
 ```
 
 ## secondsPastMidnight
@@ -792,9 +755,7 @@ seconds past midnight Type number Example Returns the seconds past midnight.
 ### Simple Example
 
 ```javascript
-apex.date.secondsPastMidnight(
-    null
-);
+var seconds = apex.date.secondsPastMidnight( myDate );
 ```
 
 ## setDayOfYear
@@ -819,10 +780,8 @@ The date object Type Date Example Returns the date object.
 ### Simple Example
 
 ```javascript
-apex.date.setDayOfYear(
-    null,
-    null
-);
+var myDate = new Date();
+apex.date.setDayOfYear( myDate, 126 );
 ```
 
 ## since
@@ -847,10 +806,11 @@ The formatted date string Type string Example Returns the relative date in words
 ### Simple Example
 
 ```javascript
-apex.date.since(
-    null,
-    null
-);
+var sinceString = apex.date.since( myDate );
+// output: "2 days from now" or "30 minutes ago"
+
+var sinceString = apex.date.since( myDate, true );
+// output: "In 1.1y" or "30m"
 ```
 
 ## startOfDay
@@ -874,9 +834,8 @@ The start date of a day Type Date Example Returns the start date of a given day.
 ### Simple Example
 
 ```javascript
-apex.date.startOfDay(
-    null
-);
+var dayStartDate = apex.date.startOfDay( myDate );
+// output: "2021-JUN-29 24:00:00" (as date object)
 ```
 
 ## subtract
@@ -902,11 +861,9 @@ The modified date object Type Date Example Returns the modified date object.
 ### Simple Example
 
 ```javascript
-apex.date.subtract(
-    null,
-    null,
-    null
-);
+var myDate = new Date( "2021-06-20" )
+myDate = apex.date.subtract( myDate, 2, apex.date.UNIT.DAY );
+// myDate is now "2021-06-19"
 ```
 
 ## toISOString
@@ -930,9 +887,8 @@ The formatted date string Type string Example Returns date as ISO format string.
 ### Simple Example
 
 ```javascript
-apex.date.toISOString(
-    null
-);
+var isoFormat = apex.date.toISOString( myDate );
+// output: "2021-06-15T14:30:00"
 ```
 
 ## weekOfMonth
@@ -956,9 +912,7 @@ The week number Type number Example Returns the week number of given month. Docu
 ### Simple Example
 
 ```javascript
-apex.date.weekOfMonth(
-    null
-);
+var weekNumber = apex.date.weekOfMonth( myDate );
 ```
 
 ## Notes
