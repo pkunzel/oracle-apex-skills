@@ -292,11 +292,13 @@ Sets the current selection in the view from the given array of model records. On
 ### Simple Example
 
 ```javascript
-interactiveGridView.setSelectedRecords(
-    {},
-    null,
-    null
-);
+const view = apex.region( "orders_ig" )
+    .widget()
+    .interactiveGrid( "getViews", "grid" );
+const model = view.model;
+const record = model.getRecord( "1001" );
+
+view.setSelectedRecords( [ record ], true, false );
 ```
 
 ## Notes

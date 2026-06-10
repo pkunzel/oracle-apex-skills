@@ -183,10 +183,12 @@ The formatted number. Type string Example Format the number 1234.569 with locale
 ### Simple Example
 
 ```javascript
-apex.locale.formatNumber(
-    "Example",
-    null,
-    {}
+const totalText = apex.locale.formatNumber(
+    1234.569,
+    "FML999G999G990D00",
+    {
+        NLS_CURRENCY: "$"
+    }
 );
 ```
 
@@ -472,9 +474,9 @@ the converted number or NaN if pValue cannot be converted to a number Type numbe
 ### Simple Example
 
 ```javascript
-apex.locale.toNumber(
-    "Example",
-    null
+const amount = apex.locale.toNumber(
+    "$1,234.56",
+    "FML999G999G990D00"
 );
 ```
 

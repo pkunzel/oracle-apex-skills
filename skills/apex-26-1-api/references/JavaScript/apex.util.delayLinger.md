@@ -90,8 +90,10 @@ Call this function when the potentially long-running async process finishes. For
 
 ```javascript
 apex.util.delayLinger.finish(
-    "MY_PROCESS",
-    null
+    "task-list-refresh",
+    function() {
+        $( "#taskList .u-Processing" ).remove();
+    }
 );
 ```
 
@@ -114,8 +116,10 @@ Call this function when a potentially long-running async process starts. For eac
 
 ```javascript
 apex.util.delayLinger.start(
-    "MY_PROCESS",
-    null
+    "task-list-refresh",
+    function() {
+        apex.util.showSpinner( $( "#taskList" ) );
+    }
 );
 ```
 

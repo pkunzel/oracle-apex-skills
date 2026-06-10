@@ -718,7 +718,7 @@ taskActions.add( [ {
         apex.navigation.dialog(
             "f?p=&APP_ID.:20:&SESSION.",
             { title: "New Task", modal: true },
-            null,
+            "task-dialog",
             apex.jQuery( "#task_board" )
         );
     }
@@ -874,12 +874,18 @@ The following example shows a typical use case of handleAjaxErrors.
 #### Simple Example
 
 ```javascript
-apex.da.handleAjaxErrors(
-    null,
-    "Example",
-    null,
-    function() {}
-);
+const daContext = this;
+
+apex.server.plugin( daContext.action.ajaxIdentifier, {
+    x01: apex.item( "P10_AGENT_ID" ).getValue()
+} ).fail( function( jqXHR, textStatus, errorThrown ) {
+    apex.da.handleAjaxErrors(
+        jqXHR,
+        textStatus,
+        errorThrown,
+        daContext.resumeCallback
+    );
+} );
 ```
 
 ### resume
@@ -901,8 +907,8 @@ For Dynamic Action plug-in developers that write plug-ins that perform Ajax call
 
 ```javascript
 apex.da.resume(
-    function() {},
-    null
+    this.resumeCallback,
+    false
 );
 ```
 
@@ -2299,9 +2305,10 @@ Add messages for use by apex.lang.getMessage and the format functions. Can be ca
 #### Simple Example
 
 ```javascript
-apex.lang.addMessages(
-    null
-);
+apex.lang.addMessages( {
+    ORDER_SAVED: "Order saved.",
+    PROCESS_STATUS: "Process %0% complete"
+} );
 ```
 
 ### clearMessages
@@ -2345,9 +2352,9 @@ The formatted message text. Type string Examples This example using positional p
 #### Simple Example
 
 ```javascript
-apex.lang.format(
-    null,
-    "Example"
+const totalText = apex.lang.format(
+    "Total cost: $%0",
+    "34.00"
 );
 ```
 
@@ -2378,9 +2385,13 @@ The localized and formatted message text. If the key is not found then the key i
 #### Simple Example
 
 ```javascript
-apex.lang.formatMessage(
-    null,
-    "Example"
+apex.lang.addMessages( {
+    PROCESS_STATUS: "Process %0% complete"
+} );
+
+const statusText = apex.lang.formatMessage(
+    "PROCESS_STATUS",
+    60
 );
 ```
 
@@ -2411,9 +2422,13 @@ The localized and formatted message text. If the key is not found then the key i
 #### Simple Example
 
 ```javascript
-apex.lang.formatMessageNoEscape(
-    null,
-    "Example"
+apex.lang.addMessages( {
+    STATUS_BADGE: "Status: %0"
+} );
+
+const badgeHtml = apex.lang.formatMessageNoEscape(
+    "STATUS_BADGE",
+    "<span class=\"u-success-text\">Ready</span>"
 );
 ```
 
@@ -2444,9 +2459,9 @@ The formatted message text. Type string Examples This example using positional p
 #### Simple Example
 
 ```javascript
-apex.lang.formatNoEscape(
-    null,
-    "Example"
+const badgeHtml = apex.lang.formatNoEscape(
+    "Status: %0",
+    "<span class=\"u-success-text\">Ready</span>"
 );
 ```
 
@@ -2471,9 +2486,7 @@ The localized message text. If the key is not found then the key is returned. Ty
 #### Simple Example
 
 ```javascript
-apex.lang.getMessage(
-    null
-);
+const okLabel = apex.lang.getMessage( "OK_BTN_LABEL" );
 ```
 
 ### hasMessage
@@ -2497,9 +2510,9 @@ true if the given message exists and false otherwise. Type boolean Example This 
 #### Simple Example
 
 ```javascript
-apex.lang.hasMessage(
-    null
-);
+if ( apex.lang.hasMessage( "EXTRA_MESSAGE" ) ) {
+    apex.message.alert( apex.lang.getMessage( "EXTRA_MESSAGE" ) );
+}
 ```
 
 ### loadMessages
@@ -2523,9 +2536,10 @@ promise resolved (with no data) when messages are available, rejected (with no d
 #### Simple Example
 
 ```javascript
-apex.lang.loadMessages(
-    null
-);
+apex.lang.loadMessages( [ "MY_MESSAGE1", "MY_MESSAGE2" ] )
+    .then( function() {
+        apex.message.alert( apex.lang.getMessage( "MY_MESSAGE1" ) );
+    } );
 ```
 
 ### loadMessagesIfNeeded
@@ -2547,8 +2561,10 @@ Load additional messages from the server only if they are not already loaded.
 
 ```javascript
 apex.lang.loadMessagesIfNeeded(
-    null,
-    function() {}
+    [ "AI_AGENT_ERROR" ],
+    function() {
+        apex.message.alert( apex.lang.getMessage( "AI_AGENT_ERROR" ) );
+    }
 );
 ```
 
@@ -2742,10 +2758,12 @@ The formatted number. Type string Example Format the number 1234.569 with locale
 #### Simple Example
 
 ```javascript
-apex.locale.formatNumber(
-    "Example",
-    null,
-    {}
+const totalText = apex.locale.formatNumber(
+    1234.569,
+    "FML999G999G990D00",
+    {
+        NLS_CURRENCY: "$"
+    }
 );
 ```
 
@@ -3031,9 +3049,9 @@ the converted number or NaN if pValue cannot be converted to a number Type numbe
 #### Simple Example
 
 ```javascript
-apex.locale.toNumber(
-    "Example",
-    null
+const amount = apex.locale.toNumber(
+    "$1,234.56",
+    "FML999G999G990D00"
 );
 ```
 
@@ -3510,9 +3528,7 @@ Closes the dialog window.
 #### Simple Example
 
 ```javascript
-apex.navigation.dialog.cancel(
-    null
-);
+apex.navigation.dialog.cancel( true );
 ```
 
 ### close
@@ -3534,8 +3550,11 @@ Executes an action and then closes the dialog window.
 
 ```javascript
 apex.navigation.dialog.close(
-    null,
-    null
+    true,
+    {
+        P30_ORDER_ID: apex.item( "P30_ORDER_ID" ).getValue(),
+        P30_STATUS: apex.item( "P30_STATUS" ).getValue()
+    }
 );
 ```
 
@@ -4689,9 +4708,7 @@ The jQuery object of the region. Type jQuery Example The following example close
 #### Simple Example
 
 ```javascript
-apex.theme.closeRegion(
-    null
-);
+apex.theme.closeRegion( "quick_edit_dialog" );
 ```
 
 ### mq
@@ -4715,9 +4732,9 @@ true if the media query matches. Type boolean Example After each time the window
 #### Simple Example
 
 ```javascript
-apex.theme.mq(
-    null
-);
+if ( apex.theme.mq( "(min-width: 640px)" ) ) {
+    apex.region( "orders" ).refresh();
+}
 ```
 
 ### openRegion
@@ -4741,9 +4758,7 @@ The jQuery object of the region. Type jQuery Example The following example opens
 #### Simple Example
 
 ```javascript
-apex.theme.openRegion(
-    null
-);
+apex.theme.openRegion( "quick_edit_dialog" );
 ```
 
 ### popupFieldHelp
@@ -5023,8 +5038,10 @@ Call this function when the potentially long-running async process finishes. For
 
 ```javascript
 apex.util.delayLinger.finish(
-    "MY_PROCESS",
-    null
+    "task-list-refresh",
+    function() {
+        $( "#taskList .u-Processing" ).remove();
+    }
 );
 ```
 
@@ -5047,8 +5064,10 @@ Call this function when a potentially long-running async process starts. For eac
 
 ```javascript
 apex.util.delayLinger.start(
-    "MY_PROCESS",
-    null
+    "task-list-refresh",
+    function() {
+        apex.util.showSpinner( $( "#taskList" ) );
+    }
 );
 ```
 
@@ -5162,9 +5181,13 @@ Object with a no argument function "remove" that closes the popup. Type Object E
 #### Simple Example
 
 ```javascript
-apex.widget.waitPopup(
-    null
-);
+const wait = apex.widget.waitPopup();
+
+apex.server.process( "REBUILD_CACHE", {
+    pageItems: "#P10_ID"
+} ).always( function() {
+    wait.remove();
+} );
 ```
 
 ### Notes
@@ -5547,11 +5570,7 @@ The model returned by `getModel` can change over time. Do not keep it indefinite
 apex.jQuery( "#orders_cards" ).on( "apexselectionchange", function() {
     const selected = apex.region( "orders_cards" ).getSelectedValues() || [];
 
-    apex.item( "P10_SELECTED_COUNT" ).setValue(
-        String( selected.length ),
-        null,
-        true
-    );
+    apex.item( "P10_SELECTED_COUNT" ).setValue( String( selected.length ), null, true );
 } );
 ```
 
@@ -5634,11 +5653,7 @@ apex.jQuery( "#apply_filters" ).on( "click", function() {
 const facets = apex.region( "order_facets" );
 const total = facets.getTotalResourceCount();
 
-apex.item( "P10_RESULT_COUNT" ).setValue(
-    String( total ),
-    null,
-    true
-);
+apex.item( "P10_RESULT_COUNT" ).setValue( String( total ), null, true );
 ```
 
 Read per-facet value counts:
@@ -6149,11 +6164,13 @@ Sets the current selection in the view from the given array of model records. On
 #### Simple Example
 
 ```javascript
-interactiveGridView.setSelectedRecords(
-    {},
-    null,
-    null
-);
+const view = apex.region( "orders_ig" )
+    .widget()
+    .interactiveGrid( "getViews", "grid" );
+const model = view.model;
+const record = model.getRecord( "1001" );
+
+view.setSelectedRecords( [ record ], true, false );
 ```
 
 ### Notes
@@ -6328,7 +6345,12 @@ The current row or null if not supported. Type jQuery Example This example gets 
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.getCurrentRow();
+const ir = apex.region( "orders_ir" );
+const currentRow$ = ir.getCurrentRow();
+
+if ( currentRow$ ) {
+    currentRow$.addClass( "is-current-order" );
+}
 ```
 
 ### getCurrentRowValue
@@ -6346,7 +6368,12 @@ The current row value or null if not supported. Type string
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.getCurrentRowValue();
+const ir = apex.region( "orders_ir" );
+const orderId = ir.getCurrentRowValue();
+
+if ( orderId ) {
+    apex.item( "P20_ORDER_ID" ).setValue( orderId );
+}
 ```
 
 ### getSelectedValues
@@ -6364,7 +6391,10 @@ Array of selected record values. Returns null if selection is not supported. Typ
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.getSelectedValues();
+const ir = apex.region( "orders_ir" );
+const orderIds = ir.getSelectedValues() || [];
+
+apex.item( "P20_SELECTED_ORDERS" ).setValue( orderIds.join( ":" ) );
 ```
 
 ### getSelection
@@ -6382,7 +6412,12 @@ The selected row elements as a jQuery collection. Returns null if selection isn'
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.getSelection();
+const ir = apex.region( "orders_ir" );
+const selectedRows$ = ir.getSelection();
+
+if ( selectedRows$ ) {
+    selectedRows$.addClass( "is-selected-order" );
+}
 ```
 
 ### getViewName
@@ -6400,7 +6435,9 @@ The current view mode. Type string Example The following example gets the curren
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.getViewName();
+const ir = apex.region( "orders_ir" );
+
+apex.debug.info( "Current Interactive Report view: %s", ir.getViewName() );
 ```
 
 ### refresh
@@ -6420,9 +6457,9 @@ Refreshes the report with new data from the server.
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.refresh(
-    null
-);
+const ir = apex.region( "orders_ir" );
+
+ir.refresh( true );
 ```
 
 ### selectAll
@@ -6443,10 +6480,11 @@ Select all the rows in the report that can be selected. Typically this applies t
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.selectAll(
-    null,
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+
+ir.selectAll(
+    true,
+    false
 );
 ```
 
@@ -6468,9 +6506,12 @@ Sets the last focused row to the given pRow$. If pRow$ is not a row or not in th
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.setCurrentRow(
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+const row$ = ir.element.find( "tr[data-id='1001']" );
+
+ir.setCurrentRow(
+    row$,
+    true
 );
 ```
 
@@ -6492,9 +6533,11 @@ Sets the last focused row to the one with the given pRowValue. If no row has the
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.setCurrentRowValue(
-    "Example",
-    null
+const ir = apex.region( "orders_ir" );
+
+ir.setCurrentRowValue(
+    "1001",
+    true
 );
 ```
 
@@ -6521,11 +6564,14 @@ Count of the rows actually selected or -1 if selection is not supported. Type nu
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.setSelectedValues(
-    "Example",
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+const selectedCount = ir.setSelectedValues(
+    [ "1001", "1002" ],
+    true,
+    false
 );
+
+apex.debug.info( "Selected %s rendered order rows.", selectedCount );
 ```
 
 ### setSelection
@@ -6547,10 +6593,13 @@ Set the selected rows. Triggers the apex.event:apexselectionchange event if the 
 #### Simple Example
 
 ```javascript
-interactiveReportRegion.setSelection(
-    null,
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+const rows$ = ir.element.find( "tr[data-id='1001'], tr[data-id='1002']" );
+
+ir.setSelection(
+    rows$,
+    true,
+    false
 );
 ```
 
@@ -6621,11 +6670,7 @@ Use the methods when you need the optional `displayValue` or `suppressChangeEven
 Use the third `setValue` argument when a programmatic update should not fire Dynamic Actions bound to change.
 
 ```javascript
-apex.item( "P10_STATUS" ).setValue(
-    "DRAFT",
-    null,
-    true
-);
+apex.item( "P10_STATUS" ).setValue( "DRAFT", null, true );
 ```
 
 For values that should trigger Dynamic Actions, omit the third argument or pass `false`.
@@ -7436,11 +7481,7 @@ const data = {
     ]
 };
 
-const adapter = apex.widget.treeView.makeDefaultNodeAdapter(
-    data,
-    null,
-    true,
-    [ "root" ] );
+const adapter = apex.widget.treeView.makeDefaultNodeAdapter( data, null, true, [ "root" ] );
 ```
 
 ### Lazy Loading Pattern
@@ -8314,11 +8355,13 @@ Use `gotoCell` as documented by the `interactiveGrid` module.
 #### Simple Example
 
 ```javascript
-interactiveGrid.gotoCell(
-    {},
-    {},
-    null
-);
+const ig$ = apex.region( "orders_ig" ).widget();
+const view = ig$.interactiveGrid( "getViews", "grid" );
+const model = view.model;
+const record = model.getRecord( "1001" );
+const recordId = model.getRecordId( record );
+
+ig$.interactiveGrid( "gotoCell", null, recordId, "STATUS" );
 ```
 
 ### refresh
@@ -8392,11 +8435,11 @@ Use `setSelectedRecords` as documented by the `interactiveGrid` module.
 #### Simple Example
 
 ```javascript
-interactiveGrid.setSelectedRecords(
-    {},
-    null,
-    null
-);
+const ig$ = apex.region( "orders_ig" ).widget();
+const view = ig$.interactiveGrid( "getViews", "grid" );
+const record = view.model.getRecord( "1001" );
+
+ig$.interactiveGrid( "setSelectedRecords", [ record ], true, false );
 ```
 
 ### copyDefaultToolbar

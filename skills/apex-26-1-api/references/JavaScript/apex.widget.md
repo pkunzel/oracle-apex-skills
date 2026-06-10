@@ -103,9 +103,13 @@ Object with a no argument function "remove" that closes the popup. Type Object E
 ### Simple Example
 
 ```javascript
-apex.widget.waitPopup(
-    null
-);
+const wait = apex.widget.waitPopup();
+
+apex.server.process( "REBUILD_CACHE", {
+    pageItems: "#P10_ID"
+} ).always( function() {
+    wait.remove();
+} );
 ```
 
 ## Notes

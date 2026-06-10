@@ -678,11 +678,13 @@ Use `gotoCell` as documented by the `interactiveGrid` module.
 ### Simple Example
 
 ```javascript
-interactiveGrid.gotoCell(
-    {},
-    {},
-    null
-);
+const ig$ = apex.region( "orders_ig" ).widget();
+const view = ig$.interactiveGrid( "getViews", "grid" );
+const model = view.model;
+const record = model.getRecord( "1001" );
+const recordId = model.getRecordId( record );
+
+ig$.interactiveGrid( "gotoCell", null, recordId, "STATUS" );
 ```
 
 ## refresh
@@ -756,11 +758,11 @@ Use `setSelectedRecords` as documented by the `interactiveGrid` module.
 ### Simple Example
 
 ```javascript
-interactiveGrid.setSelectedRecords(
-    {},
-    null,
-    null
-);
+const ig$ = apex.region( "orders_ig" ).widget();
+const view = ig$.interactiveGrid( "getViews", "grid" );
+const record = view.model.getRecord( "1001" );
+
+ig$.interactiveGrid( "setSelectedRecords", [ record ], true, false );
 ```
 
 ## copyDefaultToolbar

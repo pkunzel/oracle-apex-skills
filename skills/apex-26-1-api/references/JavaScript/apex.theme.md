@@ -113,9 +113,7 @@ The jQuery object of the region. Type jQuery Example The following example close
 ### Simple Example
 
 ```javascript
-apex.theme.closeRegion(
-    null
-);
+apex.theme.closeRegion( "quick_edit_dialog" );
 ```
 
 ## mq
@@ -139,9 +137,9 @@ true if the media query matches. Type boolean Example After each time the window
 ### Simple Example
 
 ```javascript
-apex.theme.mq(
-    null
-);
+if ( apex.theme.mq( "(min-width: 640px)" ) ) {
+    apex.region( "orders" ).refresh();
+}
 ```
 
 ## openRegion
@@ -165,9 +163,7 @@ The jQuery object of the region. Type jQuery Example The following example opens
 ### Simple Example
 
 ```javascript
-apex.theme.openRegion(
-    null
-);
+apex.theme.openRegion( "quick_edit_dialog" );
 ```
 
 ## popupFieldHelp

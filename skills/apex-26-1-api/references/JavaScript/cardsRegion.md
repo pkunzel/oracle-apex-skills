@@ -118,11 +118,7 @@ The model returned by `getModel` can change over time. Do not keep it indefinite
 apex.jQuery( "#orders_cards" ).on( "apexselectionchange", function() {
     const selected = apex.region( "orders_cards" ).getSelectedValues() || [];
 
-    apex.item( "P10_SELECTED_COUNT" ).setValue(
-        String( selected.length ),
-        null,
-        true
-    );
+    apex.item( "P10_SELECTED_COUNT" ).setValue( String( selected.length ), null, true );
 } );
 ```
 

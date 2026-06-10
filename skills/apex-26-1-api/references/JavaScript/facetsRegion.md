@@ -63,11 +63,7 @@ apex.jQuery( "#apply_filters" ).on( "click", function() {
 const facets = apex.region( "order_facets" );
 const total = facets.getTotalResourceCount();
 
-apex.item( "P10_RESULT_COUNT" ).setValue(
-    String( total ),
-    null,
-    true
-);
+apex.item( "P10_RESULT_COUNT" ).setValue( String( total ), null, true );
 ```
 
 Read per-facet value counts:

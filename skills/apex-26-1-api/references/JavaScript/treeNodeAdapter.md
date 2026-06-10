@@ -35,11 +35,7 @@ const data = {
     ]
 };
 
-const adapter = apex.widget.treeView.makeDefaultNodeAdapter(
-    data,
-    null,
-    true,
-    [ "root" ] );
+const adapter = apex.widget.treeView.makeDefaultNodeAdapter( data, null, true, [ "root" ] );
 ```
 
 ## Lazy Loading Pattern

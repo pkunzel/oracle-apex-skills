@@ -70,7 +70,7 @@ taskActions.add( [ {
         apex.navigation.dialog(
             "f?p=&APP_ID.:20:&SESSION.",
             { title: "New Task", modal: true },
-            null,
+            "task-dialog",
             apex.jQuery( "#task_board" )
         );
     }
@@ -125,4 +125,3 @@ Use shortcuts sparingly and avoid conflicts with browser, operating system, and 
 - Update action enabled/disabled state when selection or context changes.
 - Clean up custom contexts with `removeContext` if the DOM region is removed.
 - Prefer scoped contexts for reusable components so shortcuts only apply when focus is inside the component.
-

@@ -60,11 +60,7 @@ Use the methods when you need the optional `displayValue` or `suppressChangeEven
 Use the third `setValue` argument when a programmatic update should not fire Dynamic Actions bound to change.
 
 ```javascript
-apex.item( "P10_STATUS" ).setValue(
-    "DRAFT",
-    null,
-    true
-);
+apex.item( "P10_STATUS" ).setValue( "DRAFT", null, true );
 ```
 
 For values that should trigger Dynamic Actions, omit the third argument or pass `false`.

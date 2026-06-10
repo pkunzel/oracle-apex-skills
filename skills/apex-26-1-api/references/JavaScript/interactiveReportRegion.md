@@ -165,7 +165,12 @@ The current row or null if not supported. Type jQuery Example This example gets 
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.getCurrentRow();
+const ir = apex.region( "orders_ir" );
+const currentRow$ = ir.getCurrentRow();
+
+if ( currentRow$ ) {
+    currentRow$.addClass( "is-current-order" );
+}
 ```
 
 ## getCurrentRowValue
@@ -183,7 +188,12 @@ The current row value or null if not supported. Type string
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.getCurrentRowValue();
+const ir = apex.region( "orders_ir" );
+const orderId = ir.getCurrentRowValue();
+
+if ( orderId ) {
+    apex.item( "P20_ORDER_ID" ).setValue( orderId );
+}
 ```
 
 ## getSelectedValues
@@ -201,7 +211,10 @@ Array of selected record values. Returns null if selection is not supported. Typ
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.getSelectedValues();
+const ir = apex.region( "orders_ir" );
+const orderIds = ir.getSelectedValues() || [];
+
+apex.item( "P20_SELECTED_ORDERS" ).setValue( orderIds.join( ":" ) );
 ```
 
 ## getSelection
@@ -219,7 +232,12 @@ The selected row elements as a jQuery collection. Returns null if selection isn'
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.getSelection();
+const ir = apex.region( "orders_ir" );
+const selectedRows$ = ir.getSelection();
+
+if ( selectedRows$ ) {
+    selectedRows$.addClass( "is-selected-order" );
+}
 ```
 
 ## getViewName
@@ -237,7 +255,9 @@ The current view mode. Type string Example The following example gets the curren
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.getViewName();
+const ir = apex.region( "orders_ir" );
+
+apex.debug.info( "Current Interactive Report view: %s", ir.getViewName() );
 ```
 
 ## refresh
@@ -257,9 +277,9 @@ Refreshes the report with new data from the server.
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.refresh(
-    null
-);
+const ir = apex.region( "orders_ir" );
+
+ir.refresh( true );
 ```
 
 ## selectAll
@@ -280,10 +300,11 @@ Select all the rows in the report that can be selected. Typically this applies t
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.selectAll(
-    null,
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+
+ir.selectAll(
+    true,
+    false
 );
 ```
 
@@ -305,9 +326,12 @@ Sets the last focused row to the given pRow$. If pRow$ is not a row or not in th
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.setCurrentRow(
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+const row$ = ir.element.find( "tr[data-id='1001']" );
+
+ir.setCurrentRow(
+    row$,
+    true
 );
 ```
 
@@ -329,9 +353,11 @@ Sets the last focused row to the one with the given pRowValue. If no row has the
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.setCurrentRowValue(
-    "Example",
-    null
+const ir = apex.region( "orders_ir" );
+
+ir.setCurrentRowValue(
+    "1001",
+    true
 );
 ```
 
@@ -358,11 +384,14 @@ Count of the rows actually selected or -1 if selection is not supported. Type nu
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.setSelectedValues(
-    "Example",
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+const selectedCount = ir.setSelectedValues(
+    [ "1001", "1002" ],
+    true,
+    false
 );
+
+apex.debug.info( "Selected %s rendered order rows.", selectedCount );
 ```
 
 ## setSelection
@@ -384,10 +413,13 @@ Set the selected rows. Triggers the apex.event:apexselectionchange event if the 
 ### Simple Example
 
 ```javascript
-interactiveReportRegion.setSelection(
-    null,
-    null,
-    null
+const ir = apex.region( "orders_ir" );
+const rows$ = ir.element.find( "tr[data-id='1001'], tr[data-id='1002']" );
+
+ir.setSelection(
+    rows$,
+    true,
+    false
 );
 ```
 

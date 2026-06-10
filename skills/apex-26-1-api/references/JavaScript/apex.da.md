@@ -99,12 +99,18 @@ The following example shows a typical use case of handleAjaxErrors.
 ### Simple Example
 
 ```javascript
-apex.da.handleAjaxErrors(
-    null,
-    "Example",
-    null,
-    function() {}
-);
+const daContext = this;
+
+apex.server.plugin( daContext.action.ajaxIdentifier, {
+    x01: apex.item( "P10_AGENT_ID" ).getValue()
+} ).fail( function( jqXHR, textStatus, errorThrown ) {
+    apex.da.handleAjaxErrors(
+        jqXHR,
+        textStatus,
+        errorThrown,
+        daContext.resumeCallback
+    );
+} );
 ```
 
 ## resume
@@ -126,8 +132,8 @@ For Dynamic Action plug-in developers that write plug-ins that perform Ajax call
 
 ```javascript
 apex.da.resume(
-    function() {},
-    null
+    this.resumeCallback,
+    false
 );
 ```
 

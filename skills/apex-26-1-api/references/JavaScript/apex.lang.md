@@ -108,9 +108,10 @@ Add messages for use by apex.lang.getMessage and the format functions. Can be ca
 ### Simple Example
 
 ```javascript
-apex.lang.addMessages(
-    null
-);
+apex.lang.addMessages( {
+    ORDER_SAVED: "Order saved.",
+    PROCESS_STATUS: "Process %0% complete"
+} );
 ```
 
 ## clearMessages
@@ -154,9 +155,9 @@ The formatted message text. Type string Examples This example using positional p
 ### Simple Example
 
 ```javascript
-apex.lang.format(
-    null,
-    "Example"
+const totalText = apex.lang.format(
+    "Total cost: $%0",
+    "34.00"
 );
 ```
 
@@ -187,9 +188,13 @@ The localized and formatted message text. If the key is not found then the key i
 ### Simple Example
 
 ```javascript
-apex.lang.formatMessage(
-    null,
-    "Example"
+apex.lang.addMessages( {
+    PROCESS_STATUS: "Process %0% complete"
+} );
+
+const statusText = apex.lang.formatMessage(
+    "PROCESS_STATUS",
+    60
 );
 ```
 
@@ -220,9 +225,13 @@ The localized and formatted message text. If the key is not found then the key i
 ### Simple Example
 
 ```javascript
-apex.lang.formatMessageNoEscape(
-    null,
-    "Example"
+apex.lang.addMessages( {
+    STATUS_BADGE: "Status: %0"
+} );
+
+const badgeHtml = apex.lang.formatMessageNoEscape(
+    "STATUS_BADGE",
+    "<span class=\"u-success-text\">Ready</span>"
 );
 ```
 
@@ -253,9 +262,9 @@ The formatted message text. Type string Examples This example using positional p
 ### Simple Example
 
 ```javascript
-apex.lang.formatNoEscape(
-    null,
-    "Example"
+const badgeHtml = apex.lang.formatNoEscape(
+    "Status: %0",
+    "<span class=\"u-success-text\">Ready</span>"
 );
 ```
 
@@ -280,9 +289,7 @@ The localized message text. If the key is not found then the key is returned. Ty
 ### Simple Example
 
 ```javascript
-apex.lang.getMessage(
-    null
-);
+const okLabel = apex.lang.getMessage( "OK_BTN_LABEL" );
 ```
 
 ## hasMessage
@@ -306,9 +313,9 @@ true if the given message exists and false otherwise. Type boolean Example This 
 ### Simple Example
 
 ```javascript
-apex.lang.hasMessage(
-    null
-);
+if ( apex.lang.hasMessage( "EXTRA_MESSAGE" ) ) {
+    apex.message.alert( apex.lang.getMessage( "EXTRA_MESSAGE" ) );
+}
 ```
 
 ## loadMessages
@@ -332,9 +339,10 @@ promise resolved (with no data) when messages are available, rejected (with no d
 ### Simple Example
 
 ```javascript
-apex.lang.loadMessages(
-    null
-);
+apex.lang.loadMessages( [ "MY_MESSAGE1", "MY_MESSAGE2" ] )
+    .then( function() {
+        apex.message.alert( apex.lang.getMessage( "MY_MESSAGE1" ) );
+    } );
 ```
 
 ## loadMessagesIfNeeded
@@ -356,8 +364,10 @@ Load additional messages from the server only if they are not already loaded.
 
 ```javascript
 apex.lang.loadMessagesIfNeeded(
-    null,
-    function() {}
+    [ "AI_AGENT_ERROR" ],
+    function() {
+        apex.message.alert( apex.lang.getMessage( "AI_AGENT_ERROR" ) );
+    }
 );
 ```
 

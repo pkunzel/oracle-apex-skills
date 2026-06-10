@@ -87,9 +87,7 @@ Closes the dialog window.
 ### Simple Example
 
 ```javascript
-apex.navigation.dialog.cancel(
-    null
-);
+apex.navigation.dialog.cancel( true );
 ```
 
 ## close
@@ -111,8 +109,11 @@ Executes an action and then closes the dialog window.
 
 ```javascript
 apex.navigation.dialog.close(
-    null,
-    null
+    true,
+    {
+        P30_ORDER_ID: apex.item( "P30_ORDER_ID" ).getValue(),
+        P30_STATUS: apex.item( "P30_STATUS" ).getValue()
+    }
 );
 ```
 
