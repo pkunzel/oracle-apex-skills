@@ -1,6 +1,6 @@
 ---
 name: apex-26-1-api
-description: Use when writing, reviewing, debugging, or explaining Oracle APEX 26.1 PL/SQL API package calls, JavaScript apex namespace APIs, client/server Ajax patterns, page item and region code, APEX plug-in client/server code, or mixed PL/SQL and JavaScript behavior in Oracle APEX applications.
+description: Use only when writing, reviewing, debugging, or explaining Oracle APEX 26.1 application code that uses APEX 26.1 APIs. Use for PL/SQL only when the code runs in an Oracle APEX project and calls APEX PL/SQL packages. Use for JavaScript only when working with Oracle APEX page, plug-in, theme, or static JavaScript files that use APEX JavaScript APIs such as the apex namespace.
 metadata:
   short-description: Oracle APEX 26.1 PL/SQL and JavaScript APIs
 ---
