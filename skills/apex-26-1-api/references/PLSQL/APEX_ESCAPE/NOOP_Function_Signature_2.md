@@ -38,13 +38,10 @@ APEX_ESCAPE.NOOP (
 
 ```sql
 declare
-    l_result CLOB;
+    l_result clob;
 begin
-    l_result := apex_escape.NOOP(
-        p_string => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.noop(p_string => to_clob('<span>already escaped upstream</span>'));
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

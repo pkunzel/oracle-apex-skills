@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.REMOVE_DEBUG_BY_VIEW(
-        p_application_id => 1,
-        p_view_id => 1
+    apex_debug.remove_debug_by_view(
+        p_application_id => :APP_ID,
+        p_view_id        => apex_debug.get_page_view_id
     );
 end;
 /
 ```
-

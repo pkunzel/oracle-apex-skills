@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.LOG_PAGE_SESSION_STATE(
-        p_page_id => 1,
+    apex_debug.log_page_session_state(
+        p_page_id => :APP_PAGE_ID,
         p_enabled => true,
-        p_level => null
+        p_level   => apex_debug.c_log_level_app_trace
     );
 end;
 /
 ```
-

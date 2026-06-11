@@ -44,13 +44,17 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_valid   varchar2(1);
+    l_message clob;
 begin
-    apex_dg_data_gen.VALIDATE_INSTANCE_SETTING(
-        p_json => to_clob('Example text'),
-        p_valid => 'EXAMPLE',
-        p_message => to_clob('Example text')
+    apex_dg_data_gen.validate_instance_setting(
+        p_json    => to_clob('{"blueprint":"DEMO_ORDER_BP","table":"CUSTOMERS","rows":25}'),
+        p_valid   => l_valid,
+        p_message => l_message
     );
+
+    sys.dbms_output.put_line('Valid: ' || l_valid);
 end;
 /
 ```
-

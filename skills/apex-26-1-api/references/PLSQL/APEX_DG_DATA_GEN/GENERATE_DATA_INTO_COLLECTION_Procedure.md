@@ -50,16 +50,18 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_errors clob;
 begin
-    apex_dg_data_gen.GENERATE_DATA_INTO_COLLECTION(
-        p_blueprint => 'EXAMPLE',
-        p_format => 'EXAMPLE',
-        p_blueprint_table => 'EXAMPLE',
-        p_row_scaling => 1,
-        p_stop_after_errors => 1,
-        p_errors => to_clob('Example text')
+    apex_dg_data_gen.generate_data_into_collection(
+        p_blueprint       => 'DEMO_ORDER_BP',
+        p_format          => 'JSON',
+        p_blueprint_table => 'CUSTOMERS',
+        p_row_scaling     => 100,
+        p_errors          => l_errors
     );
+
+    -- Results are written to the package-defined APEX$DG$<blueprint name> collection.
 end;
 /
 ```
-

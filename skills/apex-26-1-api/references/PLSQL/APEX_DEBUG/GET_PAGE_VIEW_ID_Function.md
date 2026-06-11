@@ -31,11 +31,10 @@ APEX_DEBUG.GET_PAGE_VIEW_ID (
 
 ```sql
 declare
-    l_result NUMBER;
+    l_view_id number;
 begin
-    l_result := apex_debug.GET_PAGE_VIEW_ID;
-    sys.dbms_output.put_line('Result captured.');
+    l_view_id := apex_debug.get_page_view_id;
+    sys.dbms_output.put_line('Current debug page view: ' || l_view_id);
 end;
 /
 ```
-

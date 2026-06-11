@@ -59,19 +59,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.UPDATE_DATA_SOURCE(
-        p_blueprint => 'EXAMPLE',
-        p_name => 'EXAMPLE',
-        p_new_name => 'EXAMPLE',
-        p_data_source_type => 'EXAMPLE',
-        p_table => 'EXAMPLE',
-        p_preserve_case => 'EXAMPLE',
-        p_sql_query => to_clob('Example text'),
-        p_where_clause => 'EXAMPLE',
-        p_inline_data => to_clob('Example text'),
-        p_order_by_column => 'EXAMPLE'
+    apex_dg_data_gen.update_data_source(
+        p_blueprint        => 'DEMO_ORDER_BP',
+        p_name             => 'ACTIVE_PRODUCTS',
+        p_data_source_type => 'SQL_QUERY',
+        p_sql_query        => 'select product_id, product_name from products where active_flag = ''Y''',
+        p_order_by_column  => 'PRODUCT_NAME'
     );
 end;
 /
 ```
-

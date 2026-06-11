@@ -31,11 +31,11 @@ APEX_DEBUG.GET_LAST_MESSAGE_ID (
 
 ```sql
 declare
-    l_result NUMBER;
+    l_message_id number;
 begin
-    l_result := apex_debug.GET_LAST_MESSAGE_ID;
-    sys.dbms_output.put_line('Result captured.');
+    apex_debug.info('Created before reading the last debug message id.');
+    l_message_id := apex_debug.get_last_message_id;
+    sys.dbms_output.put_line('Last debug message id: ' || l_message_id);
 end;
 /
 ```
-

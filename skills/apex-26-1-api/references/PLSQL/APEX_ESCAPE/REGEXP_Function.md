@@ -39,11 +39,8 @@ APEX_ESCAPE.REGEXP (
 declare
     l_result varchar2(32767);
 begin
-    l_result := apex_escape.REGEXP(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.regexp(p_string => 'SKU-100(blue).');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

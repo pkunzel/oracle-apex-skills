@@ -44,14 +44,10 @@ Returns the blueprint as a JSON document in a CLOB.
 
 ```sql
 declare
-    l_result CLOB;
+    l_blueprint_json clob;
 begin
-    l_result := apex_dg_data_gen.EXPORT_BLUEPRINT(
-        p_name => 'EXAMPLE',
-        p_pretty => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_blueprint_json := apex_dg_data_gen.export_blueprint(p_blueprint => 'DEMO_ORDER_BP');
+    sys.dbms_output.put_line(dbms_lob.substr(l_blueprint_json, 4000, 1));
 end;
 /
 ```
-

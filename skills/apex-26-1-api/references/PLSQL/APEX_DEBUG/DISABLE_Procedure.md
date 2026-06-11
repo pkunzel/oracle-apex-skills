@@ -34,8 +34,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.DISABLE;
+    apex_debug.info('Disabling debug logging after batch validation.');
+    apex_debug.disable;
 end;
 /
 ```
-

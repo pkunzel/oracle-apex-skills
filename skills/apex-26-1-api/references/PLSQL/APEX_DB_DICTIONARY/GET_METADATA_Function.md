@@ -50,17 +50,16 @@ The function returns metadata in JSON form as JSON on Oracle Database 21c and la
 
 ```sql
 declare
-    l_result JSON;
+    l_metadata clob;
 begin
-    l_result := apex_db_dictionary.GET_METADATA(
-        p_name => 'EXAMPLE',
-        p_schema => 'EXAMPLE',
-        p_object_type => 'EXAMPLE',
-        p_level => 'EXAMPLE',
-        p_etag => null
+    l_metadata := apex_db_dictionary.get_metadata(
+        p_name        => 'EMPLOYEES',
+        p_schema      => 'HR',
+        p_object_type => 'TABLE',
+        p_level       => 'ALL'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line(dbms_lob.substr(l_metadata, 4000, 1));
 end;
 /
 ```
-

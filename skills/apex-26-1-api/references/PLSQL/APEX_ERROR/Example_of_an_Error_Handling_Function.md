@@ -22,5 +22,35 @@ Use this page when code needs the `APEX_ERROR.Example of an Error Handling Funct
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+```sql
+create or replace function app_error_handler (
+    p_error in apex_error.t_error )
+    return apex_error.t_error_result
+is
+    l_result          apex_error.t_error_result;
+    l_constraint_name varchar2(255);
+begin
+    l_result := apex_error.init_error_result(p_error);
 
+    if p_error.is_internal_error and not p_error.is_common_runtime_error then
+        l_result.message := 'An unexpected application error occurred.';
+        l_result.additional_info := null;
+    elsif p_error.ora_sqlcode in (-1, -2291, -2292) then
+        l_constraint_name := apex_error.extract_constraint_name(p_error);
+
+        if l_constraint_name = 'ORDERS_CUSTOMER_FK' then
+            l_result.message := 'Choose an existing customer before saving the order.';
+            l_result.display_location := apex_error.c_inline_with_field_and_notif;
+            l_result.page_item_name := 'P10_CUSTOMER_ID';
+        end if;
+    end if;
+
+    apex_error.auto_set_associated_item(
+        p_error_result => l_result,
+        p_error        => p_error
+    );
+
+    return l_result;
+end;
+/
+```

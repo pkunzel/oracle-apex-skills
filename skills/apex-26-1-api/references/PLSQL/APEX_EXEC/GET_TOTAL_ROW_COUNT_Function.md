@@ -42,13 +42,31 @@ The total row count; NULL if unknown. Parent topic: APEX_EXEC
 
 ```sql
 declare
-    l_result PLS_INTEGER;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.GET_TOTAL_ROW_COUNT(
-        p_context => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location         => apex_exec.c_location_local_db,
+        p_sql_query        => 'select order_id, status from orders',
+        p_max_rows         => 25,
+        p_total_row_count  => true
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        null;
+    end loop;
+
+    sys.dbms_output.put_line('Total rows: ' || apex_exec.get_total_row_count(l_context));
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

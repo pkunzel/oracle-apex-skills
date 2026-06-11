@@ -34,10 +34,28 @@ Returns file profile of the last PARSE() invocation in JSON format.
 
 ```sql
 declare
-    l_result CLOB;
+    l_content      blob;
+    l_profile_json clob;
 begin
-    l_result := apex_data_parser.GET_FILE_PROFILE;
-    sys.dbms_output.put_line('Result captured.');
+    select blob_content
+      into l_content
+      from apex_application_temp_files
+     where name = :P10_UPLOAD;
+
+    for r in (
+        select line_number, col001 order_id, col002 customer_name
+          from table(apex_data_parser.parse(
+              p_content       => l_content,
+              p_file_name     => 'orders.csv',
+              p_max_rows      => 20,
+              p_return_rows   => 5,
+              p_add_headers_row => 'N'))
+    ) loop
+        apex_debug.info('Preview row %s: %s', r.line_number, r.customer_name);
+    end loop;
+
+    l_profile_json := apex_data_parser.get_file_profile;
+    :P10_PROFILE_JSON := l_profile_json;
 end;
 /
 ```

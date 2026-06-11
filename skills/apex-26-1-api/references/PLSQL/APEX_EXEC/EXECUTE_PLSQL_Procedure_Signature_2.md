@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_exec.EXECUTE_PLSQL(
-        p_plsql_code => to_clob('Example text')
+    apex_exec.execute_plsql(
+        p_plsql_code => 'begin order_api.reprice_order(:P10_ORDER_ID); end;'
     );
 end;
 /
 ```
-

@@ -42,15 +42,17 @@ APEX_DG_DATA_GEN.GET_EXAMPLE (
 
 ```sql
 declare
-    l_result WWV_FLOW_T_VARCHAR2;
+    l_values wwv_flow_t_varchar2;
 begin
-    l_result := apex_dg_data_gen.GET_EXAMPLE(
-        p_friendly_name => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_rows => 1
+    l_values := apex_dg_data_gen.get_example(
+        p_friendly_name => 'animal.family',
+        p_lang          => 'en',
+        p_rows          => 5
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_values.count loop
+        sys.dbms_output.put_line(l_values(i));
+    end loop;
 end;
 /
 ```
-

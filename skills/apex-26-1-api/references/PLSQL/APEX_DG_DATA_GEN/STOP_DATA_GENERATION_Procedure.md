@@ -41,10 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.STOP_DATA_GENERATION(
-        p_blueprint => 'EXAMPLE'
-    );
+    apex_dg_data_gen.stop_data_generation(p_blueprint => 'DEMO_ORDER_BP');
 end;
 /
 ```
-

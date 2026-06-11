@@ -42,13 +42,10 @@ Return Description VARCHAR2 The escaped string.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.JSON(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.json(p_string => 'Line 1' || chr(10) || '"quoted" value');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

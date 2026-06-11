@@ -22,5 +22,29 @@ Use this page when code needs the `APEX_DATA_LOADING.Data Types` data types. Con
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+The package exposes the `t_data_load_result` record returned by `LOAD_DATA`.
 
+```sql
+type t_data_load_result is record(
+    processed_rows pls_integer,
+    error_rows     pls_integer
+);
+```
+
+Use the returned counts to decide whether to continue the workflow or route the user to load-error review.
+
+```sql
+declare
+    l_result apex_data_loading.t_data_load_result;
+begin
+    l_result := apex_data_loading.load_data(
+        p_static_id    => 'ORDER_IMPORT',
+        p_data_to_load => :P30_CSV_TEXT
+    );
+
+    if l_result.error_rows > 0 then
+        apex_debug.warn('Rows rejected during load: %s', l_result.error_rows);
+    end if;
+end;
+/
+```

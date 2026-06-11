@@ -41,10 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.REMOVE_BLUEPRINT(
-        p_name => 'EXAMPLE'
-    );
+    apex_dg_data_gen.remove_blueprint(p_blueprint => 'DEMO_ORDER_BP_COPY');
 end;
 /
 ```
-

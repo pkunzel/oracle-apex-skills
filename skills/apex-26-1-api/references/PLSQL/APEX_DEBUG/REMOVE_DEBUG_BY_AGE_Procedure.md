@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.REMOVE_DEBUG_BY_AGE(
-        p_application_id => 1,
-        p_older_than_days => 1
+    apex_debug.remove_debug_by_age(
+        p_application_id  => :APP_ID,
+        p_older_than_days => 14
     );
 end;
 /
 ```
-

@@ -41,14 +41,8 @@ Returns true , when credentials are correct, false otherwise.
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_exec.IS_REMOTE_SQL_AUTH_VALID(
-        p_server_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_exec.is_remote_sql_auth_valid(p_server_static_id => 'REMOTE_HR') then sys.dbms_output.put_line('Remote SQL credentials are valid.'); end if;
 end;
 /
 ```
-

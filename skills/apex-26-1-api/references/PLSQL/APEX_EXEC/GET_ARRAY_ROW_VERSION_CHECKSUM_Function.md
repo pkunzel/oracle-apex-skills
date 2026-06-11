@@ -42,13 +42,40 @@ Row version checksum for the nested current array row. See Also: SET_ARRAY_ROW_V
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_checksum     varchar2(32767);
 begin
-    l_result := apex_exec.GET_ARRAY_ROW_VERSION_CHECKSUM(
-        p_context => to_clob('Example text')
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'LINES', apex_exec.c_data_type_array);
+
+    l_context := apex_exec.open_rest_source_dml_context(
+        p_static_id         => 'ORDERS_API',
+        p_columns           => l_columns,
+        p_array_column_name => 'lines'
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    apex_exec.add_dml_array_row(
+        p_context         => l_context,
+        p_column_name     => 'LINES',
+        p_column_position => 2,
+        p_operation       => apex_exec.c_dml_operation_update
+    );
+    apex_exec.set_array_row_version_checksum(l_context, :P10_LINE_CHECKSUM);
+
+    l_checksum := apex_exec.get_array_row_version_checksum(l_context);
+    sys.dbms_output.put_line(l_checksum);
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

@@ -44,14 +44,13 @@ The table ID.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_table_id number;
 begin
-    l_result := apex_dg_data_gen.GET_BP_TABLE_ID(
-        p_bp_id => 1,
-        p_table_name => 'EXAMPLE'
+    l_table_id := apex_dg_data_gen.get_bp_table_id(
+        p_blueprint  => 'DEMO_ORDER_BP',
+        p_table_name => 'CUSTOMERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+    sys.dbms_output.put_line('Table id: ' || l_table_id);
 end;
 /
 ```
-

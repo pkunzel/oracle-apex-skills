@@ -43,14 +43,13 @@ TRUE , if the file name matches the specified extension. FALSE otherwise.
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_data_parser.ASSERT_FILE_TYPE(
-        p_file_name => 'EXAMPLE',
-        p_file_type => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_data_parser.assert_file_type(
+        p_file_name => 'orders.csv',
+        p_file_type => apex_data_parser.c_file_type_csv
+    ) then
+        apex_debug.info('Upload has a CSV file extension.');
+    end if;
 end;
 /
 ```

@@ -76,27 +76,33 @@ This function returns: the export file as object which includes the contents, MI
 
 ```sql
 declare
-    l_result T_EXPORT;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_export       apex_data_export.t_export;
 begin
-    l_result := apex_data_export.EXPORT(
-        p_context => to_clob('Example text'),
-        p_format => null,
-        p_as_clob => true,
-        p_columns => null,
-        p_column_groups => null,
-        p_aggregates => null,
-        p_highlights => null,
-        p_file_name => 'EXAMPLE',
-        p_print_config => null,
-        p_page_header => 'EXAMPLE',
-        p_page_footer => 'EXAMPLE',
-        p_supplemental_text => to_clob('Example text'),
-        p_csv_enclosed_by => 'EXAMPLE',
-        p_csv_separator => 'EXAMPLE',
-        p_pdf_accessible => true,
-        p_xml_include_declaration => true
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => q'[select order_id, customer_name, order_total, status from orders]'
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    l_export := apex_data_export.export(
+        p_context     => l_context,
+        p_format      => apex_data_export.c_format_csv,
+        p_as_clob     => true,
+        p_file_name   => 'orders',
+        p_page_header => 'Open Orders'
+    );
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+    apex_debug.info('Created export %s as %s.', l_export.file_name, l_export.format);
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```

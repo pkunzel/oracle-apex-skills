@@ -49,14 +49,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_error.ADD_ERROR(
-        p_message => to_clob('Example text'),
-        p_additional_info => 'EXAMPLE',
-        p_display_location => 'EXAMPLE',
-        p_page_item_name => 'EXAMPLE',
-        p_ignore_ora_error => true
+    apex_error.add_error(
+        p_message          => 'Quantity must be greater than zero.',
+        p_display_location => apex_error.c_inline_with_field_and_notif,
+        p_page_item_name   => 'P10_QUANTITY'
     );
 end;
 /
 ```
-

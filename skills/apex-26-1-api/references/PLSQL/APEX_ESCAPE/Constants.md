@@ -10,6 +10,16 @@ Parent package: [APEX_ESCAPE](../APEX_ESCAPE.md)
 
 The APEX_ESCAPE package uses the following constants.
 
+## Constants
+
+```sql
+c_ldap_dn_reserved_chars     -- reserved characters for LDAP distinguished names
+c_ldap_search_reserved_chars -- reserved characters for LDAP search filters
+c_html_allowlist_tags        -- default tags allowed by HTML_ALLOWLIST and HTML_ALLOWLIST_CLOB
+```
+
+Use the package constants as defaults instead of hard-coded reserved-character lists when calling `LDAP_DN`, `LDAP_SEARCH_FILTER`, `HTML_ALLOWLIST`, or `HTML_ALLOWLIST_CLOB`.
+
 ## When To Use
 
 Use this page when code needs the `APEX_ESCAPE.Constants` constants. Confirm security, workspace, and session requirements for your calling context.
@@ -22,5 +32,13 @@ Use this page when code needs the `APEX_ESCAPE.Constants` constants. Confirm sec
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the allowlist and reserved-character constants when you need the documented defaults explicitly:
 
+```sql
+begin
+    sys.dbms_output.put_line(apex_escape.c_html_allowlist_tags);
+    sys.dbms_output.put_line(apex_escape.ldap_dn('CN=Doe, Jane+Sales'));
+    sys.dbms_output.put_line(apex_escape.ldap_search_filter('jane*(doe)'));
+end;
+/
+```

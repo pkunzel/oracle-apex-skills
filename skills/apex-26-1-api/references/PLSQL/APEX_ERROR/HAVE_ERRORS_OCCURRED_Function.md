@@ -30,12 +30,10 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_error.HAVE_ERRORS_OCCURRED;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_error.have_errors_occurred then
+        apex_debug.warn('Validation errors have been added to the current request.');
+    end if;
 end;
 /
 ```
-

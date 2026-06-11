@@ -56,19 +56,21 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_output    blob;
+    l_file_ext  varchar2(255);
+    l_mime_type varchar2(255);
+    l_errors    clob;
 begin
-    apex_dg_data_gen.GENERATE_DATA(
-        p_blueprint => 'EXAMPLE',
-        p_format => 'EXAMPLE',
-        p_blueprint_table => 'EXAMPLE',
-        p_row_scaling => 1,
-        p_stop_after_errors => 1,
-        p_output => null,
-        p_file_ext => 'EXAMPLE',
-        p_mime_type => 'EXAMPLE',
-        p_errors => to_clob('Example text')
+    apex_dg_data_gen.generate_data(
+        p_blueprint     => 'DEMO_ORDER_BP',
+        p_format        => 'CSV',
+        p_row_scaling   => 100,
+        p_output        => l_output,
+        p_file_ext      => l_file_ext,
+        p_mime_type     => l_mime_type,
+        p_errors        => l_errors
     );
 end;
 /
 ```
-

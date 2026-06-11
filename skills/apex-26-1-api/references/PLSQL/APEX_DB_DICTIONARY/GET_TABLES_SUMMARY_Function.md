@@ -52,18 +52,18 @@ This function returns a CLOB summary for all matching tables/views, including re
 
 ```sql
 declare
-    l_result CLOB;
+    l_summary clob;
 begin
-    l_result := apex_db_dictionary.GET_TABLES_SUMMARY(
-        p_regex => 'EXAMPLE',
-        p_owner => 'EXAMPLE',
-        p_object_type => 'EXAMPLE',
-        p_include_comments => true,
+    l_summary := apex_db_dictionary.get_tables_summary(
+        p_regex               => '^EMP',
+        p_owner               => 'HR',
+        p_object_type         => 'TABLE',
+        p_include_comments    => true,
         p_include_annotations => true,
-        p_format => null
+        p_format              => apex_db_dictionary.c_markdown
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line(dbms_lob.substr(l_summary, 4000, 1));
 end;
 /
 ```
-

@@ -26,5 +26,17 @@ This is a procedure and does not return a value.
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+```sql
+declare
+    l_parameters apex_exec.t_parameters;
+begin
+    apex_exec.add_parameter(l_parameters, 'order_id', :P10_ORDER_ID);
 
+    apex_exec.execute_rest_source(
+        p_static_id           => 'ORDERS_API',
+        p_operation_static_id => 'submit-order',
+        p_parameters          => l_parameters
+    );
+end;
+/
+```

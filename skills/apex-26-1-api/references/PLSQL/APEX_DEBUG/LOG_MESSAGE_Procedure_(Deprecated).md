@@ -49,12 +49,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.LOG_MESSAGE(
-        p_message => to_clob('Example text'),
+    apex_debug.log_message(
+        p_message => 'Legacy debug hook reached for order ' || :P10_ORDER_ID,
         p_enabled => true,
-        p_level => null
+        p_level   => apex_debug.c_log_level_app_trace
     );
 end;
 /
 ```
-

@@ -58,18 +58,18 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_columns apex_data_export.t_columns;
 begin
-    apex_data_export.ADD_COLUMN(
-        p_columns => null,
-        p_name => null,
-        p_heading => 'EXAMPLE',
-        p_format_mask => 'EXAMPLE',
-        p_heading_alignment => null,
-        p_value_alignment => null,
-        p_width => 1,
-        p_is_column_break => true,
-        p_is_frozen => true,
-        p_column_group_idx => 1
+    apex_data_export.add_column(
+        p_columns           => l_columns,
+        p_name              => 'ORDER_TOTAL',
+        p_heading           => 'Order Total',
+        p_format_mask       => 'FML999G999G990D00',
+        p_heading_alignment => apex_data_export.c_align_end,
+        p_value_alignment   => apex_data_export.c_align_end,
+        p_width             => 14,
+        p_is_frozen         => true
     );
 end;
 /

@@ -60,22 +60,20 @@ This function returns a CLOB containing formatted descriptions for all tables/vi
 
 ```sql
 declare
-    l_result CLOB;
+    l_info clob;
 begin
-    l_result := apex_db_dictionary.GET_TABLE_INFO_REGEX(
-        p_regex => 'EXAMPLE',
-        p_owner => 'EXAMPLE',
-        p_object_type => 'EXAMPLE',
-        p_include_constraints => true,
-        p_include_indexes => true,
-        p_include_comments => true,
-        p_include_annotations => true,
-        p_include_domains => true,
-        p_include_virtual_columns => true,
-        p_format => null
+    l_info := apex_db_dictionary.get_table_info_regex(
+        p_regex                   => '^EMP',
+        p_owner                   => 'HR',
+        p_object_type             => 'TABLE',
+        p_include_constraints     => true,
+        p_include_indexes         => true,
+        p_include_comments        => true,
+        p_include_virtual_columns => false,
+        p_format                  => apex_db_dictionary.c_markdown
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line(dbms_lob.substr(l_info, 4000, 1));
 end;
 /
 ```
-

@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_data_parser.SET_PARSER_FLAGS(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE'
+    apex_data_parser.set_parser_flags(
+        p_name  => 'CSV_BACKSLASH_ESCAPING',
+        p_value => 'N'
     );
 end;
 /

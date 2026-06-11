@@ -41,10 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_escape.SET_HTML_ESCAPING_MODE(
-        p_mode => 'EXAMPLE'
-    );
+    apex_escape.set_html_escaping_mode(p_mode => 'E');
+    sys.dbms_output.put_line(apex_escape.html('Price <= 10 & name = "ACME"'));
 end;
 /
 ```
-

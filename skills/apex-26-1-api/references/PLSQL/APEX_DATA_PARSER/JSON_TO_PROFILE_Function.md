@@ -36,12 +36,16 @@ Returns the file profile as an instance of the t_file_profile record type.
 
 ```sql
 declare
-    l_result T_FILE_PROFILE;
+    l_profile apex_data_parser.t_file_profile;
 begin
-    l_result := apex_data_parser.JSON_TO_PROFILE(
-        p_json => to_clob('Example text')
+    l_profile := apex_data_parser.json_to_profile(
+        p_json => :P10_PROFILE_JSON
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_profile.file_type = apex_data_parser.c_file_type_csv then
+        apex_debug.info('Profile describes a CSV file with delimiter %s.',
+                        l_profile.csv_delimiter);
+    end if;
 end;
 /
 ```

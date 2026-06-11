@@ -39,15 +39,26 @@ APEX_ERROR.EXTRACT_CONSTRAINT_NAME (
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
+create or replace function app_error_handler (
+    p_error in apex_error.t_error )
+    return apex_error.t_error_result
+is
+    l_result          apex_error.t_error_result;
+    l_constraint_name varchar2(255);
 begin
-    l_result := apex_error.EXTRACT_CONSTRAINT_NAME(
-        p_error => null,
-        p_include_schema => true
+    l_result := apex_error.init_error_result(p_error);
+    l_constraint_name := apex_error.extract_constraint_name(
+        p_error          => p_error,
+        p_include_schema => false
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_constraint_name = 'ORDERS_CUSTOMER_FK' then
+        l_result.message := 'Select a valid customer before saving the order.';
+        l_result.page_item_name := 'P10_CUSTOMER_ID';
+        l_result.display_location := apex_error.c_inline_with_field_and_notif;
+    end if;
+
+    return l_result;
 end;
 /
 ```
-

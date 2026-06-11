@@ -44,13 +44,14 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_payload varchar2(32767) := rpad('payload=', 12000, '*');
 begin
-    apex_debug.LOG_LONG_MESSAGE(
-        p_message => to_clob('Example text'),
+    apex_debug.log_long_message(
+        p_message => l_payload,
         p_enabled => true,
-        p_level => null
+        p_level   => apex_debug.c_log_level_app_trace
     );
 end;
 /
 ```
-

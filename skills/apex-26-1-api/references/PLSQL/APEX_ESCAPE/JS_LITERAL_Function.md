@@ -40,14 +40,13 @@ APEX_ESCAPE.JS_LITERAL (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.JS_LITERAL(
-        p_string => 'EXAMPLE',
-        p_quote => 'EXAMPLE'
+    l_result := apex_escape.js_literal(
+        p_string => q'[can't break out]',
+        p_quote  => ''''
     );
-    sys.dbms_output.put_line('Result captured.');
+    sys.dbms_output.put_line(l_result);
 end;
 /
 ```
-

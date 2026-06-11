@@ -43,11 +43,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.RESEQUENCE_BLUEPRINT(
-        p_blueprint => 'EXAMPLE',
-        p_offset => 1
-    );
+    apex_dg_data_gen.resequence_blueprint(p_blueprint => 'DEMO_ORDER_BP', p_offset => 10);
 end;
 /
 ```
-

@@ -45,12 +45,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_escape.SET_CSV_PARAMETERS(
-        p_enclosed_by => 'EXAMPLE',
-        p_separated_by => 'EXAMPLE',
+    apex_escape.set_csv_parameters(
+        p_enclosed_by     => '"',
+        p_separated_by    => ',',
         p_escape_formulas => true
     );
+
+    sys.dbms_output.put_line(apex_escape.csv('=SUM(A1:A3)', p_quote => true));
 end;
 /
 ```
-

@@ -43,11 +43,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.REMOVE_DATA_SOURCE(
-        p_blueprint => 'EXAMPLE',
-        p_name => 'EXAMPLE'
-    );
+    apex_dg_data_gen.remove_data_source(p_blueprint => 'DEMO_ORDER_BP', p_name => 'ACTIVE_PRODUCTS');
 end;
 /
 ```
-

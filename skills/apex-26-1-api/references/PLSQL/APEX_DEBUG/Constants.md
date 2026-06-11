@@ -10,6 +10,16 @@ Parent package: [APEX_DEBUG](../APEX_DEBUG.md)
 
 The APEX_DEBUG package uses the following constants.
 
+## Log Levels
+
+- `c_log_level_error`: critical errors.
+- `c_log_level_warn`: less critical errors.
+- `c_log_level_info`: default level when debugging is enabled.
+- `c_log_level_app_enter`: application procedure/function entry messages.
+- `c_log_level_app_trace`: application trace messages.
+- `c_log_level_engine_enter`: APEX engine procedure/function entry messages.
+- `c_log_level_engine_trace`: APEX engine trace messages.
+
 ## When To Use
 
 Use this page when code needs the `APEX_DEBUG.Constants` constants. Confirm security, workspace, and session requirements for your calling context.
@@ -22,5 +32,15 @@ Use this page when code needs the `APEX_DEBUG.Constants` constants. Confirm secu
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
-
+```sql
+begin
+    apex_debug.enable(p_level => apex_debug.c_log_level_info);
+    apex_debug.message(
+        p_message => 'Preparing order %s for customer %s',
+        p0        => :P10_ORDER_ID,
+        p1        => :P10_CUSTOMER_ID,
+        p_level   => apex_debug.c_log_level_info
+    );
+end;
+/
+```

@@ -68,13 +68,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.MESSAGE(
-        p_message => to_clob('Example text'),
-        p_max_length => 1,
-        p_level => null,
-        p_force => true
+    apex_debug.message(
+        p_message    => 'Inventory check for product %s returned %s units',
+        p0           => :P20_PRODUCT_ID,
+        p1           => :P20_AVAILABLE_QTY,
+        p_max_length => 2000,
+        p_level      => apex_debug.c_log_level_info
     );
 end;
 /
 ```
-

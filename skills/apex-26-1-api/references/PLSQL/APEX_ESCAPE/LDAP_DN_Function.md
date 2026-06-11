@@ -42,15 +42,10 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.LDAP_DN(
-        p_string => 'EXAMPLE',
-        p_reserved_chars => 'EXAMPLE',
-        p_escaped_non_ascii => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.ldap_dn(p_string => 'CN=Doe, Jane+Sales');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

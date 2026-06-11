@@ -38,13 +38,15 @@ APEX_DG_DATA_GEN.GET_WEIGHTED_INLINE_DATA (
 
 ```sql
 declare
-    l_result WWV_FLOW_T_VARCHAR2;
+    l_values wwv_flow_t_varchar2;
 begin
-    l_result := apex_dg_data_gen.GET_WEIGHTED_INLINE_DATA(
-        p_data => 'EXAMPLE'
+    l_values := apex_dg_data_gen.get_weighted_inline_data(
+        p_data => 'STANDARD,70;EXPRESS,25;OVERNIGHT,5'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. least(l_values.count, 10) loop
+        sys.dbms_output.put_line(l_values(i));
+    end loop;
 end;
 /
 ```
-

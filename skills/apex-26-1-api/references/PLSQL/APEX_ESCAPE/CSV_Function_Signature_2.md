@@ -42,15 +42,10 @@ APEX_ESCAPE.CSV (
 
 ```sql
 declare
-    l_result CLOB;
+    l_result clob;
 begin
-    l_result := apex_escape.CSV(
-        p_string => to_clob('Example text'),
-        p_quote => true,
-        p_strip_html => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.csv(p_string => to_clob('<b>ACME, Inc.</b>'), p_quote => true, p_strip_html => true);
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

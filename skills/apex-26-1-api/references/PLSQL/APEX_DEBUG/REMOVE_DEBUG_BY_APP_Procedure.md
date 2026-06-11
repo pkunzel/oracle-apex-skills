@@ -41,10 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.REMOVE_DEBUG_BY_APP(
-        p_application_id => 1
-    );
+    apex_debug.remove_debug_by_app(p_application_id => :APP_ID);
 end;
 /
 ```
-

@@ -42,12 +42,33 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    apex_exec.OPEN_ARRAY(
-        p_context => to_clob('Example text'),
-        p_column_name => 'EXAMPLE'
+    l_context := apex_exec.open_rest_source_query(
+        p_static_id         => 'ORDERS_API',
+        p_array_column_name => 'lines',
+        p_max_rows          => 10
     );
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        apex_exec.open_array(l_context, 'lines');
+        while apex_exec.next_array_row(l_context) loop
+            sys.dbms_output.put_line(apex_exec.get_varchar2(l_context, 'productCode'));
+        end loop;
+        apex_exec.close_array(l_context);
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

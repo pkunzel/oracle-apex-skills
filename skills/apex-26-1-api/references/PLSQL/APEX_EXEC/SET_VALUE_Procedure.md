@@ -50,14 +50,34 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    apex_exec.SET_VALUE(
-        p_context => to_clob('Example text'),
-        p_column_position => 1,
-        p_value => 'EXAMPLE',
-        p_column_name => 'EXAMPLE'
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_context := apex_exec.open_local_dml_context(
+        p_columns    => l_columns,
+        p_query_type => apex_exec.c_query_type_table,
+        p_table_name => 'ORDERS'
     );
+    l_context_open := true;
+
+    apex_exec.add_dml_row(l_context, apex_exec.c_dml_operation_update);
+    apex_exec.set_value(l_context, 'ORDER_ID', :P10_ORDER_ID);
+    apex_exec.set_value(l_context, 'STATUS', 'SHIPPED');
+    apex_exec.execute_dml(l_context);
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

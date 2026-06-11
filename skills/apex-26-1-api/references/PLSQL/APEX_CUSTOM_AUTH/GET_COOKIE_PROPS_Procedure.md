@@ -48,14 +48,21 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_cookie_name   varchar2(255);
+    l_cookie_path   varchar2(4000);
+    l_cookie_domain varchar2(4000);
+    l_secure        boolean;
 begin
-    apex_custom_auth.GET_COOKIE_PROPS(
-        p_app_id => 1,
-        p_cookie_name => 'EXAMPLE',
-        p_cookie_path => 'EXAMPLE',
-        p_cookie_domain => 'EXAMPLE',
-        p_secure => true
+    apex_custom_auth.get_cookie_props(
+        p_app_id        => apex_application.g_flow_id,
+        p_cookie_name   => l_cookie_name,
+        p_cookie_path   => l_cookie_path,
+        p_cookie_domain => l_cookie_domain,
+        p_secure        => l_secure
     );
+
+    apex_debug.info('Authentication cookie name: %s', l_cookie_name);
 end;
 /
 ```

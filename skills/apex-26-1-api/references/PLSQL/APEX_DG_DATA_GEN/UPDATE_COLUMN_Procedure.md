@@ -101,40 +101,19 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.UPDATE_COLUMN(
-        p_blueprint => 'EXAMPLE',
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_new_column_name => 'EXAMPLE',
-        p_sequence => 1,
-        p_preserve_case => 'EXAMPLE',
-        p_display_name => 'EXAMPLE',
-        p_max_length => 1,
-        p_multi_value => 'EXAMPLE',
-        p_mv_format => 'EXAMPLE',
-        p_mv_unique => 'EXAMPLE',
-        p_mv_delimiter => 'EXAMPLE',
-        p_mv_min_entries => 1,
-        p_mv_max_entries => 1,
-        p_mv_partition_by => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_data_source_type => 'EXAMPLE',
-        p_data_source => 'EXAMPLE',
-        p_ds_preserve_case => 'EXAMPLE',
-        p_min_numeric_value => 1,
-        p_max_numeric_value => 1,
-        p_numeric_precision => 1,
-        p_min_date_value => sysdate,
-        p_max_date_value => sysdate,
-        p_format_mask => 'EXAMPLE',
-        p_sequence_start_with => 1,
-        p_sequence_increment => 1,
-        p_formula => 'EXAMPLE',
-        p_formula_lang => 'EXAMPLE',
-        p_custom_attributes => 'EXAMPLE',
-        p_percent_blank => 1
+    apex_dg_data_gen.update_column(
+        p_blueprint           => 'DEMO_ORDER_BP',
+        p_sequence            => 1,
+        p_table_name          => 'CUSTOMERS',
+        p_column_name         => 'CUSTOMER_ID',
+        p_new_column_name     => 'CUSTOMER_ID',
+        p_display_name        => 'Customer ID',
+        p_max_length          => 10,
+        p_data_source_type    => 'SEQUENCE',
+        p_sequence_start_with => 1000,
+        p_sequence_increment  => 1,
+        p_percent_blank       => 0
     );
 end;
 /
 ```
-

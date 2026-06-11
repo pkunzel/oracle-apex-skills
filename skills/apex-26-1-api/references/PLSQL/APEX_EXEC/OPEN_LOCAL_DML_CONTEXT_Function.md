@@ -82,30 +82,33 @@ The context object representing the DML handle.
 
 ```sql
 declare
-    l_result T_CONTEXT;
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.OPEN_LOCAL_DML_CONTEXT(
-        p_columns => null,
-        p_query_type => to_clob('Example text'),
-        p_table_owner => 'EXAMPLE',
-        p_table_name => 'EXAMPLE',
-        p_where_clause => 'EXAMPLE',
-        p_sql_query => to_clob('Example text'),
-        p_function_body => to_clob('Example text'),
-        p_function_body_language => to_clob('Example text'),
-        p_plsql_function_body => to_clob('Example text'),
-        p_with_check_option => true,
-        p_optimizer_hint => 'EXAMPLE',
-        p_dml_table_owner => 'EXAMPLE',
-        p_dml_table_name => 'EXAMPLE',
-        p_dml_plsql_code => to_clob('Example text'),
-        p_lost_update_detection => sysdate,
-        p_lock_rows => null,
-        p_lock_plsql_code => to_clob('Example text'),
-        p_sql_parameters => to_clob('Example text')
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_context := apex_exec.open_local_dml_context(
+        p_columns    => l_columns,
+        p_query_type => apex_exec.c_query_type_table,
+        p_table_name => 'ORDERS'
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    apex_exec.add_dml_row(l_context, apex_exec.c_dml_operation_update);
+    apex_exec.set_value(l_context, 'ORDER_ID', :P10_ORDER_ID);
+    apex_exec.set_value(l_context, 'STATUS', 'SHIPPED');
+    apex_exec.execute_dml(l_context);
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

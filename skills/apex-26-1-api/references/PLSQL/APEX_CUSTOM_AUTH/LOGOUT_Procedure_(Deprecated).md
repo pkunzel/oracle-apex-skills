@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_custom_auth.LOGOUT(
-        p_this_app => 'EXAMPLE',
-        p_next_app_page_sess => 'EXAMPLE',
-        p_next_url => 'EXAMPLE'
+    apex_custom_auth.logout(
+        p_this_app           => :APP_ID,
+        p_next_app_page_sess => :APP_ID || ':LOGIN:' || :APP_SESSION
     );
 end;
 /

@@ -42,12 +42,38 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    apex_exec.SET_ARRAY_CURRENT_ROW(
-        p_context => to_clob('Example text'),
-        p_current_row_idx => 1
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'LINES', apex_exec.c_data_type_array);
+
+    l_context := apex_exec.open_rest_source_dml_context(
+        p_static_id         => 'ORDERS_API',
+        p_columns           => l_columns,
+        p_array_column_name => 'lines'
     );
+    l_context_open := true;
+
+    apex_exec.add_dml_array_row(
+        p_context         => l_context,
+        p_column_name     => 'LINES',
+        p_column_position => 2,
+        p_operation       => apex_exec.c_dml_operation_insert
+    );
+    apex_exec.set_array_current_row(l_context, 1);
+    apex_exec.set_array_row_version_checksum(l_context, :P10_LINE_CHECKSUM);
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

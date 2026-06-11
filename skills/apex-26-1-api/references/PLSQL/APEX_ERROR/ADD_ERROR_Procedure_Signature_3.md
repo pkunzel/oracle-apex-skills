@@ -62,15 +62,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_error.ADD_ERROR(
-        p_error_code => 'EXAMPLE',
-        p_escape_placeholders => true,
-        p_additional_info => 'EXAMPLE',
-        p_display_location => 'EXAMPLE',
-        p_page_item_name => 'EXAMPLE',
-        p_ignore_ora_error => true
+    apex_error.add_error(
+        p_error_code       => 'ORDER.MINIMUM_TOTAL',
+        p0                 => to_char(:P10_ORDER_TOTAL),
+        p_display_location => apex_error.c_inline_with_field_and_notif,
+        p_page_item_name   => 'P10_ORDER_TOTAL'
     );
 end;
 /
 ```
-

@@ -42,13 +42,37 @@ TRUE if successful. FALSE if the end of the result set has been reached. See Als
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.HAS_MORE_ARRAY_ROWS(
-        p_context => to_clob('Example text')
+    l_context := apex_exec.open_rest_source_query(
+        p_static_id         => 'ORDERS_API',
+        p_array_column_name => 'lines',
+        p_max_rows          => 10
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        apex_exec.open_array(l_context, 'lines');
+        while apex_exec.next_array_row(l_context) loop
+            sys.dbms_output.put_line(apex_exec.get_varchar2(l_context, 'productCode'));
+        end loop;
+
+        if apex_exec.has_more_array_rows(l_context) then
+            sys.dbms_output.put_line('This order has additional line rows.');
+        end if;
+
+        apex_exec.close_array(l_context);
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

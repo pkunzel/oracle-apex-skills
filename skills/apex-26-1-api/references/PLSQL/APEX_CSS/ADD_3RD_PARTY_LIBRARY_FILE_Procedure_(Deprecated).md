@@ -55,13 +55,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_css.ADD_3RD_PARTY_LIBRARY_FILE(
-        p_library => 'EXAMPLE',
-        p_file_name => 'EXAMPLE',
-        p_directory => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_media_query => to_clob('Example text'),
-        p_attributes => 'EXAMPLE'
+    apex_css.add_3rd_party_library_file(
+        p_library     => 'jquery-ui',
+        p_file_name   => 'themes/base/jquery-ui',
+        p_directory   => apex_application.g_image_prefix || 'libraries/',
+        p_version     => '1.13.2',
+        p_media_query => 'screen',
+        p_attributes  => 'data-apex-lib="jquery-ui"'
     );
 end;
 /

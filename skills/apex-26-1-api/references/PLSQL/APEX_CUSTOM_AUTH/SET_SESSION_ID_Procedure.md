@@ -41,8 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_custom_auth.SET_SESSION_ID(
-        p_session_id => 1
+    apex_custom_auth.set_session_id(
+        p_session_id => apex_custom_auth.get_next_session_id
     );
 end;
 /

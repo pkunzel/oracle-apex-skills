@@ -42,13 +42,10 @@ ID of the blueprint.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_blueprint_id number;
 begin
-    l_result := apex_dg_data_gen.GET_BLUEPRINT_ID(
-        p_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_blueprint_id := apex_dg_data_gen.get_blueprint_id(p_blueprint => 'DEMO_ORDER_BP');
+    sys.dbms_output.put_line('Blueprint id: ' || l_blueprint_id);
 end;
 /
 ```
-

@@ -46,15 +46,13 @@ TRUE if the column exists, FALSE otherwise.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_columns apex_exec.t_columns;
 begin
-    l_result := apex_exec.COLUMN_EXISTS(
-        p_columns => null,
-        p_column_name => 'EXAMPLE',
-        p_parent_column_path => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number);
+
+    if apex_exec.column_exists(l_columns, 'ORDER_ID') then
+        sys.dbms_output.put_line('ORDER_ID is in the column collection.');
+    end if;
 end;
 /
 ```
-

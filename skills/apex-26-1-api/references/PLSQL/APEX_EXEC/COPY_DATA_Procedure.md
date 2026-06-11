@@ -44,13 +44,44 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_source_context apex_exec.t_context;
+    l_target_context apex_exec.t_context;
+    l_source_open    boolean := false;
+    l_target_open    boolean := false;
+    l_columns        apex_exec.t_columns;
 begin
-    apex_exec.COPY_DATA(
-        p_from_context => to_clob('Example text'),
-        p_to_context => to_clob('Example text'),
-        p_operation_column_name => 'EXAMPLE'
+    l_source_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from staging_orders'
     );
+    l_source_open := true;
+
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_target_context := apex_exec.open_local_dml_context(
+        p_columns    => l_columns,
+        p_query_type => apex_exec.c_query_type_table,
+        p_table_name => 'ORDERS'
+    );
+    l_target_open := true;
+
+    apex_exec.copy_data(
+        p_from_context => l_source_context,
+        p_to_context   => l_target_context
+    );
+    apex_exec.execute_dml(l_target_context);
+
+    apex_exec.close(l_target_context);
+    l_target_open := false;
+    apex_exec.close(l_source_context);
+    l_source_open := false;
+exception
+    when others then
+        if l_target_open then apex_exec.close(l_target_context); end if;
+        if l_source_open then apex_exec.close(l_source_context); end if;
+        raise;
 end;
 /
 ```
-

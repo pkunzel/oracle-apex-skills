@@ -42,13 +42,25 @@ Returns the result columns count. Parent topic: APEX_EXEC
 
 ```sql
 declare
-    l_result PLS_INTEGER;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.GET_COLUMN_COUNT(
-        p_context => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders'
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    sys.dbms_output.put_line('Columns: ' || apex_exec.get_column_count(l_context));
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

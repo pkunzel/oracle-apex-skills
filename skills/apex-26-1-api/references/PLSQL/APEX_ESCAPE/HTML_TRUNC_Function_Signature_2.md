@@ -40,14 +40,10 @@ APEX_ESCAPE.HTML_TRUNC (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result clob;
 begin
-    l_result := apex_escape.HTML_TRUNC(
-        p_string => to_clob('Example text'),
-        p_length => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.html_trunc(p_string => to_clob('<strong>Quarterly revenue & margin</strong>'), p_length => 25);
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

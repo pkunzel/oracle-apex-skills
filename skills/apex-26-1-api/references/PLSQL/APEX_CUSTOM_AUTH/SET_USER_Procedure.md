@@ -41,8 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_custom_auth.SET_USER(
-        p_user => 'USER'
+    apex_custom_auth.set_user(
+        p_user => upper(:P101_USERNAME)
     );
 end;
 /

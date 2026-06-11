@@ -43,15 +43,8 @@ This function returns the enquoted object name.
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_exec.ENQUOTE_NAME(
-        p_str => 'EXAMPLE',
-        p_for_database => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    sys.dbms_output.put_line(apex_exec.enquote_name('Order Status', apex_exec.c_database_oracle));
 end;
 /
 ```
-

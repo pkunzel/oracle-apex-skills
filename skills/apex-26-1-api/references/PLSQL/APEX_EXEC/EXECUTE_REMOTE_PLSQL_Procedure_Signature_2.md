@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_exec.EXECUTE_REMOTE_PLSQL(
-        p_server_static_id => 'EXAMPLE_STATIC_ID',
-        p_plsql_code => to_clob('Example text')
+    apex_exec.execute_remote_plsql(
+        p_server_static_id => 'REMOTE_ORDERS',
+        p_plsql_code       => 'begin order_api.refresh_status; end;'
     );
 end;
 /
 ```
-

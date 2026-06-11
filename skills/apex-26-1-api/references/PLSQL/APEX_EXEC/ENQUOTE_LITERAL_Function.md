@@ -43,15 +43,8 @@ This function returns the enquoted string literal.
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_exec.ENQUOTE_LITERAL(
-        p_str => 'EXAMPLE',
-        p_for_database => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    sys.dbms_output.put_line(apex_exec.enquote_literal('ACME''s order', apex_exec.c_database_oracle));
 end;
 /
 ```
-

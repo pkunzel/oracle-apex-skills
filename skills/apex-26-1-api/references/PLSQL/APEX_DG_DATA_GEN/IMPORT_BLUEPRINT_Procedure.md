@@ -46,14 +46,18 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_blueprint_json clob;
+    l_blueprint_id   number;
 begin
-    apex_dg_data_gen.IMPORT_BLUEPRINT(
-        p_clob => to_clob('Example text'),
-        p_override_name => 'EXAMPLE',
-        p_replace => true,
-        p_blueprint_id => 1
+    l_blueprint_json := apex_dg_data_gen.export_blueprint(p_blueprint => 'DEMO_ORDER_BP');
+
+    apex_dg_data_gen.import_blueprint(
+        p_clob          => l_blueprint_json,
+        p_override_name => 'DEMO_ORDER_BP_COPY',
+        p_replace       => true,
+        p_blueprint_id  => l_blueprint_id
     );
 end;
 /
 ```
-

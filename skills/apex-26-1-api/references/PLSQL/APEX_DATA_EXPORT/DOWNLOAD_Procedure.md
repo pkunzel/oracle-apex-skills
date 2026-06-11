@@ -46,13 +46,36 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_export       apex_data_export.t_export;
 begin
-    apex_data_export.DOWNLOAD(
-        p_export => null,
-        p_content_disposition => to_clob('Example text'),
-        p_add_file_extension => true,
-        p_stop_apex_engine => true
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => q'[select order_id, customer_name, order_total from orders]'
     );
+    l_context_open := true;
+
+    l_export := apex_data_export.export(
+        p_context   => l_context,
+        p_format    => apex_data_export.c_format_xlsx,
+        p_file_name => 'orders'
+    );
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+
+    apex_data_export.download(
+        p_export              => l_export,
+        p_content_disposition => apex_data_export.c_attachment
+    );
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```

@@ -31,10 +31,10 @@ RETURN NUMBER;
 
 ```sql
 declare
-    l_result NUMBER;
+    l_security_group_id number;
 begin
-    l_result := apex_custom_auth.GET_SECURITY_GROUP_ID;
-    sys.dbms_output.put_line('Result captured.');
+    l_security_group_id := apex_custom_auth.get_security_group_id;
+    apex_debug.info('Current workspace security group ID: %s', l_security_group_id);
 end;
 /
 ```

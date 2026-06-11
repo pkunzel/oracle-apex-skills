@@ -42,12 +42,48 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_columns       apex_exec.t_columns;
+    l_source_ctx    apex_exec.t_context;
+    l_target_ctx    apex_exec.t_context;
+    l_source_open   boolean := false;
+    l_target_open   boolean := false;
 begin
-    apex_exec.SET_VALUES(
-        p_context => to_clob('Example text'),
-        p_source_context => to_clob('Example text')
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_source_ctx := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders where order_id = :P10_ORDER_ID'
     );
+    l_source_open := true;
+
+    l_target_ctx := apex_exec.open_local_dml_context(
+        p_columns    => l_columns,
+        p_query_type => apex_exec.c_query_type_table,
+        p_table_name => 'ORDERS'
+    );
+    l_target_open := true;
+
+    if apex_exec.next_row(l_source_ctx) then
+        apex_exec.add_dml_row(l_target_ctx, apex_exec.c_dml_operation_update);
+        apex_exec.set_values(
+            p_context        => l_target_ctx,
+            p_source_context => l_source_ctx
+        );
+        apex_exec.set_value(l_target_ctx, 'STATUS', 'SHIPPED');
+        apex_exec.execute_dml(l_target_ctx);
+    end if;
+
+    apex_exec.close(l_target_ctx);
+    l_target_open := false;
+    apex_exec.close(l_source_ctx);
+    l_source_open := false;
+exception
+    when others then
+        if l_target_open then apex_exec.close(l_target_ctx); end if;
+        if l_source_open then apex_exec.close(l_source_ctx); end if;
+        raise;
 end;
 /
 ```
-

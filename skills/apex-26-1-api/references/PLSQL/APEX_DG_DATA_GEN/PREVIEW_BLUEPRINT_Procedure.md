@@ -47,14 +47,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.PREVIEW_BLUEPRINT(
-        p_blueprint => null,
-        p_table_name => 'EXAMPLE',
-        p_number_of_rows => null,
-        p_data_collection => null,
-        p_header_collection => null
+    apex_dg_data_gen.preview_blueprint(
+        p_blueprint          => 'DEMO_ORDER_BP',
+        p_table_name         => 'CUSTOMERS',
+        p_number_of_rows     => 10,
+        p_data_collection    => 'DG_PREVIEW_DATA',
+        p_header_collection  => 'DG_PREVIEW_HEADERS'
     );
 end;
 /
 ```
-

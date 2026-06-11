@@ -42,13 +42,19 @@ The t_columns object describing the columns and data types.
 
 ```sql
 declare
-    l_result T_COLUMNS;
+    l_requested_columns apex_exec.t_columns;
+    l_columns           apex_exec.t_columns;
 begin
-    l_result := apex_exec.DESCRIBE_QUERY(
-        p_columns => null
+    apex_exec.add_column(l_requested_columns, 'ORDER_ID', apex_exec.c_data_type_number);
+    apex_exec.add_column(l_requested_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_columns := apex_exec.describe_query(
+        p_columns => l_requested_columns
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_columns.count loop
+        sys.dbms_output.put_line(l_columns(i).name || ': ' || apex_exec.get_data_type(l_columns(i).data_type));
+    end loop;
 end;
 /
 ```
-

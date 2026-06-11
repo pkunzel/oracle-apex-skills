@@ -62,22 +62,22 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_table_id number;
 begin
-    apex_dg_data_gen.ADD_TABLE(
-        p_blueprint => 'EXAMPLE',
-        p_sequence => 1,
-        p_table_name => 'EXAMPLE',
-        p_preserve_case => 'EXAMPLE',
-        p_display_name => 'EXAMPLE',
-        p_singular_name => 'EXAMPLE',
-        p_plural_name => 'EXAMPLE',
-        p_rows => 1,
-        p_max_rows => 1,
-        p_use_existing_table => 'EXAMPLE',
-        p_exclude_columns => 'EXAMPLE',
-        p_table_id => 1
+    apex_dg_data_gen.add_table(
+        p_blueprint          => 'DEMO_ORDER_BP',
+        p_sequence           => 1,
+        p_table_name         => 'CUSTOMERS',
+        p_display_name       => 'Customers',
+        p_singular_name      => 'Customer',
+        p_plural_name        => 'Customers',
+        p_rows               => 25,
+        p_max_rows           => 50,
+        p_use_existing_table => 'Y',
+        p_exclude_columns    => apex_t_varchar2('CREATED_BY', 'CREATED_ON'),
+        p_table_id           => l_table_id
     );
 end;
 /
 ```
-

@@ -30,11 +30,12 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_custom_auth.CURRENT_PAGE_IS_PUBLIC;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_custom_auth.current_page_is_public then
+        apex_debug.info('Current page is public; skip login enforcement.');
+    else
+        apex_debug.info('Current page requires authentication.');
+    end if;
 end;
 /
 ```

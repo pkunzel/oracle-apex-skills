@@ -54,18 +54,19 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_blueprint_id number;
 begin
-    apex_dg_data_gen.ADD_BLUEPRINT_FROM_TABLES(
-        p_name => 'EXAMPLE',
-        p_tables => 'EXAMPLE',
-        p_preserve_case => 'EXAMPLE',
-        p_exclude_columns => 'EXAMPLE',
-        p_description => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_default_schema => 'EXAMPLE',
-        p_blueprint_id => 1
+    apex_dg_data_gen.add_blueprint_from_tables(
+        p_name            => 'DEMO_ORDER_BP',
+        p_tables          => apex_t_varchar2('CUSTOMERS:25', 'ORDERS:100'),
+        p_preserve_case   => 'N',
+        p_exclude_columns => apex_t_varchar2('CREATED_BY', 'CREATED_ON'),
+        p_description     => 'Blueprint generated from existing customer and order tables.',
+        p_lang            => 'en',
+        p_default_schema  => 'HR',
+        p_blueprint_id    => l_blueprint_id
     );
 end;
 /
 ```
-

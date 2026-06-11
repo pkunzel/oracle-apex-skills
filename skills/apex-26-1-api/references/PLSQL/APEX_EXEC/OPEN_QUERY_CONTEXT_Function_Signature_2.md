@@ -64,22 +64,36 @@ The context object representing a "cursor" for the query. Parent topic: APEX_EXE
 
 ```sql
 declare
-    l_result T_CONTEXT;
+    l_columns      apex_exec.t_columns;
+    l_filters      apex_exec.t_filters;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.OPEN_QUERY_CONTEXT(
-        p_columns => null,
-        p_filters => null,
-        p_order_bys => null,
-        p_aggregation => null,
-        p_control_break => null,
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_total_row_count => true,
-        p_total_row_count_limit => 1,
-        p_sql_parameters => to_clob('Example text')
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+    apex_exec.add_filter(l_filters, apex_exec.c_filter_eq, 'STATUS', p_value => 'OPEN');
+
+    l_context := apex_exec.open_query_context(
+        p_columns         => l_columns,
+        p_filters         => l_filters,
+        p_first_row       => 1,
+        p_max_rows        => 25,
+        p_total_row_count => true
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(apex_exec.get_varchar2(l_context, 'STATUS'));
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

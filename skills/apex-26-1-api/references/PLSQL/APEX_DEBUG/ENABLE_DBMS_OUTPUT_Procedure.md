@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.ENABLE_DBMS_OUTPUT(
-        p_prefix => 'EXAMPLE'
-    );
+    apex_debug.enable(p_level => apex_debug.c_log_level_app_trace);
+    apex_debug.enable_dbms_output(p_prefix => '# APEX|');
+    apex_debug.trace('DBMS_OUTPUT mirroring is enabled for this session.');
 end;
 /
 ```
-

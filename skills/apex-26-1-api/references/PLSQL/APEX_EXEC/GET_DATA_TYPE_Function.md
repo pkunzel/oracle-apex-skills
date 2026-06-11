@@ -42,14 +42,10 @@ Signature 1 VARCHAR2 representation of the data type, as used by SQL Signature 2
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_exec.GET_DATA_TYPE(
-        p_datatype_num => null
+    sys.dbms_output.put_line(
+        apex_exec.get_data_type(p_datatype_num => apex_exec.c_data_type_timestamp_tz)
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

@@ -43,11 +43,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_exec.PURGE_JSON_SOURCE_CACHE(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_current_session_only => true
-    );
+    apex_exec.purge_json_source_cache(p_static_id => 'ORDERS_JSON', p_current_session_only => true);
 end;
 /
 ```
-

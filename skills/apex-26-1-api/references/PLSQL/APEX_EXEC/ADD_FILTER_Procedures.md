@@ -62,5 +62,24 @@ PROCEDURE ADD_FILTER (
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+```sql
+declare
+    l_filters apex_exec.t_filters;
+begin
+    apex_exec.add_filter(
+        p_filters     => l_filters,
+        p_filter_type => apex_exec.c_filter_eq,
+        p_column_name => 'STATUS',
+        p_value       => 'OPEN'
+    );
 
+    apex_exec.add_filter(
+        p_filters     => l_filters,
+        p_filter_type => apex_exec.c_filter_between,
+        p_column_name => 'ORDER_DATE',
+        p_from_value  => trunc(sysdate) - 30,
+        p_to_value    => trunc(sysdate)
+    );
+end;
+/
+```

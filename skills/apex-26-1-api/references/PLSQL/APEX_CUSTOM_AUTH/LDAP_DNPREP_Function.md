@@ -42,12 +42,13 @@ END ldap_dnprep;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_ldap_user varchar2(255);
 begin
-    l_result := apex_custom_auth.LDAP_DNPREP(
-        p_username => 'USER'
+    l_ldap_user := apex_custom_auth.ldap_dnprep(
+        p_username => 'jane.doe@example.com'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Prepared LDAP user value: %s', l_ldap_user);
 end;
 /
 ```

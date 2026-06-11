@@ -49,17 +49,15 @@ This is a procedure and does not return a value.
 
 ```sql
 declare
-    l_result ERROR;
+    l_blueprint_id number;
 begin
-    l_result := apex_dg_data_gen.ADD_BLUEPRINT_FROM_FILE(
-        p_filename => 'EXAMPLE',
-        p_application_id => 1,
-        p_override_name => 'EXAMPLE',
-        p_replace => true,
-        p_blueprint_id => 1
+    apex_dg_data_gen.add_blueprint_from_file(
+        p_filename       => 'demo-order-blueprint.json',
+        p_application_id => :APP_ID,
+        p_override_name  => 'DEMO_ORDER_BP',
+        p_replace        => true,
+        p_blueprint_id   => l_blueprint_id
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

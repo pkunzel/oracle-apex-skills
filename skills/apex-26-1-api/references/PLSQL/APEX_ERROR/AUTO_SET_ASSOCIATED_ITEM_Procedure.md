@@ -42,12 +42,20 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+create or replace function app_error_handler (
+    p_error in apex_error.t_error )
+    return apex_error.t_error_result
+is
+    l_result apex_error.t_error_result;
 begin
-    apex_error.AUTO_SET_ASSOCIATED_ITEM(
-        p_error_result => null,
-        p_error => null
+    l_result := apex_error.init_error_result(p_error);
+
+    apex_error.auto_set_associated_item(
+        p_error_result => l_result,
+        p_error        => p_error
     );
+
+    return l_result;
 end;
 /
 ```
-

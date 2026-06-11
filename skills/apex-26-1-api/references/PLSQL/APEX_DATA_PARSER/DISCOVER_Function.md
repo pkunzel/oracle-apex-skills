@@ -57,25 +57,24 @@ CLOB containing the file profile in JSON format.
 
 ```sql
 declare
-    l_result CLOB;
+    l_content      blob;
+    l_file_name    varchar2(255);
+    l_profile_json clob;
 begin
-    l_result := apex_data_parser.DISCOVER(
-        p_content => to_clob('Example text'),
-        p_file_name => 'EXAMPLE',
-        p_decimal_char => 'EXAMPLE',
-        p_xlsx_sheet_name => 'EXAMPLE',
-        p_row_selector => 'EXAMPLE',
-        p_csv_row_delimiter => 'EXAMPLE',
-        p_csv_col_delimiter => 'EXAMPLE',
-        p_csv_enclosed => 'EXAMPLE',
-        p_skip_rows => 1,
-        p_nullif => 'EXAMPLE',
-        p_force_trim_whitespace => true,
-        p_file_charset => 'EXAMPLE',
-        p_max_rows => 1,
-        p_xml_namespaces => 'EXAMPLE'
+    select blob_content, filename
+      into l_content, l_file_name
+      from apex_application_temp_files
+     where name = :P10_UPLOAD;
+
+    l_profile_json := apex_data_parser.discover(
+        p_content           => l_content,
+        p_file_name         => l_file_name,
+        p_csv_col_delimiter => ',',
+        p_file_charset      => 'AL32UTF8',
+        p_max_rows          => 100
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    :P10_PROFILE_JSON := l_profile_json;
 end;
 /
 ```

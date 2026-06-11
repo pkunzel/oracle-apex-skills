@@ -46,15 +46,16 @@ This function returns a comma-delimited list of primary key column names. Return
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_columns apex_t_varchar2;
 begin
-    l_result := apex_db_dictionary.GET_PRIMARY_KEY_COLUMNS(
-        p_table => 'EXAMPLE',
-        p_owner => 'EXAMPLE',
-        p_delimiter => 'EXAMPLE'
+    l_columns := apex_db_dictionary.get_primary_key_columns(
+        p_table => 'EMPLOYEES',
+        p_owner => 'HR'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_columns.count loop
+        sys.dbms_output.put_line(l_columns(i));
+    end loop;
 end;
 /
 ```
-

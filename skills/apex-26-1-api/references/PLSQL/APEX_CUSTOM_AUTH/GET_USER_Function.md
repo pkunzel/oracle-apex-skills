@@ -31,10 +31,10 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_user varchar2(255);
 begin
-    l_result := apex_custom_auth.GET_USER;
-    sys.dbms_output.put_line('Result captured.');
+    l_user := apex_custom_auth.get_user;
+    apex_debug.info('Current custom-auth user: %s', l_user);
 end;
 /
 ```

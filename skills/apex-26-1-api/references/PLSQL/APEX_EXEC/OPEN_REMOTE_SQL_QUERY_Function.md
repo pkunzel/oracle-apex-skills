@@ -61,21 +61,32 @@ The context object representing a cursor for the web source query.
 
 ```sql
 declare
-    l_result T_CONTEXT;
+    l_parameters   apex_exec.t_parameters;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.OPEN_REMOTE_SQL_QUERY(
-        p_server_static_id => 'EXAMPLE_STATIC_ID',
-        p_sql_query => to_clob('Example text'),
-        p_sql_parameters => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_columns => null,
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_total_row_count => true,
-        p_total_row_count_limit => 1
+    apex_exec.add_parameter(l_parameters, 'P_DEPTNO', :P10_DEPTNO);
+
+    l_context := apex_exec.open_remote_sql_query(
+        p_server_static_id => 'REMOTE_HR',
+        p_sql_query        => 'select empno, ename from emp where deptno = :P_DEPTNO',
+        p_sql_parameters   => l_parameters,
+        p_max_rows         => 50
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(apex_exec.get_varchar2(l_context, 'ENAME'));
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

@@ -52,16 +52,26 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_host               varchar2(4000);
+    l_port               integer;
+    l_use_ssl            varchar2(10);
+    l_use_exact_dn       varchar2(10);
+    l_dn                 varchar2(4000);
+    l_search_filter      varchar2(4000);
+    l_ldap_edit_function varchar2(4000);
 begin
-    apex_custom_auth.GET_LDAP_PROPS(
-        p_ldap_host => 'EXAMPLE',
-        p_ldap_port => 1,
-        p_use_ssl => 'EXAMPLE',
-        p_use_exact_dn => 'EXAMPLE',
-        p_ldap_dn => 'EXAMPLE',
-        p_search_filter => 'EXAMPLE',
-        p_ldap_edit_function => 'EXAMPLE'
+    apex_custom_auth.get_ldap_props(
+        p_ldap_host          => l_host,
+        p_ldap_port          => l_port,
+        p_use_ssl            => l_use_ssl,
+        p_use_exact_dn       => l_use_exact_dn,
+        p_ldap_dn            => l_dn,
+        p_search_filter      => l_search_filter,
+        p_ldap_edit_function => l_ldap_edit_function
     );
+
+    apex_debug.info('LDAP host: %s:%s', l_host, l_port);
 end;
 /
 ```

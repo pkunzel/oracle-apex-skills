@@ -50,15 +50,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.UPDATE_BLUEPRINT(
-        p_name => 'EXAMPLE',
-        p_new_name => 'EXAMPLE',
-        p_display_name => 'EXAMPLE',
-        p_description => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_default_schema => 'EXAMPLE'
+    apex_dg_data_gen.update_blueprint(
+        p_name           => 'DEMO_ORDER_BP',
+        p_display_name   => 'Demo Order Blueprint v2',
+        p_description    => 'Synthetic order data with updated row counts.',
+        p_lang           => 'en',
+        p_default_schema => 'HR'
     );
 end;
 /
 ```
-

@@ -45,12 +45,14 @@ This is a procedure and does not return a value.
 
 ```sql
 declare
-    l_context apex_exec.t_context;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
     l_context := apex_exec.open_query_context(
         p_location  => apex_exec.c_location_local_db,
         p_sql_query => q'[select order_id, status from orders where status = 'READY']'
     );
+    l_context_open := true;
 
     apex_automation.execute(
         p_application_id => apex_application.g_flow_id,
@@ -59,9 +61,10 @@ begin
     );
 
     apex_exec.close(l_context);
+    l_context_open := false;
 exception
     when others then
-        if l_context is not null then
+        if l_context_open then
             apex_exec.close(l_context);
         end if;
         raise;

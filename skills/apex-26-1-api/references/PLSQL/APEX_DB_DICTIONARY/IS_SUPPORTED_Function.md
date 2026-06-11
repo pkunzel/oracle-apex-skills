@@ -34,12 +34,12 @@ This function returns TRUE if DBMS_DEVELOPER is available on this instance; othe
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_db_dictionary.IS_SUPPORTED;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_db_dictionary.is_supported then
+        sys.dbms_output.put_line('APEX_DB_DICTIONARY can use DBMS_DEVELOPER metadata APIs.');
+    else
+        sys.dbms_output.put_line('DBMS_DEVELOPER metadata APIs are not available in this database.');
+    end if;
 end;
 /
 ```
-

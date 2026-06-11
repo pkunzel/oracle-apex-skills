@@ -37,13 +37,12 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_custom_auth.APPLICATION_PAGE_ITEM_EXISTS(
-        p_item_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_custom_auth.application_page_item_exists(
+        p_item_name => 'P101_USERNAME'
+    ) then
+        apex_debug.info('Login username item exists on this page.');
+    end if;
 end;
 /
 ```

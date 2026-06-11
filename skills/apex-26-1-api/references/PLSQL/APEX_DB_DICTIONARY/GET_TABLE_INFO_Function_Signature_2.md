@@ -56,20 +56,18 @@ This function returns a CLOB containing formatted descriptions for all requested
 
 ```sql
 declare
-    l_result CLOB;
+    l_info clob;
 begin
-    l_result := apex_db_dictionary.GET_TABLE_INFO(
-        p_table_array => 'EXAMPLE',
-        p_include_constraints => true,
-        p_include_indexes => true,
-        p_include_comments => true,
-        p_include_annotations => true,
-        p_include_domains => true,
+    l_info := apex_db_dictionary.get_table_info(
+        p_table_array             => apex_t_varchar2('HR.EMPLOYEES', 'HR.DEPARTMENTS'),
+        p_include_constraints     => true,
+        p_include_indexes         => true,
+        p_include_comments        => true,
         p_include_virtual_columns => true,
-        p_format => null
+        p_format                  => apex_db_dictionary.c_plain
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line(dbms_lob.substr(l_info, 4000, 1));
 end;
 /
 ```
-

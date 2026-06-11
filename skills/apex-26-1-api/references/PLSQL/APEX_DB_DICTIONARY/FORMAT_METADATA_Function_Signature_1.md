@@ -56,20 +56,26 @@ CLOB containing formatted table description.
 
 ```sql
 declare
-    l_result CLOB;
+    l_metadata_json json;
+    l_markdown      clob;
 begin
-    l_result := apex_db_dictionary.FORMAT_METADATA(
-        p_json => to_clob('Example text'),
-        p_include_constraints => true,
-        p_include_indexes => true,
-        p_include_comments => true,
-        p_include_annotations => true,
-        p_include_domains => true,
+    l_metadata_json := json(apex_db_dictionary.get_metadata(
+        p_name        => 'EMPLOYEES',
+        p_schema      => 'HR',
+        p_object_type => 'TABLE',
+        p_level       => 'ALL'
+    ));
+
+    l_markdown := apex_db_dictionary.format_metadata(
+        p_json                    => l_metadata_json,
+        p_include_constraints     => true,
+        p_include_indexes         => true,
+        p_include_comments        => true,
         p_include_virtual_columns => true,
-        p_format => null
+        p_format                  => apex_db_dictionary.c_markdown
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line(dbms_lob.substr(l_markdown, 4000, 1));
 end;
 /
 ```
-

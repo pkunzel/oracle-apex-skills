@@ -41,10 +41,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.REMOVE_SESSION_MESSAGES(
-        p_session => 1
-    );
+    apex_debug.remove_session_messages(p_session => v('APP_SESSION'));
 end;
 /
 ```
-

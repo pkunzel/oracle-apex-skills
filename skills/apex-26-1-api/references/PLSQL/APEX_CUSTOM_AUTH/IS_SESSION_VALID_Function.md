@@ -30,11 +30,10 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_custom_auth.IS_SESSION_VALID;
-    sys.dbms_output.put_line('Result captured.');
+    if not apex_custom_auth.is_session_valid then
+        apex_debug.warn('Custom-auth session is no longer valid.');
+    end if;
 end;
 /
 ```

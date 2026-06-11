@@ -48,15 +48,36 @@ The column value as specific data type. Parent topic: APEX_EXEC
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_order_id_pos pls_integer;
+    l_status_pos   pls_integer;
 begin
-    l_result := apex_exec.GET(
-        p_context => to_clob('Example text'),
-        p_column_idx => 1,
-        p_column_name => 'EXAMPLE'
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders where customer_id = :P10_CUSTOMER_ID',
+        p_max_rows  => 50
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    l_order_id_pos := apex_exec.get_column_position(l_context, 'ORDER_ID');
+    l_status_pos   := apex_exec.get_column_position(l_context, 'STATUS');
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(
+            apex_exec.get_number(l_context, l_order_id_pos) || ': ' ||
+            apex_exec.get_varchar2(l_context, l_status_pos)
+        );
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

@@ -50,16 +50,19 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_blueprint_id number;
 begin
-    apex_dg_data_gen.ADD_BLUEPRINT(
-        p_name => 'EXAMPLE',
-        p_display_name => 'EXAMPLE',
-        p_description => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_default_schema => 'EXAMPLE',
-        p_blueprint_id => 1
+    apex_dg_data_gen.add_blueprint(
+        p_name           => 'DEMO_ORDER_BP',
+        p_display_name   => 'Demo Order Blueprint',
+        p_description    => 'Synthetic customers and orders for development testing.',
+        p_lang           => 'en',
+        p_default_schema => 'HR',
+        p_blueprint_id   => l_blueprint_id
     );
+
+    sys.dbms_output.put_line('Blueprint id: ' || l_blueprint_id);
 end;
 /
 ```
-

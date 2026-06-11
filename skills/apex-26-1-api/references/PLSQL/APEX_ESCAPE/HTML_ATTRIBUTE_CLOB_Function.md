@@ -38,13 +38,10 @@ APEX_ESCAPE.HTML_ATTRIBUTE_CLOB (
 
 ```sql
 declare
-    l_result CLOB;
+    l_result clob;
 begin
-    l_result := apex_escape.HTML_ATTRIBUTE_CLOB(
-        p_string => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.html_attribute_clob(p_string => to_clob('Tom "TJ" Jones & Sons'));
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

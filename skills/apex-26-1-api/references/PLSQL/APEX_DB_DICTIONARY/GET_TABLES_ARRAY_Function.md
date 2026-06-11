@@ -46,15 +46,17 @@ This function returns an array of fully qualified names in the format OWNER . OB
 
 ```sql
 declare
-    l_result WWV_FLOW_T_VARCHAR2;
+    l_tables apex_t_varchar2;
 begin
-    l_result := apex_db_dictionary.GET_TABLES_ARRAY(
-        p_regex => 'EXAMPLE',
-        p_owner => 'EXAMPLE',
-        p_object_type => 'EXAMPLE'
+    l_tables := apex_db_dictionary.get_tables_array(
+        p_regex       => '^EMP',
+        p_owner       => 'HR',
+        p_object_type => 'TABLE'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_tables.count loop
+        sys.dbms_output.put_line(l_tables(i));
+    end loop;
 end;
 /
 ```
-

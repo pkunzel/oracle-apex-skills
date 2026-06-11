@@ -41,10 +41,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.ENABLE(
-        p_level => null
-    );
+    apex_debug.enable(p_level => apex_debug.c_log_level_info);
+    apex_debug.info('Debug logging enabled for page %s', :APP_PAGE_ID);
 end;
 /
 ```
-

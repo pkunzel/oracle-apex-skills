@@ -43,9 +43,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_css.ADD(
-        p_css => 'EXAMPLE',
-        p_key => 'EXAMPLE'
+    apex_css.add(
+        p_css => '.order-total--overdue { color: #B42318; font-weight: 600; }',
+        p_key => 'order-total-status'
     );
 end;
 /

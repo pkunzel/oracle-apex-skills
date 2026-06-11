@@ -31,10 +31,13 @@ RETURN NUMBER;
 
 ```sql
 declare
-    l_result NUMBER;
+    l_cookie_session_id number;
 begin
-    l_result := apex_custom_auth.GET_SESSION_ID_FROM_COOKIE;
-    sys.dbms_output.put_line('Result captured.');
+    l_cookie_session_id := apex_custom_auth.get_session_id_from_cookie;
+
+    if l_cookie_session_id is not null then
+        apex_custom_auth.set_session_id(l_cookie_session_id);
+    end if;
 end;
 /
 ```

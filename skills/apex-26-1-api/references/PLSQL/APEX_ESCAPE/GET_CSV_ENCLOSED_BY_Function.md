@@ -36,12 +36,13 @@ APEX_ESCAPE.GET_CSV_ENCLOSED_BY
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_escape.GET_CSV_ENCLOSED_BY;
-    sys.dbms_output.put_line('Result captured.');
+    apex_escape.set_csv_parameters(
+        p_enclosed_by     => '"',
+        p_separated_by    => ',',
+        p_escape_formulas => true
+    );
+    sys.dbms_output.put_line('CSV enclosure: ' || apex_escape.get_csv_enclosed_by);
 end;
 /
 ```
-

@@ -36,12 +36,18 @@ Returns profile column information as rows of apex_t_parser_columns .
 
 ```sql
 declare
-    l_result APEX_T_PARSER_COLUMNS;
+    l_profile_json clob := :P10_PROFILE_JSON;
 begin
-    l_result := apex_data_parser.GET_COLUMNS(
-        p_profile => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    for c in (
+        select column_position, column_name, data_type, format_mask
+          from table(apex_data_parser.get_columns(p_profile => l_profile_json))
+         order by column_position
+    ) loop
+        apex_debug.info('Column %s: %s (%s)',
+                        c.column_position,
+                        c.column_name,
+                        c.data_type);
+    end loop;
 end;
 /
 ```

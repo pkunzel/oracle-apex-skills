@@ -53,16 +53,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_error.ADD_ERROR(
-        p_message => to_clob('Example text'),
-        p_additional_info => 'EXAMPLE',
-        p_display_location => 'EXAMPLE',
-        p_region_id => 1,
-        p_column_alias => 'EXAMPLE',
-        p_row_num => 1,
-        p_ignore_ora_error => true
+    apex_error.add_error(
+        p_message          => 'Line quantity must be greater than zero.',
+        p_display_location => apex_error.c_inline_with_field_and_notif,
+        p_region_id        => :P10_LINES_REGION_ID,
+        p_column_alias     => 'QTY',
+        p_row_num          => :P10_LINE_ROWNUM
     );
 end;
 /
 ```
-

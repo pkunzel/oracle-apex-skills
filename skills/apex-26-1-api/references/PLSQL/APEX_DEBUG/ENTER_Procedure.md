@@ -64,31 +64,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.ENTER(
-        p_routine_name => 'EXAMPLE',
-        p_name01 => 'EXAMPLE',
-        p_value01 => 'EXAMPLE',
-        p_name02 => 'EXAMPLE',
-        p_value02 => 'EXAMPLE',
-        p_name03 => 'EXAMPLE',
-        p_value03 => 'EXAMPLE',
-        p_name04 => 'EXAMPLE',
-        p_value04 => 'EXAMPLE',
-        p_name05 => 'EXAMPLE',
-        p_value05 => 'EXAMPLE',
-        p_name06 => 'EXAMPLE',
-        p_value06 => 'EXAMPLE',
-        p_name07 => 'EXAMPLE',
-        p_value07 => 'EXAMPLE',
-        p_name08 => 'EXAMPLE',
-        p_value08 => 'EXAMPLE',
-        p_name09 => 'EXAMPLE',
-        p_value09 => 'EXAMPLE',
-        p_name10 => 'EXAMPLE',
-        p_value10 => 'EXAMPLE',
-        p_value_max_length => 1
+    apex_debug.enter(
+        p_routine_name => 'process_order',
+        p_name01       => 'ORDER_ID',
+        p_value01      => :P10_ORDER_ID,
+        p_name02       => 'STATUS',
+        p_value02      => :P10_STATUS
     );
 end;
 /
 ```
-

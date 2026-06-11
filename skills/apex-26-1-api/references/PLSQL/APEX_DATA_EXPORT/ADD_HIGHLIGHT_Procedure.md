@@ -50,14 +50,16 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_highlights apex_data_export.t_highlights;
 begin
-    apex_data_export.ADD_HIGHLIGHT(
-        p_highlights => null,
-        p_id => 1,
-        p_value_column => null,
-        p_display_column => null,
-        p_text_color => to_clob('Example text'),
-        p_background_color => null
+    apex_data_export.add_highlight(
+        p_highlights       => l_highlights,
+        p_id               => 1,
+        p_value_column     => 'RISK_LEVEL_ID',
+        p_display_column   => 'CUSTOMER_NAME',
+        p_text_color       => '#7A271A',
+        p_background_color => '#FEF3F2'
     );
 end;
 /

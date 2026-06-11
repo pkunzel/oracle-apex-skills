@@ -52,15 +52,17 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_aggregates apex_data_export.t_aggregates;
 begin
-    apex_data_export.ADD_AGGREGATE(
-        p_aggregates => null,
-        p_label => null,
-        p_format_mask => 'EXAMPLE',
-        p_display_column => null,
-        p_value_column => null,
-        p_overall_label => null,
-        p_overall_value_column => null
+    apex_data_export.add_aggregate(
+        p_aggregates           => l_aggregates,
+        p_label                => 'Total',
+        p_format_mask          => 'FML999G999G990D00',
+        p_display_column       => 'ORDER_TOTAL',
+        p_value_column         => 'ORDER_TOTAL',
+        p_overall_label        => 'Grand Total',
+        p_overall_value_column => 'ORDER_TOTAL'
     );
 end;
 /

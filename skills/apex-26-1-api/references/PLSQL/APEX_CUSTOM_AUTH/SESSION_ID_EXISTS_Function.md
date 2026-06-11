@@ -30,11 +30,10 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_custom_auth.SESSION_ID_EXISTS;
-    sys.dbms_output.put_line('Result captured.');
+    if not apex_custom_auth.session_id_exists then
+        apex_custom_auth.set_session_id_to_next_value;
+    end if;
 end;
 /
 ```

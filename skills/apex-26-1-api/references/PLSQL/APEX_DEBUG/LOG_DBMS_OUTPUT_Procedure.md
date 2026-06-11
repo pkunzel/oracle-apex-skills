@@ -34,8 +34,8 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.LOG_DBMS_OUTPUT;
+    dbms_output.put_line('Rows prepared: ' || :P10_ROW_COUNT);
+    apex_debug.log_dbms_output;
 end;
 /
 ```
-

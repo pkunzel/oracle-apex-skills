@@ -45,10 +45,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_data_install.LOAD_SUPPORTING_OBJECT_DATA(
-        p_table_name => 'EXAMPLE',
+    apex_data_install.load_supporting_object_data(
+        p_table_name           => 'ORDER_SEED_DATA',
         p_delete_after_install => true,
-        p_app_id => 1
+        p_app_id               => apex_application.g_flow_id
     );
 end;
 /

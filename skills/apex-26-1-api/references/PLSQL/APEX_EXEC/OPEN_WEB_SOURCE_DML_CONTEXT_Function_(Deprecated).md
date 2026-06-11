@@ -56,17 +56,27 @@ The context object representing the DML handle.
 
 ```sql
 declare
-    l_result T_CONTEXT;
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.OPEN_WEB_SOURCE_DML_CONTEXT(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_parameters => null,
-        p_columns => null,
-        p_lost_update_detection => sysdate,
-        p_array_column_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_context := apex_exec.open_web_source_dml_context(p_module_static_id => 'LEGACY_ORDERS_WS', p_columns => l_columns);
+    l_context_open := true;
+
+    apex_exec.add_dml_row(l_context, apex_exec.c_dml_operation_update);
+    apex_exec.set_value(l_context, 'ORDER_ID', :P10_ORDER_ID);
+    apex_exec.set_value(l_context, 'STATUS', 'SHIPPED');
+    apex_exec.execute_dml(l_context);
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then apex_exec.close(l_context); end if;
+        raise;
 end;
 /
 ```
-

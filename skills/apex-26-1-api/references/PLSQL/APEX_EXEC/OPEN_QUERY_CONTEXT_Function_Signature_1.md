@@ -121,46 +121,36 @@ The context object representing a "cursor" for the source query.
 
 ```sql
 declare
-    l_result T_CONTEXT;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_order_id_pos pls_integer;
+    l_status_pos   pls_integer;
 begin
-    l_result := apex_exec.OPEN_QUERY_CONTEXT(
-        p_location => null,
-        p_table_owner => 'EXAMPLE',
-        p_table_name => 'EXAMPLE',
-        p_where_clause => 'EXAMPLE',
-        p_match_clause => 'EXAMPLE',
-        p_columns_clause => 'EXAMPLE',
-        p_order_by_clause => 'EXAMPLE',
-        p_include_rowid_column => true,
-        p_sql_query => to_clob('Example text'),
-        p_function_body => to_clob('Example text'),
-        p_function_body_language => to_clob('Example text'),
-        p_plsql_function_body => to_clob('Example text'),
-        p_optimizer_hint => 'EXAMPLE',
-        p_server_static_id => 'EXAMPLE_STATIC_ID',
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_web_src_parameters => null,
-        p_external_filter_expr => 'EXAMPLE',
-        p_external_order_by_expr => 'EXAMPLE',
-        p_sql_parameters => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_columns => null,
-        p_filters => null,
-        p_order_bys => null,
-        p_aggregation => null,
-        p_control_break => null,
-        p_post_process_type => null,
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_total_row_count => true,
-        p_total_row_count_limit => 1,
-        p_supports_binary_number => true,
-        p_array_column_name => 'EXAMPLE',
-        p_duality_view_static_id => 'EXAMPLE_STATIC_ID',
-        p_json_source_static_id => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders where customer_id = :P10_CUSTOMER_ID',
+        p_max_rows  => 50
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    l_order_id_pos := apex_exec.get_column_position(l_context, 'ORDER_ID');
+    l_status_pos   := apex_exec.get_column_position(l_context, 'STATUS');
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(
+            apex_exec.get_number(l_context, l_order_id_pos) || ': ' ||
+            apex_exec.get_varchar2(l_context, l_status_pos)
+        );
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

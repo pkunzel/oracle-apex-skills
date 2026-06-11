@@ -42,13 +42,32 @@ TRUE , if there is more data, FALSE otherwise. NULL if no more data detection wa
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.HAS_MORE_ROWS(
-        p_context => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders order by order_id',
+        p_max_rows  => 50
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(apex_exec.get_varchar2(l_context, 'STATUS'));
+    end loop;
+
+    if apex_exec.has_more_rows(l_context) then
+        sys.dbms_output.put_line('Fetch the next page to continue.');
+    end if;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

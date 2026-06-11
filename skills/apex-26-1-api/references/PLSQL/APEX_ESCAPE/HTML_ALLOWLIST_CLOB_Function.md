@@ -40,14 +40,10 @@ APEX_ESCAPE.HTML_ALLOWLIST_CLOB (
 
 ```sql
 declare
-    l_result CLOB;
+    l_result clob;
 begin
-    l_result := apex_escape.HTML_ALLOWLIST_CLOB(
-        p_html => to_clob('Example text'),
-        p_allowlist_tags => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.html_allowlist_clob(p_html => to_clob('<p>Safe <strong>text</strong></p><script>alert(1)</script>'));
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

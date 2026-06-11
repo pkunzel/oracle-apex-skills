@@ -38,13 +38,10 @@ APEX_ESCAPE.HTML_ATTRIBUTE (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.HTML_ATTRIBUTE(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.html_attribute(p_string => 'Tom "TJ" Jones & Sons');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

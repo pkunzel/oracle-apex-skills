@@ -42,10 +42,14 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_session_id number;
 begin
-    apex_custom_auth.DEFINE_USER_SESSION(
-        p_user => 'USER',
-        p_session_id => 1
+    l_session_id := apex_custom_auth.get_next_session_id;
+
+    apex_custom_auth.define_user_session(
+        p_user       => upper(:P101_USERNAME),
+        p_session_id => l_session_id
     );
 end;
 /

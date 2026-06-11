@@ -40,13 +40,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_custom_auth.LOGIN(
-        p_uname => 'EXAMPLE',
-        p_password => 'EXAMPLE',
-        p_session_id => 'EXAMPLE',
-        p_app_page => 'EXAMPLE',
-        p_entry_point => 'EXAMPLE',
-        p_preserve_case => true
+    apex_custom_auth.login(
+        p_uname         => :P101_USERNAME,
+        p_password      => :P101_PASSWORD,
+        p_session_id    => v('APP_SESSION'),
+        p_app_page      => :APP_ID || ':1',
+        p_entry_point   => 'LOGIN',
+        p_preserve_case => false
     );
 end;
 /

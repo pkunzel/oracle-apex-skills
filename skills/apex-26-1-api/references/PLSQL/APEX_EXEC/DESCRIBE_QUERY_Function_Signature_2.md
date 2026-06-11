@@ -79,28 +79,16 @@ The t_columns object describing the columns and data types.
 
 ```sql
 declare
-    l_result T_COLUMNS;
+    l_columns apex_exec.t_columns;
 begin
-    l_result := apex_exec.DESCRIBE_QUERY(
-        p_location => null,
-        p_table_owner => 'EXAMPLE',
-        p_table_name => 'EXAMPLE',
-        p_match_clause => 'EXAMPLE',
-        p_columns_clause => 'EXAMPLE',
-        p_test_for_rowid => true,
-        p_sql_query => to_clob('Example text'),
-        p_function_body => to_clob('Example text'),
-        p_function_body_language => to_clob('Example text'),
-        p_optimizer_hint => 'EXAMPLE',
-        p_server_static_id => 'EXAMPLE_STATIC_ID',
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_post_process_type => null,
-        p_columns => null,
-        p_duality_view_static_id => 'EXAMPLE_STATIC_ID',
-        p_json_source_static_id => to_clob('Example text')
+    l_columns := apex_exec.describe_query(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status, order_total from orders'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_columns.count loop
+        sys.dbms_output.put_line(l_columns(i).name || ': ' || apex_exec.get_data_type(l_columns(i).data_type));
+    end loop;
 end;
 /
 ```
-

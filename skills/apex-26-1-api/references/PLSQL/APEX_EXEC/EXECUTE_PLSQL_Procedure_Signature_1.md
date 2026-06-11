@@ -44,13 +44,16 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_parameters apex_exec.t_parameters;
 begin
-    apex_exec.EXECUTE_PLSQL(
-        p_plsql_code => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_sql_parameters => to_clob('Example text')
+    apex_exec.add_parameter(l_parameters, 'P_ORDER_ID', :P10_ORDER_ID);
+
+    apex_exec.execute_plsql(
+        p_plsql_code      => 'begin order_api.reprice_order(:P_ORDER_ID); end;',
+        p_auto_bind_items => false,
+        p_sql_parameters  => l_parameters
     );
 end;
 /
 ```
-

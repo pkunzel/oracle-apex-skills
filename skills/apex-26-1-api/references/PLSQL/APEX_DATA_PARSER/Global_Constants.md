@@ -22,5 +22,21 @@ Use this page when code needs the `APEX_DATA_PARSER.Global Constants` constants.
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use file-type constants when the file name is not enough or when you want to assert a type explicitly.
 
+```sql
+apex_data_parser.c_file_type_xlsx
+apex_data_parser.c_file_type_csv
+apex_data_parser.c_file_type_xml
+apex_data_parser.c_file_type_json
+apex_data_parser.c_file_type_ics
+```
+
+```sql
+if apex_data_parser.assert_file_type(
+       p_file_name => 'orders.csv',
+       p_file_type => apex_data_parser.c_file_type_csv )
+then
+    apex_debug.info('CSV upload accepted.');
+end if;
+```

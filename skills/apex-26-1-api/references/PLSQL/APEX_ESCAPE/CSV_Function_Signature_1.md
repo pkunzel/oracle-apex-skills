@@ -42,15 +42,10 @@ APEX_ESCAPE.CSV (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.CSV(
-        p_string => 'EXAMPLE',
-        p_quote => true,
-        p_strip_html => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.csv(p_string => 'ACME, Inc.', p_quote => true, p_strip_html => false);
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

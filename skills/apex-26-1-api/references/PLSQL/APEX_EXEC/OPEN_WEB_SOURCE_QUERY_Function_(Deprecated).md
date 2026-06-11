@@ -75,25 +75,24 @@ The context object representing a "cursor" for the web source query.
 
 ```sql
 declare
-    l_result T_CONTEXT;
+    l_parameters   apex_exec.t_parameters;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.OPEN_WEB_SOURCE_QUERY(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_parameters => null,
-        p_filters => null,
-        p_order_bys => null,
-        p_aggregation => null,
-        p_control_break => null,
-        p_columns => null,
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_external_filter_expr => 'EXAMPLE',
-        p_external_order_by_expr => 'EXAMPLE',
-        p_total_row_count => true,
-        p_array_column_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_exec.add_parameter(l_parameters, 'customer_id', :P10_CUSTOMER_ID);
+    l_context := apex_exec.open_web_source_query(p_module_static_id => 'LEGACY_ORDERS_WS', p_parameters => l_parameters, p_max_rows => 25);
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(apex_exec.get_varchar2(l_context, 'status'));
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then apex_exec.close(l_context); end if;
+        raise;
 end;
 /
 ```
-

@@ -42,12 +42,42 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    apex_exec.SET_CURRENT_ROW(
-        p_context => to_clob('Example text'),
-        p_row_idx => 1
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+
+    l_context := apex_exec.open_local_dml_context(
+        p_columns    => l_columns,
+        p_query_type => apex_exec.c_query_type_table,
+        p_table_name => 'ORDERS'
     );
+    l_context_open := true;
+
+    apex_exec.add_dml_row(l_context, apex_exec.c_dml_operation_update);
+    apex_exec.set_value(l_context, 'ORDER_ID', :P10_FIRST_ORDER_ID);
+    apex_exec.set_value(l_context, 'STATUS', 'READY_TO_SHIP');
+
+    apex_exec.add_dml_row(l_context, apex_exec.c_dml_operation_update);
+    apex_exec.set_value(l_context, 'ORDER_ID', :P10_SECOND_ORDER_ID);
+    apex_exec.set_value(l_context, 'STATUS', 'READY_TO_SHIP');
+
+    apex_exec.set_current_row(l_context, 1);
+    apex_exec.set_value(l_context, 'STATUS', 'REVIEW');
+
+    apex_exec.execute_dml(l_context);
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

@@ -37,14 +37,15 @@ APEX_ERROR.INIT_ERROR_RESULT (
 ## Simple Example
 
 ```sql
-declare
-    l_result T_ERROR_RESULT;
+create or replace function app_error_handler (
+    p_error in apex_error.t_error )
+    return apex_error.t_error_result
+is
+    l_result apex_error.t_error_result;
 begin
-    l_result := apex_error.INIT_ERROR_RESULT(
-        p_error => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_error.init_error_result(p_error);
+    l_result.display_location := apex_error.c_inline_in_notification;
+    return l_result;
 end;
 /
 ```
-

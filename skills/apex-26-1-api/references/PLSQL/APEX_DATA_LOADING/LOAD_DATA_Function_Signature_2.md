@@ -44,15 +44,19 @@ APEX_DATA_LOADING.LOAD_DATA (
 
 ```sql
 declare
-    l_result T_DATA_LOAD_RESULT;
+    l_csv    clob;
+    l_result apex_data_loading.t_data_load_result;
 begin
-    l_result := apex_data_loading.LOAD_DATA(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_data_to_load => to_clob('Example text'),
-        p_xlsx_sheet_name => 'EXAMPLE'
+    l_csv := 'ORDER_ID,CUSTOMER_NAME,ORDER_TOTAL' || chr(10) ||
+             '1001,Acme Corp,1250.00';
+
+    l_result := apex_data_loading.load_data(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'ORDER_IMPORT',
+        p_data_to_load   => l_csv
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Loaded %s rows from generated CSV.', l_result.processed_rows);
 end;
 /
 ```

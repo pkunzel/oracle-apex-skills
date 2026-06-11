@@ -36,12 +36,15 @@ Returns the file type as t_file_type .
 
 ```sql
 declare
-    l_result T_FILE_TYPE;
+    l_file_type apex_data_parser.t_file_type;
 begin
-    l_result := apex_data_parser.GET_FILE_TYPE(
-        p_file_name => 'EXAMPLE'
+    l_file_type := apex_data_parser.get_file_type(
+        p_file_name => 'orders.xlsx'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    if l_file_type = apex_data_parser.c_file_type_xlsx then
+        apex_debug.info('Workbook upload detected.');
+    end if;
 end;
 /
 ```

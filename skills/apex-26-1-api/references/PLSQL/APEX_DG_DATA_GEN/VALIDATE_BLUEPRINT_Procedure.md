@@ -44,13 +44,18 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_errors clob;
 begin
-    apex_dg_data_gen.VALIDATE_BLUEPRINT(
-        p_blueprint => 'EXAMPLE',
-        p_format => 'EXAMPLE',
-        p_errors => to_clob('Example text')
+    apex_dg_data_gen.validate_blueprint(
+        p_blueprint => 'DEMO_ORDER_BP',
+        p_format    => 'SQL INSERT',
+        p_errors    => l_errors
     );
+
+    if l_errors is not null then
+        sys.dbms_output.put_line(dbms_lob.substr(l_errors, 4000, 1));
+    end if;
 end;
 /
 ```
-

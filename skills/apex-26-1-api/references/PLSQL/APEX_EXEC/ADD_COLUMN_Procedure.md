@@ -58,20 +58,12 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_columns apex_exec.t_columns;
 begin
-    apex_exec.ADD_COLUMN(
-        p_columns => null,
-        p_column_name => 'EXAMPLE',
-        p_data_type => null,
-        p_sql_expression => to_clob('Example text'),
-        p_format_mask => 'EXAMPLE',
-        p_is_primary_key => true,
-        p_is_query_only => true,
-        p_is_returning => true,
-        p_is_checksum => true,
-        p_parent_column_path => 'EXAMPLE'
-    );
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+    apex_exec.add_column(l_columns, 'UPDATED_ON', apex_exec.c_data_type_timestamp, p_is_query_only => true);
 end;
 /
 ```
-

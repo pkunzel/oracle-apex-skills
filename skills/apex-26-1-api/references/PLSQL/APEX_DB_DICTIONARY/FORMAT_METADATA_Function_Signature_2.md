@@ -56,20 +56,24 @@ CLOB containing formatted table description. Parent topic: APEX_DB_DICTIONARY
 
 ```sql
 declare
-    l_result CLOB;
+    l_metadata clob;
+    l_plain    clob;
 begin
-    l_result := apex_db_dictionary.FORMAT_METADATA(
-        p_json => to_clob('Example text'),
-        p_include_constraints => true,
-        p_include_indexes => true,
-        p_include_comments => true,
-        p_include_annotations => true,
-        p_include_domains => true,
-        p_include_virtual_columns => true,
-        p_format => null
+    l_metadata := apex_db_dictionary.get_metadata(
+        p_name        => 'EMPLOYEES',
+        p_schema      => 'HR',
+        p_object_type => 'TABLE'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_plain := apex_db_dictionary.format_metadata(
+        p_json                => l_metadata,
+        p_include_constraints => true,
+        p_include_indexes     => false,
+        p_include_comments    => true,
+        p_format              => apex_db_dictionary.c_plain
+    );
+
+    sys.dbms_output.put_line(dbms_lob.substr(l_plain, 4000, 1));
 end;
 /
 ```
-

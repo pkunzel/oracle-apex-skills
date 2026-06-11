@@ -36,12 +36,24 @@ Returns table with worksheet information.
 
 ```sql
 declare
-    l_result APEX_T_PARSER_WORKSHEETS;
+    l_content blob;
 begin
-    l_result := apex_data_parser.GET_XLSX_WORKSHEETS(
-        p_content => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select blob_content
+      into l_content
+      from apex_application_temp_files
+     where name = :P10_UPLOAD;
+
+    for ws in (
+        select sheet_sequence, sheet_display_name, sheet_file_name
+          from table(apex_data_parser.get_xlsx_worksheets(
+              p_content => l_content))
+         order by sheet_sequence
+    ) loop
+        apex_debug.info('Worksheet %s: %s (%s)',
+                        ws.sheet_sequence,
+                        ws.sheet_display_name,
+                        ws.sheet_file_name);
+    end loop;
 end;
 /
 ```

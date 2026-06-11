@@ -44,13 +44,14 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_parameters apex_exec.t_parameters;
 begin
-    apex_exec.ADD_PARAMETER(
-        p_parameters => null,
-        p_name => null,
-        p_value => 'EXAMPLE'
+    apex_exec.add_parameter(
+        p_parameters => l_parameters,
+        p_name       => 'P_CUSTOMER_ID',
+        p_value      => :P10_CUSTOMER_ID
     );
 end;
 /
 ```
-

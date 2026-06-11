@@ -45,12 +45,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_dg_data_gen.REMOVE_COLUMN(
-        p_blueprint => 'EXAMPLE',
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE'
-    );
+    apex_dg_data_gen.remove_column(p_blueprint => 'DEMO_ORDER_BP', p_table_name => 'CUSTOMERS', p_column_name => 'OLD_STATUS');
 end;
 /
 ```
-

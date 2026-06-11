@@ -50,17 +50,17 @@ This function returns a JSON array of objects. Each object includes: owner: obje
 
 ```sql
 declare
-    l_result JSON;
+    l_tables json;
 begin
-    l_result := apex_db_dictionary.GET_TABLES_JSON(
-        p_regex => 'EXAMPLE',
-        p_owner => 'EXAMPLE',
-        p_object_type => 'EXAMPLE',
-        p_include_comments => true,
+    l_tables := apex_db_dictionary.get_tables_json(
+        p_regex               => '^EMP',
+        p_owner               => 'HR',
+        p_object_type         => 'TABLE',
+        p_include_comments    => true,
         p_include_annotations => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line(json_serialize(l_tables returning varchar2 pretty));
 end;
 /
 ```
-

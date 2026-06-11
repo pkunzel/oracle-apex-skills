@@ -44,14 +44,27 @@ t_column object with column metadata. Parent topic: APEX_EXEC
 
 ```sql
 declare
-    l_result T_COLUMN;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_column       apex_exec.t_column;
 begin
-    l_result := apex_exec.GET_COLUMN(
-        p_context => to_clob('Example text'),
-        p_column_idx => 1
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders'
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    l_column := apex_exec.get_column(l_context, 1);
+    sys.dbms_output.put_line(l_column.name || ': ' || apex_exec.get_data_type(l_column.data_type));
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

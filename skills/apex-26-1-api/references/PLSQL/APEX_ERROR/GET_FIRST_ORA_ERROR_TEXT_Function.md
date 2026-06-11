@@ -39,15 +39,22 @@ APEX_ERROR.GET_FIRST_ORA_ERROR_TEXT (
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
+create or replace function app_error_handler (
+    p_error in apex_error.t_error )
+    return apex_error.t_error_result
+is
+    l_result apex_error.t_error_result;
 begin
-    l_result := apex_error.GET_FIRST_ORA_ERROR_TEXT(
-        p_error => null,
-        p_include_error_no => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_error.init_error_result(p_error);
+
+    if p_error.ora_sqlerrm is not null then
+        l_result.message := apex_error.get_first_ora_error_text(
+            p_error            => p_error,
+            p_include_error_no => false
+        );
+    end if;
+
+    return l_result;
 end;
 /
 ```
-

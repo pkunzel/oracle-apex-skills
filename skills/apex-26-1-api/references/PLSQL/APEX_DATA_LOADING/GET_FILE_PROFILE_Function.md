@@ -40,13 +40,14 @@ APEX_DATA_LOADING.GET_FILE_PROFILE (
 
 ```sql
 declare
-    l_result CLOB;
+    l_profile_json clob;
 begin
-    l_result := apex_data_loading.GET_FILE_PROFILE(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
+    l_profile_json := apex_data_loading.get_file_profile(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'ORDER_IMPORT'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Data load profile length: %s', dbms_lob.getlength(l_profile_json));
 end;
 /
 ```

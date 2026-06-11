@@ -91,32 +91,27 @@ Returns rows of the apex_t_parser_row type.
 
 ```sql
 declare
-    l_result APEX_T_PARSER_TABLE;
+    l_content blob;
 begin
-    l_result := apex_data_parser.PARSE(
-        p_content => to_clob('Example text'),
-        p_file_name => 'EXAMPLE',
-        p_file_type => null,
-        p_file_profile => to_clob('Example text'),
-        p_detect_data_types => 'EXAMPLE',
-        p_decimal_char => 'EXAMPLE',
-        p_xlsx_sheet_name => 'EXAMPLE',
-        p_row_selector => 'EXAMPLE',
-        p_csv_row_delimiter => 'EXAMPLE',
-        p_csv_col_delimiter => 'EXAMPLE',
-        p_csv_enclosed => 'EXAMPLE',
-        p_skip_rows => 1,
-        p_add_headers_row => 'EXAMPLE',
-        p_nullif => 'EXAMPLE',
-        p_force_trim_whitespace => true,
-        p_file_charset => 'EXAMPLE',
-        p_max_rows => 1,
-        p_return_rows => 1,
-        p_store_profile_to_collection => 'EXAMPLE',
-        p_xml_namespaces => 'EXAMPLE',
-        p_fix_excel_precision => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select blob_content
+      into l_content
+      from apex_application_temp_files
+     where name = :P10_UPLOAD;
+
+    for r in (
+        select line_number, col001 order_id, col002 customer_name, col003 order_total
+          from table(apex_data_parser.parse(
+              p_content                => l_content,
+              p_file_name              => 'orders.csv',
+              p_csv_col_delimiter      => ',',
+              p_skip_rows              => 1,
+              p_detect_data_types      => 'Y',
+              p_max_rows               => 100,
+              p_store_profile_to_collection => 'ORDER_IMPORT_PROFILE'))
+    ) loop
+        insert into order_import_stage (order_id, customer_name, order_total)
+        values (r.order_id, r.customer_name, to_number(r.order_total));
+    end loop;
 end;
 /
 ```

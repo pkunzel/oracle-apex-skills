@@ -39,13 +39,12 @@ APEX_ESCAPE.JS_LITERAL_CLOB (
 
 ```sql
 declare
-    l_result CLOB;
+    l_result clob;
 begin
-    l_result := apex_escape.JS_LITERAL_CLOB(
-        p_string => to_clob('Example text')
+    l_result := apex_escape.js_literal_clob(
+        p_string => to_clob(q'[can't break out]')
     );
-    sys.dbms_output.put_line('Result captured.');
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

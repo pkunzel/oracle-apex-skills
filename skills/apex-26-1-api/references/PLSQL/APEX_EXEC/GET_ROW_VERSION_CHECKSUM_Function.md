@@ -42,13 +42,34 @@ The row version checksum. Parent topic: APEX_EXEC
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_columns      apex_exec.t_columns;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_exec.GET_ROW_VERSION_CHECKSUM(
-        p_context => to_clob('Example text')
+    apex_exec.add_column(l_columns, 'ORDER_ID', apex_exec.c_data_type_number, p_is_primary_key => true);
+    apex_exec.add_column(l_columns, 'STATUS', apex_exec.c_data_type_varchar2);
+    apex_exec.add_column(l_columns, 'ROW_VERSION', apex_exec.c_data_type_varchar2, p_is_checksum => true);
+
+    l_context := apex_exec.open_local_dml_context(
+        p_columns               => l_columns,
+        p_query_type            => apex_exec.c_query_type_table,
+        p_table_name            => 'ORDERS',
+        p_lost_update_detection => apex_exec.c_lost_update_explicit
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        sys.dbms_output.put_line(apex_exec.get_row_version_checksum(l_context));
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

@@ -44,15 +44,24 @@ APEX_DATA_LOADING.LOAD_DATA (
 
 ```sql
 declare
-    l_result T_DATA_LOAD_RESULT;
+    l_file_blob blob;
+    l_result    apex_data_loading.t_data_load_result;
 begin
-    l_result := apex_data_loading.LOAD_DATA(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_data_to_load => null,
-        p_xlsx_sheet_name => 'EXAMPLE'
+    select blob_content
+      into l_file_blob
+      from apex_application_temp_files
+     where name = :P30_UPLOAD;
+
+    l_result := apex_data_loading.load_data(
+        p_application_id => apex_application.g_flow_id,
+        p_static_id      => 'ORDER_IMPORT',
+        p_data_to_load   => l_file_blob,
+        p_xlsx_sheet_name => 'Orders'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('Loaded %s rows; %s rejected.',
+                    l_result.processed_rows,
+                    l_result.error_rows);
 end;
 /
 ```

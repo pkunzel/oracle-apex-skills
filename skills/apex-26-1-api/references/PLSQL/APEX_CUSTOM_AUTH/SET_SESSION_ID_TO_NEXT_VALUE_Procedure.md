@@ -34,7 +34,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_custom_auth.SET_SESSION_ID_TO_NEXT_VALUE;
+    apex_custom_auth.set_session_id_to_next_value;
 end;
 /
 ```

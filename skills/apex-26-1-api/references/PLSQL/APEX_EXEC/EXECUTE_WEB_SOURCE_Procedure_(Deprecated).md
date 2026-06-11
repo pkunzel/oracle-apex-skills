@@ -50,14 +50,17 @@ Return Description p_parameters Array with OUT parameter values, received from t
 ## Simple Example
 
 ```sql
+declare
+    l_parameters apex_exec.t_parameters;
 begin
-    apex_exec.EXECUTE_WEB_SOURCE(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_operation => 'EXAMPLE',
-        p_url_pattern => 'EXAMPLE',
-        p_parameters => null
+    apex_exec.add_parameter(l_parameters, 'order_id', :P10_ORDER_ID);
+
+    apex_exec.execute_web_source(
+        p_module_static_id => 'LEGACY_ORDERS_WS',
+        p_operation        => 'GET',
+        p_url_pattern      => 'orders/:order_id',
+        p_parameters       => l_parameters
     );
 end;
 /
 ```
-

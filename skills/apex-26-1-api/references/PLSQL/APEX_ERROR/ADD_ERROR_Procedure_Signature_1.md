@@ -47,13 +47,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_error.ADD_ERROR(
-        p_message => to_clob('Example text'),
-        p_additional_info => 'EXAMPLE',
-        p_display_location => 'EXAMPLE',
-        p_ignore_ora_error => true
+    apex_error.add_error(
+        p_message          => 'The order cannot be submitted until it has at least one line.',
+        p_additional_info  => 'Validation ORDER_HAS_LINES failed.',
+        p_display_location => apex_error.c_inline_in_notification
     );
 end;
 /
 ```
-

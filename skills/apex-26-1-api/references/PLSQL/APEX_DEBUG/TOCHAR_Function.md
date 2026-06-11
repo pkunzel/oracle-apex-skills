@@ -37,14 +37,11 @@ APEX_DEBUG.TOCHAR (
 ## Simple Example
 
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_debug.TOCHAR(
-        p_value => true
+    apex_debug.info(
+        'Order approved flag is %s',
+        apex_debug.tochar(:P10_APPROVED = 'Y')
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

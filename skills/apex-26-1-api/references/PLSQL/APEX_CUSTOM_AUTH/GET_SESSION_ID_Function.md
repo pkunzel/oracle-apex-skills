@@ -31,10 +31,10 @@ RETURN NUMBER;
 
 ```sql
 declare
-    l_result NUMBER;
+    l_session_id number;
 begin
-    l_result := apex_custom_auth.GET_SESSION_ID;
-    sys.dbms_output.put_line('Result captured.');
+    l_session_id := apex_custom_auth.get_session_id;
+    apex_debug.info('Current custom-auth session ID: %s', l_session_id);
 end;
 /
 ```

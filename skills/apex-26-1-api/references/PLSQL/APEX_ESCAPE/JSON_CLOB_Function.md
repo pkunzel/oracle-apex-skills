@@ -38,13 +38,10 @@ APEX_ESCAPE.JSON_CLOB (
 
 ```sql
 declare
-    l_result CLOB;
+    l_result clob;
 begin
-    l_result := apex_escape.JSON_CLOB(
-        p_string => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.json_clob(p_string => to_clob('Line 1' || chr(10) || '"quoted" value'));
+    sys.dbms_output.put_line(dbms_lob.substr(l_result, 4000, 1));
 end;
 /
 ```
-

@@ -75,5 +75,21 @@ Parameter value. Parent topic: APEX_EXEC
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+```sql
+declare
+    l_parameters apex_exec.t_parameters;
+    l_status     varchar2(30);
+begin
+    apex_exec.add_parameter(l_parameters, 'P_ORDER_ID', :P10_ORDER_ID);
 
+    apex_exec.execute_plsql(
+        p_plsql_code     => 'begin order_api.submit_order(:P_ORDER_ID, :P_STATUS); end;',
+        p_auto_bind_items => false,
+        p_sql_parameters => l_parameters
+    );
+
+    l_status := apex_exec.get_parameter_varchar2(l_parameters, 'P_STATUS');
+    sys.dbms_output.put_line('Submit status: ' || l_status);
+end;
+/
+```

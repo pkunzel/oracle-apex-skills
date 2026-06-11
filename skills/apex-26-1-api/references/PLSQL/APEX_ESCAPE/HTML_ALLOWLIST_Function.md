@@ -40,14 +40,10 @@ APEX_ESCAPE.HTML_ALLOWLIST (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.HTML_ALLOWLIST(
-        p_html => 'EXAMPLE',
-        p_allowlist_tags => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.html_allowlist(p_html => '<p>Safe <strong>text</strong><script>alert(1)</script></p>');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

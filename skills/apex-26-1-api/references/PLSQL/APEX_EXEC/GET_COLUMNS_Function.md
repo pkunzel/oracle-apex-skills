@@ -42,13 +42,30 @@ t_columns object with column meta data. Parent topic: APEX_EXEC
 
 ```sql
 declare
-    l_result T_COLUMNS;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
+    l_columns      apex_exec.t_columns;
 begin
-    l_result := apex_exec.GET_COLUMNS(
-        p_context => to_clob('Example text')
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status from orders',
+        p_max_rows  => 1
     );
-    sys.dbms_output.put_line('Result captured.');
+    l_context_open := true;
+
+    l_columns := apex_exec.get_columns(l_context);
+    for i in 1 .. l_columns.count loop
+        sys.dbms_output.put_line(l_columns(i).name);
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

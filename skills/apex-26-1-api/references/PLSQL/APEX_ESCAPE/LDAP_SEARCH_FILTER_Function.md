@@ -42,15 +42,10 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.LDAP_SEARCH_FILTER(
-        p_string => 'EXAMPLE',
-        p_reserved_chars => 'EXAMPLE',
-        p_escape_non_ascii => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.ldap_search_filter(p_string => 'jane*(doe)');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

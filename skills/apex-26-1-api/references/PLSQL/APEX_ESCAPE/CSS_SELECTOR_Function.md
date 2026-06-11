@@ -38,13 +38,10 @@ APEX_ESCAPE.CSS_SELECTOR (
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_result varchar2(32767);
 begin
-    l_result := apex_escape.CSS_SELECTOR(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_result := apex_escape.css_selector(p_string => 'P10 Customer.Name');
+    sys.dbms_output.put_line(dbms_lob.substr(to_clob(l_result), 4000, 1));
 end;
 /
 ```
-

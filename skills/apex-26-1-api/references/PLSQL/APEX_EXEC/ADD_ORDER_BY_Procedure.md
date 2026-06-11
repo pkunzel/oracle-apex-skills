@@ -47,14 +47,15 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_order_bys apex_exec.t_order_bys;
 begin
-    apex_exec.ADD_ORDER_BY(
-        p_order_bys => null,
-        p_position => 1,
-        p_direction => null,
-        p_order_nulls => null
+    apex_exec.add_order_by(
+        p_order_bys   => l_order_bys,
+        p_position    => 1,
+        p_direction   => apex_exec.c_order_desc,
+        p_order_nulls => apex_exec.c_order_nulls_last
     );
 end;
 /
 ```
-

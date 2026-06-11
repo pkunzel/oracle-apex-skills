@@ -54,14 +54,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_css.ADD_FILE(
-        p_name => 'EXAMPLE',
-        p_directory => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_skip_extension => true,
-        p_media_query => to_clob('Example text'),
-        p_ie_condition => 'EXAMPLE',
-        p_attributes => 'EXAMPLE'
+    apex_css.add_file(
+        p_name        => 'app-overrides',
+        p_directory   => apex_application.g_image_prefix || 'css/',
+        p_version     => '2026.06.11',
+        p_media_query => 'screen',
+        p_attributes  => 'data-apex-css="app-overrides"'
     );
 end;
 /

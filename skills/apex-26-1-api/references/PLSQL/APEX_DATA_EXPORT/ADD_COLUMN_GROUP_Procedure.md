@@ -48,13 +48,15 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_groups apex_data_export.t_column_groups;
+    l_finance_group_idx pls_integer;
 begin
-    apex_data_export.ADD_COLUMN_GROUP(
-        p_column_groups => null,
-        p_idx => 1,
-        p_name => 'EXAMPLE',
-        p_alignment => null,
-        p_parent_group_idx => 1
+    apex_data_export.add_column_group(
+        p_column_groups => l_groups,
+        p_idx           => l_finance_group_idx,
+        p_name          => 'Financials',
+        p_alignment     => apex_data_export.c_align_center
     );
 end;
 /

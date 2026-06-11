@@ -54,11 +54,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_debug.INFO(
-        p_message => to_clob('Example text'),
-        p_max_length => 1
+    apex_debug.info(
+        p_message    => 'Order %s validation status: %s',
+        p0           => :P10_ORDER_ID,
+        p1           => :P10_STATUS,
+        p_max_length => 2000
     );
 end;
 /
 ```
-
