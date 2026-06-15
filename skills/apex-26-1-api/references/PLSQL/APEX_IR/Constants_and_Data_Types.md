@@ -20,7 +20,20 @@ Use this page when code needs the `APEX_IR.Constants and Data Types` constants. 
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Example
+## Simple Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the documented view constants instead of hard-coded view names when calling APIs such as GET_REPORT.
 
+```sql
+declare
+    l_report apex_ir.t_report;
+begin
+    l_report := apex_ir.get_report(
+        p_page_id   => 10,
+        p_region_id => 123456789,
+        p_report_id => 987654321,
+        p_view      => apex_ir.c_view_report
+    );
+end;
+/
+```

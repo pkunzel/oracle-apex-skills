@@ -44,16 +44,28 @@ RETURN APEX_T_VARCHAR2;
 
 ## Simple Example
 
+List the member names of a JSON object.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_values apex_json.t_values;
+    l_members apex_t_varchar2;
+
 begin
-    l_result := apex_json.GET_MEMBERS(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_members := apex_json.get_members(
+        p_path   => 'order',
+        p_values => l_values
+    );
+
+    for i in 1 .. l_members.count loop
+        apex_debug.info('order member: %s', l_members(i));
+    end loop;
+
 end;
 /
 ```
-

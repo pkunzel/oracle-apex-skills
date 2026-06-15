@@ -33,13 +33,15 @@ Workspace name of grantor workspace.
 
 ## Simple Example
 
+Use this inside an extension app to detect the workspace that granted the extension access.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_grantor_workspace varchar2(255);
 begin
-    l_result := apex_extension.GET_GRANTOR_WORKSPACE;
-    sys.dbms_output.put_line('Result captured.');
+    l_grantor_workspace := apex_extension.get_grantor_workspace;
+
+    sys.dbms_output.put_line('Granted by workspace: ' || l_grantor_workspace);
 end;
 /
 ```
-

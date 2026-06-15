@@ -46,20 +46,22 @@ APEX_IR.CLONE_REPORT (
 
 ## Simple Example
 
+Clone a saved report and capture the new report ID.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_new_report_id number;
 begin
-    l_result := apex_ir.CLONE_REPORT(
-        p_report_id => 1,
-        p_new_name => 'EXAMPLE',
-        p_new_description => 'EXAMPLE',
-        p_new_owner => 'EXAMPLE',
-        p_new_is_public => true,
-        p_replace_report => true
+    l_new_report_id := apex_ir.clone_report(
+        p_report_id       => 987654321,
+        p_new_name        => 'Open Orders - Manager Review',
+        p_new_description => 'Filtered report used by the order management team.',
+        p_new_owner       => :APP_USER,
+        p_new_is_public   => false,
+        p_replace_report  => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state('P10_CLONED_REPORT_ID', l_new_report_id);
 end;
 /
 ```
-

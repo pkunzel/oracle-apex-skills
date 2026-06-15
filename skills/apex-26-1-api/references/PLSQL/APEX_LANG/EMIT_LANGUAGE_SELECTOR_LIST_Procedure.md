@@ -32,10 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Emit the language selector from a PL/SQL Dynamic Content region.
+
 ```sql
 begin
-    apex_lang.EMIT_LANGUAGE_SELECTOR_LIST;
+    apex_lang.emit_language_selector_list;
 end;
 /
 ```
-

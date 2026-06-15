@@ -42,18 +42,21 @@ APEX_LANG.GET_XLIFF_DOCUMENT (
 
 ## Simple Example
 
+Generate an XLIFF document for a page so translators can work on changed text.
+
 ```sql
 declare
-    l_result CLOB;
+    l_xliff clob;
 begin
-    l_result := apex_lang.GET_XLIFF_DOCUMENT(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_language => 'EXAMPLE',
-        p_only_modified_elements => true
+    l_xliff := apex_lang.get_xliff_document(
+        p_application_id          => 100,
+        p_page_id                 => 10,
+        p_language                => 'de',
+        p_only_modified_elements  => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    insert into translation_exports(application_id, page_id, language_code, export_clob)
+    values (100, 10, 'de', l_xliff);
 end;
 /
 ```
-

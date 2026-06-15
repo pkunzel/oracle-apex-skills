@@ -48,16 +48,22 @@ Array member values if the referenced t_value is an array. An array with just th
 
 ## Simple Example
 
+Read a JSON string array into APEX_T_VARCHAR2.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_values apex_json.t_values;
+    l_statuses apex_t_varchar2;
 begin
-    l_result := apex_json.GET_T_VARCHAR2(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"statuses":["OPEN","CLOSED"]}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_statuses := apex_json.get_t_varchar2(
+        p_path   => 'statuses',
+        p_values => l_values
+    );
 end;
 /
 ```
-

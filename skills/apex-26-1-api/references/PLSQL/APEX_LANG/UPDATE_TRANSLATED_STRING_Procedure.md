@@ -19,7 +19,7 @@ Use this page when code needs the `APEX_LANG.UPDATE_TRANSLATED_STRING` procedure
 ```sql
 APEX_LANG.UPDATE_TRANSLATED_STRING (
     p_id        IN NUMBER,
-    p_language  IN VARCHAR2
+    p_language  IN VARCHAR2,
     p_string    IN VARCHAR2 )
 ```
 
@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update one seeded translated string by ID.
+
 ```sql
 begin
-    apex_lang.UPDATE_TRANSLATED_STRING(
-        p_id => 1,
-        p_language => 'EXAMPLE',
-        p_string => 'EXAMPLE'
+    apex_lang.update_translated_string(
+        p_id       => 789012,
+        p_language => 'de',
+        p_string   => 'Bestellung abgeschlossen'
     );
 end;
 /
 ```
-

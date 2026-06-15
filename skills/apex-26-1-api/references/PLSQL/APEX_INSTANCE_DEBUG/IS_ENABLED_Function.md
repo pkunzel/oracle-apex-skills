@@ -30,12 +30,12 @@ APEX_INSTANCE_DEBUG.IS_ENABLED
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_instance_debug.IS_ENABLED;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_instance_debug.is_enabled then
+        sys.dbms_output.put_line('Instance-level debug is enabled.');
+    else
+        sys.dbms_output.put_line('Instance-level debug is disabled.');
+    end if;
 end;
 /
 ```
-

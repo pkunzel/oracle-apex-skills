@@ -54,24 +54,29 @@ APEX_ITEM.RADIOGROUP (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.RADIOGROUP(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_selected_value => 'EXAMPLE',
-        p_display => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_onblur => 'EXAMPLE',
-        p_onchange => 'EXAMPLE',
-        p_onfocus => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Generate radio buttons for a row-level approval choice.
 
+```sql
+select apex_item.radiogroup(
+           p_idx            => 7,
+           p_value          => 'APPROVED',
+           p_selected_value => decision,
+           p_display        => 'Approve',
+           p_attributes     => 'class="decision-option"',
+           p_onchange       => 'apex.event.trigger(this, "decisionchange")',
+           p_item_id        => 'f07_approve_' || request_id,
+           p_item_label     => 'Approve request ' || request_id
+       ) ||
+       apex_item.radiogroup(
+           p_idx            => 7,
+           p_value          => 'REJECTED',
+           p_selected_value => decision,
+           p_display        => 'Reject',
+           p_attributes     => 'class="decision-option"',
+           p_onchange       => 'apex.event.trigger(this, "decisionchange")',
+           p_item_id        => 'f07_reject_' || request_id,
+           p_item_label     => 'Reject request ' || request_id
+       ) as decision_item,
+       request_title
+from approval_requests
+```

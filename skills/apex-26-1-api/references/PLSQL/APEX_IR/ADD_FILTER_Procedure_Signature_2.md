@@ -49,17 +49,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add a filter to a saved report addressed by report alias.
+
 ```sql
 begin
-    apex_ir.ADD_FILTER(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_report_column => 'EXAMPLE',
-        p_filter_value => 'EXAMPLE',
-        p_operator_abbr => 'EXAMPLE',
-        p_report_alias => 'EXAMPLE'
+    apex_ir.add_filter(
+        p_page_id       => 10,
+        p_region_id     => 123456789,
+        p_report_column => 'CUSTOMER_NAME',
+        p_filter_value  => 'Acme',
+        p_operator_abbr => 'C',
+        p_report_alias  => 'OPEN_ORDERS'
     );
 end;
 /
 ```
-

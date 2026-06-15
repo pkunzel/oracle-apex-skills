@@ -41,16 +41,16 @@ Return Description VARCHAR2 The converted and escaped JSON value.
 
 ## Simple Example
 
+Stringify a date with the package ISO-8601 format constant.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_json_value varchar2(32767);
 begin
-    l_result := apex_json.STRINGIFY(
-        p_value => sysdate,
-        p_format => 'EXAMPLE'
+    l_json_value := apex_json.stringify(
+        p_value  => trunc(sysdate),
+        p_format => apex_json.c_date_iso8601
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

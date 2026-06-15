@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.SET_PARAMETER(
-        p_parameter => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_force => true
+    apex_instance_admin.set_parameter(
+        p_parameter => 'SMTP_HOST_ADDRESS',
+        p_value     => 'smtp.mail.internal',
+        p_force     => false
     );
 end;
 /
 ```
-

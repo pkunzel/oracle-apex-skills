@@ -44,16 +44,26 @@ APEX_JSON.GET_VALUE_KIND (
 
 ## Simple Example
 
+Check the value kind before choosing a typed getter.
+
 ```sql
 declare
-    l_result T_KIND;
+    l_values apex_json.t_values;
+    l_kind pls_integer;
+
 begin
-    l_result := apex_json.GET_VALUE_KIND(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_kind := apex_json.get_value_kind(
+        p_path   => 'order.total',
+        p_values => l_values
+    );
+
+    apex_debug.info('Kind for order.total: %s', l_kind);
+
 end;
 /
 ```
-

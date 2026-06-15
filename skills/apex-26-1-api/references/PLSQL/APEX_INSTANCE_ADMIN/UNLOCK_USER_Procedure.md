@@ -44,13 +44,14 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_temp_password varchar2(128) := sys.dbms_random.string('x', 24);
 begin
-    apex_instance_admin.UNLOCK_USER(
-        p_workspace => 'EXAMPLE',
-        p_username => 'USER',
-        p_password => 'EXAMPLE'
+    apex_instance_admin.unlock_user(
+        p_workspace => 'SALES_ANALYTICS',
+        p_username  => 'JDOE',
+        p_password  => l_temp_password
     );
 end;
 /
 ```
-

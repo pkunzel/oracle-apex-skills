@@ -39,12 +39,22 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Open the root JSON object and write named members.
+
 ```sql
+declare
+    l_json clob;
 begin
-    apex_json.OPEN_OBJECT(
-        p_name => 'EXAMPLE'
-    );
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    apex_json.write('orderId', 101);
+    apex_json.write('status', 'OPEN');
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

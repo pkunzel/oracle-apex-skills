@@ -43,15 +43,17 @@ A table of approval log entries (type apex_t_approval_log ).
 ## Simple Example
 
 ```sql
-declare
-    l_result WWV_FLOW_T_APPROVAL_LOG_TABLE;
 begin
-    l_result := apex_human_task.GET_TASK_HISTORY(
-        p_task_id => 1,
-        p_include_all => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    for r in (
+        select event_creator, event_type, event_timestamp, message
+          from table(apex_human_task.get_task_history(
+                   p_task_id     => :P30_TASK_ID,
+                   p_include_all => 'Y'
+               ))
+         order by event_timestamp
+    ) loop
+        sys.dbms_output.put_line(r.event_timestamp || ' ' || r.event_type);
+    end loop;
 end;
 /
 ```
-

@@ -46,17 +46,22 @@ RETURN CLOB
 
 ## Simple Example
 
+Read a large text member from parsed JSON.
+
 ```sql
 declare
-    l_result CLOB;
+    l_values apex_json.t_values;
+    l_notes  clob;
 begin
-    l_result := apex_json.GET_CLOB(
-        p_path => 'EXAMPLE',
-        p_default => to_clob('Example text'),
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"notes":"Call customer before shipping."}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_notes := apex_json.get_clob(
+        p_path   => 'order.notes',
+        p_values => l_values
+    );
 end;
 /
 ```
-

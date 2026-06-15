@@ -44,17 +44,20 @@ A clob containing file in the format supplied.
 
 ## Simple Example
 
+Export text messages for one language mapping as XLIFF.
+
 ```sql
 declare
-    l_result CLOB;
+    l_xliff clob;
 begin
-    l_result := apex_lang.EXPORT_TEXT_MESSAGES(
-        p_application_id => 1,
-        p_lang_code => 'EXAMPLE',
-        p_format => null
+    l_xliff := apex_lang.export_text_messages(
+        p_application_id => 100,
+        p_lang_code      => 'de',
+        p_format         => apex_lang.c_export_format_xliff
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    insert into translation_exports(application_id, language_code, export_clob)
+    values (100, 'de', l_xliff);
 end;
 /
 ```
-

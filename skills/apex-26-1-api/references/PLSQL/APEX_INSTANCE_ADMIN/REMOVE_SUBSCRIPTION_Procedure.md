@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_SUBSCRIPTION(
-        p_subscription_id => 1
+    apex_instance_admin.remove_subscription(
+        p_subscription_id => 456789
     );
 end;
 /
 ```
-

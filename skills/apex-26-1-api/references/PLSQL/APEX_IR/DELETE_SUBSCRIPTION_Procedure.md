@@ -39,12 +39,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Delete an interactive report subscription.
+
 ```sql
 begin
-    apex_ir.DELETE_SUBSCRIPTION(
-        p_subscription_id => 1
+    apex_ir.delete_subscription(
+        p_subscription_id => 2456813
     );
 end;
 /
 ```
-

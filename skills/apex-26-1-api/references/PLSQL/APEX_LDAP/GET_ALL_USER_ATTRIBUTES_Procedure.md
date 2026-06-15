@@ -55,20 +55,28 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Read all returned LDAP attributes for a person entry.
+
 ```sql
+declare
+    l_attributes       apex_application_global.vc_arr2;
+    l_attribute_values apex_application_global.vc_arr2;
 begin
-    apex_ldap.GET_ALL_USER_ATTRIBUTES(
-        p_username => 'USER',
-        p_pass => 'EXAMPLE',
-        p_auth_base => 'EXAMPLE',
-        p_host => 'EXAMPLE',
-        p_port => 'EXAMPLE',
-        p_use_ssl => 'EXAMPLE',
-        p_attributes => null,
-        p_attribute_values => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
+    apex_ldap.get_all_user_attributes(
+        p_username             => :P101_USERNAME,
+        p_pass                 => :P101_PASSWORD,
+        p_auth_base            => 'ou=People,dc=company,dc=test',
+        p_host                 => 'ldap.company.test',
+        p_port                 => '636',
+        p_use_ssl              => 'Y',
+        p_attributes           => l_attributes,
+        p_attribute_values     => l_attribute_values,
+        p_credential_static_id => 'LDAP_BIND_CREDENTIAL'
     );
+
+    for i in 1 .. l_attributes.count loop
+        apex_debug.info('%s = %s', l_attributes(i), l_attribute_values(i));
+    end loop;
 end;
 /
 ```
-

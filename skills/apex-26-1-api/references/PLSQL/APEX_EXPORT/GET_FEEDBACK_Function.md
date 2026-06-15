@@ -46,18 +46,22 @@ A table of apex_t_export_file .
 
 ## Simple Example
 
+Use the workspace ID from the target environment, optionally filtering feedback by date and deployment system.
+
 ```sql
 declare
-    l_result APEX_T_EXPORT_FILES;
+    l_feedback apex_t_export_files;
 begin
-    l_result := apex_export.GET_FEEDBACK(
-        p_workspace_id => 1,
-        p_with_date => true,
-        p_since => sysdate,
-        p_deployment_system => 'EXAMPLE'
+    l_feedback := apex_export.get_feedback(
+        p_workspace_id      => 123456789,
+        p_with_date         => true,
+        p_since             => trunc(sysdate) - 7,
+        p_deployment_system => 'PROD'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_feedback.count loop
+        sys.dbms_output.put_line(l_feedback(i).name);
+    end loop;
 end;
 /
 ```
-

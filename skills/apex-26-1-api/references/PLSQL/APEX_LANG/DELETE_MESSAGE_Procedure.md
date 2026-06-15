@@ -39,12 +39,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Delete a text message by its text message ID.
+
 ```sql
 begin
-    apex_lang.DELETE_MESSAGE(
-        p_id => 1
+    apex_lang.delete_message(
+        p_id => 456789
     );
 end;
 /
 ```
-

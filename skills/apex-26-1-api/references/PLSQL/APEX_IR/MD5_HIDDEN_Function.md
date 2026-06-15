@@ -46,21 +46,22 @@ APEX_ITEM.MD5_HIDDEN (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.MD5_HIDDEN(
-        p_idx => 1,
-        p_value01 => 'EXAMPLE',
-        p_value02 => 'EXAMPLE',
-        p_value03 => 'EXAMPLE',
-        p_value50 => 'EXAMPLE',
-        p_col_sep => 'EXAMPLE',
-        p_item_id => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Submit a hidden checksum alongside editable row data.
 
+```sql
+select apex_item.hidden(
+           p_idx     => 1,
+           p_value   => order_id,
+           p_item_id => 'f01_' || order_id
+       ) ||
+       apex_item.md5_hidden(
+           p_idx     => 2,
+           p_value01 => order_id,
+           p_value02 => status,
+           p_value03 => to_char(last_update_date, 'YYYYMMDDHH24MISS'),
+           p_col_sep => '|',
+           p_item_id => 'f02_' || order_id
+       ) as row_controls,
+       status
+from orders
+```

@@ -47,13 +47,23 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write a parsed JSON subtree from APEX_JSON.T_VALUES.
+
 ```sql
+declare
+    l_values apex_json.t_values;
 begin
-    apex_json.WRITE(
-        p_values => null,
-        p_path => 'EXAMPLE'
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN"}}'
     );
+
+    apex_json.initialize_clob_output;
+    apex_json.write(
+        p_values => l_values,
+        p_path   => 'order'
+    );
+    apex_json.free_output;
 end;
 /
 ```
-

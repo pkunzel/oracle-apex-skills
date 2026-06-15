@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update only the text for an existing text message by ID.
+
 ```sql
 begin
-    apex_lang.UPDATE_MESSAGE(
-        p_id => 1,
-        p_message_text => to_clob('Example text')
+    apex_lang.update_message(
+        p_id           => 456789,
+        p_message_text => 'Order %ORDER_ID is now %STATUS'
     );
 end;
 /
 ```
-

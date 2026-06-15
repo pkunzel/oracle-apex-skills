@@ -44,16 +44,26 @@ RETURN t_value;
 
 ## Simple Example
 
+Read a raw APEX_JSON.T_VALUE when code needs to inspect the parsed value itself.
+
 ```sql
 declare
-    l_result T_VALUE;
+    l_values apex_json.t_values;
+    l_value apex_json.t_value;
+
 begin
-    l_result := apex_json.GET_VALUE(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_value := apex_json.get_value(
+        p_path   => 'order.status',
+        p_values => l_values
+    );
+
+    apex_debug.info('Value kind: %s', l_value.kind);
+
 end;
 /
 ```
-

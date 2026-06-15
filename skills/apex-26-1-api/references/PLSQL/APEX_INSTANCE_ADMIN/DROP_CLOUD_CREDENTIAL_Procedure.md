@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.DROP_CLOUD_CREDENTIAL(
-        p_credential_name => 'EXAMPLE'
+    apex_instance_admin.drop_cloud_credential(
+        p_credential_name => 'OCI_OBJECT_STORAGE_BACKUP'
     );
 end;
 /
 ```
-

@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_debug.LIST_MESSAGES(
-        p_page_view_id => 1
+    apex_instance_debug.list_messages(
+        p_page_view_id => :P900_PAGE_VIEW_ID
     );
 end;
 /
 ```
-

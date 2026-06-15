@@ -42,16 +42,19 @@ A t_token .
 
 ## Simple Example
 
+Decode a signed token and inspect the decoded JSON payload.
+
 ```sql
 declare
-    l_result T_TOKEN;
+    l_key   raw(32) := hextoraw('00112233445566778899AABBCCDDEEFF');
+    l_token apex_jwt.t_token;
 begin
-    l_result := apex_jwt.DECODE(
-        p_value => 'EXAMPLE',
-        p_signature_key => null
+    l_token := apex_jwt.decode(
+        p_value         => :P0_ACCESS_TOKEN,
+        p_signature_key => l_key
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('JWT payload: %s', l_token.payload);
 end;
 /
 ```
-

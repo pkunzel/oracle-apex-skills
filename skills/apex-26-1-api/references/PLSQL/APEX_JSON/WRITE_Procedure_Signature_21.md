@@ -43,14 +43,32 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Generate JSON into a temporary CLOB so the result can be stored, returned, or inspected before it is sent.
+
 ```sql
+declare
+    l_json clob;
 begin
-    apex_json.WRITE(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_write_null => true
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    
+apex_json.write(
+        p_name  => 'shipToLocation',
+        p_value => mdsys.sdo_geometry(
+            2001,
+            4326,
+            mdsys.sdo_point_type(-122.42, 37.77, 0),
+            mdsys.sdo_elem_info_array(1, 1, 1),
+            mdsys.sdo_ordinate_array(-122.42, 37.77)
+        ),
+        p_write_null => false
     );
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

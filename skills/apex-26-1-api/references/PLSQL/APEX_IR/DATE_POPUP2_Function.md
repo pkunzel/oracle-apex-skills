@@ -66,30 +66,26 @@ APEX_ITEM.DATE_POPUP2 (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.DATE_POPUP2(
-        p_idx => 1,
-        p_value => sysdate,
-        p_date_format => 'EXAMPLE',
-        p_size => 1,
-        p_maxLength => 1,
-        p_attributes => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_default_value => 'EXAMPLE',
-        p_max_value => 'EXAMPLE',
-        p_min_value => 'EXAMPLE',
-        p_show_on => 'EXAMPLE',
-        p_number_of_months => 'EXAMPLE',
-        p_navigation_list_for => 'EXAMPLE',
-        p_year_range => 'EXAMPLE',
-        p_validation_date => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render the jQuery date picker variant with date bounds and a unique item ID.
 
+```sql
+select apex_item.date_popup2(
+           p_idx                 => 2,
+           p_value               => due_date,
+           p_date_format         => 'YYYY-MM-DD',
+           p_size                => 10,
+           p_maxLength           => 10,
+           p_attributes          => 'class="due-date"',
+           p_item_id             => 'f02_' || task_id,
+           p_item_label          => 'Due date for task ' || task_name,
+           p_min_value           => to_char(trunc(sysdate), 'YYYY-MM-DD'),
+           p_max_value           => to_char(add_months(trunc(sysdate), 6), 'YYYY-MM-DD'),
+           p_show_on             => 'button',
+           p_number_of_months    => '[1,2]',
+           p_navigation_list_for => 'MONTH_AND_YEAR',
+           p_year_range          => 'c-1:c+1',
+           p_validation_date     => to_char(due_date, 'YYYY-MM-DD')
+       ) as due_date_item,
+       task_name
+from project_tasks
+```

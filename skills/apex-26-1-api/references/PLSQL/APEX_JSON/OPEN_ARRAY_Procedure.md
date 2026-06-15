@@ -39,12 +39,24 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Open a named JSON array inside an object.
+
 ```sql
+declare
+    l_json clob;
 begin
-    apex_json.OPEN_ARRAY(
-        p_name => 'EXAMPLE'
-    );
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    apex_json.open_array('statuses');
+    apex_json.write('OPEN');
+    apex_json.write('CLOSED');
+    apex_json.close_array;
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

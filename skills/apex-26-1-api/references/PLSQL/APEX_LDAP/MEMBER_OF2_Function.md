@@ -48,21 +48,23 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Return LDAP group membership using the MEMBER_OF2 variant.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_groups varchar2(32767);
 begin
-    l_result := apex_ldap.MEMBER_OF2(
-        p_username => 'USER',
-        p_pass => 'EXAMPLE',
-        p_auth_base => 'EXAMPLE',
-        p_host => 'EXAMPLE',
-        p_port => 'EXAMPLE',
-        p_use_ssl => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
+    l_groups := apex_ldap.member_of2(
+        p_username             => :APP_USER,
+        p_pass                 => :P101_PASSWORD,
+        p_auth_base            => 'ou=People,dc=company,dc=test',
+        p_host                 => 'ldap.company.test',
+        p_port                 => '636',
+        p_use_ssl              => 'Y',
+        p_credential_static_id => 'LDAP_BIND_CREDENTIAL'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_debug.info('LDAP groups: %s', l_groups);
 end;
 /
 ```
-

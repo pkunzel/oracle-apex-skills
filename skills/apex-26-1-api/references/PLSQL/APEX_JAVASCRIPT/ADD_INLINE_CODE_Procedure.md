@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add inline JavaScript once per page rendering by supplying a stable key.
+
 ```sql
 begin
-    apex_javascript.ADD_INLINE_CODE(
-        p_code => 'EXAMPLE',
-        p_key => 'EXAMPLE'
+    apex_javascript.add_inline_code(
+        p_code => 'window.orderSearch = { pageItem: "P10_SEARCH" };',
+        p_key  => 'order-search-config'
     );
 end;
 /
 ```
-

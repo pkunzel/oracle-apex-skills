@@ -46,20 +46,25 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Authenticate an end user against an LDAPS server.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_authenticated boolean;
 begin
-    l_result := apex_ldap.AUTHENTICATE(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_search_base => 'EXAMPLE',
-        p_host => 'EXAMPLE',
-        p_port => 'EXAMPLE',
-        p_use_ssl => 'EXAMPLE'
+    l_authenticated := apex_ldap.authenticate(
+        p_username    => :P101_USERNAME,
+        p_password    => :P101_PASSWORD,
+        p_search_base => 'ou=People,dc=company,dc=test',
+        p_host        => 'ldap.company.test',
+        p_port        => '636',
+        p_use_ssl     => 'Y'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state(
+        p_name  => 'P101_AUTH_RESULT',
+        p_value => case when l_authenticated then 'OK' else 'FAILED' end
+    );
 end;
 /
 ```
-

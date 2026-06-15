@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.CANCEL_TASK(
-        p_task_id => 1
+    apex_human_task.cancel_task(
+        p_task_id => :P30_TASK_ID
     );
 end;
 /
 ```
-

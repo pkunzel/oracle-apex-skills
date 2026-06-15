@@ -54,24 +54,21 @@ APEX_ITEM.SELECT_LIST_FROM_QUERY_XL (
 
 ## Simple Example
 
-```sql
-declare
-    l_result CLOB;
-begin
-    l_result := apex_ir.SELECT_LIST_FROM_QUERY_XL(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_attributes => 'EXAMPLE',
-        p_show_null => 'EXAMPLE',
-        p_null_value => 'EXAMPLE',
-        p_null_text => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_show_extra => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Use the XL query variant when the list source can be large.
 
+```sql
+select apex_item.select_list_from_query_xl(
+           p_idx        => 8,
+           p_value      => customer_id,
+           p_query      => 'select customer_name d, customer_id r from customers where active_flag = ''Y'' order by 1',
+           p_attributes => 'class="customer-list"',
+           p_show_null  => 'YES',
+           p_null_value => '-1',
+           p_null_text  => '- Select customer -',
+           p_item_id    => 'f08_' || order_id,
+           p_item_label => 'Customer for order ' || order_number,
+           p_show_extra => 'NO'
+       ) as customer_item,
+       order_number
+from orders
+```

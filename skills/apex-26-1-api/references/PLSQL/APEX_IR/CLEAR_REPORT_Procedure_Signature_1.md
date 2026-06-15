@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear report settings for a saved report by numeric report ID.
+
 ```sql
 begin
-    apex_ir.CLEAR_REPORT(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_report_id => 1
+    apex_ir.clear_report(
+        p_page_id   => 10,
+        p_region_id => 123456789,
+        p_report_id => 987654321
     );
 end;
 /
 ```
-

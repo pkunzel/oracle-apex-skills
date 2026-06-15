@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.TRUNCATE_LOG(
-        p_log => 'EXAMPLE'
+    apex_instance_admin.truncate_log(
+        p_log => 'ACTIVITY'
     );
 end;
 /
 ```
-

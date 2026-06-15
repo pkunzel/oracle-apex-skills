@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove a language mapping for an application.
+
 ```sql
 begin
-    apex_lang.DELETE_LANGUAGE_MAPPING(
-        p_application_id => 1,
-        p_language => 'EXAMPLE'
+    apex_lang.delete_language_mapping(
+        p_application_id => 100,
+        p_language       => 'de'
     );
 end;
 /
 ```
-

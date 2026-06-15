@@ -43,11 +43,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.SET_LOG_SWITCH_INTERVAL(
-        p_log_name => 'EXAMPLE',
-        p_log_switch_after_days => 1
+    apex_instance_admin.set_log_switch_interval(
+        p_log_name              => 'ACTIVITY',
+        p_log_switch_after_days => 30
     );
+
+    commit;
 end;
 /
 ```
-

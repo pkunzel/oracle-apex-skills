@@ -40,15 +40,21 @@ Return Description CLOB The GeoJSON value.
 
 ## Simple Example
 
+Stringify an SDO geometry value as JSON.
+
 ```sql
 declare
-    l_result CLOB;
+    l_json_value varchar2(32767);
 begin
-    l_result := apex_json.STRINGIFY(
-        p_value => 'EXAMPLE'
+    l_json_value := apex_json.stringify(
+        mdsys.sdo_geometry(
+            2001,
+            4326,
+            mdsys.sdo_point_type(-122.42, 37.77, 0),
+            mdsys.sdo_elem_info_array(1, 1, 1),
+            mdsys.sdo_ordinate_array(-122.42, 37.77)
+        )
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

@@ -36,15 +36,22 @@ APEX_JSON.GET_CLOB_OUTPUT (
 
 ## Simple Example
 
+Return generated JSON from the temporary CLOB output buffer.
+
 ```sql
 declare
-    l_result CLOB;
+    l_json clob;
 begin
-    l_result := apex_json.GET_CLOB_OUTPUT(
-        p_free => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    apex_json.write('orderId', 101);
+    apex_json.write('status', 'OPEN');
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

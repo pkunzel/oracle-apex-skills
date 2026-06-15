@@ -41,10 +41,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_WEB_ENTRY_POINT(
-        p_name => 'EXAMPLE'
+    apex_instance_admin.remove_web_entry_point(
+        p_name => 'SALES_API.PUBLIC_CALLBACK'
     );
+
+    commit;
 end;
 /
 ```
-

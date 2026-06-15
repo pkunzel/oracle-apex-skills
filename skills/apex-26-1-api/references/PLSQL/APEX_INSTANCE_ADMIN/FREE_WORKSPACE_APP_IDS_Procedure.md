@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.FREE_WORKSPACE_APP_IDS(
-        p_workspace_id => 1
+    apex_instance_admin.free_workspace_app_ids(
+        p_workspace_id => 123456789
     );
 end;
 /
 ```
-

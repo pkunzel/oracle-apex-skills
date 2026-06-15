@@ -35,10 +35,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_WORKSPACE_EXCEPTIONS(
-        p_workspace => 'EXAMPLE'
+    apex_instance_admin.remove_workspace_exceptions(
+        p_workspace => 'HR_APPS'
     );
 end;
 /
 ```
-

@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.COMPLETE_TASK(
-        p_task_id => 1,
-        p_outcome => null,
+    apex_human_task.complete_task(
+        p_task_id   => :P30_TASK_ID,
+        p_outcome   => apex_human_task.c_task_outcome_approved,
         p_autoclaim => true
     );
 end;
 /
 ```
-

@@ -32,10 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Load RequireJS before registering or requiring custom AMD modules.
+
 ```sql
 begin
-    apex_javascript.ADD_REQUIREJS;
+    apex_javascript.add_requirejs;
 end;
 /
 ```
-

@@ -46,17 +46,25 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Read a numeric value from an array element using a path placeholder.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_values apex_json.t_values;
+    l_qty    number;
 begin
-    l_result := apex_json.GET_NUMBER(
-        p_path => 'EXAMPLE',
-        p_default => true,
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"items":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_qty := apex_json.get_number(
+        p_path   => 'items[%d].qty',
+        p0       => '1',
+        p_values => l_values
+    );
+
+    apex_util.set_session_state('P10_FIRST_QTY', l_qty);
 end;
 /
 ```
-

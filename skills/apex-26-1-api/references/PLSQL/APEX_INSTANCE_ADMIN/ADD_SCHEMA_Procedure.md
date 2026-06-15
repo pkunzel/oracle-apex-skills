@@ -20,7 +20,7 @@ Use this page when code needs the `APEX_INSTANCE_ADMIN.ADD_SCHEMA` procedure. Co
 APEX_INSTANCE_ADMIN.ADD_SCHEMA (
     p_workspace             IN VARCHAR2,
     p_schema                IN VARCHAR2,
-    p_grant_apex_privileges IN VARCHAR2 DEFAULT FALSE )
+    p_grant_apex_privileges IN BOOLEAN DEFAULT FALSE )
 ```
 
 ## Parameters
@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.ADD_SCHEMA(
-        p_workspace => 'EXAMPLE',
-        p_schema => 'EXAMPLE',
-        p_grant_apex_privileges => 'EXAMPLE'
+    apex_instance_admin.add_schema(
+        p_workspace             => 'SALES_ANALYTICS',
+        p_schema                => 'SALES_MART',
+        p_grant_apex_privileges => true
     );
 end;
 /
 ```
-

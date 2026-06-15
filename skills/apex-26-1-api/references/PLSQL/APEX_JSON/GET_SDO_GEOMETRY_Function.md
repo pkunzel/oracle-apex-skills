@@ -50,17 +50,22 @@ Return Description a geometry Value at the given path position.
 
 ## Simple Example
 
+Read GeoJSON into an SDO geometry value.
+
 ```sql
 declare
-    l_result MDSYS.SDO_GEOMETRY;
+    l_values apex_json.t_values;
+    l_point  mdsys.sdo_geometry;
 begin
-    l_result := apex_json.GET_SDO_GEOMETRY(
-        p_path => 'EXAMPLE',
-        p_srid => 1,
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"location":{"type":"Point","coordinates":[-122.42,37.77]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_point := apex_json.get_sdo_geometry(
+        p_path   => 'location',
+        p_values => l_values
+    );
 end;
 /
 ```
-

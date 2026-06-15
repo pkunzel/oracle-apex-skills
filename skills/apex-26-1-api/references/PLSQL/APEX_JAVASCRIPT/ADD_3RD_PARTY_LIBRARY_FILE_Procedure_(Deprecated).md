@@ -51,16 +51,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy plug-ins may still call this deprecated helper, but new code should prefer ADD_LIBRARY.
+
 ```sql
 begin
-    apex_javascript.ADD_3RD_PARTY_LIBRARY_FILE(
-        p_library => 'EXAMPLE',
-        p_file_name => 'EXAMPLE',
-        p_directory => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_attributes => 'EXAMPLE'
+    apex_javascript.add_3rd_party_library_file(
+        p_library    => 'hammerjs',
+        p_file_name  => 'hammer-2.0.4#MIN#',
+        p_directory  => p_plugin.file_prefix,
+        p_version    => '2.0.4',
+        p_attributes => 'defer'
     );
 end;
 /
 ```
-

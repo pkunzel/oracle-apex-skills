@@ -34,12 +34,13 @@ apex_t_temp_lov_data
 ## Simple Example
 
 ```sql
-declare
-    l_result APEX_T_TEMP_LOV_DATA;
 begin
-    l_result := apex_human_task.GET_LOV_TYPE;
-    sys.dbms_output.put_line('Result captured.');
+    for r in (
+        select display_value, return_value
+          from table(apex_human_task.get_lov_type())
+    ) loop
+        sys.dbms_output.put_line(r.return_value || ': ' || r.display_value);
+    end loop;
 end;
 /
 ```
-

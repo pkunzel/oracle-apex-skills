@@ -33,13 +33,14 @@ This function returns the language selector as an HTML snippet.
 
 ## Simple Example
 
+Return the language selector HTML from a Dynamic Content region.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_html varchar2(32767);
 begin
-    l_result := apex_lang.GET_LANGUAGE_SELECTOR_LIST;
-    sys.dbms_output.put_line('Result captured.');
+    l_html := apex_lang.get_language_selector_list;
+    htp.p(l_html);
 end;
 /
 ```
-

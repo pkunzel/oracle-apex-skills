@@ -53,16 +53,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.ADD_WORKSPACE(
-        p_workspace_id => 1,
-        p_workspace => 'EXAMPLE',
-        p_source_identifier => 'EXAMPLE',
-        p_primary_schema => 'EXAMPLE',
-        p_additional_schemas => 'EXAMPLE',
-        p_rm_consumer_group => 'EXAMPLE',
-        p_host_prefix => 'EXAMPLE'
+    apex_instance_admin.add_workspace(
+        p_workspace_id       => 8675309,
+        p_workspace          => 'SALES_ANALYTICS',
+        p_source_identifier  => 'SALES_ANALYTICS_PROD',
+        p_primary_schema     => 'SALES_APP',
+        p_additional_schemas => 'SALES_STAGE:SALES_MART',
+        p_rm_consumer_group  => 'APEX_LOW',
+        p_host_prefix        => 'sales'
     );
 end;
 /
 ```
-

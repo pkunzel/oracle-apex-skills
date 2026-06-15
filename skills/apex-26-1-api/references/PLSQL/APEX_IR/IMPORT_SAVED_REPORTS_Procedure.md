@@ -47,16 +47,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Import a signed saved-report export into the current workspace and target application.
+
 ```sql
+declare
+    l_export_content clob := :P50_REPORT_EXPORT;
 begin
-    apex_ir.IMPORT_SAVED_REPORTS(
-        p_export_content => to_clob('Example text'),
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_replace_report => true,
-        p_new_owner => 'EXAMPLE',
-        p_new_application_id => 1
+    apex_ir.import_saved_reports(
+        p_export_content       => l_export_content,
+        p_credential_static_id => 'IR_REPORT_SIGNING_KEY',
+        p_replace_report       => true,
+        p_new_owner            => :APP_USER,
+        p_new_application_id   => 100
     );
 end;
 /
 ```
-

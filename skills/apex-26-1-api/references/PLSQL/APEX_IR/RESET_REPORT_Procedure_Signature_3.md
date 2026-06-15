@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Reset a saved report by region and report static ID.
+
 ```sql
 begin
-    apex_ir.RESET_REPORT(
-        p_page_id => 1,
-        p_region_static_id => 'EXAMPLE_STATIC_ID',
-        p_report_static_id => 'EXAMPLE_STATIC_ID'
+    apex_ir.reset_report(
+        p_page_id          => 10,
+        p_region_static_id => 'orders_ir',
+        p_report_static_id => 'primary'
     );
 end;
 /
 ```
-

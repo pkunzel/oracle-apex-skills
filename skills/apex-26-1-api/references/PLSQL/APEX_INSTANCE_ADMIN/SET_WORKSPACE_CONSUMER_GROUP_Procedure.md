@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.SET_WORKSPACE_CONSUMER_GROUP(
-        p_workspace => 'EXAMPLE',
-        p_rm_consumer_group => 'EXAMPLE'
+    apex_instance_admin.set_workspace_consumer_group(
+        p_workspace         => 'SALES_ANALYTICS',
+        p_rm_consumer_group => 'APEX_LOW'
     );
 end;
 /
 ```
-

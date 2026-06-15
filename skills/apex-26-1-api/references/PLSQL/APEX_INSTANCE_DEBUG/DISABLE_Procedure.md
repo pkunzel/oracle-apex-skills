@@ -34,8 +34,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_debug.DISABLE;
+    apex_instance_debug.disable;
 end;
 /
 ```
-

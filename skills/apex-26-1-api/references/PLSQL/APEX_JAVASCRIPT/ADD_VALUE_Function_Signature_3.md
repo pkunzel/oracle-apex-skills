@@ -38,16 +38,16 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Append Boolean values to generated JavaScript.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_values varchar2(32767);
 begin
-    l_result := apex_javascript.ADD_VALUE(
-        p_value => true,
-        p_add_comma => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values := '[' ||
+        apex_javascript.add_value(true, true) ||
+        apex_javascript.add_value(false, false) ||
+    ']';
 end;
 /
 ```
-

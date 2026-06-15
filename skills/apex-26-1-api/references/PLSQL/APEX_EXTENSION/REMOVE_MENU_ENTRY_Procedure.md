@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove a previously registered Builder Extension menu item by its label and workspace.
+
 ```sql
 begin
-    apex_extension.REMOVE_MENU_ENTRY(
-        p_label => 'EXAMPLE',
-        p_workspace => 'EXAMPLE'
+    apex_extension.remove_menu_entry(
+        p_label     => 'Data Dictionary Tools',
+        p_workspace => 'EXTENSIONS_WS'
     );
 end;
 /
 ```
-

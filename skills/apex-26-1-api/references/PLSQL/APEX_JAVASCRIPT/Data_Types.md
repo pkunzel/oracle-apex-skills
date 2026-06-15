@@ -20,7 +20,19 @@ Use this page when code needs the `APEX_JAVASCRIPT.Data Types` data types. Confi
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Example
+## Simple Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the package helpers to produce JavaScript-safe literals instead of concatenating raw values.
 
+```sql
+declare
+    l_config varchar2(32767);
+begin
+    l_config := '{' ||
+        apex_javascript.add_attribute('ajaxIdentifier', apex_plugin.get_ajax_identifier, true, true) ||
+        apex_javascript.add_attribute('regionStaticId', 'orders_ir', true, true) ||
+        apex_javascript.add_attribute('pageSize', 25, true, false) ||
+    '}';
+end;
+/
+```

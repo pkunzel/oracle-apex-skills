@@ -48,21 +48,19 @@ APEX_ITEM.CHECKBOX2 (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.CHECKBOX2(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_checked_values => 'EXAMPLE',
-        p_checked_values_delimiter => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render row-selection checkboxes in a report query; submitted checked values arrive in APEX_APPLICATION.G_F01.
 
+```sql
+select apex_item.checkbox2(
+           p_idx                      => 1,
+           p_value                    => order_id,
+           p_attributes               => 'class="select-order"',
+           p_checked_values           => :P10_SELECTED_ORDER_IDS,
+           p_checked_values_delimiter => ':',
+           p_item_id                  => 'f01_' || order_id,
+           p_item_label               => 'Select order ' || order_number
+       ) as select_order,
+       order_number,
+       status
+from orders
+```

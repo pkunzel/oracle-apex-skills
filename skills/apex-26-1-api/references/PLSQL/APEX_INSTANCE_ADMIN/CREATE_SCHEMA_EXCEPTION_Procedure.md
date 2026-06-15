@@ -36,11 +36,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.CREATE_SCHEMA_EXCEPTION(
-        p_schema => 'EXAMPLE',
-        p_workspace => 'EXAMPLE'
+    apex_instance_admin.create_schema_exception(
+        p_schema    => 'HR_SECURE',
+        p_workspace => 'HR_APPS'
     );
 end;
 /
 ```
-

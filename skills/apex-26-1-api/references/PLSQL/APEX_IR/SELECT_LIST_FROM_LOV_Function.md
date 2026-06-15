@@ -54,24 +54,21 @@ APEX_ITEM.SELECT_LIST_FROM_LOV (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.SELECT_LIST_FROM_LOV(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_lov => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_show_null => 'EXAMPLE',
-        p_null_value => 'EXAMPLE',
-        p_null_text => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_show_extra => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Build a select list from a shared LOV.
 
+```sql
+select apex_item.select_list_from_lov(
+           p_idx        => 8,
+           p_value      => priority_code,
+           p_lov        => 'TASK_PRIORITIES',
+           p_attributes => 'class="priority-list"',
+           p_show_null  => 'YES',
+           p_null_value => 'UNASSIGNED',
+           p_null_text  => '- Select priority -',
+           p_item_id    => 'f08_' || task_id,
+           p_item_label => 'Priority for task ' || task_name,
+           p_show_extra => 'NO'
+       ) as priority_item,
+       task_name
+from project_tasks
+```

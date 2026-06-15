@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.EXCLUDE_POTENTIAL_OWNER(
-        p_task_id => 1,
-        p_potential_owner => 'EXAMPLE'
+    apex_human_task.exclude_potential_owner(
+        p_task_id         => :P30_TASK_ID,
+        p_potential_owner => 'JANE.APPROVER'
     );
 end;
 /
 ```
-

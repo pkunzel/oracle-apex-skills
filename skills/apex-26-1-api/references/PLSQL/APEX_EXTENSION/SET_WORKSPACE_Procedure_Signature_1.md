@@ -39,12 +39,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the workspace context by workspace ID before running extension-management code outside the usual request context.
+
 ```sql
 begin
-    apex_extension.SET_WORKSPACE(
-        p_id => 1
+    apex_extension.set_workspace(p_id => 123456789);
+
+    apex_extension.remove_menu_entry(
+        p_label => 'Data Dictionary Tools'
     );
 end;
 /
 ```
-

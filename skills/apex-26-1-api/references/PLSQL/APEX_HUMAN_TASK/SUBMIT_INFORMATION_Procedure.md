@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.SUBMIT_INFORMATION(
-        p_task_id => 1,
-        p_text => to_clob('Example text')
+    apex_human_task.submit_information(
+        p_task_id => :P30_TASK_ID,
+        p_text    => 'Supplier quote uploaded and order total updated.'
     );
 end;
 /
 ```
-

@@ -30,12 +30,12 @@ APEX_INSTANCE_ADMIN.IS_DB_SIGNATURE_VALID
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_instance_admin.IS_DB_SIGNATURE_VALID;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_instance_admin.is_db_signature_valid then
+        sys.dbms_output.put_line('Database signature is valid.');
+    else
+        sys.dbms_output.put_line('Database signature needs attention.');
+    end if;
 end;
 /
 ```
-

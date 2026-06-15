@@ -45,15 +45,15 @@ VARCHAR2 - The old value of this parameter in VARCHAR2 format.
 
 ```sql
 declare
-    l_result varchar2(32767);
+    l_old_total varchar2(32767);
 begin
-    l_result := apex_human_task.GET_TASK_PARAMETER_OLD_VALUE(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID',
-        p_raise_error => true
+    l_old_total := apex_human_task.get_task_parameter_old_value(
+        p_task_id         => :P30_TASK_ID,
+        p_param_static_id => 'ORDER_TOTAL',
+        p_raise_error     => false
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Previous total: ' || l_old_total);
 end;
 /
 ```
-

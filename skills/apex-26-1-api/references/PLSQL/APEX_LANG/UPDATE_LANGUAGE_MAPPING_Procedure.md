@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Point an existing mapping to a different translated application ID.
+
 ```sql
 begin
-    apex_lang.UPDATE_LANGUAGE_MAPPING(
-        p_application_id => 1,
-        p_language => 'EXAMPLE',
-        p_new_trans_application_id => 1
+    apex_lang.update_language_mapping(
+        p_application_id             => 100,
+        p_language                   => 'de',
+        p_translation_application_id => 1101
     );
 end;
 /
 ```
-

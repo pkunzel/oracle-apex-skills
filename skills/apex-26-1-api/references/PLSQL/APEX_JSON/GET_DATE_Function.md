@@ -48,18 +48,25 @@ RETURN DATE;
 
 ## Simple Example
 
+Read a JSON date string with an explicit format mask.
+
 ```sql
 declare
-    l_result DATE;
+    l_values apex_json.t_values;
+    l_created date;
+
 begin
-    l_result := apex_json.GET_DATE(
-        p_path => 'EXAMPLE',
-        p_default => sysdate,
-        p_format => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_created := apex_json.get_date(
+        p_path   => 'order.created',
+        p_format => 'YYYY-MM-DD"T"HH24:MI:SS"Z"',
+        p_values => l_values
+    );
+
 end;
 /
 ```
-

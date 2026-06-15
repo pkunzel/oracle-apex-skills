@@ -54,24 +54,21 @@ APEX_ITEM.SELECT_LIST_FROM_QUERY (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.SELECT_LIST_FROM_QUERY(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_attributes => 'EXAMPLE',
-        p_show_null => 'EXAMPLE',
-        p_null_value => 'EXAMPLE',
-        p_null_text => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_show_extra => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Build a select list from a two-column SQL query.
 
+```sql
+select apex_item.select_list_from_query(
+           p_idx        => 8,
+           p_value      => assignee_id,
+           p_query      => 'select full_name d, person_id r from team_members where active_flag = ''Y'' order by 1',
+           p_attributes => 'class="assignee-list"',
+           p_show_null  => 'YES',
+           p_null_value => '-1',
+           p_null_text  => '- Unassigned -',
+           p_item_id    => 'f08_' || task_id,
+           p_item_label => 'Assignee for task ' || task_name,
+           p_show_extra => 'NO'
+       ) as assignee_item,
+       task_name
+from project_tasks
+```

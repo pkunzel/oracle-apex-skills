@@ -32,10 +32,21 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Release the temporary CLOB output buffer after calling GET_CLOB_OUTPUT.
+
 ```sql
+declare
+    l_json clob;
 begin
-    apex_json.FREE_OUTPUT;
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    apex_json.write('status', 'created');
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

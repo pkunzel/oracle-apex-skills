@@ -39,12 +39,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the workspace context by workspace name when the workspace ID is not convenient to look up.
+
 ```sql
 begin
-    apex_extension.SET_WORKSPACE(
-        p_name => 'EXAMPLE'
+    apex_extension.set_workspace(p_name => 'EXTENSIONS_WS');
+
+    apex_extension.add_menu_entry(
+        p_label => 'Data Dictionary Tools',
+        p_url   => apex_page.get_url(p_application => 500, p_page => 1)
     );
 end;
 /
 ```
-

@@ -46,15 +46,15 @@ This function returns the ID of the renewed task.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_renewed_task_id number;
 begin
-    l_result := apex_human_task.RENEW_TASK(
-        p_task_id => 1,
-        p_priority => 1,
-        p_due_date => sysdate
+    l_renewed_task_id := apex_human_task.renew_task(
+        p_task_id  => :P30_TASK_ID,
+        p_priority => apex_human_task.c_task_priority_high,
+        p_due_date => systimestamp + interval '3' day
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    :P30_RENEWED_TASK_ID := l_renewed_task_id;
 end;
 /
 ```
-

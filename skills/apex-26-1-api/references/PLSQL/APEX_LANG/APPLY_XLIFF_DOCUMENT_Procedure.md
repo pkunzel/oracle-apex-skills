@@ -43,14 +43,20 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Apply an edited XLIFF document for an existing translation mapping.
+
 ```sql
+declare
+    l_xliff clob := q'[
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2"><file source-language="en" target-language="de"><body/></file></xliff>
+]';
 begin
-    apex_lang.APPLY_XLIFF_DOCUMENT(
-        p_application_id => 1,
-        p_language => 'EXAMPLE',
-        p_document => to_clob('Example text')
+    apex_lang.apply_xliff_document(
+        p_application_id => 100,
+        p_language       => 'de',
+        p_document       => l_xliff
     );
 end;
 /
 ```
-

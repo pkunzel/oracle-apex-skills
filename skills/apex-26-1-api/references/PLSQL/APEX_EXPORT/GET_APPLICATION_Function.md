@@ -70,30 +70,25 @@ A table of apex_t_export_file . Unless the caller passes p_split=>true to the fu
 
 ## Simple Example
 
+This exports application 100 as split SQL files, includes supporting objects, exports only selected components, and keeps audit dates without user names.
+
 ```sql
 declare
-    l_result APEX_T_EXPORT_FILES;
+    l_files apex_t_export_files;
 begin
-    l_result := apex_export.GET_APPLICATION(
-        p_application_id => 1,
-        p_type => null,
-        p_split => true,
-        p_with_date => true,
-        p_with_ir_public_reports => true,
-        p_with_ir_private_reports => true,
-        p_with_ir_notifications => true,
-        p_with_translations => true,
-        p_with_original_ids => true,
-        p_with_no_subscriptions => true,
-        p_with_comments => true,
-        p_with_supporting_objects => 'EXAMPLE',
-        p_with_acl_assignments => true,
-        p_components => 'EXAMPLE',
-        p_with_audit_info => null,
-        p_with_runtime_instances => 'EXAMPLE'
+    l_files := apex_export.get_application(
+        p_application_id          => 100,
+        p_type                    => apex_export.c_type_sql,
+        p_split                   => true,
+        p_with_date               => true,
+        p_with_supporting_objects => 'Y',
+        p_components              => apex_t_varchar2('PAGE:1', 'LOV:%'),
+        p_with_audit_info         => apex_export.c_audit_dates_only
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_files.count loop
+        sys.dbms_output.put_line(l_files(i).name);
+    end loop;
 end;
 /
 ```
-

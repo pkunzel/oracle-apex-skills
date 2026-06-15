@@ -40,15 +40,23 @@ This function returns a table of apex_t_export_file containing the name and cont
 
 ## Simple Example
 
+Unzip a previously stored APEX export BLOB back into the `apex_t_export_files` collection.
+
 ```sql
 declare
-    l_result APEX_T_EXPORT_FILES;
+    l_zip   blob;
+    l_files apex_t_export_files;
 begin
-    l_result := apex_export.UNZIP(
-        p_source_zip => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select file_blob
+      into l_zip
+      from app_export_archive
+     where file_name = 'f100.zip';
+
+    l_files := apex_export.unzip(p_source_zip => l_zip);
+
+    for i in 1 .. l_files.count loop
+        sys.dbms_output.put_line(l_files(i).name);
+    end loop;
 end;
 /
 ```
-

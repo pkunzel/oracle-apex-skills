@@ -47,13 +47,15 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.DELETE_TASKS(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_states => 'EXAMPLE',
-        p_include_workflow_tasks => true
+    apex_human_task.delete_tasks(
+        p_application_id         => 100,
+        p_static_id              => 'ORDER_APPROVAL',
+        p_states                 => apex_t_varchar2(
+            apex_human_task.c_task_state_completed,
+            apex_human_task.c_task_state_cancelled
+        ),
+        p_include_workflow_tasks => false
     );
 end;
 /
 ```
-

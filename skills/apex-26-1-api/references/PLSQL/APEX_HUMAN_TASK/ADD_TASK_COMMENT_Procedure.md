@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.ADD_TASK_COMMENT(
-        p_task_id => 1,
-        p_text => to_clob('Example text')
+    apex_human_task.add_task_comment(
+        p_task_id => :P30_TASK_ID,
+        p_text    => 'Reviewed the invoice attachment and routed to Finance.'
     );
 end;
 /
 ```
-

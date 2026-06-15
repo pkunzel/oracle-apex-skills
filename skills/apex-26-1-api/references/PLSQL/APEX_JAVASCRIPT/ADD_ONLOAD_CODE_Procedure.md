@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Queue JavaScript for execution after the page has loaded.
+
 ```sql
 begin
-    apex_javascript.ADD_ONLOAD_CODE(
-        p_code => 'EXAMPLE',
-        p_key => 'EXAMPLE'
+    apex_javascript.add_onload_code(
+        p_code => 'apex.item("P10_SEARCH").setFocus();',
+        p_key  => 'focus-order-search'
     );
 end;
 /
 ```
-

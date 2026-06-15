@@ -47,16 +47,19 @@ An xmltype representation of the json data
 
 ## Simple Example
 
-```sql
-declare
-    l_result SYS.XMLTYPE;
-begin
-    l_result := apex_json.TO_XMLTYPE_SQL(
-        p_source => to_clob('Example text'),
-        p_strict => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Use the SQL-friendly wrapper when calling from SQL.
 
+```sql
+select x.sku,
+       x.qty
+from xmltable(
+       '/json/lines/row'
+       passing apex_json.to_xmltype_sql(
+           p_source => '{"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}',
+           p_strict => 'Y'
+       )
+       columns
+           sku varchar2(30) path 'sku',
+           qty number       path 'qty'
+     ) x
+```

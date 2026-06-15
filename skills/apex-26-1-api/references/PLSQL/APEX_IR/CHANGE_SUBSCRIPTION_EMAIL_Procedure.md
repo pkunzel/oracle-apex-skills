@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update the destination address for an existing interactive report subscription.
+
 ```sql
 begin
-    apex_ir.CHANGE_SUBSCRIPTION_EMAIL(
-        p_subscription_id => 1,
-        p_email_address => 'EXAMPLE'
+    apex_ir.change_subscription_email(
+        p_subscription_id => 2456813,
+        p_email_address   => 'ops-digest@company.test'
     );
 end;
 /
 ```
-

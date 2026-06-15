@@ -35,10 +35,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_SCHEMA_EXCEPTIONS(
-        p_schema => 'EXAMPLE'
+    apex_instance_admin.remove_schema_exceptions(
+        p_schema => 'HR_SECURE'
     );
 end;
 /
 ```
-

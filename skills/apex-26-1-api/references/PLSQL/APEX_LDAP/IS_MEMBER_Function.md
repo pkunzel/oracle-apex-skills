@@ -52,23 +52,25 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Check whether a user belongs to a specific LDAP group.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_is_member boolean;
 begin
-    l_result := apex_ldap.IS_MEMBER(
-        p_username => 'USER',
-        p_pass => 'EXAMPLE',
-        p_auth_base => 'EXAMPLE',
-        p_host => 'EXAMPLE',
-        p_port => 'EXAMPLE',
-        p_use_ssl => 'EXAMPLE',
-        p_group => 'EXAMPLE',
-        p_group_base => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
+    l_is_member := apex_ldap.is_member(
+        p_username             => :APP_USER,
+        p_pass                 => :P101_PASSWORD,
+        p_auth_base            => 'ou=People,dc=company,dc=test',
+        p_host                 => 'ldap.company.test',
+        p_port                 => '636',
+        p_use_ssl              => 'Y',
+        p_group                => 'cn=APEX_DEVELOPERS,ou=Groups,dc=company,dc=test',
+        p_group_base           => 'ou=Groups,dc=company,dc=test',
+        p_credential_static_id => 'LDAP_BIND_CREDENTIAL'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state('P101_IS_DEVELOPER', case when l_is_member then 'Y' else 'N' end);
 end;
 /
 ```
-

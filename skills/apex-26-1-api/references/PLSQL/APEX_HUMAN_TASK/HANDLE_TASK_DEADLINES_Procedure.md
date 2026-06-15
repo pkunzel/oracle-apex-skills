@@ -40,8 +40,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.HANDLE_TASK_DEADLINES;
+    apex_human_task.handle_task_deadlines;
 end;
 /
 ```
-

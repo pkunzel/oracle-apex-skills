@@ -42,18 +42,28 @@ RETURN apex_t_varchar2;
 
 ## Simple Example
 
+Find array elements whose child value matches a target value.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_values apex_json.t_values;
+    l_paths  apex_t_varchar2;
 begin
-    l_result := apex_json.FIND_PATHS_LIKE(
-        p_return_path => 'EXAMPLE',
-        p_subpath => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"lines":[{"sku":"A100","status":"OPEN"},{"sku":"B200","status":"CLOSED"}]}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_paths := apex_json.find_paths_like(
+        p_return_path => 'lines[%]',
+        p_subpath     => '.status',
+        p_value       => 'OPEN',
+        p_values      => l_values
+    );
+
+    for i in 1 .. l_paths.count loop
+        apex_debug.info('Matching line path: %s', l_paths(i));
+    end loop;
 end;
 /
 ```
-

@@ -48,21 +48,18 @@ APEX_ITEM.TEXTAREA (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.TEXTAREA(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_rows => 1,
-        p_cols => 1,
-        p_attributes => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render a multi-line editable note column.
 
+```sql
+select apex_item.textarea(
+           p_idx        => 11,
+           p_value      => review_notes,
+           p_rows       => 4,
+           p_cols       => 60,
+           p_attributes => 'class="review-notes"',
+           p_item_id    => 'f11_' || review_id,
+           p_item_label => 'Review notes for ' || review_id
+       ) as notes_item,
+       reviewer_name
+from order_reviews
+```

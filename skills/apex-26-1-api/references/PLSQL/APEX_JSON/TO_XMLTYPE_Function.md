@@ -47,16 +47,16 @@ Return Description sys.xmltype An xmltype representation of the JSON data.
 
 ## Simple Example
 
-```sql
-declare
-    l_result SYS.XMLTYPE;
-begin
-    l_result := apex_json.TO_XMLTYPE(
-        p_source => to_clob('Example text'),
-        p_strict => true
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Convert JSON to XMLTYPE so SQL XML functions can query it.
 
+```sql
+select x.order_id,
+       x.status
+from xmltable(
+       '/json/order'
+       passing apex_json.to_xmltype('{"order":{"order_id":101,"status":"OPEN"}}')
+       columns
+           order_id number       path 'order_id',
+           status   varchar2(30) path 'status'
+     ) x
+```

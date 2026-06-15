@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.CREATE_OR_UPDATE_ADMIN_USER(
-        p_username => 'USER'
+    apex_instance_admin.create_or_update_admin_user(
+        p_username => 'APEX_ADMIN'
     );
 end;
 /
 ```
-

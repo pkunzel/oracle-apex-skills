@@ -21,7 +21,7 @@ APEX_ITEM.DATE_POPUP (
     p_idx                       IN    NUMBER,
     p_row                       IN    NUMBER,
     p_value                     IN    VARCHAR2 DEFAULT NULL,
-    p_date_format               IN    DATE DEFAULT 'DD-MON-YYYY',
+    p_date_format               IN    VARCHAR2 DEFAULT 'DD-MON-YYYY',
     p_size                      IN    NUMBER DEFAULT 20,
     p_maxlength                 IN    NUMBER DEFAULT 2000,
     p_attributes                IN    VARCHAR2 DEFAULT NULL,
@@ -52,23 +52,20 @@ APEX_ITEM.DATE_POPUP (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.DATE_POPUP(
-        p_idx => 1,
-        p_row => 1,
-        p_value => 'EXAMPLE',
-        p_date_format => sysdate,
-        p_size => 1,
-        p_maxlength => 1,
-        p_attributes => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render an editable due-date column in a SQL report.
 
+```sql
+select apex_item.date_popup(
+           p_idx         => 2,
+           p_row         => rownum,
+           p_value       => to_char(due_date, 'YYYY-MM-DD'),
+           p_date_format => 'YYYY-MM-DD',
+           p_size        => 10,
+           p_maxlength   => 10,
+           p_attributes  => 'class="due-date"',
+           p_item_id     => 'f02_' || task_id,
+           p_item_label  => 'Due date for task ' || task_name
+       ) as due_date_item,
+       task_name
+from project_tasks
+```

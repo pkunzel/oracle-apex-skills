@@ -47,17 +47,19 @@ TRUE if the user given by p_user is permitted to perform the operation given by 
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_human_task.IS_ALLOWED(
-        p_task_id => 1,
-        p_operation => null,
-        p_user => 'USER',
-        p_new_participant => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_human_task.is_allowed(
+           p_task_id         => :P30_TASK_ID,
+           p_operation       => apex_human_task.c_task_op_delegate,
+           p_user            => :APP_USER,
+           p_new_participant => :P30_DELEGATE_TO
+       )
+    then
+        apex_human_task.delegate_task(
+            p_task_id => :P30_TASK_ID,
+            p_to_user => :P30_DELEGATE_TO
+        );
+    end if;
 end;
 /
 ```
-

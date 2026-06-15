@@ -54,24 +54,19 @@ APEX_ITEM.SELECT_LIST (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.SELECT_LIST(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_list_values => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_show_null => 'EXAMPLE',
-        p_null_value => 'EXAMPLE',
-        p_null_text => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_show_extra => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Build a static select list for each row; submitted values arrive in APEX_APPLICATION.G_F08.
 
+```sql
+select apex_item.select_list(
+           p_idx         => 8,
+           p_value       => status,
+           p_list_values => 'Open;OPEN,In Progress;IN_PROGRESS,Closed;CLOSED',
+           p_attributes  => 'class="status-list"',
+           p_show_null   => 'NO',
+           p_item_id     => 'f08_' || task_id,
+           p_item_label  => 'Status for task ' || task_name,
+           p_show_extra  => 'NO'
+       ) as status_item,
+       task_name
+from project_tasks
+```

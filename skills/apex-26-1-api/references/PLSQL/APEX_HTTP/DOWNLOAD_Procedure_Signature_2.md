@@ -45,15 +45,22 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Build the CLOB first, then pass it to `DOWNLOAD` with an appropriate MIME type and filename.
+
 ```sql
+declare
+    l_csv clob;
 begin
-    apex_http.DOWNLOAD(
-        p_clob => to_clob('Example text'),
-        p_content_type => to_clob('Example text'),
-        p_filename => 'EXAMPLE',
-        p_is_inline => true
+    l_csv :=
+        'ORDER_ID,STATUS,TOTAL' || chr(10) ||
+        :P30_ORDER_ID || ',' || :P30_STATUS || ',' || :P30_TOTAL;
+
+    apex_http.download(
+        p_clob         => l_csv,
+        p_content_type => 'text/csv; charset=utf-8',
+        p_filename     => 'order-' || :P30_ORDER_ID || '.csv',
+        p_is_inline    => false
     );
 end;
 /
 ```
-

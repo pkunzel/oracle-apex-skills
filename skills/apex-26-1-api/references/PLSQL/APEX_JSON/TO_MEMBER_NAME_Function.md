@@ -40,15 +40,13 @@ A valid member name for get_% functions.
 
 ## Simple Example
 
+Convert text into a JSON member name literal.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_member_name varchar2(32767);
 begin
-    l_result := apex_json.TO_MEMBER_NAME(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_member_name := apex_json.to_member_name('order status');
 end;
 /
 ```
-

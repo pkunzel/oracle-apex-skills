@@ -45,15 +45,23 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Pass a BLOB variable, not a literal, because the BLOB parameter is `IN OUT NOCOPY`.
+
 ```sql
+declare
+    l_pdf blob;
 begin
-    apex_http.DOWNLOAD(
-        p_blob => null,
-        p_content_type => to_clob('Example text'),
-        p_filename => 'EXAMPLE',
-        p_is_inline => true
+    select file_blob
+      into l_pdf
+      from invoice_documents
+     where invoice_id = :P10_INVOICE_ID;
+
+    apex_http.download(
+        p_blob         => l_pdf,
+        p_content_type => 'application/pdf',
+        p_filename     => 'invoice-' || :P10_INVOICE_ID || '.pdf',
+        p_is_inline    => false
     );
 end;
 /
 ```
-

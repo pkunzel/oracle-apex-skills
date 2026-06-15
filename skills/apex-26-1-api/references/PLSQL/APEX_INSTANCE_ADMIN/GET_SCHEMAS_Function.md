@@ -38,13 +38,13 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_schemas varchar2(32767);
 begin
-    l_result := apex_instance_admin.GET_SCHEMAS(
-        p_workspace => 'EXAMPLE'
+    l_schemas := apex_instance_admin.get_schemas(
+        p_workspace => 'SALES_ANALYTICS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Workspace schemas: ' || l_schemas);
 end;
 /
 ```
-

@@ -37,7 +37,22 @@ type t_token is record (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Example
+## Simple Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+The record returned by DECODE stores the JOSE header, claims payload, and signature as text.
 
+```sql
+declare
+    l_key   raw(32) := hextoraw('00112233445566778899AABBCCDDEEFF');
+    l_token apex_jwt.t_token;
+begin
+    l_token := apex_jwt.decode(
+        p_value         => :P0_ID_TOKEN,
+        p_signature_key => l_key
+    );
+
+    apex_debug.info('JWT header: %s', l_token.header);
+    apex_debug.info('JWT claims: %s', l_token.payload);
+end;
+/
+```

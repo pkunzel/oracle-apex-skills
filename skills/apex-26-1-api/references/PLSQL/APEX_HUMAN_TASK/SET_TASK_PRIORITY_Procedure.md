@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.SET_TASK_PRIORITY(
-        p_task_id => 1,
-        p_priority => 1
+    apex_human_task.set_task_priority(
+        p_task_id  => :P30_TASK_ID,
+        p_priority => apex_human_task.c_task_priority_urgent
     );
 end;
 /
 ```
-

@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.DELEGATE_TASK(
-        p_task_id => 1,
-        p_to_user => 'USER'
+    apex_human_task.delegate_task(
+        p_task_id => :P30_TASK_ID,
+        p_to_user => :P30_DELEGATE_TO
     );
 end;
 /
 ```
-

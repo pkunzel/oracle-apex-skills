@@ -44,16 +44,26 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Get the number of elements in a JSON array.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_values apex_json.t_values;
+    l_line_count number;
+
 begin
-    l_result := apex_json.GET_COUNT(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_line_count := apex_json.get_count(
+        p_path   => 'order.lines',
+        p_values => l_values
+    );
+
+    apex_util.set_session_state('P10_LINE_COUNT', l_line_count);
+
 end;
 /
 ```
-

@@ -31,11 +31,11 @@ APEX_INSTANCE_ADMIN.DB_SIGNATURE
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_signature varchar2(32767);
 begin
-    l_result := apex_instance_admin.DB_SIGNATURE;
-    sys.dbms_output.put_line('Result captured.');
+    l_signature := apex_instance_admin.db_signature;
+
+    sys.dbms_output.put_line('Database signature: ' || l_signature);
 end;
 /
 ```
-

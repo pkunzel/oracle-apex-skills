@@ -20,6 +20,7 @@ Use this page when code needs the `APEX_INSTANCE_ADMIN.GET_WORKSPACE_PARAMETER` 
 APEX_INSTANCE_ADMIN.GET_WORKSPACE_PARAMETER (
     p_workspace     IN VARCHAR2,
     p_parameter     IN VARCHAR2 )
+RETURN VARCHAR2;
 ```
 
 ## Parameters
@@ -31,7 +32,7 @@ APEX_INSTANCE_ADMIN.GET_WORKSPACE_PARAMETER (
 
 ## Returns
 
-This is a procedure and does not return a value.
+Returns the current value of the requested workspace parameter.
 
 ## Important Notes
 
@@ -43,11 +44,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.GET_WORKSPACE_PARAMETER(
-        p_workspace => 'EXAMPLE',
-        p_parameter => 'EXAMPLE'
+    sys.dbms_output.put_line(
+        apex_instance_admin.get_workspace_parameter(
+            p_workspace => 'SALES_ANALYTICS',
+            p_parameter => 'WORKSPACE_EMAIL_MAXIMUM'
+        )
     );
 end;
 /
 ```
-

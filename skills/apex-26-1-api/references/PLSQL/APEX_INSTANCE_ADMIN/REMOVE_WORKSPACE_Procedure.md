@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_WORKSPACE(
-        p_workspace => 'EXAMPLE',
-        p_drop_users => 'USER',
-        p_drop_tablespaces => 'EXAMPLE'
+    apex_instance_admin.remove_workspace(
+        p_workspace        => 'SALES_ANALYTICS',
+        p_drop_users       => 'N',
+        p_drop_tablespaces => 'N'
     );
 end;
 /
 ```
-

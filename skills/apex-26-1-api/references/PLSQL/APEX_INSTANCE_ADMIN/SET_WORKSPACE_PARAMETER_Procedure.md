@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.SET_WORKSPACE_PARAMETER(
-        p_workspace => 'EXAMPLE',
-        p_parameter => 'EXAMPLE',
-        p_value => 'EXAMPLE'
+    apex_instance_admin.set_workspace_parameter(
+        p_workspace => 'SALES_ANALYTICS',
+        p_parameter => 'WORKSPACE_EMAIL_MAXIMUM',
+        p_value     => '2500'
     );
 end;
 /
 ```
-

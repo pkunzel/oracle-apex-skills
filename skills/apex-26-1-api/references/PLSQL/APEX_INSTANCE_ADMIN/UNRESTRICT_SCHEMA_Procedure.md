@@ -35,10 +35,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.UNRESTRICT_SCHEMA(
-        p_schema => 'EXAMPLE'
+    apex_instance_admin.unrestrict_schema(
+        p_schema => 'HR_SECURE'
     );
 end;
 /
 ```
-

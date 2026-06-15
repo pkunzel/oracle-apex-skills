@@ -49,14 +49,13 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.CREATE_CLOUD_CREDENTIAL(
-        p_credential_name => 'EXAMPLE',
-        p_user_ocid => 'USER',
-        p_tenancy_ocid => 'EXAMPLE',
-        p_private_key => 'EXAMPLE',
-        p_fingerprint => 'EXAMPLE'
+    apex_instance_admin.create_cloud_credential(
+        p_credential_name => 'OCI_OBJECT_STORAGE_BACKUP',
+        p_user_ocid       => :P900_USER_OCID,
+        p_tenancy_ocid    => :P900_TENANCY_OCID,
+        p_private_key     => :P900_PRIVATE_KEY_PEM,
+        p_fingerprint     => :P900_KEY_FINGERPRINT
     );
 end;
 /
 ```
-

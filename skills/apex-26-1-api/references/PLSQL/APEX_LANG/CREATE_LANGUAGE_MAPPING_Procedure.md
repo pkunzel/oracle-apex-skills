@@ -47,16 +47,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Create a translation mapping from the primary application to a translated application.
+
 ```sql
 begin
-    apex_lang.CREATE_LANGUAGE_MAPPING(
-        p_application_id => 1,
-        p_language => 'EXAMPLE',
-        p_translation_application_id => 1,
-        p_direction_right_to_left => true,
-        p_image_directory => 'EXAMPLE'
+    apex_lang.create_language_mapping(
+        p_application_id             => 100,
+        p_language                   => 'de',
+        p_translation_application_id => 1100,
+        p_direction_right_to_left    => false,
+        p_image_directory            => '#APP_FILES#de/'
     );
 end;
 /
 ```
-

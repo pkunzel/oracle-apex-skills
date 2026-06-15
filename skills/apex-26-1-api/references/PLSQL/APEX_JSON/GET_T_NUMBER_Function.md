@@ -48,16 +48,22 @@ Array member values if the referenced t_value is an array. An array with just th
 
 ## Simple Example
 
+Read a JSON numeric array into APEX_T_NUMBER.
+
 ```sql
 declare
-    l_result APEX_T_NUMBER;
+    l_values apex_json.t_values;
+    l_scores apex_t_number;
 begin
-    l_result := apex_json.GET_T_NUMBER(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"scores":[10,20,30]}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_scores := apex_json.get_t_number(
+        p_path   => 'scores',
+        p_values => l_values
+    );
 end;
 /
 ```
-

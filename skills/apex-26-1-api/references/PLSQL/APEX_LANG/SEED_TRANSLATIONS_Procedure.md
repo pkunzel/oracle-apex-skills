@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Seed translation rows for the selected language mapping.
+
 ```sql
 begin
-    apex_lang.SEED_TRANSLATIONS(
-        p_application_id => 1,
-        p_language => 'EXAMPLE'
+    apex_lang.seed_translations(
+        p_application_id => 100,
+        p_language       => 'de'
     );
 end;
 /
 ```
-

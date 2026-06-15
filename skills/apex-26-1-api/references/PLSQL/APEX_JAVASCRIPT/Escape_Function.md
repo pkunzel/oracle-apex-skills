@@ -36,15 +36,16 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Escape text before injecting it into a JavaScript string literal.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_javascript.Escape Function(
-        p_text => to_clob('Example text')
+    apex_javascript.add_onload_code(
+        p_code => 'showMessage("' ||
+                  apex_javascript.escape(sys.htf.escape_sc(:P10_MESSAGE)) ||
+                  '");',
+        p_key  => 'show-page-message'
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

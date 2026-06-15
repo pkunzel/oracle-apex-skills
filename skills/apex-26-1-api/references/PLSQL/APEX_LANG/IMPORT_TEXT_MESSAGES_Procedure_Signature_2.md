@@ -41,13 +41,21 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Import a ZIP BLOB containing translated text-message files.
+
 ```sql
+declare
+    l_zip blob;
 begin
-    apex_lang.IMPORT_TEXT_MESSAGES(
-        p_application_id => 1,
-        p_zip_file => null
+    select file_blob
+      into l_zip
+      from translation_uploads
+     where upload_id = :P50_UPLOAD_ID;
+
+    apex_lang.import_text_messages(
+        p_application_id => 100,
+        p_zip_file       => l_zip
     );
 end;
 /
 ```
-

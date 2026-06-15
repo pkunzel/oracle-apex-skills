@@ -40,15 +40,13 @@ Return Description VARCHAR2 The converted and escaped JSON value.
 
 ## Simple Example
 
+Stringify a numeric value for manual JSON assembly.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_json_value varchar2(32767);
 begin
-    l_result := apex_json.STRINGIFY(
-        p_value => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_json_value := apex_json.stringify(1250.75);
 end;
 /
 ```
-

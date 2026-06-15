@@ -41,13 +41,25 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write a named array from a SYS_REFCURSOR.
+
 ```sql
+declare
+    l_cursor sys_refcursor;
 begin
-    apex_json.WRITE(
-        p_name => 'EXAMPLE',
-        p_cursor => null
+    open l_cursor for
+        select order_id, status, order_total
+        from orders
+        where status = 'OPEN';
+
+    apex_json.initialize_clob_output;
+    apex_json.open_object;
+    apex_json.write(
+        p_name   => 'orders',
+        p_cursor => l_cursor
     );
+    apex_json.close_object;
+    apex_json.free_output;
 end;
 /
 ```
-

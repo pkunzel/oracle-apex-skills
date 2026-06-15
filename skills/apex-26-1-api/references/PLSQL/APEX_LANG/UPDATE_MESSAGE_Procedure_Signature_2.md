@@ -51,18 +51,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update a text message and its metadata in one call.
+
 ```sql
 begin
-    apex_lang.UPDATE_MESSAGE(
-        p_id => 1,
-        p_name => 'EXAMPLE',
-        p_language => 'EXAMPLE',
-        p_message_text => to_clob('Example text'),
+    apex_lang.update_message(
+        p_id                 => 456789,
+        p_name               => 'ORDER_STATUS',
+        p_language           => 'en',
+        p_message_text       => 'Order %ORDER_ID is now %STATUS',
         p_used_in_javascript => true,
-        p_comment => 'EXAMPLE',
-        p_metadata => to_clob('Example text')
+        p_comment            => 'Used by the order status region and client code.',
+        p_metadata           => '{"owner":"orders","reviewed":"2026-06-15"}'
     );
 end;
 /
 ```
-

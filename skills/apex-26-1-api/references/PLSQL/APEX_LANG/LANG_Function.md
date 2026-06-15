@@ -44,16 +44,18 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Translate a primary-language string using the current application translation repository.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_label varchar2(32767);
 begin
-    l_result := apex_lang.LANG(
-        p_primary_text_string => to_clob('Example text'),
-        p_primary_language => 'EXAMPLE'
+    l_label := apex_lang.lang(
+        p_primary_text_string => 'Order total',
+        p_primary_language    => 'en'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state('P10_TOTAL_LABEL', l_label);
 end;
 /
 ```
-

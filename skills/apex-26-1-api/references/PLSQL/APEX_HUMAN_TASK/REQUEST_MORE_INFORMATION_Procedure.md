@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.REQUEST_MORE_INFORMATION(
-        p_task_id => 1,
-        p_text => to_clob('Example text'),
-        p_to_user => 'USER'
+    apex_human_task.request_more_information(
+        p_task_id => :P30_TASK_ID,
+        p_text    => 'Please attach the supplier quote before approval.',
+        p_to_user => :P30_REQUEST_INFO_FROM
     );
 end;
 /
 ```
-

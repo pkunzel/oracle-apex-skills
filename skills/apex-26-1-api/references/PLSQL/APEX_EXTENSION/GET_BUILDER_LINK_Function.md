@@ -44,19 +44,19 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_extension.GET_BUILDER_LINK(
-        p_app_id => 1,
-        p_page_id => 1,
-        p_view_name => 'EXAMPLE',
-        p_component_id => 1,
-        p_as_data_action => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Generate Builder backlinks from APEX dictionary rows. The `p_view_name` identifies the dictionary view and `p_component_id` is the row's component ID.
 
+```sql
+select application_id,
+       page_id,
+       item_name,
+       apex_extension.get_builder_link(
+           p_app_id       => application_id,
+           p_page_id      => page_id,
+           p_view_name    => 'APEX_APPLICATION_PAGE_ITEMS',
+           p_component_id => item_id
+       ) as builder_link
+  from apex_application_page_items
+ where application_id = 100
+   and page_id = 10;
+```

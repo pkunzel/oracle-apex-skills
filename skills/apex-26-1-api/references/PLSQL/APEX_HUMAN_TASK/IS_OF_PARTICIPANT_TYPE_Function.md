@@ -47,16 +47,15 @@ TRUE if the user given by p_user is a participant of given participant type for 
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_human_task.IS_OF_PARTICIPANT_TYPE(
-        p_task_id => 1,
-        p_participant_type => null,
-        p_user => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_human_task.is_of_participant_type(
+           p_task_id          => :P30_TASK_ID,
+           p_participant_type => apex_human_task.c_task_business_admin,
+           p_user             => :APP_USER
+       )
+    then
+        sys.dbms_output.put_line('Current user is a business admin for this task.');
+    end if;
 end;
 /
 ```
-

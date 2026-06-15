@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Reset a saved report by report alias.
+
 ```sql
 begin
-    apex_ir.RESET_REPORT(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_report_alias => 'EXAMPLE'
+    apex_ir.reset_report(
+        p_page_id      => 10,
+        p_region_id    => 123456789,
+        p_report_alias => 'OPEN_ORDERS'
     );
 end;
 /
 ```
-

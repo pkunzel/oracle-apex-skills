@@ -45,13 +45,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Parse into the package global values when a short block will immediately read from G_VALUES.
+
 ```sql
 begin
-    apex_json.PARSE(
-        p_source => to_clob('Example text'),
+    apex_json.parse(
+        p_source => '{"order":{"id":101,"status":"OPEN"}}',
         p_strict => true
+    );
+
+    apex_util.set_session_state(
+        p_name  => 'P10_STATUS',
+        p_value => apex_json.get_varchar2(p_path => 'order.status')
     );
 end;
 /
 ```
-

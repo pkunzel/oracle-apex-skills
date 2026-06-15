@@ -30,7 +30,7 @@ APEX_JAVASCRIPT.ADD_LIBRARY (
     p_is_module               IN BOOLEAN  DEFAULT FALSE,
     p_is_async                IN BOOLEAN  DEFAULT FALSE,
     p_is_defer                IN BOOLEAN  DEFAULT FALSE,
-    p_attributes              IN VARCHAR2 DEFAILT NULL,
+    p_attributes              IN VARCHAR2 DEFAULT NULL,
     p_key                     IN VARCHAR2 DEFAULT NULL )
 ```
 
@@ -65,25 +65,21 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Load a JavaScript library from application static files and expose it as a RequireJS module.
+
 ```sql
 begin
-    apex_javascript.ADD_LIBRARY(
-        p_name => 'EXAMPLE',
-        p_directory => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_check_to_add_minified => true,
-        p_skip_extension => true,
-        p_ie_condition => 'EXAMPLE',
-        p_requirejs_module => 'EXAMPLE',
-        p_requirejs_js_expression => 'EXAMPLE',
-        p_requirejs_required => true,
-        p_is_module => true,
-        p_is_async => true,
-        p_is_defer => true,
-        p_attributes => 'EXAMPLE',
-        p_key => 'EXAMPLE'
+    apex_javascript.add_library(
+        p_name                    => 'chart#MIN#',
+        p_directory               => '#APP_FILES#js/',
+        p_version                 => '1.0.0',
+        p_check_to_add_minified   => true,
+        p_requirejs_module        => 'orderChart',
+        p_requirejs_js_expression => 'OrderChart',
+        p_is_defer                => true,
+        p_attributes              => 'data-owner="orders"',
+        p_key                     => 'order-chart-library'
     );
 end;
 /
 ```
-

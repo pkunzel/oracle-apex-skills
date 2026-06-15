@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_SAVED_REPORTS(
-        p_application_id => 1
+    apex_instance_admin.remove_saved_reports(
+        p_application_id => 100
     );
 end;
 /
 ```
-

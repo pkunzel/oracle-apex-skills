@@ -40,17 +40,14 @@ APEX_ITEM.TEXT_FROM_LOV_QUERY (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.TEXT_FROM_LOV_QUERY(
-        p_value => 'EXAMPLE',
-        p_query => to_clob('Example text'),
-        p_null_text => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Display a lookup value using a two-column LOV query.
 
+```sql
+select apex_item.text_from_lov_query(
+           p_value     => customer_id,
+           p_query     => 'select customer_name d, customer_id r from customers order by 1',
+           p_null_text => '- No customer -'
+       ) as customer_name,
+       order_number
+from orders
+```

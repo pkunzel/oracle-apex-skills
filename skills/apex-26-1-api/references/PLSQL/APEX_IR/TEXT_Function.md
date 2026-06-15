@@ -48,21 +48,18 @@ APEX_ITEM.TEXT(
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.TEXT(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_size => 1,
-        p_maxlength => 1,
-        p_attributes => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render an editable text column for a report row.
 
+```sql
+select apex_item.text(
+           p_idx        => 10,
+           p_value      => product_name,
+           p_size       => 40,
+           p_maxlength  => 120,
+           p_attributes => 'class="product-name"',
+           p_item_id    => 'f10_' || product_id,
+           p_item_label => 'Product name for ' || product_id
+       ) as product_name_item,
+       product_id
+from products
+```

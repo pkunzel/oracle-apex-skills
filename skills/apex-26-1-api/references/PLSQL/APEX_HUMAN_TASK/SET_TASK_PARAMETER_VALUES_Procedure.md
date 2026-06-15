@@ -44,13 +44,17 @@ This is a procedure and does not return a value.
 ## Simple Example
 
 ```sql
+declare
+    l_params apex_human_task.t_task_parameters;
 begin
-    apex_human_task.SET_TASK_PARAMETER_VALUES(
-        p_task_id => 1,
-        p_parameters => null,
+    l_params(1).static_id    := 'ORDER_TOTAL';
+    l_params(1).string_value := to_char(:P30_REVISED_TOTAL);
+
+    apex_human_task.set_task_parameter_values(
+        p_task_id     => :P30_TASK_ID,
+        p_parameters  => l_params,
         p_raise_error => true
     );
 end;
 /
 ```
-

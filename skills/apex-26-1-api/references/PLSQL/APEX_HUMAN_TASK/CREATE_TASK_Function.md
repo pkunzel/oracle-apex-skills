@@ -59,21 +59,27 @@ Returns the ID of the newly created task.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_params  apex_human_task.t_task_parameters;
+    l_task_id number;
 begin
-    l_result := apex_human_task.CREATE_TASK(
-        p_application_id => 1,
-        p_task_def_static_id => 'EXAMPLE_STATIC_ID',
-        p_subject => 'EXAMPLE',
-        p_parameters => null,
-        p_priority => 1,
-        p_initiator => 'EXAMPLE',
-        p_initiator_can_complete => true,
-        p_detail_pk => 'EXAMPLE',
-        p_due_date => sysdate
+    l_params(1).static_id    := 'ORDER_ID';
+    l_params(1).string_value := :P10_ORDER_ID;
+    l_params(2).static_id    := 'ORDER_TOTAL';
+    l_params(2).string_value := to_char(:P10_ORDER_TOTAL);
+
+    l_task_id := apex_human_task.create_task(
+        p_application_id         => :APP_ID,
+        p_task_def_static_id     => 'ORDER_APPROVAL',
+        p_subject                => 'Approve order ' || :P10_ORDER_ID,
+        p_parameters             => l_params,
+        p_priority               => apex_human_task.c_task_priority_high,
+        p_initiator              => :APP_USER,
+        p_initiator_can_complete => false,
+        p_detail_pk              => :P10_ORDER_ID,
+        p_due_date               => systimestamp + interval '2' day
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    :P10_TASK_ID := l_task_id;
 end;
 /
 ```
-

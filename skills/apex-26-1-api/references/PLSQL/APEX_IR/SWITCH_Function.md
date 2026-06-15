@@ -52,23 +52,20 @@ APEX_ITEM.SWITCH (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.SWITCH(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_on_value => 'EXAMPLE',
-        p_on_label => 'EXAMPLE',
-        p_off_value => 'EXAMPLE',
-        p_off_label => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_attributes => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render a Y/N toggle for each row in a tabular form style report.
 
+```sql
+select apex_item.switch(
+           p_idx        => 9,
+           p_value      => enabled_flag,
+           p_on_value   => 'Y',
+           p_on_label   => 'Enabled',
+           p_off_value  => 'N',
+           p_off_label  => 'Disabled',
+           p_item_id    => 'f09_' || rule_id,
+           p_item_label => 'Enabled flag for rule ' || rule_name,
+           p_attributes => 'class="enabled-switch"'
+       ) as enabled_item,
+       rule_name
+from automation_rules
+```

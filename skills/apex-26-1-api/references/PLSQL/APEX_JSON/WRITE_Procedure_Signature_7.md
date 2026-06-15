@@ -39,12 +39,20 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write a SYS_REFCURSOR result set as JSON.
+
 ```sql
+declare
+    l_cursor sys_refcursor;
 begin
-    apex_json.WRITE(
-        p_cursor => null
-    );
+    open l_cursor for
+        select order_id, status, order_total
+        from orders
+        where status = 'OPEN';
+
+    apex_json.initialize_clob_output;
+    apex_json.write(p_cursor => l_cursor);
+    apex_json.free_output;
 end;
 /
 ```
-

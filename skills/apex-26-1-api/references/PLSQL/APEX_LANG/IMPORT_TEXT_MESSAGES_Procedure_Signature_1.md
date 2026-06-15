@@ -43,14 +43,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Import an edited XLIFF or CSV text-message CLOB.
+
 ```sql
+declare
+    l_xliff clob := :P50_XLIFF_CLOB;
 begin
-    apex_lang.IMPORT_TEXT_MESSAGES(
-        p_application_id => 1,
-        p_file => to_clob('Example text'),
-        p_format => null
+    apex_lang.import_text_messages(
+        p_application_id => 100,
+        p_file           => l_xliff,
+        p_format         => apex_lang.c_export_format_xliff
     );
 end;
 /
 ```
-

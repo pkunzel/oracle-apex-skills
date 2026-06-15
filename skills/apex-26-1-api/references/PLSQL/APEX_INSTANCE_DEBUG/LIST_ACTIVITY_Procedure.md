@@ -45,20 +45,18 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_debug.LIST_ACTIVITY(
-        p_from_date => sysdate,
-        p_to_date => sysdate,
-        p_app_id => 1,
-        p_page_id => 1,
-        p_workspace_name => 'EXAMPLE',
-        p_session_id => 1,
-        p_user => 'USER',
-        p_ip_address => 'EXAMPLE',
-        p_not_ip_address => 'EXAMPLE',
-        p_error => 'EXAMPLE',
-        p_debug => 1
+    apex_instance_debug.list_activity(
+        p_from_date      => trunc(sysdate) - 1,
+        p_to_date        => sysdate,
+        p_app_id         => 100,
+        p_page_id        => 1,
+        p_workspace_name => 'SALES_ANALYTICS',
+        p_session_id     => :P900_SESSION_ID,
+        p_user           => 'JDOE',
+        p_ip_address     => '198.51.100.25',
+        p_error          => 'Y',
+        p_debug          => 1
     );
 end;
 /
 ```
-

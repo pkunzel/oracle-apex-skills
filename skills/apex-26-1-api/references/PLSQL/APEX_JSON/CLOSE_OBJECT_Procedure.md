@@ -32,10 +32,22 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Generate JSON into a temporary CLOB so the result can be stored, returned, or inspected before it is sent.
+
 ```sql
+declare
+    l_json clob;
 begin
-    apex_json.CLOSE_OBJECT;
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    apex_json.write('orderId', 101);
+    apex_json.write('status', 'OPEN');
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

@@ -45,15 +45,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Initialize JSON output to the HTTP buffer when returning JSON from an APEX AJAX callback.
+
 ```sql
 begin
-    apex_json.INITIALIZE_OUTPUT(
-        p_http_header => true,
-        p_http_cache => true,
-        p_http_cache_etag => 'EXAMPLE',
-        p_indent => 1
+    apex_json.initialize_output(
+        p_http_header     => true,
+        p_http_cache      => false,
+        p_http_cache_etag => 'orders-v1'
     );
+    apex_json.open_object;
+    apex_json.write('status', 'ok');
+    apex_json.close_object;
 end;
 /
 ```
-

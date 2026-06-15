@@ -41,10 +41,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.ADD_AUTO_PROV_RESTRICTIONS(
-        p_block_email_patterns => 'EXAMPLE'
+    apex_instance_admin.add_auto_prov_restrictions(
+        p_block_email_patterns => apex_t_varchar2(
+            '%@blocked-domain.test',
+            '%@temporary-mail.test'
+        )
     );
 end;
 /
 ```
-

@@ -45,15 +45,24 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Decode a JWT and validate the issuer, audience, and time-based claims.
+
 ```sql
+declare
+    l_key   raw(32) := hextoraw('00112233445566778899AABBCCDDEEFF');
+    l_token apex_jwt.t_token;
 begin
-    apex_jwt.VALIDATE(
-        p_token => null,
-        p_iss => 'EXAMPLE',
-        p_aud => 'EXAMPLE',
-        p_leeway_seconds => 1
+    l_token := apex_jwt.decode(
+        p_value         => :P0_ID_TOKEN,
+        p_signature_key => l_key
+    );
+
+    apex_jwt.validate(
+        p_token          => l_token,
+        p_iss            => 'https://identity.company.test/',
+        p_aud            => 'apex-client-100',
+        p_leeway_seconds => 60
     );
 end;
 /
 ```
-

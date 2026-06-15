@@ -50,17 +50,19 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+MESSAGE is deprecated; prefer GET_MESSAGE, but legacy code can still resolve positional substitutions.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_message varchar2(32767);
 begin
-    l_result := apex_lang.MESSAGE(
-        p_name => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_application_id => 1
+    l_message := apex_lang.message(
+        p_name           => 'ORDER_STATUS_LEGACY',
+        p0               => :P10_ORDER_ID,
+        p1               => :P10_STATUS,
+        p_lang           => 'de',
+        p_application_id => 100
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

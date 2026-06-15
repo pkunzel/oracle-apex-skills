@@ -45,12 +45,11 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_debug.LIST_PAGE_VIEWS(
-        p_session_id => 1,
-        p_max_rows => 1,
-        p_show_d2 => true
+    apex_instance_debug.list_page_views(
+        p_session_id => :P900_SESSION_ID,
+        p_max_rows   => 50,
+        p_show_d2    => false
     );
 end;
 /
 ```
-

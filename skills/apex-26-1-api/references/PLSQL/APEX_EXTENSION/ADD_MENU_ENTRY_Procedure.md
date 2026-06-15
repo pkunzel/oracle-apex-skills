@@ -51,18 +51,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Create a Builder Extension menu entry that opens an APEX utility app in a reusable browser tab.
+
 ```sql
 begin
-    apex_extension.ADD_MENU_ENTRY(
-        p_label => 'EXAMPLE',
-        p_url => 'EXAMPLE',
-        p_display_sequence => 1,
-        p_description => 'EXAMPLE',
-        p_is_public => true,
-        p_tab_identifier => 'EXAMPLE',
-        p_workspace => 'EXAMPLE'
+    apex_extension.add_menu_entry(
+        p_label            => 'Data Dictionary Tools',
+        p_url              => apex_page.get_url(p_application => 500, p_page => 1),
+        p_display_sequence => 10,
+        p_description      => 'Open internal tools for inspecting APEX metadata.',
+        p_is_public        => false,
+        p_tab_identifier   => 'DATA_DICTIONARY_TOOLS',
+        p_workspace        => 'EXTENSIONS_WS'
     );
 end;
 /
 ```
-

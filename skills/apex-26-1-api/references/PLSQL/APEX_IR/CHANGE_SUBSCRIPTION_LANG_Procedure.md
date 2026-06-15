@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Change the language used when APEX sends a subscription email.
+
 ```sql
 begin
-    apex_ir.CHANGE_SUBSCRIPTION_LANG(
-        p_subscription_id => 1,
-        p_language => 'EXAMPLE'
+    apex_ir.change_subscription_lang(
+        p_subscription_id => 2456813,
+        p_language        => 'de'
     );
 end;
 /
 ```
-

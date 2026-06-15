@@ -51,15 +51,27 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write a parsed JSON subtree as a named member.
+
 ```sql
+declare
+    l_values apex_json.t_values;
 begin
-    apex_json.WRITE(
-        p_name => 'EXAMPLE',
-        p_values => null,
-        p_path => 'EXAMPLE',
-        p_write_null => true
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN"}}'
     );
+
+    apex_json.initialize_clob_output;
+    apex_json.open_object;
+    apex_json.write(
+        p_name       => 'order',
+        p_values     => l_values,
+        p_path       => 'order',
+        p_write_null => false
+    );
+    apex_json.close_object;
+    apex_json.free_output;
 end;
 /
 ```
-

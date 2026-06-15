@@ -42,18 +42,15 @@ APEX_ITEM.DISPLAY_AND_SAVE (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.DISPLAY_AND_SAVE(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Display an immutable value while still submitting it in an APEX form array.
 
+```sql
+select apex_item.display_and_save(
+           p_idx        => 3,
+           p_value      => order_number,
+           p_item_id    => 'f03_' || order_id,
+           p_item_label => 'Order number ' || order_number
+       ) as order_number_display,
+       customer_name
+from orders
+```

@@ -56,23 +56,26 @@ A VARCHAR2, the encoded token value.
 
 ## Simple Example
 
+Create a short-lived signed JWT for a service call.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_key   raw(32) := hextoraw('00112233445566778899AABBCCDDEEFF');
+    l_token varchar2(32767);
 begin
-    l_result := apex_jwt.ENCODE(
-        p_iss => 'EXAMPLE',
-        p_sub => 'EXAMPLE',
-        p_aud => 'EXAMPLE',
-        p_nbf_ts => sysdate,
-        p_iat_ts => sysdate,
-        p_exp_sec => 1,
-        p_jti => 'EXAMPLE',
-        p_other_claims => 'EXAMPLE',
-        p_signature_key => null
+    l_token := apex_jwt.encode(
+        p_iss           => 'https://apex.company.test/',
+        p_sub           => :APP_USER,
+        p_aud           => 'orders-api',
+        p_nbf_ts        => systimestamp,
+        p_iat_ts        => systimestamp,
+        p_exp_sec       => 300,
+        p_jti           => rawtohex(sys_guid()),
+        p_other_claims  => '"scope":"orders:read","tenant":"SALES"',
+        p_signature_key => l_key
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state('P0_SERVICE_JWT', l_token);
 end;
 /
 ```
-

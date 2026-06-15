@@ -46,18 +46,18 @@ APEX_IR.GET_REPORT(
 
 ## Simple Example
 
+Legacy code can still request the runtime query metadata, but new code should prefer supported report APIs where possible.
+
 ```sql
 declare
-    l_result T_REPORT;
+    l_report apex_ir.t_report;
 begin
-    l_result := apex_ir.GET_REPORT(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_report_id => 1,
-        p_view => 'EXAMPLE'
+    l_report := apex_ir.get_report(
+        p_page_id   => 10,
+        p_region_id => 123456789,
+        p_report_id => 987654321,
+        p_view      => apex_ir.c_view_report
     );
-    sys.dbms_output.put_line('Result captured.');
 end;
 /
 ```
-

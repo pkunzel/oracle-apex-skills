@@ -38,16 +38,18 @@ APEX_IR.GET_LAST_VIEWED_REPORT_ID (
 
 ## Simple Example
 
+Find the report ID for the last report the current user viewed in an interactive report region.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_report_id number;
 begin
-    l_result := apex_ir.GET_LAST_VIEWED_REPORT_ID(
-        p_page_id => 1,
-        p_region_id => 'EXAMPLE'
+    l_report_id := apex_ir.get_last_viewed_report_id(
+        p_page_id   => 10,
+        p_region_id => 'orders_ir'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state('P10_LAST_REPORT_ID', l_report_id);
 end;
 /
 ```
-

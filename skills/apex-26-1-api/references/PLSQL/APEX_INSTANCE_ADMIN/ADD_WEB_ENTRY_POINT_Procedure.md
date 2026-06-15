@@ -43,11 +43,12 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.ADD_WEB_ENTRY_POINT(
-        p_name => 'EXAMPLE',
-        p_methods => 'EXAMPLE'
+    apex_instance_admin.add_web_entry_point(
+        p_name    => 'SALES_API.PUBLIC_CALLBACK',
+        p_methods => 'GET,POST'
     );
+
+    commit;
 end;
 /
 ```
-

@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REVOKE_EXTENSION_WORKSPACE(
-        p_from_workspace => 'EXAMPLE',
-        p_to_workspace => 'EXAMPLE'
+    apex_instance_admin.revoke_extension_workspace(
+        p_from_workspace => 'EXTENSIONS_WS',
+        p_to_workspace   => 'SALES_ANALYTICS'
     );
 end;
 /
 ```
-

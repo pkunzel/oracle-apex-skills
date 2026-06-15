@@ -48,14 +48,24 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Parse JSON into a local T_VALUES variable so calls do not depend on package global state.
+
 ```sql
+declare
+    l_values apex_json.t_values;
+    l_order_id number;
+
 begin
-    apex_json.PARSE(
-        p_values => 'EXAMPLE',
-        p_source => to_clob('Example text'),
-        p_strict => true
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
+
+    l_order_id := apex_json.get_number(
+        p_path   => 'order.id',
+        p_values => l_values
+    );
+
 end;
 /
 ```
-

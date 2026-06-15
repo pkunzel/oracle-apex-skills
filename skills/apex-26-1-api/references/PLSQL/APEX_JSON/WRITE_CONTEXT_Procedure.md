@@ -18,7 +18,7 @@ Use this page when code needs the `APEX_JSON.WRITE_CONTEXT` procedure. Confirm s
 
 ```sql
 PROCEDURE WRITE_CONTEXT (
-   p_name        IN VARCHAR2
+   p_name        IN VARCHAR2,
    p_context     IN apex_exec.t_context,
    p_write_null  IN BOOLEAN  DEFAULT FALSE );
 ```
@@ -43,14 +43,27 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write rows from an APEX_EXEC query context as a JSON array member.
+
 ```sql
+declare
+    l_context apex_exec.t_context;
 begin
-    apex_json.WRITE_CONTEXT(
-        p_name => 'EXAMPLE',
-        p_context => to_clob('Example text'),
-        p_write_null => true
+    l_context := apex_exec.open_query_context(
+        p_location  => apex_exec.c_location_local_db,
+        p_sql_query => 'select order_id, status, order_total from orders where status = ''OPEN'''
     );
+
+    apex_json.initialize_clob_output;
+    apex_json.open_object;
+    apex_json.write_context(
+        p_name       => 'orders',
+        p_context    => l_context,
+        p_write_null => false
+    );
+    apex_json.close_object;
+    apex_exec.close(l_context);
+    apex_json.free_output;
 end;
 /
 ```
-

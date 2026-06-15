@@ -34,8 +34,7 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.VALIDATE_EMAIL_CONFIG;
+    apex_instance_admin.validate_email_config;
 end;
 /
 ```
-

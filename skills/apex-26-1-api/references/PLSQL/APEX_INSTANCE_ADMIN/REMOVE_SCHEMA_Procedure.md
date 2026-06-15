@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_instance_admin.REMOVE_SCHEMA(
-        p_workspace => 'EXAMPLE',
-        p_schema => 'EXAMPLE'
+    apex_instance_admin.remove_schema(
+        p_workspace => 'SALES_ANALYTICS',
+        p_schema    => 'SALES_STAGE'
     );
 end;
 /
 ```
-

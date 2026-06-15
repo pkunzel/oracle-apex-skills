@@ -41,14 +41,15 @@ A table of apex_t_temp_lov_data .
 ## Simple Example
 
 ```sql
-declare
-    l_result WWV_FLOW_T_TEMP_LOV_DATA;
 begin
-    l_result := apex_human_task.GET_TASK_DELEGATES(
-        p_task_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    for r in (
+        select display_value, return_value
+          from table(apex_human_task.get_task_delegates(
+                   p_task_id => :P30_TASK_ID
+               ))
+    ) loop
+        sys.dbms_output.put_line(r.display_value || ' -> ' || r.return_value);
+    end loop;
 end;
 /
 ```
-

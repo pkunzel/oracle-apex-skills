@@ -40,17 +40,14 @@ APEX_ITEM.TEXT_FROM_LOV (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.TEXT_FROM_LOV(
-        p_value => 'EXAMPLE',
-        p_lov => 'EXAMPLE',
-        p_null_text => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Display the shared LOV display value for a stored return value.
 
+```sql
+select apex_item.text_from_lov(
+           p_value     => priority_code,
+           p_lov       => 'TASK_PRIORITIES',
+           p_null_text => '- No priority -'
+       ) as priority_display,
+       task_name
+from project_tasks
+```

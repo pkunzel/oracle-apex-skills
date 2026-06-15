@@ -38,16 +38,16 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Append dates to generated JavaScript using the package's date formatting.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_values varchar2(32767);
 begin
-    l_result := apex_javascript.ADD_VALUE(
-        p_value => sysdate,
-        p_add_comma => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values := '[' ||
+        apex_javascript.add_value(trunc(sysdate), true) ||
+        apex_javascript.add_value(trunc(sysdate) + 7, false) ||
+    ']';
 end;
 /
 ```
-

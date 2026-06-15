@@ -35,11 +35,13 @@ Returns the timestamp of the next purge.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_next_purge timestamp with time zone;
 begin
-    l_result := apex_human_task.GET_NEXT_PURGE_TIMESTAMP;
-    sys.dbms_output.put_line('Result captured.');
+    l_next_purge := apex_human_task.get_next_purge_timestamp;
+
+    sys.dbms_output.put_line(
+        to_char(l_next_purge, 'YYYY-MM-DD HH24:MI:SS TZH:TZM')
+    );
 end;
 /
 ```
-

@@ -22,5 +22,20 @@ Use this page when code needs the `APEX_INSTANCE_ADMIN.Available Parameter Value
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use parameter names from this page with `SET_PARAMETER`, `GET_PARAMETER`, `SET_WORKSPACE_PARAMETER`, and `GET_WORKSPACE_PARAMETER`. Instance-only parameters must be set with `SET_PARAMETER`; workspace-level overrides use `SET_WORKSPACE_PARAMETER`.
 
+```sql
+begin
+    apex_instance_admin.set_parameter(
+        p_parameter => 'SMTP_HOST_ADDRESS',
+        p_value     => 'smtp.mail.internal'
+    );
+
+    apex_instance_admin.set_workspace_parameter(
+        p_workspace => 'SALES_ANALYTICS',
+        p_parameter => 'WORKSPACE_EMAIL_MAXIMUM',
+        p_value     => '2500'
+    );
+end;
+/
+```

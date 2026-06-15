@@ -58,26 +58,22 @@ APEX_ITEM.POPUPKEY_FROM_LOV (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.POPUPKEY_FROM_LOV(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_lov_name => 'EXAMPLE',
-        p_width => 'EXAMPLE',
-        p_max_length => 'EXAMPLE',
-        p_form_index => 'EXAMPLE',
-        p_escape_html => 'EXAMPLE',
-        p_max_elements => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_ok_to_query => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render a popup LOV that stores the return key from a named shared LOV.
 
+```sql
+select apex_item.popupkey_from_lov(
+           p_idx          => 6,
+           p_value        => product_id,
+           p_lov_name     => 'ACTIVE_PRODUCTS',
+           p_width        => '50',
+           p_max_length   => '40',
+           p_escape_html  => 'YES',
+           p_max_elements => '200',
+           p_attributes   => 'class="product-picker"',
+           p_ok_to_query  => 'NO',
+           p_item_id      => 'f06_' || line_id,
+           p_item_label   => 'Product for line ' || line_id
+       ) as product_item,
+       quantity
+from order_lines
+```

@@ -45,15 +45,22 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Initialize CLOB output before generating JSON that should be captured as a CLOB.
+
 ```sql
+declare
+    l_json clob;
 begin
-    apex_json.INITIALIZE_CLOB_OUTPUT(
-        p_dur => 1,
-        p_cache => true,
-        p_indent => 1,
-        p_preserve => true
-    );
+    apex_json.initialize_clob_output;
+
+    apex_json.open_object;
+    apex_json.write('generatedBy', :APP_USER);
+    apex_json.write('generatedAt', sysdate);
+    apex_json.close_object;
+
+    l_json := apex_json.get_clob_output;
+    apex_debug.info('JSON payload: %s', dbms_lob.substr(l_json, 4000, 1));
+    apex_json.free_output;
 end;
 /
 ```
-

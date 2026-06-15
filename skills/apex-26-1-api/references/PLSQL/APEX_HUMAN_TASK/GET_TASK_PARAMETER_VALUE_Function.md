@@ -46,15 +46,15 @@ The task parameter value for the given static ID or null.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_order_id varchar2(32767);
 begin
-    l_result := apex_human_task.GET_TASK_PARAMETER_VALUE(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID',
-        p_ignore_not_found => true
+    l_order_id := apex_human_task.get_task_parameter_value(
+        p_task_id          => :P30_TASK_ID,
+        p_param_static_id  => 'ORDER_ID',
+        p_ignore_not_found => false
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('Order ID: ' || l_order_id);
 end;
 /
 ```
-

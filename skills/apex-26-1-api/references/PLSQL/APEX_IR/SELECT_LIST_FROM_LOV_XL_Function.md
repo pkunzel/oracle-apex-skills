@@ -54,24 +54,21 @@ APEX_ITEM.SELECT_LIST_FROM_LOV_XL (
 
 ## Simple Example
 
-```sql
-declare
-    l_result CLOB;
-begin
-    l_result := apex_ir.SELECT_LIST_FROM_LOV_XL(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_lov => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_show_null => 'EXAMPLE',
-        p_null_value => 'EXAMPLE',
-        p_null_text => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE',
-        p_show_extra => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Use the XL variant when the shared LOV can return many rows.
 
+```sql
+select apex_item.select_list_from_lov_xl(
+           p_idx        => 8,
+           p_value      => product_id,
+           p_lov        => 'ACTIVE_PRODUCTS',
+           p_attributes => 'class="product-list"',
+           p_show_null  => 'YES',
+           p_null_value => '-1',
+           p_null_text  => '- Select product -',
+           p_item_id    => 'f08_' || line_id,
+           p_item_label => 'Product for line ' || line_id,
+           p_show_extra => 'NO'
+       ) as product_item,
+       quantity
+from order_lines
+```

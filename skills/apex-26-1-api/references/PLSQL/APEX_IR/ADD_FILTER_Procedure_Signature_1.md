@@ -49,17 +49,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add an equals filter to a specific saved interactive report by report ID.
+
 ```sql
 begin
-    apex_ir.ADD_FILTER(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_report_column => 'EXAMPLE',
-        p_filter_value => 'EXAMPLE',
-        p_operator_abbr => 'EXAMPLE',
-        p_report_id => 1
+    apex_ir.add_filter(
+        p_page_id       => 10,
+        p_region_id     => 123456789,
+        p_report_column => 'STATUS',
+        p_filter_value  => 'OPEN',
+        p_operator_abbr => 'EQ',
+        p_report_id     => 987654321
     );
 end;
 /
 ```
-

@@ -20,7 +20,31 @@ Use this page when code needs the `APEX_JSON.APEX_JSON` examples. Confirm securi
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Example
+## Simple Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Parse JSON when reading values, and use OPEN_OBJECT/WRITE/CLOSE_OBJECT when generating JSON.
 
+```sql
+declare
+    l_values apex_json.t_values;
+    l_status varchar2(30);
+    l_json   clob;
+begin
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN"}}'
+    );
+    l_status := apex_json.get_varchar2(
+        p_path   => 'order.status',
+        p_values => l_values
+    );
+
+    apex_json.initialize_clob_output;
+    apex_json.open_object;
+    apex_json.write('status', l_status);
+    apex_json.close_object;
+    l_json := apex_json.get_clob_output;
+    apex_json.free_output;
+end;
+/
+```

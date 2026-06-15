@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.SET_INITIATOR_CAN_COMPLETE(
-        p_task_id => 1,
-        p_initiator_can_complete => true
+    apex_human_task.set_initiator_can_complete(
+        p_task_id                => :P30_TASK_ID,
+        p_initiator_can_complete => false
     );
 end;
 /
 ```
-

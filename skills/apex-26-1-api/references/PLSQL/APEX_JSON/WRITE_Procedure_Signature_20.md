@@ -18,7 +18,7 @@ Use this page when code needs the `APEX_JSON.WRITE` procedure. Confirm security,
 
 ```sql
 APEX_JSON.WRITE (
-   p_name        IN VARCHAR2
+   p_name        IN VARCHAR2,
    p_value       IN BLOB,
    p_write_null  IN BOOLEAN  DEFAULT FALSE );
 ```
@@ -43,14 +43,26 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write a BLOB value, such as a receipt PDF, as a named JSON member.
+
 ```sql
+declare
+    l_receipt_blob blob;
 begin
-    apex_json.WRITE(
-        p_name => 'EXAMPLE',
-        p_value => null,
-        p_write_null => true
+    select receipt_pdf
+      into l_receipt_blob
+      from order_receipts
+     where order_id = 101;
+
+    apex_json.initialize_clob_output;
+    apex_json.open_object;
+    apex_json.write(
+        p_name       => 'receiptPdf',
+        p_value      => l_receipt_blob,
+        p_write_null => false
     );
+    apex_json.close_object;
+    apex_json.free_output;
 end;
 /
 ```
-

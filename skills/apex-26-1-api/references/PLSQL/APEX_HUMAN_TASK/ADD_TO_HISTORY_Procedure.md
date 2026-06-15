@@ -41,10 +41,9 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.ADD_TO_HISTORY(
-        p_message => to_clob('Example text')
+    apex_human_task.add_to_history(
+        p_message => 'Escalated automatically because the due date is within 24 hours.'
     );
 end;
 /
 ```
-

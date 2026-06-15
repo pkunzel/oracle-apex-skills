@@ -46,17 +46,26 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read a string value from parsed JSON.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_values apex_json.t_values;
+    l_status varchar2(30);
+
 begin
-    l_result := apex_json.GET_VARCHAR2(
-        p_path => 'EXAMPLE',
-        p_default => true,
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_status := apex_json.get_varchar2(
+        p_path   => 'order.status',
+        p_values => l_values
+    );
+
+    apex_util.set_session_state('P10_STATUS', l_status);
+
 end;
 /
 ```
-

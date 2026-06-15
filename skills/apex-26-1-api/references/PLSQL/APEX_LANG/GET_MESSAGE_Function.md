@@ -42,18 +42,20 @@ APEX_LANG.GET_MESSAGE (
 
 ## Simple Example
 
+Read a named text message and pass named substitution values.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_message varchar2(32767);
 begin
-    l_result := apex_lang.GET_MESSAGE(
-        p_name => 'EXAMPLE',
-        p_params => 'EXAMPLE',
-        p_lang => 'EXAMPLE',
-        p_application_id => 1
+    l_message := apex_lang.get_message(
+        p_name           => 'ORDER_STATUS',
+        p_params         => apex_t_varchar2('ORDER_ID', :P10_ORDER_ID, 'STATUS', :P10_STATUS),
+        p_lang           => 'de',
+        p_application_id => 100
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    apex_util.set_session_state('P10_STATUS_TEXT', l_message);
 end;
 /
 ```
-

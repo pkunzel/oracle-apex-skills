@@ -51,18 +51,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Create a translated text message that can also be consumed by JavaScript.
+
 ```sql
 begin
-    apex_lang.CREATE_MESSAGE(
-        p_application_id => 1,
-        p_name => 'EXAMPLE',
-        p_language => 'EXAMPLE',
-        p_message_text => to_clob('Example text'),
+    apex_lang.create_message(
+        p_application_id     => 100,
+        p_name               => 'ORDER_STATUS',
+        p_language           => 'en',
+        p_message_text       => 'Order %ORDER_ID is %STATUS',
         p_used_in_javascript => true,
-        p_comment => 'EXAMPLE',
-        p_metadata => to_clob('Example text')
+        p_comment            => 'Shown in the order status badge.',
+        p_metadata           => '{"owner":"orders"}'
     );
 end;
 /
 ```
-

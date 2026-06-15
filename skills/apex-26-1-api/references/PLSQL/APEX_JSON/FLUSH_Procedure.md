@@ -32,10 +32,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Flush JSON written to the HTP buffer while generating a response.
+
 ```sql
 begin
-    apex_json.FLUSH;
+    apex_json.open_object;
+    apex_json.write('status', 'queued');
+    apex_json.flush;
+    apex_json.write('detail', 'export job accepted');
+    apex_json.close_object;
 end;
 /
 ```
-

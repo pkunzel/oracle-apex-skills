@@ -32,10 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Load Oracle JET before rendering plug-in code that depends on JET modules.
+
 ```sql
 begin
-    apex_javascript.ADD_JET;
+    apex_javascript.add_jet;
 end;
 /
 ```
-

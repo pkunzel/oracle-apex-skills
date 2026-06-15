@@ -58,26 +58,22 @@ APEX_ITEM.POPUP_FROM_LOV (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.POPUP_FROM_LOV(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_lov_name => 'EXAMPLE',
-        p_width => 'EXAMPLE',
-        p_max_length => 'EXAMPLE',
-        p_form_index => 'EXAMPLE',
-        p_escape_html => 'EXAMPLE',
-        p_max_elements => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_ok_to_query => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render a popup LOV using a shared LOV name.
 
+```sql
+select apex_item.popup_from_lov(
+           p_idx          => 5,
+           p_value        => customer_id,
+           p_lov_name     => 'ACTIVE_CUSTOMERS',
+           p_width        => '40',
+           p_max_length   => '30',
+           p_escape_html  => 'YES',
+           p_max_elements => '200',
+           p_attributes   => 'class="customer-picker"',
+           p_ok_to_query  => 'YES',
+           p_item_id      => 'f05_' || order_id,
+           p_item_label   => 'Customer for order ' || order_number
+       ) as customer_item,
+       order_number
+from orders
+```

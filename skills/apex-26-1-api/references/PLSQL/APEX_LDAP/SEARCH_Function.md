@@ -59,26 +59,31 @@ APEX_LDAP.SEARCH (
 
 ## Simple Example
 
+Query LDAP attributes from the pipelined SEARCH result in SQL.
+
 ```sql
-declare
-    l_result APEX_T_LDAP_ATTRIBUTES;
 begin
-    l_result := apex_ldap.SEARCH(
-        p_username => 'USER',
-        p_pass => 'EXAMPLE',
-        p_auth_base => 'EXAMPLE',
-        p_host => 'EXAMPLE',
-        p_port => 1,
-        p_use_ssl => 'EXAMPLE',
-        p_search_base => 'EXAMPLE',
-        p_search_filter => 'EXAMPLE',
-        p_scope => 1,
-        p_timeout_sec => 1,
-        p_attribute_names => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    for r in (
+        select dn, name, val
+        from table(
+            apex_ldap.search(
+                p_username             => :P101_BIND_USER,
+                p_pass                 => :P101_BIND_PASSWORD,
+                p_auth_base            => 'dc=company,dc=test',
+                p_host                 => 'ldap.company.test',
+                p_port                 => 636,
+                p_use_ssl              => 'Y',
+                p_search_base          => 'ou=People,dc=company,dc=test',
+                p_search_filter        => '(mail=*@company.test)',
+                p_scope                => sys.dbms_ldap.scope_subtree,
+                p_timeout_sec          => 5,
+                p_attribute_names      => 'mail,displayName,departmentNumber',
+                p_credential_static_id => 'LDAP_BIND_CREDENTIAL'
+            )
+        )
+    ) loop
+        apex_debug.info('%s %s=%s', r.dn, r.name, r.val);
+    end loop;
 end;
 /
 ```
-

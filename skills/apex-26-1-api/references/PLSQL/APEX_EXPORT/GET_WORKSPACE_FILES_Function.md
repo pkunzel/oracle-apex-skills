@@ -42,16 +42,20 @@ A table of apex_t_export_file . The result is a single file, splitting into mult
 
 ## Simple Example
 
+This exports static workspace files for archival or source-control storage.
+
 ```sql
 declare
-    l_result APEX_T_EXPORT_FILES;
+    l_files apex_t_export_files;
 begin
-    l_result := apex_export.GET_WORKSPACE(
-        p_workspace_id => 1,
-        p_with_date => true
+    l_files := apex_export.get_workspace_files(
+        p_workspace_id => 123456789,
+        p_with_date    => true
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    for i in 1 .. l_files.count loop
+        sys.dbms_output.put_line(l_files(i).name);
+    end loop;
 end;
 /
 ```
-

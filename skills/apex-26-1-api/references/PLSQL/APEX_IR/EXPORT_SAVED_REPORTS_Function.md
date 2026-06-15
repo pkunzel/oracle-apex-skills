@@ -42,16 +42,19 @@ The signed and base64-encoded report export JSON object in CLOB.
 
 ## Simple Example
 
+Export selected saved reports and store the signed export payload.
+
 ```sql
 declare
-    l_result CLOB;
+    l_export clob;
 begin
-    l_result := apex_ir.EXPORT_SAVED_REPORTS(
-        p_report_ids => 1,
-        p_credential_static_id => 'EXAMPLE_STATIC_ID'
+    l_export := apex_ir.export_saved_reports(
+        p_report_ids           => apex_t_number(987654321, 987654322),
+        p_credential_static_id => 'IR_REPORT_SIGNING_KEY'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    insert into ir_report_exports(exported_on, export_content)
+    values (systimestamp, l_export);
 end;
 /
 ```
-

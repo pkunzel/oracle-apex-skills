@@ -43,11 +43,10 @@ This is a procedure and does not return a value.
 
 ```sql
 begin
-    apex_human_task.REJECT_TASK(
-        p_task_id => 1,
+    apex_human_task.reject_task(
+        p_task_id   => :P30_TASK_ID,
         p_autoclaim => true
     );
 end;
 /
 ```
-

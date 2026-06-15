@@ -39,15 +39,17 @@ RETURN BOOLEAN;
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_human_task.HAS_TASK_PARAM_CHANGED(
-        p_task_id => 1,
-        p_param_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_human_task.has_task_param_changed(
+           p_task_id         => :P30_TASK_ID,
+           p_param_static_id => 'ORDER_TOTAL'
+       )
+    then
+        apex_human_task.add_task_comment(
+            p_task_id => :P30_TASK_ID,
+            p_text    => 'Order total changed since this task was created.'
+        );
+    end if;
 end;
 /
 ```
-

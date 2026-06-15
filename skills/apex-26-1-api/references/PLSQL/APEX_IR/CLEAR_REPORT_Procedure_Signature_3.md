@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear report settings with region and report static IDs.
+
 ```sql
 begin
-    apex_ir.CLEAR_REPORT(
-        p_page_id => 1,
-        p_region_static_id => 'EXAMPLE_STATIC_ID',
-        p_report_static_id => 'EXAMPLE_STATIC_ID'
+    apex_ir.clear_report(
+        p_page_id          => 10,
+        p_region_static_id => 'orders_ir',
+        p_report_static_id => 'primary'
     );
 end;
 /
 ```
-

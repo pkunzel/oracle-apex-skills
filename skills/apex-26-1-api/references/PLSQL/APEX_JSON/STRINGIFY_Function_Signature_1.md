@@ -40,15 +40,13 @@ Return Description VARCHAR2 The converted and escaped JSON value.
 
 ## Simple Example
 
+Turn a PL/SQL string into a JavaScript/JSON string literal.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_json_value varchar2(32767);
 begin
-    l_result := apex_json.STRINGIFY(
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_json_value := apex_json.stringify('Open order "A100"');
 end;
 /
 ```
-

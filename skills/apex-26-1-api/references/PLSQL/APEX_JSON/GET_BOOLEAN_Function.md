@@ -50,17 +50,26 @@ Return Description TRUE Value at the given path position. FALSE Value at the giv
 
 ## Simple Example
 
+Read a JSON Boolean value after parsing the document into T_VALUES.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_values apex_json.t_values;
+    l_expedited boolean;
+
 begin
-    l_result := apex_json.GET_BOOLEAN(
-        p_path => 'EXAMPLE',
-        p_default => true,
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_expedited := apex_json.get_boolean(
+        p_path   => 'order.expedited',
+        p_values => l_values
+    );
+
+    apex_util.set_session_state('P10_EXPEDITED', case when l_expedited then 'Y' else 'N' end);
+
 end;
 /
 ```
-

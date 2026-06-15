@@ -48,16 +48,26 @@ Return Description TRUE Given path points to an existing value. FALSE Given path
 
 ## Simple Example
 
+Check for an optional JSON member before reading it.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_values apex_json.t_values;
+    l_has_total boolean;
+
 begin
-    l_result := apex_json.DOES_EXIST(
-        p_path => 'EXAMPLE',
-        p_values => null
+    apex_json.parse(
+        p_values => l_values,
+        p_source => '{"order":{"id":101,"status":"OPEN","total":1250.75,"created":"2026-06-15T12:30:00Z","expedited":true,"lines":[{"sku":"A100","qty":2},{"sku":"B200","qty":1}]}}'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    l_has_total := apex_json.does_exist(
+        p_path   => 'order.total',
+        p_values => l_values
+    );
+
+    apex_util.set_session_state('P10_HAS_TOTAL', case when l_has_total then 'Y' else 'N' end);
+
 end;
 /
 ```
-

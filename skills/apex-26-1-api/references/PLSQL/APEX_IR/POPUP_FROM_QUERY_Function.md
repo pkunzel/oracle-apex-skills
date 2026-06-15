@@ -58,26 +58,22 @@ APEX_ITEM.POPUP_FROM_QUERY (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.POPUP_FROM_QUERY(
-        p_idx => 1,
-        p_value => 'EXAMPLE',
-        p_lov_query => to_clob('Example text'),
-        p_width => 'EXAMPLE',
-        p_max_length => 'EXAMPLE',
-        p_form_index => 'EXAMPLE',
-        p_escape_html => 'EXAMPLE',
-        p_max_elements => 'EXAMPLE',
-        p_attributes => 'EXAMPLE',
-        p_ok_to_query => to_clob('Example text'),
-        p_item_id => 'EXAMPLE',
-        p_item_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Render a popup LOV from a two-column SQL query.
 
+```sql
+select apex_item.popup_from_query(
+           p_idx          => 5,
+           p_value        => customer_id,
+           p_lov_query    => 'select customer_name d, customer_id r from customers where active_flag = ''Y'' order by 1',
+           p_width        => '40',
+           p_max_length   => '30',
+           p_escape_html  => 'YES',
+           p_max_elements => '200',
+           p_attributes   => 'class="customer-picker"',
+           p_ok_to_query  => 'YES',
+           p_item_id      => 'f05_' || order_id,
+           p_item_label   => 'Customer for order ' || order_number
+       ) as customer_item,
+       order_number
+from orders
+```

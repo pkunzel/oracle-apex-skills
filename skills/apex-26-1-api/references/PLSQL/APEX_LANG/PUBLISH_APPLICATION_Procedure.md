@@ -43,14 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Publish a translated application after seeding and applying translated strings.
+
 ```sql
 begin
-    apex_lang.PUBLISH_APPLICATION(
-        p_application_id => 1,
-        p_language => 'EXAMPLE',
-        p_new_trans_application_id => 1
+    apex_lang.publish_application(
+        p_application_id => 100,
+        p_language       => 'de'
     );
 end;
 /
 ```
-

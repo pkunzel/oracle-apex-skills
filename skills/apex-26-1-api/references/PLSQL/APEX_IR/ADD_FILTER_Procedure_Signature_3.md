@@ -49,17 +49,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Use static IDs when the application export/import process can change numeric region or report IDs.
+
 ```sql
 begin
-    apex_ir.ADD_FILTER(
-        p_page_id => 1,
-        p_region_static_id => 'EXAMPLE_STATIC_ID',
-        p_report_column => 'EXAMPLE',
-        p_filter_value => 'EXAMPLE',
-        p_operator_abbr => 'EXAMPLE',
-        p_report_static_id => 'EXAMPLE_STATIC_ID'
+    apex_ir.add_filter(
+        p_page_id          => 10,
+        p_region_static_id => 'orders_ir',
+        p_report_column    => 'ORDER_TOTAL',
+        p_filter_value     => '1000',
+        p_operator_abbr    => 'GT',
+        p_report_static_id => 'primary'
     );
 end;
 /
 ```
-

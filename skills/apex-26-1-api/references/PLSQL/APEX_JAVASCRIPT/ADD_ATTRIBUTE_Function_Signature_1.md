@@ -42,18 +42,20 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Build a JavaScript object literal attribute whose value is escaped as a string.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_config varchar2(32767);
 begin
-    l_result := apex_javascript.ADD_ATTRIBUTE(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_omit_null => true,
-        p_add_comma => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_config := '{' ||
+        apex_javascript.add_attribute(
+            p_name      => 'pageItem',
+            p_value     => 'P10_STATUS',
+            p_omit_null => true,
+            p_add_comma => false
+        ) ||
+    '}';
 end;
 /
 ```
-

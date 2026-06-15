@@ -49,18 +49,19 @@ A table of tasks (type apex_t_approval_tasks ) containing the following columns:
 ## Simple Example
 
 ```sql
-declare
-    l_result APEX_T_APPROVAL_TASKS;
 begin
-    l_result := apex_human_task.GET_TASKS(
-        p_context => to_clob('Example text'),
-        p_user => 'USER',
-        p_task_id => 1,
-        p_application_id => 1,
-        p_show_expired_tasks => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    for r in (
+        select task_id, subject, state, priority
+          from table(apex_human_task.get_tasks(
+                   p_context            => apex_human_task.c_context_my_tasks,
+                   p_user               => :APP_USER,
+                   p_application_id     => :APP_ID,
+                   p_show_expired_tasks => 'N'
+               ))
+         order by priority, task_id
+    ) loop
+        sys.dbms_output.put_line(r.task_id || ' - ' || r.subject);
+    end loop;
 end;
 /
 ```
-

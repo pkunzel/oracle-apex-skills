@@ -38,13 +38,13 @@ RETURN VARCHAR2;
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_smtp_host varchar2(32767);
 begin
-    l_result := apex_instance_admin.GET_PARAMETER(
-        p_parameter => 'EXAMPLE'
+    l_smtp_host := apex_instance_admin.get_parameter(
+        p_parameter => 'SMTP_HOST_ADDRESS'
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    sys.dbms_output.put_line('SMTP host: ' || l_smtp_host);
 end;
 /
 ```
-

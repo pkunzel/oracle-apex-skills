@@ -41,13 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Expose a global library object as a RequireJS module.
+
 ```sql
 begin
-    apex_javascript.ADD_REQUIREJS_DEFINE(
-        p_module => 'EXAMPLE',
-        p_js_expression => 'EXAMPLE'
+    apex_javascript.add_requirejs_define(
+        p_module        => 'orderChart',
+        p_js_expression => 'window.OrderChart'
     );
 end;
 /
 ```
-

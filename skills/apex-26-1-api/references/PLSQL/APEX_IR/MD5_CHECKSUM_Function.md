@@ -44,20 +44,16 @@ APEX_ITEM.MD5_CHECKSUM (
 
 ## Simple Example
 
-```sql
-declare
-    l_result VARCHAR2;
-begin
-    l_result := apex_ir.MD5_CHECKSUM(
-        p_value01 => 'EXAMPLE',
-        p_value02 => 'EXAMPLE',
-        p_value03 => 'EXAMPLE',
-        p_value50 => 'EXAMPLE',
-        p_col_sep => 'EXAMPLE',
-        p_item_id => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
-```
+Calculate a checksum across row values so later processing can detect lost updates.
 
+```sql
+select order_id,
+       apex_item.md5_checksum(
+           p_value01 => order_id,
+           p_value02 => status,
+           p_value03 => to_char(last_update_date, 'YYYYMMDDHH24MISS'),
+           p_col_sep => '|',
+           p_item_id => 'row_checksum_' || order_id
+       ) as row_checksum
+from orders
+```

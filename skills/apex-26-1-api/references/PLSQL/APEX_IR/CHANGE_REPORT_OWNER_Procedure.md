@@ -43,14 +43,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Move saved reports from one case-sensitive APEX user name to another.
+
 ```sql
 begin
-    apex_ir.CHANGE_REPORT_OWNER(
-        p_report_id => 1,
-        p_old_owner => 'EXAMPLE',
-        p_new_owner => 'EXAMPLE'
+    apex_ir.change_report_owner(
+        p_application_id => 100,
+        p_old_owner      => 'JANE.APPROVER',
+        p_new_owner      => 'MARTIN.MANAGER'
     );
 end;
 /
 ```
-

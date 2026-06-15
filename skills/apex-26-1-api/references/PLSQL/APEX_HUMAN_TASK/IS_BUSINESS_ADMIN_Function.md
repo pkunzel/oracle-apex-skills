@@ -43,15 +43,14 @@ TRUE if the user given by p_user is at least in one task definition configured a
 ## Simple Example
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_human_task.IS_BUSINESS_ADMIN(
-        p_user => 'USER',
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_human_task.is_business_admin(
+           p_user           => :APP_USER,
+           p_application_id => :APP_ID
+       )
+    then
+        sys.dbms_output.put_line('Current user can administer tasks.');
+    end if;
 end;
 /
 ```
-

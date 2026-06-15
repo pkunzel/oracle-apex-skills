@@ -42,16 +42,19 @@ Blob containing a ZIP file.
 
 ## Simple Example
 
+Export all translation mappings for an application into a ZIP BLOB.
+
 ```sql
 declare
-    l_result BLOB;
+    l_zip blob;
 begin
-    l_result := apex_lang.EXPORT_TEXT_MESSAGES(
-        p_application_id => 1,
-        p_format => null
+    l_zip := apex_lang.export_text_messages(
+        p_application_id => 100,
+        p_format         => apex_lang.c_export_format_xliff
     );
-    sys.dbms_output.put_line('Result captured.');
+
+    insert into translation_zip_exports(application_id, export_blob)
+    values (100, l_zip);
 end;
 /
 ```
-
