@@ -31,15 +31,19 @@ This function returns an instance of APEX_EXEC.T_SUPPORTS_ORDERBY_NULLS_AS which
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Check NULLS ordering support before adding NULLS FIRST or NULLS LAST to generated ORDER BY clauses.
 
 ```sql
 declare
-    l_result APEX_EXEC.T_SUPPORTS_ORDERBY_NULLS_AS;
+    l_nulls_support apex_exec.t_supports_orderby_nulls_as;
 begin
-    l_result := apex_plugin_util.GET_ORDERBY_NULLS_SUPPORT;
-    sys.dbms_output.put_line('Result captured.');
+    l_nulls_support := apex_plugin_util.get_orderby_nulls_support;
+
+    apex_debug.info(
+        p_message => 'ORDER BY NULLS support value: %s',
+        p0        => to_char(l_nulls_support));
 end;
 /
 ```
-

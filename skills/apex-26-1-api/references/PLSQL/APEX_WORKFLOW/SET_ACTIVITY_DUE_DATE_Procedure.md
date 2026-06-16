@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Move the due date for a waiting activity.
+
 ```sql
 begin
-    apex_workflow.SET_ACTIVITY_DUE_DATE(
-        p_instance_id => 1,
-        p_activity_static_id => 'EXAMPLE_STATIC_ID',
-        p_due_date => sysdate
-    );
+    apex_workflow.set_activity_due_date(
+        p_instance_id        => :P30_WORKFLOW_ID,
+        p_activity_static_id => 'WAIT_FOR_REVIEW',
+        p_due_date           => systimestamp + interval '2' day);
 end;
 /
 ```

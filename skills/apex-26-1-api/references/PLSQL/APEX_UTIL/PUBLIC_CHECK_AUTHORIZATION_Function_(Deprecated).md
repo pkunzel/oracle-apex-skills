@@ -40,14 +40,15 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Legacy only. Prefer APEX_AUTHORIZATION.IS_AUTHORIZED in new code.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_util.PUBLIC_CHECK_AUTHORIZATION(
-        p_security_scheme => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_util.public_check_authorization(
+           p_security_scheme => 'Can Administer Orders')
+    then
+        apex_util.set_session_state('P1_CAN_ADMIN', 'Y');
+    end if;
 end;
 /
 ```

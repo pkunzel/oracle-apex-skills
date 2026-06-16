@@ -38,15 +38,15 @@ APEX_STRING.SPLIT (
 
 ## Simple Example
 
+Split CLOB content into lines.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_lines apex_t_varchar2;
 begin
-    l_result := apex_string.SPLIT(
-        p_str => to_clob('Example text'),
-        p_sep => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_lines := apex_string.split(
+        p_str => :P10_UPLOADED_TEXT,
+        p_sep => chr(10));
 end;
 /
 ```

@@ -73,31 +73,28 @@ The export file contents, mime_type, and optionally the report layout.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Export a report region using the current declarative region behavior.
 
 ```sql
 declare
-    l_result APEX_DATA_EXPORT.T_EXPORT;
+    l_region_id number;
+    l_export    apex_data_export.t_export;
 begin
-    l_result := apex_region.EXPORT_DATA(
-        p_format => null,
-        p_page_id => 1,
-        p_region_id => 1,
-        p_component_id => 1,
-        p_view_mode => 'EXAMPLE',
-        p_additional_filters => null,
-        p_max_rows => 1,
-        p_parent_column_values => null,
-        p_as_clob => true,
-        p_file_name => 'EXAMPLE',
-        p_page_size => null,
-        p_orientation => null,
-        p_data_only => true,
-        p_pdf_accessible => true,
-        p_xml_include_declaration => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_region_id := apex_region.get_id(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_dom_static_id  => 'orders_report');
+
+    l_export := apex_region.export_data(
+        p_format    => apex_data_export.c_format_csv,
+        p_page_id   => 10,
+        p_region_id => l_region_id,
+        p_max_rows  => 5000,
+        p_file_name => 'orders');
+
+    apex_data_export.download(l_export);
 end;
 /
 ```
-

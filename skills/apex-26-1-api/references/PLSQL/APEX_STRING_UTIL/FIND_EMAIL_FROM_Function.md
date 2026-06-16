@@ -40,14 +40,12 @@ This function returns the from address.
 
 ## Simple Example
 
+Read a sender address from raw mail header text.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.FIND_EMAIL_FROM(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_FROM_ADDRESS := apex_string_util.find_email_from(
+        p_string => :P10_RAW_EMAIL_HEADERS);
 end;
 /
 ```

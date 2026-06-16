@@ -39,15 +39,13 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+APEX normally pushes the queue through its mail job; call PUSH_QUEUE when a controlled process should deliver pending mail immediately.
 
 ```sql
 begin
-    apex_mail.PUSH_QUEUE(
-        p_smtp_hostname => 'EXAMPLE',
-        p_smtp_portno => 1
-    );
+    apex_mail.push_queue;
 end;
 /
 ```
-

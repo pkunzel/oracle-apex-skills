@@ -39,14 +39,14 @@ APEX_UTIL.GET_APPLICATION_STATUS (
 
 ## Simple Example
 
+Legacy only. Prefer APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS in new code.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_status varchar2(255);
 begin
-    l_result := apex_util.GET_APPLICATION_STATUS(
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_status := apex_util.get_application_status(
+        p_application_id => :APP_ID);
 end;
 /
 ```

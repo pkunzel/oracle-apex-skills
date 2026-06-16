@@ -32,17 +32,18 @@ This function returns the value of the specified item as CLOB. Parent topic: APE
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use GET_CLOB for large text items so the code does not force a VARCHAR2 conversion.
 
 ```sql
 declare
-    l_result CLOB;
+    l_note clob;
 begin
-    l_result := apex_session_state.GET_CLOB(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_note := apex_session_state.get_clob(
+        p_item => 'P10_NOTE');
+
+    apex_debug.info('Note length: %s', dbms_lob.getlength(l_note));
 end;
 /
 ```
-

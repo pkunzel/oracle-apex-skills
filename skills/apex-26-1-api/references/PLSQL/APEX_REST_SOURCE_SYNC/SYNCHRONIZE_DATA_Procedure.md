@@ -41,16 +41,16 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Run the configured REST Source synchronization and let it continue in the background.
 
 ```sql
 begin
-    apex_rest_source_sync.SYNCHRONIZE_DATA(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
+    apex_rest_source_sync.synchronize_data(
+        p_module_static_id  => 'ORDERS_API',
         p_run_in_background => true,
-        p_application_id => 1
-    );
+        p_application_id    => :APP_ID);
 end;
 /
 ```
-

@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set workspace context by security group id for a non-browser script.
+
 ```sql
 begin
-    apex_util.SET_SECURITY_GROUP_ID(
-        p_security_group_id => 1
-    );
+    apex_util.set_security_group_id(
+        p_security_group_id => apex_util.find_security_group_id('MY_WORKSPACE'));
 end;
 /
 ```

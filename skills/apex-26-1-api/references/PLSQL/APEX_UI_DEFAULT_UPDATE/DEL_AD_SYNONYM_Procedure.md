@@ -39,10 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove a UI Default entry from the owning schema after confirming generated pages no longer rely on it.
+
 ```sql
 begin
-    apex_ui_default_update.DEL_AD_SYNONYM(
-        p_syn_name => 'EXAMPLE'
+    apex_ui_default_update.del_ad_synonym(
+        p_syn_name => 'CREATED_USER'
     );
 end;
 /

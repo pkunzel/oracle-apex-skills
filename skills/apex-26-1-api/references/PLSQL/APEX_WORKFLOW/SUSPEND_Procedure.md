@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Suspend a workflow instance from an authorized administrative action.
+
 ```sql
 begin
-    apex_workflow.SUSPEND(
-        p_instance_id => 1
-    );
+    apex_workflow.suspend(
+        p_instance_id => :P30_WORKFLOW_ID);
 end;
 /
 ```

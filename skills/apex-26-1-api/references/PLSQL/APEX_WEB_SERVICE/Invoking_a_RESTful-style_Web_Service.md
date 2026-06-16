@@ -22,5 +22,23 @@ Use this page when code needs the `APEX_WEB_SERVICE.Invoking a RESTful-style Web
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Pass query parameters with paired vc_arr2 arrays when calling a REST endpoint.
+
+```sql
+declare
+    l_names    apex_application_global.vc_arr2;
+    l_values   apex_application_global.vc_arr2;
+    l_response clob;
+begin
+    l_names  := apex_string.string_to_table('status:limit');
+    l_values := apex_string.string_to_table('open:25');
+
+    l_response := apex_web_service.make_rest_request(
+        p_url         => 'https://api.example.com/orders',
+        p_http_method => 'GET',
+        p_parm_name   => l_names,
+        p_parm_value  => l_values);
+end;
+/
+```
 

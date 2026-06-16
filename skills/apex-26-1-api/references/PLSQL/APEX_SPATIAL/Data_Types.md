@@ -22,5 +22,17 @@ Use this page when code needs the `APEX_SPATIAL.Data Types` data types. Confirm 
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use t_srid values such as c_wgs_84 when creating simple longitude/latitude geometries.
 
+```sql
+declare
+    l_srid apex_spatial.t_srid := apex_spatial.c_wgs_84;
+    l_geom mdsys.sdo_geometry;
+begin
+    l_geom := apex_spatial.point(
+        p_lon  => :P10_LONGITUDE,
+        p_lat  => :P10_LATITUDE,
+        p_srid => l_srid);
+end;
+/
+```

@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Let the signed-in user change their own password after validating a page item.
+
 ```sql
 begin
-    apex_util.CHANGE_CURRENT_USER_PW(
-        p_new_password => 'EXAMPLE'
-    );
+    apex_util.change_current_user_pw(
+        p_new_password => :P100_NEW_PASSWORD);
 end;
 /
 ```

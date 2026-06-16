@@ -27,15 +27,19 @@ RETURN BOOLEAN;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Guard data-changing code when the current region is rendered read-only.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_region.IS_READ_ONLY;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_region.is_read_only then
+        raise_application_error(-20000, 'This region is read-only.');
+    end if;
+
+    update orders
+       set status = :P10_STATUS
+     where order_id = :P10_ORDER_ID;
 end;
 /
 ```
-

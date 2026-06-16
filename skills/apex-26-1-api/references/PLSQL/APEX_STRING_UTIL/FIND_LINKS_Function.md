@@ -42,15 +42,15 @@ This function returns an array of links.
 
 ## Simple Example
 
+Extract only HTTPS links from user-provided notes before storing them as references.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_links apex_t_varchar2;
 begin
-    l_result := apex_string_util.FIND_LINKS(
-        p_string => 'EXAMPLE',
-        p_https_only => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_links := apex_string_util.find_links(
+        p_string     => :P10_NOTES,
+        p_https_only => true);
 end;
 /
 ```

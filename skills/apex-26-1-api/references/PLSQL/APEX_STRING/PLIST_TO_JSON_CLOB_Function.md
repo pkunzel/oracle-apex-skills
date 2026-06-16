@@ -40,14 +40,18 @@ CLOB containing a JSON object with keys and values of the given p_plist .
 
 ## Simple Example
 
+Serialize a small property list for logging or an API payload.
+
 ```sql
 declare
-    l_result CLOB;
+    l_props apex_t_varchar2;
+    l_json  clob;
 begin
-    l_result := apex_string.PLIST_TO_JSON_CLOB(
-        p_plist => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_props := apex_string.plist_put(l_props, 'status', 'open');
+    l_props := apex_string.plist_put(l_props, 'owner', :APP_USER);
+
+    l_json := apex_string.plist_to_json_clob(
+        p_plist => l_props);
 end;
 /
 ```

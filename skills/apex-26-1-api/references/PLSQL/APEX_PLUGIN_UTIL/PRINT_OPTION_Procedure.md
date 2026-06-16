@@ -45,18 +45,22 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use PRINT_OPTION while rendering a select list so display and return values are escaped consistently.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_OPTION(
-        p_display_value => 'EXAMPLE',
-        p_return_value => 'EXAMPLE',
-        p_is_selected => true,
-        p_attributes => 'EXAMPLE',
-        p_escape => true
-    );
+    sys.htp.p('<select id="' || apex_escape.html_attribute(p_item.name) || '">');
+
+    apex_plugin_util.print_option(
+        p_display_value => 'Open',
+        p_return_value  => 'OPEN',
+        p_is_selected   => p_param.value = 'OPEN',
+        p_attributes    => 'data-state="open"',
+        p_escape        => true);
+
+    sys.htp.p('</select>');
 end;
 /
 ```
-

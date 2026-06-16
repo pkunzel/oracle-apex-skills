@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Rename an APEX workspace user account.
+
 ```sql
 begin
-    apex_util.SET_USERNAME(
-        p_userid => 1,
-        p_username => 'USER'
-    );
+    apex_util.set_username(
+        p_userid   => apex_util.get_user_id('JSMITH'),
+        p_username => 'JORDAN.SMITH');
 end;
 /
 ```

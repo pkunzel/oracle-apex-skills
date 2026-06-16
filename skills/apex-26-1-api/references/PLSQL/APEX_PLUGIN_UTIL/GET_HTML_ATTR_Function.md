@@ -36,18 +36,17 @@ APEX_PLUGIN_UTIL.GET_HTML_ATTR (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use GET_HTML_ATTR for optional HTML attributes so empty values do not create broken markup.
 
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_plugin_util.GET_HTML_ATTR(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    sys.htp.p(
+        '<input type="text"' ||
+        apex_plugin_util.get_html_attr('id', p_item.name) ||
+        apex_plugin_util.get_html_attr('class', p_item.css_classes) ||
+        '>');
 end;
 /
 ```
-

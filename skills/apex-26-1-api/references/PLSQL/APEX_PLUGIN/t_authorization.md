@@ -22,5 +22,18 @@ Use this page when code needs the `APEX_PLUGIN.t_authorization` topic. Confirm s
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Authorization plug-ins return an authorization execution result from the callback.
 
+```sql
+function authorize_request (
+    p_authorization in apex_plugin.t_authorization,
+    p_plugin        in apex_plugin.t_plugin )
+    return apex_plugin.t_authorization_exec_result
+is
+    l_result apex_plugin.t_authorization_exec_result;
+begin
+    apex_debug.info('Authorization plug-in invoked: %s', p_authorization.name);
+    return l_result;
+end;
+/
+```

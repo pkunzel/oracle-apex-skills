@@ -36,18 +36,23 @@ RETURN DATE;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Check whether a page cache exists before deciding to refresh or purge it.
 
 ```sql
 declare
-    l_result DATE;
+    l_cached_at date;
 begin
-    l_result := apex_page.GET_CACHE_DATE(
-        p_application_id => 1,
-        p_page_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_cached_at := apex_page.get_cache_date(
+        p_application_id => :APP_ID,
+        p_page_id        => 10);
+
+    if l_cached_at is not null then
+        apex_debug.info(
+            p_message => 'Page 10 cache created at %s',
+            p0        => to_char(l_cached_at, 'YYYY-MM-DD HH24:MI:SS'));
+    end if;
 end;
 /
 ```
-

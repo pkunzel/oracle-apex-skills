@@ -80,13 +80,27 @@ end;
 
 ```sql
 declare
-    l_entries apex_zip.t_files;
+    l_zip     blob;
+    l_entries apex_zip.t_dir_entries;
+    l_name    varchar2(32767);
 begin
-    l_entries := apex_zip.get_dir_entries(
-        p_zipped_blob => :P10_ZIP_BLOB);
+    select content_blob
+      into l_zip
+      from uploaded_files
+     where file_id = :P10_ZIP_FILE_ID;
 
-    for i in 1 .. l_entries.count loop
-        apex_debug.info('ZIP entry: %s', l_entries(i));
+    l_entries := apex_zip.get_dir_entries(
+        p_zipped_blob => l_zip,
+        p_only_files  => true);
+
+    l_name := l_entries.first;
+    while l_name is not null loop
+        apex_debug.info(
+            'ZIP entry %s has %s bytes',
+            l_entries(l_name).file_name,
+            l_entries(l_name).uncompressed_length);
+
+        l_name := l_entries.next(l_name);
     end loop;
 end;
 /
@@ -96,16 +110,27 @@ end;
 
 ```sql
 declare
-    l_file blob;
+    l_zip     blob;
+    l_entries apex_zip.t_dir_entries;
+    l_file    blob;
 begin
-    l_file := apex_zip.get_file_content(
-        p_zipped_blob => :P10_ZIP_BLOB,
-        p_file_name   => 'manifest.json');
+    select content_blob
+      into l_zip
+      from uploaded_files
+     where file_id = :P10_ZIP_FILE_ID;
+
+    l_entries := apex_zip.get_dir_entries(l_zip);
+
+    if l_entries.exists('manifest.json') then
+        l_file := apex_zip.get_file_content(
+            p_zipped_blob => l_zip,
+            p_dir_entry   => l_entries('manifest.json'));
+    end if;
 end;
 /
 ```
 
-Check the local member page for the exact current `GET_FILE_CONTENT` signature.
+Prefer the `t_dir_entry` overload over the deprecated filename-based overload.
 
 ## Safety Guidance
 

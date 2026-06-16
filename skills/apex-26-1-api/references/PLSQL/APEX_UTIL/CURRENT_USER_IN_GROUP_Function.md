@@ -41,15 +41,15 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Gate server-side logic based on the current user's APEX group membership.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_util.CURRENT_USER_IN_GROUP(
-        p_group_name => 'EXAMPLE',
-        p_group_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_util.current_user_in_group(p_group_name => 'APP_MANAGERS') then
+        apex_util.set_session_state('P1_CAN_ADMIN', 'Y');
+    else
+        apex_util.set_session_state('P1_CAN_ADMIN', 'N');
+    end if;
 end;
 /
 ```

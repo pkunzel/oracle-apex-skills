@@ -39,11 +39,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove a header without disturbing the rest of the request header array.
+
 ```sql
 begin
-    apex_web_service.REMOVE_REQUEST_HEADER(
-        p_name => 'EXAMPLE'
-    );
+    apex_web_service.set_request_headers(
+        p_name_01  => 'Content-Type',
+        p_value_01 => 'application/json');
+
+    apex_web_service.remove_request_header(
+        p_name => 'Content-Type');
 end;
 /
 ```

@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the territory currently associated with the APEX session.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_territory varchar2(255);
 begin
-    l_result := apex_util.GET_SESSION_TERRITORY;
-    sys.dbms_output.put_line('Result captured.');
+    l_territory := apex_util.get_session_territory;
 end;
 /
 ```

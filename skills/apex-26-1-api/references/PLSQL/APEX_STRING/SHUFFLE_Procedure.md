@@ -39,11 +39,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Shuffle a collection in place.
+
 ```sql
+declare
+    l_choices apex_t_varchar2 := apex_t_varchar2('A', 'B', 'C', 'D');
 begin
-    apex_string.SHUFFLE(
-        p_table => null
-    );
+    apex_string.shuffle(
+        p_table => l_choices);
 end;
 /
 ```

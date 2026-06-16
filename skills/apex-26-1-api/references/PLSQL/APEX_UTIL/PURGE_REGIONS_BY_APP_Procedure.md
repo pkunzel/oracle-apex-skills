@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Purge all region cache entries for an application.
+
 ```sql
 begin
-    apex_util.PURGE_REGIONS_BY_APP(
-        p_application => 1
-    );
+    apex_util.purge_regions_by_app(
+        p_application => :APP_ID);
 end;
 /
 ```

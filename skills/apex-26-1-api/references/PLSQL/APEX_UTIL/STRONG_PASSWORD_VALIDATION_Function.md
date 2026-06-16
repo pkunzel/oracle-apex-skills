@@ -42,17 +42,23 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Return the default password validation message for an invalid password.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_validation_message varchar2(4000);
 begin
-    l_result := apex_util.STRONG_PASSWORD_VALIDATION(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_old_password => 'EXAMPLE',
-        p_workspace_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_validation_message := apex_util.strong_password_validation(
+        p_username       => :APP_USER,
+        p_password       => :P100_NEW_PASSWORD,
+        p_old_password   => :P100_OLD_PASSWORD,
+        p_workspace_name => 'MY_WORKSPACE');
+
+    if l_validation_message is not null then
+        apex_error.add_error(
+            p_message          => l_validation_message,
+            p_display_location => apex_error.c_inline_in_notification);
+    end if;
 end;
 /
 ```

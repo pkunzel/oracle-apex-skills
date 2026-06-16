@@ -38,15 +38,22 @@ APEX_WEB_SERVICE.GENERATE_REQUEST_BODY(
 
 ## Simple Example
 
+Generate the binary request body after adding multipart parts.
+
 ```sql
 declare
-    l_result BLOB;
+    l_parts apex_web_service.t_multipart_parts;
+    l_body  blob;
 begin
-    l_result := apex_web_service.GENERATE_REQUEST_BODY(
-        p_multipart => null,
-        p_to_charset => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_web_service.append_to_multipart(
+        p_multipart    => l_parts,
+        p_name         => 'metadata',
+        p_content_type => 'application/json',
+        p_body         => json_object('orderId' value :P10_ORDER_ID returning clob));
+
+    l_body := apex_web_service.generate_request_body(
+        p_multipart  => l_parts,
+        p_to_charset => 'AL32UTF8');
 end;
 /
 ```

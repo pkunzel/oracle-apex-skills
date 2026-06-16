@@ -42,15 +42,13 @@ VARCHAR2.
 
 ## Simple Example
 
+Read a scalar workflow variable.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_workflow.GET_VARIABLE_VALUE(
-        p_instance_id => 1,
-        p_variable_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P20_CURRENT_STATUS := apex_workflow.get_variable_value(
+        p_instance_id        => :P20_WORKFLOW_ID,
+        p_variable_static_id => 'STATUS');
 end;
 /
 ```

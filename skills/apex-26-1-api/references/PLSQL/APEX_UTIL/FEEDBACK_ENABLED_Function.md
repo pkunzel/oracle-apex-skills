@@ -29,12 +29,17 @@ APEX_UTIL.FEEDBACK_ENABLED
 
 ## Simple Example
 
+Submit feedback only when the application has feedback enabled.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_util.FEEDBACK_ENABLED;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_util.feedback_enabled then
+        apex_util.submit_feedback(
+            p_comment        => :P10_FEEDBACK,
+            p_application_id => :APP_ID,
+            p_page_id        => :APP_PAGE_ID,
+            p_email          => :P10_EMAIL);
+    end if;
 end;
 /
 ```

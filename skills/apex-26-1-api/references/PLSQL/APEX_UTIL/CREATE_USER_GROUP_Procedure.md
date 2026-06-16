@@ -36,14 +36,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Create a workspace user group used by APEX Accounts authorization logic.
+
 ```sql
 begin
-    apex_util.CREATE_USER_GROUP(
-        p_id => 1,
-        p_group_name => 'EXAMPLE',
-        p_security_group_id => 1,
-        p_group_desc => 'EXAMPLE'
-    );
+    apex_util.create_user_group(
+        p_group_name => 'APP_MANAGERS',
+        p_group_desc => 'Users allowed to administer the Operations app');
 end;
 /
 ```

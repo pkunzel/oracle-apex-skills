@@ -40,14 +40,14 @@ APEX_UTIL.URL_ENCODE (
 
 ## Simple Example
 
+Legacy only. Prefer APEX_ESCAPE.URL for new code.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_encoded varchar2(4000);
 begin
-    l_result := apex_util.URL_ENCODE(
-        p_url => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_encoded := apex_util.url_encode(
+        p_url => 'status=Open & Waiting');
 end;
 /
 ```

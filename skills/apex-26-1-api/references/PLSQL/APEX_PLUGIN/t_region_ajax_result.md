@@ -22,5 +22,22 @@ Use this page when code needs the `APEX_PLUGIN.t_region_ajax_result` topic. Conf
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Region Ajax callbacks write a response and return t_region_ajax_result.
 
+```sql
+function ajax_task_region (
+    p_region in apex_plugin.t_region,
+    p_plugin in apex_plugin.t_plugin )
+    return apex_plugin.t_region_ajax_result
+is
+    l_result apex_plugin.t_region_ajax_result;
+begin
+    apex_plugin_util.print_json_http_header;
+    apex_json.open_object;
+    apex_json.write('html', '<p>No tasks found.</p>');
+    apex_json.close_object;
+
+    return l_result;
+end;
+/
+```

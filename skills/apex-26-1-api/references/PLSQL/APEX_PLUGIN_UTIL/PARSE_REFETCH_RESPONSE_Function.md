@@ -45,20 +45,19 @@ Parameter Description * APEX_EXEC "Values" context object for the plug-in develo
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+After a REST DML call, parse the refetch response into an APEX_EXEC context for downstream column processing.
 
 ```sql
 declare
-    l_result APEX_EXEC.T_CONTEXT;
+    l_refetched_context apex_exec.t_context;
 begin
-    l_result := apex_plugin_util.PARSE_REFETCH_RESPONSE(
-        p_web_source_operation => null,
-        p_web_source => null,
-        p_values_context => to_clob('Example text'),
-        p_response => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_refetched_context := apex_plugin_util.parse_refetch_response(
+        p_web_source_operation => l_operation,
+        p_web_source           => p_web_source,
+        p_values_context       => p_values_context,
+        p_response             => l_response);
 end;
 /
 ```
-

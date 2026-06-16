@@ -40,18 +40,17 @@ An array of strings.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the documented spelling of the function name and let APEX apply the item's multi-value settings.
 
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_values apex_t_varchar2;
 begin
-    l_result := apex_plugin_util.SPLIT_MUTLIPLE_VALUE_TO_TABLE(
-        p_value => to_clob('Example text'),
-        p_item => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values := apex_plugin_util.split_mutliple_value_to_table(
+        p_value => :P10_SELECTED_USERS,
+        p_item  => p_item);
 end;
 /
 ```
-

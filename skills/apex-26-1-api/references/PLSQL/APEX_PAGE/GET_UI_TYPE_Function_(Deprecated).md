@@ -31,15 +31,19 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This UI-type helper is deprecated in APEX 26.1. Prefer current page metadata such as GET_PAGE_MODE for new code.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_ui_type varchar2(30);
 begin
-    l_result := apex_page.GET_UI_TYPE;
-    sys.dbms_output.put_line('Result captured.');
+    l_ui_type := apex_page.get_ui_type;
+
+    apex_debug.warn(
+        p_message => 'Legacy UI type check returned %s',
+        p0        => l_ui_type);
 end;
 /
 ```
-

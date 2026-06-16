@@ -38,15 +38,17 @@ APEX_UTIL.GET_HIGH_CONTRAST_MODE_TOGGLE (
 
 ## Simple Example
 
+Render the high contrast toggle link with custom accessible labels.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_toggle varchar2(4000);
 begin
-    l_result := apex_util.GET_HIGH_CONTRAST_MODE_TOGGLE(
-        p_on_message => to_clob('Example text'),
-        p_off_message => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_toggle := apex_util.get_high_contrast_mode_toggle(
+        p_on_message  => 'Enable high contrast mode',
+        p_off_message => 'Disable high contrast mode');
+
+    htp.p(l_toggle);
 end;
 /
 ```

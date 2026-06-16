@@ -44,18 +44,16 @@ APEX_STRING.GREP (
 
 ## Simple Example
 
+Extract numeric tokens from one VARCHAR2 value.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_numbers apex_t_varchar2;
 begin
-    l_result := apex_string.GREP(
-        p_str => 'EXAMPLE',
-        p_pattern => 'EXAMPLE',
-        p_modifier => 'EXAMPLE',
-        p_subexpression => 'EXAMPLE',
-        p_limit => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_numbers := apex_string.grep(
+        p_str     => 'Order 1001 total 42.50',
+        p_pattern => '[[:digit:]]+([.][[:digit:]]+)?',
+        p_limit   => 2);
 end;
 /
 ```

@@ -29,12 +29,13 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Branch server-side behavior based on screen reader mode.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_util.IS_SCREEN_READER_SESSION;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_util.is_screen_reader_session then
+        apex_util.set_session_state('P1_ACCESSIBLE_LAYOUT', 'Y');
+    end if;
 end;
 /
 ```

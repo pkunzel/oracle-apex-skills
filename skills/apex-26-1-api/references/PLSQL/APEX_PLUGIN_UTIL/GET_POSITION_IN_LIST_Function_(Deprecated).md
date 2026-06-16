@@ -40,18 +40,18 @@ RETURN NUMBER;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This routine is deprecated. Existing legacy code can still use it to find a value in an APEX string array.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_values apex_application_global.vc_arr2 := apex_application_global.vc_arr2('OPEN', 'CLOSED');
+    l_pos    number;
 begin
-    l_result := apex_plugin_util.GET_POSITION_IN_LIST(
-        p_list => null,
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pos := apex_plugin_util.get_position_in_list(
+        p_list  => l_values,
+        p_value => :P10_STATUS);
 end;
 /
 ```
-

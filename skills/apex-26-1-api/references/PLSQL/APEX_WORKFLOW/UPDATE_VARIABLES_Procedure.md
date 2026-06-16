@@ -41,12 +41,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update workflow variables while the instance is suspended or faulted.
+
 ```sql
+declare
+    l_params apex_workflow.t_workflow_parameters;
 begin
-    apex_workflow.UPDATE_VARIABLES(
-        p_instance_id => 1,
-        p_changed_params => null
-    );
+    l_params(1).static_id := 'STATUS';
+    l_params(1).value.data_type := apex_session_state.c_data_type_varchar2;
+    l_params(1).value.varchar2_value := 'REOPENED';
+
+    apex_workflow.update_variables(
+        p_instance_id    => :P30_WORKFLOW_ID,
+        p_changed_params => l_params);
 end;
 /
 ```

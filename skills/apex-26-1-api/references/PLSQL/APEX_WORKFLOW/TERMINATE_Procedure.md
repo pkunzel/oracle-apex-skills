@@ -39,11 +39,20 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Terminate a workflow only after a server-side permission check.
+
 ```sql
 begin
-    apex_workflow.TERMINATE(
-        p_instance_id => 1
-    );
+    if not apex_workflow.is_allowed(
+              p_instance_id => :P30_WORKFLOW_ID,
+              p_operation   => apex_workflow.c_workflow$_op_terminate,
+              p_user        => :APP_USER)
+    then
+        raise_application_error(-20000, 'Not authorized.');
+    end if;
+
+    apex_workflow.terminate(
+        p_instance_id => :P30_WORKFLOW_ID);
 end;
 /
 ```

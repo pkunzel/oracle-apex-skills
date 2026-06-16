@@ -37,14 +37,18 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Generate push credentials as an administrative setup action for an application that has PWA enabled.
 
 ```sql
 begin
-    apex_pwa.GENERATE_PUSH_CREDENTIALS(
-        p_application_id => 1
-    );
+    if not apex_authorization.has_access('CAN_ADMINISTER_APPLICATION') then
+        raise_application_error(-20000, 'Not authorized to manage PWA credentials.');
+    end if;
+
+    apex_pwa.generate_push_credentials(
+        p_application_id => :APP_ID);
 end;
 /
 ```
-

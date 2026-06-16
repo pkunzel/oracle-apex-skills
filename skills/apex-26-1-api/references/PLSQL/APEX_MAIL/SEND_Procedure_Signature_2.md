@@ -51,21 +51,21 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+The template procedure queues a template-based message without returning a mail id.
 
 ```sql
 begin
-    apex_mail.SEND(
-        p_template_static_id => 'EXAMPLE_STATIC_ID',
-        p_placeholders => to_clob('Example text'),
-        p_to => 'EXAMPLE',
-        p_cc => 'EXAMPLE',
-        p_bcc => 'EXAMPLE',
-        p_from => 'EXAMPLE',
-        p_replyto => 'EXAMPLE',
-        p_application_id => 1
-    );
+    apex_mail.send(
+        p_template_static_id => 'REQUEST_APPROVAL',
+        p_placeholders       => json_object(
+            'REQUEST_ID' value :P20_REQUEST_ID,
+            'REQUESTOR'  value :P20_REQUESTOR
+            returning clob),
+        p_to             => :P20_MANAGER_EMAIL,
+        p_from           => 'workflow@example.com',
+        p_application_id => :APP_ID);
 end;
 /
 ```
-

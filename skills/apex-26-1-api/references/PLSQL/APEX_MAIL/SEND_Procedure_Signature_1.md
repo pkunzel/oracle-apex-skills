@@ -51,21 +51,18 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the procedure overload when the application does not need the generated mail id.
 
 ```sql
 begin
-    apex_mail.SEND(
-        p_to => 'EXAMPLE',
-        p_from => 'EXAMPLE',
-        p_body => to_clob('Example text'),
-        p_body_html => to_clob('Example text'),
-        p_subj => 'EXAMPLE',
-        p_cc => 'EXAMPLE',
-        p_bcc => 'EXAMPLE',
-        p_replyto => 'EXAMPLE'
-    );
+    apex_mail.send(
+        p_to        => :P20_MANAGER_EMAIL,
+        p_from      => 'workflow@example.com',
+        p_subj      => 'Approval needed for request ' || :P20_REQUEST_ID,
+        p_body      => 'Please review the request in APEX.',
+        p_body_html => '<html><body><p>Please review the request in APEX.</p></body></html>');
 end;
 /
 ```
-

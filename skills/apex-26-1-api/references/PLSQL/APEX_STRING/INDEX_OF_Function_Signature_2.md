@@ -42,15 +42,18 @@ Index of the searched value in the table.
 
 ## Simple Example
 
+Search a legacy vc_arr2 array returned by STRING_TO_TABLE.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_values apex_application_global.vc_arr2;
+    l_pos    number;
 begin
-    l_result := apex_string.INDEX_OF(
-        p_table => null,
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values := apex_string.string_to_table('CSV:PDF:XLSX');
+
+    l_pos := apex_string.index_of(
+        p_table => l_values,
+        p_value => :P10_EXPORT_FORMAT);
 end;
 /
 ```

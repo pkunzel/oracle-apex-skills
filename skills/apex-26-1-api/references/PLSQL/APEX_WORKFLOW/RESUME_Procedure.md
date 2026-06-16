@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Resume a suspended workflow after an administrator resolves the pause condition.
+
 ```sql
 begin
-    apex_workflow.RESUME(
-        p_instance_id => 1,
-        p_activity_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_workflow.resume(
+        p_instance_id        => :P30_WORKFLOW_ID,
+        p_activity_static_id => 'WAIT_FOR_REVIEW');
 end;
 /
 ```

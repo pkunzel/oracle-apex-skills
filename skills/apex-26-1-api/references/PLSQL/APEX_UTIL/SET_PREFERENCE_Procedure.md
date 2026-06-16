@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Save a user preference for the current user.
+
 ```sql
 begin
-    apex_util.SET_PREFERENCE(
-        p_preference => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_user => 'USER'
-    );
+    apex_util.set_preference(
+        p_preference => 'ORDER_REPORT_VIEW',
+        p_value      => 'CARDS',
+        p_user       => :APP_USER);
 end;
 /
 ```

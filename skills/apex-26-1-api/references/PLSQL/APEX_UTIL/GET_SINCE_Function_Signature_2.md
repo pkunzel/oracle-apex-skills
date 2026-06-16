@@ -38,15 +38,15 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Format elapsed time from a timestamp value.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_label varchar2(255);
 begin
-    l_result := apex_util.GET_SINCE(
-        p_value => 'EXAMPLE',
-        p_short => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_label := apex_util.get_since(
+        p_value => systimestamp - interval '2' hour,
+        p_short => 'Y');
 end;
 /
 ```

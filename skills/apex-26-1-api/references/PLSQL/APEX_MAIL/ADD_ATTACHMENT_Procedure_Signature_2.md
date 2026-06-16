@@ -43,17 +43,29 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the CLOB overload for generated text files such as CSV exports.
 
 ```sql
+declare
+    l_mail_id number;
+    l_csv     clob;
 begin
-    apex_mail.ADD_ATTACHMENT(
-        p_mail_id => 1,
-        p_attachment => to_clob('Example text'),
-        p_filename => 'EXAMPLE',
-        p_mime_type => 'EXAMPLE'
-    );
+    l_csv := 'ORDER_ID,STATUS' || chr(10) ||
+             :P42_ORDER_ID || ',Ready';
+
+    l_mail_id := apex_mail.send(
+        p_to   => :P42_RECIPIENT_EMAIL,
+        p_from => 'reports@example.com',
+        p_subj => 'Order status export',
+        p_body => 'The CSV export is attached.');
+
+    apex_mail.add_attachment(
+        p_mail_id    => l_mail_id,
+        p_attachment => l_csv,
+        p_filename   => 'order-status.csv',
+        p_mime_type  => 'text/csv');
 end;
 /
 ```
-

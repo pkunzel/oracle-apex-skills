@@ -34,12 +34,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update the email address stored for an APEX workspace user.
+
 ```sql
 begin
-    apex_util.SET_EMAIL(
-        p_userid => 1,
-        p_email => 'EXAMPLE'
-    );
+    apex_util.set_email(
+        p_userid => apex_util.get_user_id('JSMITH'),
+        p_email  => 'jordan.smith@example.com');
 end;
 /
 ```

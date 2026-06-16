@@ -41,16 +41,21 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Set a generic t_value when shared code already carries typed session-state data.
 
 ```sql
+declare
+    l_value apex_session_state.t_value;
 begin
-    apex_session_state.SET_VALUE(
-        p_item => 'EXAMPLE',
-        p_value => null,
-        p_commit => true
-    );
+    l_value.data_type := apex_session_state.c_data_type_clob;
+    l_value.clob_value := to_clob('Full audit note saved from a scripted APEX session.');
+
+    apex_session_state.set_value(
+        p_item   => 'P10_NOTE',
+        p_value  => l_value,
+        p_commit => false);
 end;
 /
 ```
-

@@ -55,14 +55,17 @@ end;
 /
 ```
 
-Assuming workflow parameters are populated in `l_params` of type `apex_workflow.t_workflow_parameters`:
+With workflow parameters, use the documented `apex_workflow.t_workflow_parameters` records and typed `apex_session_state.t_value` values:
 
 ```sql
 declare
     l_workflow_id number;
     l_params      apex_workflow.t_workflow_parameters;
 begin
-    -- Populate l_params with documented workflow parameter records.
+    l_params(1).static_id := 'ORDER_ID';
+    l_params(1).value.data_type := apex_session_state.c_data_type_varchar2;
+    l_params(1).value.varchar2_value := :P10_ORDER_ID;
+
     l_workflow_id := apex_workflow.start_workflow(
         p_application_id => :APP_ID,
         p_static_id      => 'AI_REVIEW_WORKFLOW',
@@ -110,10 +113,16 @@ end;
 /
 ```
 
-Assuming `l_changed_params` is an `apex_workflow.t_workflow_parameters` value populated with changed variables:
+Update variables with typed workflow parameter values. This API is restricted by the documented workflow state and administrator rules.
 
 ```sql
+declare
+    l_changed_params apex_workflow.t_workflow_parameters;
 begin
+    l_changed_params(1).static_id := 'STATUS';
+    l_changed_params(1).value.data_type := apex_session_state.c_data_type_varchar2;
+    l_changed_params(1).value.varchar2_value := 'REOPENED';
+
     apex_workflow.update_variables(
         p_instance_id    => :P20_WORKFLOW_ID,
         p_changed_params => l_changed_params);

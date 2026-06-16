@@ -43,17 +43,21 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Purge the cached version of a page for the current user after data that feeds that page changes.
 
 ```sql
 begin
-    apex_page.PURGE_CACHE(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_user_name => 'USER',
-        p_current_session_only => true
-    );
+    update dashboard_preferences
+       set compact_mode = :P30_COMPACT_MODE
+     where user_name = :APP_USER;
+
+    apex_page.purge_cache(
+        p_application_id       => :APP_ID,
+        p_page_id              => 10,
+        p_user_name            => :APP_USER,
+        p_current_session_only => true);
 end;
 /
 ```
-

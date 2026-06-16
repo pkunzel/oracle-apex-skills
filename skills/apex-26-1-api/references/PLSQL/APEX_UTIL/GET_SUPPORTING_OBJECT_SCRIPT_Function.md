@@ -38,15 +38,15 @@ RETURN CLOB;
 
 ## Simple Example
 
+Return the supporting objects install script as a CLOB.
+
 ```sql
 declare
-    l_result CLOB;
+    l_script clob;
 begin
-    l_result := apex_util.GET_SUPPORTING_OBJECT_SCRIPT(
-        p_application_id => 1,
-        p_script_type => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_script := apex_util.get_supporting_object_script(
+        p_application_id => :APP_ID,
+        p_script_type    => apex_util.c_install_script);
 end;
 /
 ```

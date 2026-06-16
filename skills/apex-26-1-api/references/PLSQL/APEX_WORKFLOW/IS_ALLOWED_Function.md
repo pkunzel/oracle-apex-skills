@@ -44,16 +44,17 @@ TRUE if the user given by p_user is allowed to perform the operation given by p_
 
 ## Simple Example
 
+Check operation permission before terminating a workflow.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_workflow.IS_ALLOWED(
-        p_instance_id => 1,
-        p_operation => null,
-        p_user => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if not apex_workflow.is_allowed(
+              p_instance_id => :P30_WORKFLOW_ID,
+              p_operation   => apex_workflow.c_workflow$_op_terminate,
+              p_user        => :APP_USER)
+    then
+        raise_application_error(-20000, 'Not authorized to terminate this workflow.');
+    end if;
 end;
 /
 ```

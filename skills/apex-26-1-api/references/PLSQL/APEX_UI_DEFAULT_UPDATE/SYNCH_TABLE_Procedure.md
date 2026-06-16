@@ -39,10 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.SYNCH_TABLE(
-        p_table_name => 'EXAMPLE'
+    apex_ui_default_update.synch_table(
+        p_table_name => 'DEMO_ORDERS'
     );
 end;
 /

@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append one NUMBER value to an APEX number collection.
+
 ```sql
+declare
+    l_ids apex_t_number;
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_value => 1
-    );
+    apex_string.push(l_ids, :P10_ORDER_ID);
 end;
 /
 ```

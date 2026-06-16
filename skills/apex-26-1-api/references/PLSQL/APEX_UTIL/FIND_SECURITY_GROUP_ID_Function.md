@@ -36,14 +36,17 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Resolve a workspace name to the security group id required by low-level APEX APIs.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_security_group_id number;
 begin
-    l_result := apex_util.FIND_SECURITY_GROUP_ID(
-        p_workspace => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_security_group_id := apex_util.find_security_group_id(
+        p_workspace => 'MY_WORKSPACE');
+
+    apex_util.set_security_group_id(
+        p_security_group_id => l_security_group_id);
 end;
 /
 ```

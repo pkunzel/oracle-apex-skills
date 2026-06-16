@@ -38,15 +38,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Create a stable-looking URL slug from a title.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.GET_SLUG(
-        p_string => 'EXAMPLE',
-        p_hash_length => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_SLUG := apex_string_util.get_slug(
+        p_string      => :P10_TITLE,
+        p_hash_length => 6);
 end;
 /
 ```

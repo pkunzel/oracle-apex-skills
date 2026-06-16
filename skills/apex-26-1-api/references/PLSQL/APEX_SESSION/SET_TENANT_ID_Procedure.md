@@ -37,14 +37,14 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Set the tenant identifier after establishing the APEX session context for a multitenant application.
 
 ```sql
 begin
-    apex_session.SET_TENANT_ID(
-        p_tenant_id => 'EXAMPLE'
-    );
+    apex_session.set_tenant_id(
+        p_tenant_id => :P0_TENANT_ID);
 end;
 /
 ```
-

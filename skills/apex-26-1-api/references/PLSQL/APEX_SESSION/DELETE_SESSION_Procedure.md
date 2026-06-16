@@ -37,14 +37,19 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Delete a session that the current script created and owns.
 
 ```sql
 begin
-    apex_session.DELETE_SESSION(
-        p_session_id => 1
-    );
+    apex_session.create_session(
+        p_app_id   => 100,
+        p_page_id  => 1,
+        p_username => 'SCOTT');
+
+    apex_session.delete_session(
+        p_session_id => apex_application.g_instance);
 end;
 /
 ```
-

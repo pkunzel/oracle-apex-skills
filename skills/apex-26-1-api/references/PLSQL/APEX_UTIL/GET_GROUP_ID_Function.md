@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Resolve an APEX group name to its group id.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_group_id varchar2(255);
 begin
-    l_result := apex_util.GET_GROUP_ID(
-        p_group_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_group_id := apex_util.get_group_id(
+        p_group_name => 'APP_MANAGERS');
 end;
 /
 ```

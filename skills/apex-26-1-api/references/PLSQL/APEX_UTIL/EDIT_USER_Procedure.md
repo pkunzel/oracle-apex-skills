@@ -79,31 +79,23 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update profile fields for an existing APEX workspace user.
+
 ```sql
+declare
+    l_user_id number;
 begin
-    apex_util.EDIT_USER(
-        p_user_id => 1,
-        p_user_name => 'USER',
-        p_first_name => 'EXAMPLE',
-        p_last_name => 'EXAMPLE',
-        p_web_password => 'EXAMPLE',
-        p_new_password => 'EXAMPLE',
-        p_email_address => 'EXAMPLE',
-        p_start_date => 'EXAMPLE',
-        p_end_date => 'EXAMPLE',
-        p_employee_id => 'EXAMPLE',
-        p_allow_access_to_schemas => 'EXAMPLE',
-        p_person_type => 'EXAMPLE',
-        p_default_schema => 'EXAMPLE',
-        p_group_ids => 'EXAMPLE',
-        p_developer_roles => 'EXAMPLE',
-        p_description => 'EXAMPLE',
-        p_account_expiry => 1,
-        p_account_locked => 'EXAMPLE',
-        p_failed_access_attempts => 1,
-        p_change_password_on_first_use => 'EXAMPLE',
-        p_first_password_use_occurred => 'EXAMPLE'
-    );
+    l_user_id := apex_util.get_user_id('JSMITH');
+
+    apex_util.edit_user(
+        p_user_id      => l_user_id,
+        p_user_name    => 'JSMITH',
+        p_first_name   => 'Jordan',
+        p_last_name    => 'Smith',
+        p_email_address => 'jordan.smith@example.com',
+        p_group_ids    => apex_util.get_group_id('APP_USERS'),
+        p_description  => 'Operations application user',
+        p_account_locked => 'N');
 end;
 /
 ```

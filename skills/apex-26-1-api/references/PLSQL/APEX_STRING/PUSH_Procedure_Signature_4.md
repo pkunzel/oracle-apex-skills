@@ -41,12 +41,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append all values from one VARCHAR2 collection to another.
+
 ```sql
+declare
+    l_all     apex_t_varchar2 := apex_t_varchar2('OPEN');
+    l_more    apex_t_varchar2 := apex_t_varchar2('PENDING', 'CLOSED');
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_values => 'EXAMPLE'
-    );
+    apex_string.push(
+        p_table  => l_all,
+        p_values => l_more);
 end;
 /
 ```

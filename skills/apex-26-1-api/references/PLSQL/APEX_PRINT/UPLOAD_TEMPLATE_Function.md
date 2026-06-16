@@ -40,18 +40,20 @@ A number containing the unique ID to reference the template in future calls.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Upload a DOCX template BLOB and store the returned template id for later document generation.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_template_id number;
 begin
-    l_result := apex_print.UPLOAD_TEMPLATE(
-        p_template => null,
-        p_template_type => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_template_id := apex_print.upload_template(
+        p_template      => :P10_TEMPLATE_BLOB,
+        p_template_type => apex_print.c_template_docx);
+
+    insert into print_template_registry(static_id, template_id)
+    values ('ORDER_CONFIRMATION', l_template_id);
 end;
 /
 ```
-

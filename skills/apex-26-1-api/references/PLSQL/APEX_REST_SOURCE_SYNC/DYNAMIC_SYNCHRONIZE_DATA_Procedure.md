@@ -47,18 +47,24 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Run a one-off dynamic sync with REST Source parameters instead of the predefined sync steps.
 
 ```sql
+declare
+    l_params apex_exec.t_parameters;
 begin
-    apex_rest_source_sync.DYNAMIC_SYNCHRONIZE_DATA(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_sync_static_id => 'EXAMPLE_STATIC_ID',
-        p_sync_external_filter_expr => 'EXAMPLE',
-        p_sync_parameters => null,
-        p_application_id => 1
-    );
+    apex_exec.add_parameter(
+        p_parameters => l_params,
+        p_name       => 'updatedSince',
+        p_value      => to_char(systimestamp - interval '1' day, 'YYYY-MM-DD"T"HH24:MI:SS'));
+
+    apex_rest_source_sync.dynamic_synchronize_data(
+        p_module_static_id => 'ORDERS_API',
+        p_sync_static_id   => 'LAST_24_HOURS',
+        p_sync_parameters  => l_params,
+        p_application_id   => :APP_ID);
 end;
 /
 ```
-

@@ -48,24 +48,20 @@ RETURN NUMBER;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+The function overload returns the queued mail id, which is needed if the message later receives attachments.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_mail_id number;
 begin
-    l_result := apex_mail.SEND(
-        p_to => 'EXAMPLE',
-        p_from => 'EXAMPLE',
-        p_body => to_clob('Example text'),
-        p_body_html => to_clob('Example text'),
-        p_subj => 'EXAMPLE',
-        p_cc => 'EXAMPLE',
-        p_bcc => 'EXAMPLE',
-        p_replyto => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_mail_id := apex_mail.send(
+        p_to      => :P10_TO_EMAIL,
+        p_from    => 'support@example.com',
+        p_subj    => 'Case ' || :P10_CASE_NUMBER || ' received',
+        p_body    => 'We received your case and will follow up shortly.',
+        p_replyto => 'support@example.com');
 end;
 /
 ```
-

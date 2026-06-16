@@ -47,13 +47,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Set a build option status by id in older code.
+
 ```sql
 begin
-    apex_util.SET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_id => 1,
-        p_build_status => 'EXAMPLE'
-    );
+    apex_util.set_build_option_status(
+        p_application_id => :APP_ID,
+        p_id             => 123456789,
+        p_build_status   => 'INCLUDE');
 end;
 /
 ```

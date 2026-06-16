@@ -29,12 +29,13 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Branch server-side output based on the high contrast session setting.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_util.IS_HIGH_CONTRAST_SESSION;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_util.is_high_contrast_session then
+        apex_css.add_file(p_name => 'app-high-contrast');
+    end if;
 end;
 /
 ```

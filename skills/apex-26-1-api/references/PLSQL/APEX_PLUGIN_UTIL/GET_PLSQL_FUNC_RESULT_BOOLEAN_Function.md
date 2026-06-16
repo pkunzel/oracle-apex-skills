@@ -38,19 +38,17 @@ RETURN BOOLEAN;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the Boolean function helper when the attribute stores a PL/SQL function body that returns TRUE or FALSE.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_allowed boolean;
 begin
-    l_result := apex_plugin_util.GET_PLSQL_FUNC_RESULT_BOOLEAN(
-        p_plsql_function => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_allowed := apex_plugin_util.get_plsql_func_result_boolean(
+        p_plsql_function   => p_process.attributes.get_varchar2('ALLOW_FUNCTION'),
+        p_auto_bind_items  => true);
 end;
 /
 ```
-

@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Attach an execution context ID to outbound requests for tracing.
+
 ```sql
 begin
-    apex_web_service.SET_REQUEST_ECID_CONTEXT(
-        p_ecid => 'EXAMPLE'
-    );
+    apex_web_service.set_request_ecid_context(
+        p_ecid => 'ORDER-' || :P10_ORDER_ID);
 end;
 /
 ```

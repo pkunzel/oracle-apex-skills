@@ -40,16 +40,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Parse a scalar value from a SOAP response stored in a collection.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_web_service.PARSE_RESPONSE(
-        p_collection_name => 'EXAMPLE',
-        p_xpath => 'EXAMPLE',
-        p_ns => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_ORDER_STATUS := apex_web_service.parse_response(
+        p_collection_name => 'SOAP_ORDER_RESPONSE',
+        p_xpath           => '//order/status/text()',
+        p_ns              => null);
 end;
 /
 ```

@@ -43,17 +43,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Render APEX's standard hidden item field when a custom item should submit its current value without visible UI.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_HIDDEN(
-        p_item => null,
-        p_param => null,
-        p_id_postfix => 'EXAMPLE',
-        p_classes => 'EXAMPLE'
-    );
+    apex_plugin_util.print_hidden(
+        p_item       => p_item,
+        p_param      => p_param,
+        p_id_postfix => '_HIDDEN',
+        p_classes    => 'custom-item-hidden');
 end;
 /
 ```
-

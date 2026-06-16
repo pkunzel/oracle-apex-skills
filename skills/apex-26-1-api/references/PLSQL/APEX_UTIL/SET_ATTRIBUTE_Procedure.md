@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Store a custom attribute on an APEX workspace user.
+
 ```sql
 begin
-    apex_util.SET_ATTRIBUTE(
-        p_userid => 1,
+    apex_util.set_attribute(
+        p_userid          => apex_util.get_user_id('JSMITH'),
         p_attribute_number => 1,
-        p_attribute_value => 'EXAMPLE'
-    );
+        p_attribute_value => 'COST_CENTER_100');
 end;
 /
 ```

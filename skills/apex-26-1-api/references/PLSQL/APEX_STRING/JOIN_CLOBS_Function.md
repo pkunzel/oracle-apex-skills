@@ -40,16 +40,18 @@ RETURN CLOB;
 
 ## Simple Example
 
+Combine CLOB fragments with a separator.
+
 ```sql
 declare
-    l_result CLOB;
+    l_parts apex_t_clob := apex_t_clob(
+        to_clob('First generated section.'),
+        to_clob('Second generated section.'));
+    l_doc   clob;
 begin
-    l_result := apex_string.JOIN_CLOBS(
-        p_table => to_clob('Example text'),
-        p_sep => 'EXAMPLE',
-        p_dur => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_doc := apex_string.join_clobs(
+        p_table => l_parts,
+        p_sep   => chr(10) || chr(10));
 end;
 /
 ```

@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Retry a faulted workflow after fixing the underlying service or data issue.
+
 ```sql
 begin
-    apex_workflow.RETRY(
-        p_instance_id => 1
-    );
+    apex_workflow.retry(
+        p_instance_id => :P30_WORKFLOW_ID);
 end;
 /
 ```

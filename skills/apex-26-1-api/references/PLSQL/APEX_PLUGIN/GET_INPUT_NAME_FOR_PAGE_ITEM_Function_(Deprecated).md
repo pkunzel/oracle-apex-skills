@@ -38,17 +38,16 @@ APEX_PLUGIN.GET_INPUT_NAME_FOR_PAGE_ITEM (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This function is deprecated. Legacy item plug-ins used it to render the submitted input name.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_input_name varchar2(4000);
 begin
-    l_result := apex_plugin.GET_INPUT_NAME_FOR_PAGE_ITEM(
-        p_is_multi_value => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_input_name := apex_plugin.get_input_name_for_page_item(
+        p_is_multi_value => false);
 end;
 /
 ```
-

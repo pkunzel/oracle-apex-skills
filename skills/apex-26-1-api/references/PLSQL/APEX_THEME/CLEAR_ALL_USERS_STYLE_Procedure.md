@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear all persisted user style preferences for one application theme.
+
 ```sql
 begin
-    apex_theme.CLEAR_ALL_USERS_STYLE(
-        p_application_id => 1,
-        p_theme_number => 1
-    );
+    apex_theme.clear_all_users_style(
+        p_application_id => :APP_ID,
+        p_theme_number   => 42);
 end;
 /
 ```

@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Purge cached content for one page, scoped to the current user.
+
 ```sql
 begin
-    apex_util.CACHE_PURGE_BY_PAGE(
-        p_application => 1,
-        p_page => 1,
-        p_user_name => 'USER'
-    );
+    apex_util.cache_purge_by_page(
+        p_application => :APP_ID,
+        p_page        => 20,
+        p_user_name   => :APP_USER);
 end;
 /
 ```

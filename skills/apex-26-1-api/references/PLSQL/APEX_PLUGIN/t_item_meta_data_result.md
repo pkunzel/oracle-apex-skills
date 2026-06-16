@@ -22,5 +22,17 @@ Use this page when code needs the `APEX_PLUGIN.t_item_meta_data_result` topic. C
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Metadata callbacks return the item metadata result record after setting the documented fields needed by the plug-in.
 
+```sql
+function metadata_rating_item (
+    p_item   in apex_plugin.t_item,
+    p_plugin in apex_plugin.t_plugin )
+    return apex_plugin.t_item_meta_data_result
+is
+    l_result apex_plugin.t_item_meta_data_result;
+begin
+    return l_result;
+end;
+/
+```

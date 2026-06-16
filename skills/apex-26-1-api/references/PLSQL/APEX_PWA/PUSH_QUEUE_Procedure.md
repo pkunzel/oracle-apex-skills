@@ -30,12 +30,13 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+APEX normally processes queued push notifications for you; call PUSH_QUEUE from controlled diagnostics or jobs.
 
 ```sql
 begin
-    apex_pwa.PUSH_QUEUE;
+    apex_pwa.push_queue;
 end;
 /
 ```
-

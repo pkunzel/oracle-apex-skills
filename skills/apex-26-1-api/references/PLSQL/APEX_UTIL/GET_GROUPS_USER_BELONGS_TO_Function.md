@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the colon-delimited APEX groups assigned to a workspace user.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_groups varchar2(4000);
 begin
-    l_result := apex_util.GET_GROUPS_USER_BELONGS_TO(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_groups := apex_util.get_groups_user_belongs_to(
+        p_username => 'JSMITH');
 end;
 /
 ```

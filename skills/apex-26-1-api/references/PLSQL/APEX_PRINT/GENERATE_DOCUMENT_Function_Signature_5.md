@@ -46,23 +46,25 @@ APEX_PRINT.GENERATE_DOCUMENT (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the OCI Object Storage template overload when the custom template lives in a bucket.
 
 ```sql
 declare
-    l_result BLOB;
+    l_pdf blob;
 begin
-    l_result := apex_print.GENERATE_DOCUMENT(
-        p_data => to_clob('Example text'),
-        p_template_type => null,
-        p_template_bucket => 'EXAMPLE',
-        p_template_namespace => 'EXAMPLE',
-        p_template_object => 'EXAMPLE',
-        p_output_type => null,
-        p_output_password => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pdf := apex_print.generate_document(
+        p_data               => json_object(
+        'order_id' value :P42_ORDER_ID,
+        'status'   value 'Ready',
+        'customer' value :P42_CUSTOMER_NAME
+        returning clob),
+        p_template_type      => apex_print.c_template_docx,
+        p_template_bucket    => 'apex-print-templates',
+        p_template_namespace => 'tenantnamespace',
+        p_template_object    => 'orders/order-confirmation.docx',
+        p_output_type        => apex_print.c_output_pdf);
 end;
 /
 ```
-

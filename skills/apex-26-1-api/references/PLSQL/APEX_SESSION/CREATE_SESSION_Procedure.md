@@ -43,17 +43,24 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Create a temporary APEX session for scripts or test harnesses that need APEX context.
 
 ```sql
 begin
-    apex_session.CREATE_SESSION(
-        p_app_id => 1,
-        p_page_id => 1,
-        p_username => 'USER',
-        p_call_post_authentication => true
-    );
+    apex_session.create_session(
+        p_app_id   => 100,
+        p_page_id  => 1,
+        p_username => 'SCOTT');
+
+    apex_session_state.set_value('P1_SCRIPT_MODE', 'Y', false);
+
+    apex_session.delete_session;
+exception
+    when others then
+        apex_session.delete_session;
+        raise;
 end;
 /
 ```
-

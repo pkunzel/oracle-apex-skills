@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Replace the APEX groups granted to a workspace user.
+
 ```sql
 begin
-    apex_util.SET_GROUP_USER_GRANTS(
-        p_user_name => 'USER',
-        p_granted_group_names => 'EXAMPLE'
-    );
+    apex_util.set_group_user_grants(
+        p_user_name           => 'JSMITH',
+        p_granted_group_names => apex_t_varchar2('APP_USERS', 'REPORT_VIEWERS'));
 end;
 /
 ```

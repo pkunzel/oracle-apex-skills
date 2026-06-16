@@ -40,16 +40,23 @@ RETURN DATE;
 
 ## Simple Example
 
+Inspect a cached region timestamp and purge the region cache when the data is old.
+
 ```sql
 declare
-    l_result DATE;
+    l_cached_on date;
 begin
-    l_result := apex_util.CACHE_GET_DATE_OF_REGION_CACHE(
-        p_application => 1,
-        p_page => 1,
-        p_region_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_cached_on := apex_util.cache_get_date_of_region_cache(
+        p_application => :APP_ID,
+        p_page        => 20,
+        p_region_name => 'Quarterly Sales');
+
+    if l_cached_on is not null and l_cached_on < sysdate - (1 / 24) then
+        apex_util.purge_regions_by_name(
+            p_application => :APP_ID,
+            p_page        => 20,
+            p_region_name => 'Quarterly Sales');
+    end if;
 end;
 /
 ```

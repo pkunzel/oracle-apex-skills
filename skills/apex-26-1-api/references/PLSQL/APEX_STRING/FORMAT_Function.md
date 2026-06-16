@@ -61,16 +61,19 @@ APEX_STRING.FORMAT (
 
 ## Simple Example
 
+Build a readable message while still using bind variables for the values.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_message varchar2(4000);
 begin
-    l_result := apex_string.FORMAT(
-        p_message => to_clob('Example text'),
-        p_max_length => 1,
-        p_prefix => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_message := apex_string.format(
+        p_message => 'Order %0 for %1 is %2.',
+        p0        => :P10_ORDER_ID,
+        p1        => :P10_CUSTOMER_NAME,
+        p2        => 'ready');
+
+    apex_debug.info(l_message);
 end;
 /
 ```

@@ -39,15 +39,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Disable scheduled synchronization for a REST Data Source during maintenance.
 
 ```sql
 begin
-    apex_rest_source_sync.DISABLE(
-        p_application_id => 1,
-        p_module_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_rest_source_sync.disable(
+        p_application_id   => :APP_ID,
+        p_module_static_id => 'ORDERS_API');
 end;
 /
 ```
-

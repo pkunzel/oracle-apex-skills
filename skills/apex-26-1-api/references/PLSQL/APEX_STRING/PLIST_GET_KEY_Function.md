@@ -38,15 +38,19 @@ APEX_STRING.PLIST_GET_KEY (
 
 ## Simple Example
 
+Find the key associated with a known property-list value.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_props apex_t_varchar2;
+    l_key   varchar2(4000);
 begin
-    l_result := apex_string.PLIST_GET_KEY(
-        p_table => 'EXAMPLE',
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_props := apex_string.plist_put(l_props, 'status', 'open');
+    l_props := apex_string.plist_put(l_props, 'priority', 'high');
+
+    l_key := apex_string.plist_get_key(
+        p_table => l_props,
+        p_value => 'high');
 end;
 /
 ```

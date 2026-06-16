@@ -44,16 +44,18 @@ A table of varchar2, where the first character denotes the type of diff: @ - Lin
 
 ## Simple Example
 
+Compare two text areas line by line.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_diff apex_t_varchar2;
 begin
-    l_result := apex_string_util.DIFF(
-        p_left => 'EXAMPLE',
-        p_right => 'EXAMPLE',
-        p_context => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_diff := apex_string_util.diff(
+        p_left    => apex_string.split(:P10_OLD_TEXT, chr(10)),
+        p_right   => apex_string.split(:P10_NEW_TEXT, chr(10)),
+        p_context => 2);
+
+    :P10_DIFF_TEXT := apex_string.join(l_diff, chr(10));
 end;
 /
 ```

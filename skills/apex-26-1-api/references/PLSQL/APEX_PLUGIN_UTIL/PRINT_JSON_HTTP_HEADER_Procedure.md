@@ -30,12 +30,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this in Ajax callbacks before writing JSON to the response.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_JSON_HTTP_HEADER;
+    apex_plugin_util.print_json_http_header;
+
+    apex_json.open_object;
+    apex_json.write('status', 'ok');
+    apex_json.close_object;
 end;
 /
 ```
-

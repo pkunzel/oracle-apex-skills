@@ -53,18 +53,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Download output from a named report query and a shared report layout.
+
 ```sql
 begin
-    apex_util.DOWNLOAD_PRINT_DOCUMENT(
-        p_file_name => 'EXAMPLE',
-        p_content_disposition => to_clob('Example text'),
-        p_application_id => 1,
-        p_report_query_name => to_clob('Example text'),
-        p_report_layout_name => 'EXAMPLE',
-        p_report_layout_type => 'EXAMPLE',
-        p_document_format => 'EXAMPLE',
-        p_print_server => 'EXAMPLE'
-    );
+    apex_util.download_print_document(
+        p_file_name           => 'open-orders.pdf',
+        p_content_disposition => 'attachment',
+        p_application_id      => :APP_ID,
+        p_report_query_name   => 'OPEN_ORDERS',
+        p_report_layout_name  => 'OPEN_ORDERS_RTF',
+        p_report_layout_type  => 'rtf',
+        p_document_format     => 'pdf');
 end;
 /
 ```

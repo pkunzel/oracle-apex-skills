@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Store the screen reader session setting as a Y/N item value.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_util.IS_SCREEN_READER_SESSION_YN;
-    sys.dbms_output.put_line('Result captured.');
+    apex_util.set_session_state(
+        p_name  => 'P1_SCREEN_READER_YN',
+        p_value => apex_util.is_screen_reader_session_yn);
 end;
 /
 ```

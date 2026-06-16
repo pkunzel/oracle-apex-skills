@@ -39,15 +39,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this while diagnosing a process plug-in callback.
 
 ```sql
 begin
-    apex_plugin_util.DEBUG_PROCESS(
-        p_plugin => null,
-        p_process => null
-    );
+    apex_plugin_util.debug_process(
+        p_plugin  => p_plugin,
+        p_process => p_process);
+
+    apex_debug.info('Executing process plug-in %s', p_process.name);
 end;
 /
 ```
-

@@ -120,21 +120,20 @@ declare
     l_offset pls_integer := 1;
     l_chunk  varchar2(32767);
 begin
+    while apex_string.next_chunk(
+              p_str    => l_large_text,
+              p_chunk  => l_chunk,
+              p_offset => l_offset,
+              p_amount => 32767)
     loop
-        l_chunk := apex_string.next_chunk(
-            p_str    => l_large_text,
-            p_offset => l_offset,
-            p_amount => 32767);
-
-        exit when l_chunk is null;
-
         -- Process l_chunk here.
+        null;
     end loop;
 end;
 /
 ```
 
-Check the local member page for the exact `NEXT_CHUNK` signature before use.
+`NEXT_CHUNK` returns a Boolean and advances the offset while populating the OUT chunk parameter.
 
 ## Safety Guidance
 

@@ -22,5 +22,21 @@ Use this page when code needs the `APEX_WEB_SERVICE.About the APEX_WEB_SERVICE A
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use APEX_WEB_SERVICE when PL/SQL needs direct control over an HTTP call.
+
+```sql
+declare
+    l_response clob;
+begin
+    apex_web_service.set_request_headers(
+        p_name_01  => 'Accept',
+        p_value_01 => 'application/json');
+
+    l_response := apex_web_service.make_rest_request(
+        p_url                  => 'https://api.example.com/orders/1001',
+        p_http_method          => 'GET',
+        p_credential_static_id => 'ORDERS_API');
+end;
+/
+```
 

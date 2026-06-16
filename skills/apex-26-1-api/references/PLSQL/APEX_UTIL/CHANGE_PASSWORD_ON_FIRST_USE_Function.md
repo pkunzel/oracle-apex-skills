@@ -36,14 +36,18 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Check whether an APEX account must change its password on the next sign-in.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_required boolean;
 begin
-    l_result := apex_util.CHANGE_PASSWORD_ON_FIRST_USE(
-        p_user_name => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_required := apex_util.change_password_on_first_use(
+        p_user_name => 'JSMITH');
+
+    if l_required then
+        apex_util.set_session_state('P10_PASSWORD_ACTION', 'CHANGE_REQUIRED');
+    end if;
 end;
 /
 ```

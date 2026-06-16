@@ -62,31 +62,25 @@ APEX_PAGE.GET_URL (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Build an f?p URL without manual string concatenation, including item values and dialog triggering context.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_url varchar2(4000);
 begin
-    l_result := apex_page.GET_URL(
-        p_application => 'EXAMPLE',
-        p_page => 'EXAMPLE',
-        p_session => 1,
-        p_request => 'EXAMPLE',
-        p_debug => 'EXAMPLE',
-        p_clear_cache => 'EXAMPLE',
-        p_items => 'EXAMPLE',
-        p_values => 'EXAMPLE',
-        p_printer_friendly => 'EXAMPLE',
-        p_trace => 'EXAMPLE',
-        p_x01 => 'EXAMPLE',
-        p_hash => 'EXAMPLE',
-        p_triggering_element => 'EXAMPLE',
-        p_plain_url => true,
-        p_absolute_url => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_url := apex_page.get_url(
+        p_application        => :APP_ID,
+        p_page               => 42,
+        p_request            => 'VIEW',
+        p_clear_cache        => '42',
+        p_items              => 'P42_ORDER_ID',
+        p_values             => :P10_ORDER_ID,
+        p_triggering_element => '#view_order_btn');
+
+    sys.htp.p(
+        '<a href="' || apex_escape.html_attribute(l_url) || '">View order</a>');
 end;
 /
 ```
-

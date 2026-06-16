@@ -45,18 +45,22 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Insert geometry metadata with explicit dimension info and create a simple spatial index.
 
 ```sql
+declare
+    l_diminfo mdsys.sdo_dim_array := mdsys.sdo_dim_array(
+        mdsys.sdo_dim_element('Longitude', -180, 180, 0.5),
+        mdsys.sdo_dim_element('Latitude',   -90,  90, 0.5));
 begin
-    apex_spatial.INSERT_GEOM_METADATA(
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_diminfo => null,
-        p_srid => null,
-        p_create_index_name => true
-    );
+    apex_spatial.insert_geom_metadata(
+        p_table_name        => 'CUSTOMER_LOCATIONS',
+        p_column_name       => 'GEOM',
+        p_diminfo           => l_diminfo,
+        p_srid              => apex_spatial.c_wgs_84,
+        p_create_index_name => 'CUSTOMER_LOCATIONS_SX');
 end;
 /
 ```
-

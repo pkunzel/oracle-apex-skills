@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Purge all cached regions on one page.
+
 ```sql
 begin
-    apex_util.PURGE_REGIONS_BY_PAGE(
-        p_application => 1,
-        p_page => 1
-    );
+    apex_util.purge_regions_by_page(
+        p_application => :APP_ID,
+        p_page        => 20);
 end;
 /
 ```

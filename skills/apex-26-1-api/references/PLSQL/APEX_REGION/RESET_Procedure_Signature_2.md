@@ -43,17 +43,16 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Reset supported report or Region Display Selector state by Static ID.
 
 ```sql
 begin
-    apex_region.RESET(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_component_id => 1
-    );
+    apex_region.reset(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_static_id      => 'orders_report');
 end;
 /
 ```
-

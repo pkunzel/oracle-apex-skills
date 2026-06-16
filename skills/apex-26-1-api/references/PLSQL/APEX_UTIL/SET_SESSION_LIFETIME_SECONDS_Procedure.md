@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Shorten the lifetime of the current session for a sensitive workflow.
+
 ```sql
 begin
-    apex_util.SET_SESSION_LIFETIME_SECONDS(
-        p_seconds => 1,
-        p_scope => 'EXAMPLE'
-    );
+    apex_util.set_session_lifetime_seconds(
+        p_seconds => 1800,
+        p_scope   => 'SESSION');
 end;
 /
 ```

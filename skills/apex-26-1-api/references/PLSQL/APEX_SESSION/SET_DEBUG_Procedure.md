@@ -39,15 +39,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Enable debug for future requests in a specific APEX session.
 
 ```sql
 begin
-    apex_session.SET_DEBUG(
-        p_session_id => 1,
-        p_level => null
-    );
+    apex_session.set_debug(
+        p_session_id => apex_application.g_instance,
+        p_level      => apex_debug.c_log_level_info);
 end;
 /
 ```
-

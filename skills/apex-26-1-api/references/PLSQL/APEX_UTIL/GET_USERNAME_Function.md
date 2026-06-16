@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Resolve a numeric APEX user id back to a username.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_username varchar2(255);
 begin
-    l_result := apex_util.GET_USERNAME(
-        p_userid => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_username := apex_util.get_username(
+        p_userid => apex_util.get_user_id('JSMITH'));
 end;
 /
 ```

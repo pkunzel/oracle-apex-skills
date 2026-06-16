@@ -38,15 +38,17 @@ APEX_UTIL.GET_HASH (
 
 ## Simple Example
 
+Hash multiple values as a tamper check for server-side comparisons.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_hash varchar2(4000);
 begin
-    l_result := apex_util.GET_HASH(
-        p_values => 'EXAMPLE',
-        p_salted => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_hash := apex_util.get_hash(
+        p_values => apex_t_varchar2(:APP_USER, :P10_ORDER_ID, :P10_STATUS),
+        p_salted => true);
+
+    apex_util.set_session_state('P10_STATUS_HASH', l_hash);
 end;
 /
 ```

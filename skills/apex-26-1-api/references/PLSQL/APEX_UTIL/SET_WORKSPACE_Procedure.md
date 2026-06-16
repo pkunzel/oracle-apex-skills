@@ -39,11 +39,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set workspace context before creating an APEX session in a script.
+
 ```sql
 begin
-    apex_util.SET_WORKSPACE(
-        p_workspace => 'EXAMPLE'
-    );
+    apex_util.set_workspace(
+        p_workspace => 'MY_WORKSPACE');
+
+    apex_session.create_session(
+        p_app_id   => 100,
+        p_page_id  => 1,
+        p_username => 'ADMIN');
 end;
 /
 ```

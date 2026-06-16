@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Terminate all faulted workflow instances for an application as an administrative cleanup action.
+
 ```sql
 begin
-    apex_workflow.TERMINATE_FAULTED_WORKFLOWS(
-        p_application_id => 1
-    );
+    apex_workflow.terminate_faulted_workflows(
+        p_application_id => :APP_ID);
 end;
 /
 ```

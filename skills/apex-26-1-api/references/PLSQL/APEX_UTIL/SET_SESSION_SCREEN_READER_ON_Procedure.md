@@ -32,9 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Turn screen reader mode on for the current APEX session.
+
 ```sql
 begin
-    apex_util.SET_SESSION_SCREEN_READER_ON;
+    apex_util.set_session_screen_reader_on;
 end;
 /
 ```

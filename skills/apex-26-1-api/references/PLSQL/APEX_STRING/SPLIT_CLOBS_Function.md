@@ -40,16 +40,16 @@ RETURN apex_t_clob;
 
 ## Simple Example
 
+Split a large CLOB into CLOB sections without truncating the pieces to VARCHAR2.
+
 ```sql
 declare
-    l_result APEX_T_CLOB;
+    l_sections apex_t_clob;
 begin
-    l_result := apex_string.SPLIT_CLOBS(
-        p_str => to_clob('Example text'),
-        p_sep => 'EXAMPLE',
-        p_limit => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_sections := apex_string.split_clobs(
+        p_str   => :P10_MARKDOWN_DOCUMENT,
+        p_sep   => chr(10) || '---' || chr(10),
+        p_limit => 10);
 end;
 /
 ```

@@ -46,21 +46,18 @@ Return Description mdsys.sdo_geometry The geometry for the rectangle (p_lon1, p_
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Create a rectangle geometry for a bounding-box query.
 
 ```sql
-declare
-    l_result MDSYS.SDO_GEOMETRY;
-begin
-    l_result := apex_spatial.RECTANGLE(
-        p_lon1 => 1,
-        p_lat1 => 1,
-        p_lon2 => 1,
-        p_lat2 => 1,
-        p_srid => null
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select customer_id
+  from customer_locations
+ where sdo_anyinteract(
+           geom,
+           apex_spatial.rectangle(
+               p_lon1 => :P10_MIN_LONGITUDE,
+               p_lat1 => :P10_MIN_LATITUDE,
+               p_lon2 => :P10_MAX_LONGITUDE,
+               p_lat2 => :P10_MAX_LATITUDE)) = 'TRUE';
 ```
-

@@ -28,12 +28,13 @@ APEX_UTIL.KEYVAL_VC2;
 
 ## Simple Example
 
+Retrieve the string previously saved with SAVEKEY_VC2 during the request.
+
 ```sql
 declare
-    l_result varchar2(32767);
+    l_saved_key varchar2(4000);
 begin
-    l_result := apex_util.KEYVAL_VC2;
-    sys.dbms_output.put_line('Result captured.');
+    l_saved_key := apex_util.keyval_vc2;
 end;
 /
 ```

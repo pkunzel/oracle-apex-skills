@@ -40,14 +40,18 @@ t_workflow_state
 
 ## Simple Example
 
+Branch on the current workflow state using the documented constants.
+
 ```sql
 declare
-    l_result T_WORKFLOW_STATE;
+    l_state apex_workflow.t_workflow_state;
 begin
-    l_result := apex_workflow.GET_WORKFLOW_STATE(
-        p_instance_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_state := apex_workflow.get_workflow_state(
+        p_instance_id => :P20_WORKFLOW_ID);
+
+    if l_state = apex_workflow.c_state_faulted then
+        :P20_CAN_RETRY := 'Y';
+    end if;
 end;
 /
 ```

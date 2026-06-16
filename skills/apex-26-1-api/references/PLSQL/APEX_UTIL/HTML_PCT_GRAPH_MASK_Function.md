@@ -24,7 +24,7 @@ APEX_UTIL.HTML_PCT_GRAPH_MASK (
     p_bar_background  IN VARCHAR2  DEFAULT NULL,
     p_format          IN VARCHAR2  DEFAULT NULL,
     p_aria_labelledby IN VARCHAR2  DEFAULT NULL,
-    p_aria_label      IN VARCHAR2  DEFAUL  NULL )
+    p_aria_label      IN VARCHAR2  DEFAULT NULL )
 RETURN VARCHAR2;
 ```
 
@@ -48,21 +48,21 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Generate the legacy HTML percentage bar with accessible labeling.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_graph_html varchar2(4000);
 begin
-    l_result := apex_util.HTML_PCT_GRAPH_MASK(
-        p_number => 1,
-        p_size => 1,
-        p_background => 'EXAMPLE',
-        p_bar_background => 'EXAMPLE',
-        p_format => 'EXAMPLE',
-        p_aria_labelledby => 'EXAMPLE',
-        p_aria_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_graph_html := apex_util.html_pct_graph_mask(
+        p_number         => 72,
+        p_size           => 180,
+        p_background     => '#f3f4f6',
+        p_bar_background => '#2563eb',
+        p_format         => 'PCT_GRAPH',
+        p_aria_label     => 'Project completion: 72 percent');
+
+    htp.p(l_graph_html);
 end;
 /
 ```
-

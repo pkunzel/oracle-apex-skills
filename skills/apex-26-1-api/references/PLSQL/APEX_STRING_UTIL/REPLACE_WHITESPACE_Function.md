@@ -44,16 +44,13 @@ This function returns the input string in lower case with all special characters
 
 ## Simple Example
 
+Tokenize a label into a lower-case, separator-delimited string.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.REPLACE_WHITESPACE(
-        p_string => 'EXAMPLE',
-        p_original_find => 'EXAMPLE',
-        p_whitespace_character => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_SEARCH_KEY := apex_string_util.replace_whitespace(
+        p_string               => :P10_LABEL,
+        p_whitespace_character => '|');
 end;
 /
 ```

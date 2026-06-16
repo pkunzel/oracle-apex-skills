@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read a page item value from session state.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_status varchar2(30);
 begin
-    l_result := apex_util.GET_SESSION_STATE(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_status := apex_util.get_session_state(
+        p_item => 'P10_STATUS');
 end;
 /
 ```

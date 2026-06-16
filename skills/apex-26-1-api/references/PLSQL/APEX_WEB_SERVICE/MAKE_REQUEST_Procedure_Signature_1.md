@@ -63,23 +63,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Store a SOAP response in an APEX collection for later XPath parsing.
+
 ```sql
 begin
-    apex_web_service.MAKE_REQUEST(
-        p_url => 'EXAMPLE',
-        p_action => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_collection_name => 'EXAMPLE',
-        p_envelope => to_clob('Example text'),
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_scheme => 'EXAMPLE',
-        p_proxy_override => 'EXAMPLE',
-        p_transfer_timeout => 1,
-        p_wallet_path => 'EXAMPLE',
-        p_wallet_pwd => 'EXAMPLE',
-        p_https_host => 'EXAMPLE'
-    );
+    apex_web_service.make_request(
+        p_url             => 'https://api.example.com/soap/orders',
+        p_action          => 'urn:getOrder',
+        p_collection_name => 'SOAP_ORDER_RESPONSE',
+        p_envelope        => q'~<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body><getOrder><orderId>1001</orderId></getOrder></soapenv:Body>
+</soapenv:Envelope>~');
 end;
 /
 ```

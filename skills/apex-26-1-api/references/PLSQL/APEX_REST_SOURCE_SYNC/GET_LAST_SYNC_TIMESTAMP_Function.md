@@ -40,18 +40,21 @@ This function returns the timestamp of the last successful sync operation.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Read the last sync timestamp and decide whether a manual sync should be offered.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_last_sync timestamp with time zone;
 begin
-    l_result := apex_rest_source_sync.GET_LAST_SYNC_TIMESTAMP(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_last_sync := apex_rest_source_sync.get_last_sync_timestamp(
+        p_module_static_id => 'ORDERS_API',
+        p_application_id   => :APP_ID);
+
+    if l_last_sync < systimestamp - interval '1' hour then
+        apex_debug.warn('ORDERS_API sync is older than one hour.');
+    end if;
 end;
 /
 ```
-

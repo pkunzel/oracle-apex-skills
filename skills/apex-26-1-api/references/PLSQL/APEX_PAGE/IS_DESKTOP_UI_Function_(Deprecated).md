@@ -31,15 +31,15 @@ RETURN BOOLEAN;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This helper is deprecated. Existing legacy code can still read it, but new code should avoid UI-type branching.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_page.IS_DESKTOP_UI;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_page.is_desktop_ui then
+        apex_debug.warn('Legacy desktop UI branch executed.');
+    end if;
 end;
 /
 ```
-

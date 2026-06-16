@@ -39,16 +39,14 @@ PLIST_PUT (
 
 ## Simple Example
 
+Set or replace named values in a property list.
+
 ```sql
 declare
-    l_result varchar2(32767);
+    l_props apex_t_varchar2;
 begin
-    l_result := apex_string.PLIST_PUT(
-        p_table => null,
-        p_key => 'EXAMPLE',
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_props := apex_string.plist_put(l_props, 'status', 'open');
+    l_props := apex_string.plist_put(l_props, 'status', 'closed');
 end;
 /
 ```

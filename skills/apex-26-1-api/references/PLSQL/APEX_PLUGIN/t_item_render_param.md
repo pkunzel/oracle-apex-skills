@@ -22,5 +22,30 @@ Use this page when code needs the `APEX_PLUGIN.t_item_render_param` topic. Confi
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Item plug-ins receive item metadata and render parameters, then return a render-result record.
 
+```sql
+function render_rating_item (
+    p_item   in apex_plugin.t_item,
+    p_plugin in apex_plugin.t_plugin,
+    p_param  in apex_plugin.t_item_render_param )
+    return apex_plugin.t_item_render_result
+is
+    l_result     apex_plugin.t_item_render_result;
+    l_input_name apex_plugin.t_input_name;
+begin
+    l_input_name := apex_plugin.get_input_name_for_item;
+
+    sys.htp.p(
+        '<input type="range"' ||
+        ' id="' || apex_escape.html_attribute(p_item.name) || '"' ||
+        ' name="' || apex_escape.html_attribute(l_input_name) || '"' ||
+        ' value="' || apex_escape.html_attribute(p_param.value) || '"' ||
+        ' min="1" max="5">');
+
+    l_result.is_navigable := true;
+    l_result.navigable_dom_id := p_item.name;
+    return l_result;
+end;
+/
+```

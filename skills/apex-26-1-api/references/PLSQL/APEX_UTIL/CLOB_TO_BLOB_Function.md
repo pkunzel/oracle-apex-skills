@@ -49,18 +49,23 @@ Temporary BLOB containing the CLOB contents.
 
 ## Simple Example
 
+Convert generated text to a UTF-8 BLOB before storing or sending it.
+
 ```sql
 declare
-    l_result BLOB;
+    l_payload clob := json_object(
+        'orderId' value :P10_ORDER_ID,
+        'status'  value :P10_STATUS
+        returning clob);
+    l_blob blob;
 begin
-    l_result := apex_util.CLOB_TO_BLOB(
-        p_clob => to_clob('Example text'),
-        p_charset => 'EXAMPLE',
-        p_include_bom => 'EXAMPLE',
-        p_in_memory => 'EXAMPLE',
-        p_free_immediately => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_blob := apex_util.clob_to_blob(
+        p_clob        => l_payload,
+        p_charset     => 'AL32UTF8',
+        p_include_bom => 'N');
+
+    insert into outbound_messages(message_type, payload_blob)
+    values ('ORDER_STATUS', l_blob);
 end;
 /
 ```

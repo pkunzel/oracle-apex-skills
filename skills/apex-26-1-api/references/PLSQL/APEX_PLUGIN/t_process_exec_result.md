@@ -22,5 +22,18 @@ Use this page when code needs the `APEX_PLUGIN.t_process_exec_result` topic. Con
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Process plug-ins receive process metadata and return an execution result.
 
+```sql
+function execute_process (
+    p_process in apex_plugin.t_process,
+    p_plugin  in apex_plugin.t_plugin )
+    return apex_plugin.t_process_exec_result
+is
+    l_result apex_plugin.t_process_exec_result;
+begin
+    apex_debug.info('Executing process plug-in %s', p_process.name);
+    return l_result;
+end;
+/
+```

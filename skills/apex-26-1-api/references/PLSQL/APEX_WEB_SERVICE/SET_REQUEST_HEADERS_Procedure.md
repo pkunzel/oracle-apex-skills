@@ -61,22 +61,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set a clean header set for the next REST or SOAP request.
+
 ```sql
 begin
-    apex_web_service.SET_REQUEST_HEADERS(
-        p_name_01 => 'EXAMPLE',
-        p_value_01 => 'EXAMPLE',
-        p_name_02 => 'EXAMPLE',
-        p_value_02 => 'EXAMPLE',
-        p_name_03 => 'EXAMPLE',
-        p_value_03 => 'EXAMPLE',
-        p_name_04 => 'EXAMPLE',
-        p_value_04 => 'EXAMPLE',
-        p_name_05 => 'EXAMPLE',
-        p_value_05 => 'EXAMPLE',
-        p_reset => true,
-        p_skip_if_exists => true
-    );
+    apex_web_service.set_request_headers(
+        p_name_01        => 'Content-Type',
+        p_value_01       => 'application/json',
+        p_name_02        => 'Accept',
+        p_value_02       => 'application/json',
+        p_reset          => true,
+        p_skip_if_exists => false);
 end;
 /
 ```

@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the default parsing schema for the current APEX context.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_schema varchar2(128);
 begin
-    l_result := apex_util.GET_DEFAULT_SCHEMA;
-    sys.dbms_output.put_line('Result captured.');
+    l_schema := apex_util.get_default_schema;
 end;
 /
 ```

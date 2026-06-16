@@ -32,12 +32,17 @@ The OAuth access token from the last OAUTH_AUTHENTICATE call; NULL when the toke
 
 ## Simple Example
 
+Use the token produced by the last OAuth authentication call only when it is still available.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_token varchar2(32767);
 begin
-    l_result := apex_web_service.OAUTH_GET_LAST_TOKEN;
-    sys.dbms_output.put_line('Result captured.');
+    l_token := apex_web_service.oauth_get_last_token;
+
+    if l_token is null then
+        raise_application_error(-20000, 'OAuth token is missing or expired.');
+    end if;
 end;
 /
 ```

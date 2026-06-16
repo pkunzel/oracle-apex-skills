@@ -36,14 +36,14 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Read numeric page item session state as a NUMBER.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_quantity number;
 begin
-    l_result := apex_util.GET_NUMERIC_SESSION_STATE(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_quantity := apex_util.get_numeric_session_state(
+        p_item => 'P10_QUANTITY');
 end;
 /
 ```

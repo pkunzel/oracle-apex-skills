@@ -45,18 +45,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Call this from an item render callback before branching into readonly and editable markup.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_HIDDEN_IF_READONLY(
-        p_item_name => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_is_readonly => true,
-        p_is_printer_friendly => true,
-        p_id_postfix => 'EXAMPLE'
-    );
+    apex_plugin_util.print_hidden_if_readonly(
+        p_item_name           => p_item.name,
+        p_value               => p_param.value,
+        p_is_readonly         => p_param.is_readonly,
+        p_is_printer_friendly => p_param.is_printer_friendly);
 end;
 /
 ```
-

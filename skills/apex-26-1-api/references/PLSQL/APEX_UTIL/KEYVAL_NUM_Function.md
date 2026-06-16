@@ -29,12 +29,13 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Retrieve the number previously saved with SAVEKEY_NUM during the request.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_saved_id number;
 begin
-    l_result := apex_util.KEYVAL_NUM;
-    sys.dbms_output.put_line('Result captured.');
+    l_saved_id := apex_util.keyval_num;
 end;
 /
 ```

@@ -48,16 +48,28 @@ Return Description t_files A table of file names and path. See " Data Types " fo
 
 ## Simple Example
 
+Legacy file-list API. Prefer GET_DIR_ENTRIES in new code because it includes metadata.
+
 ```sql
 declare
-    l_result T_FILES;
+    l_zip   blob;
+    l_files apex_zip.t_files;
+    l_idx   binary_integer;
 begin
-    l_result := apex_zip.GET_FILES(
-        p_zipped_blob => null,
-        p_only_files => true,
-        p_encoding => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select content_blob
+      into l_zip
+      from uploaded_files
+     where file_id = :P10_ZIP_FILE_ID;
+
+    l_files := apex_zip.get_files(
+        p_zipped_blob => l_zip,
+        p_only_files  => true);
+
+    l_idx := l_files.first;
+    while l_idx is not null loop
+        apex_debug.info('ZIP entry: %s', l_files(l_idx));
+        l_idx := l_files.next(l_idx);
+    end loop;
 end;
 /
 ```

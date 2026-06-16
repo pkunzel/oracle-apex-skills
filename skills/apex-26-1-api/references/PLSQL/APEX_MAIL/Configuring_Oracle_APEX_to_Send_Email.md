@@ -22,5 +22,21 @@ Use this page when code needs the `APEX_MAIL.Configuring Oracle APEX to Send Ema
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+When sending mail outside an active APEX request, establish the workspace context before queuing mail.
 
+```sql
+declare
+    l_mail_id number;
+begin
+    apex_util.set_workspace(p_workspace => 'SALES_WS');
+
+    l_mail_id := apex_mail.send(
+        p_to   => 'ops@example.com',
+        p_from => 'apex@example.com',
+        p_subj => 'Nightly job completed',
+        p_body => 'The nightly order summary finished successfully.');
+
+    apex_mail.push_queue;
+end;
+/
+```

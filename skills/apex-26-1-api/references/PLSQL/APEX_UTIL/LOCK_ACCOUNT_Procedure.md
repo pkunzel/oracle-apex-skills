@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Lock an APEX workspace account from an authorized administrator flow.
+
 ```sql
 begin
-    apex_util.LOCK_ACCOUNT(
-        p_user_name => 'USER'
-    );
+    apex_util.lock_account(
+        p_user_name => 'JSMITH');
 end;
 /
 ```

@@ -22,5 +22,23 @@ Use this page when code needs the `APEX_WEB_SERVICE.Global Variables` topic. Con
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Read the HTTP status globals immediately after the request that set them.
+
+```sql
+declare
+    l_response clob;
+begin
+    l_response := apex_web_service.make_rest_request(
+        p_url         => 'https://api.example.com/orders/1001',
+        p_http_method => 'GET');
+
+    if apex_web_service.g_status_code not between 200 and 299 then
+        raise_application_error(
+            -20000,
+            'Service failed: ' || apex_web_service.g_status_code || ' ' ||
+            apex_web_service.g_reason_phrase);
+    end if;
+end;
+/
+```
 

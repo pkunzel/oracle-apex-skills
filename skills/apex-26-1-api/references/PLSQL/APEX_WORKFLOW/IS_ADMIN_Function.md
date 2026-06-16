@@ -42,15 +42,16 @@ TRUE if the user given by p_user is defined as a Business Admin for at least one
 
 ## Simple Example
 
+Check whether the current user is a workflow business administrator.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_workflow.IS_ADMIN(
-        p_user => 'USER',
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_workflow.is_admin(
+           p_user           => :APP_USER,
+           p_application_id => :APP_ID)
+    then
+        :P30_SHOW_ADMIN_ACTIONS := 'Y';
+    end if;
 end;
 /
 ```

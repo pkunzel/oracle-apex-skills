@@ -41,12 +41,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append multiple CLOB fragments to a CLOB collection.
+
 ```sql
+declare
+    l_parts apex_t_clob := apex_t_clob(to_clob('Header'));
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_values => to_clob('Example text')
-    );
+    apex_string.push(
+        p_table  => l_parts,
+        p_values => apex_t_clob(to_clob('Body'), to_clob('Footer')));
 end;
 /
 ```

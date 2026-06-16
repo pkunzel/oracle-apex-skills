@@ -36,14 +36,15 @@ APEX_STRING.SHUFFLE (
 
 ## Simple Example
 
+Return a shuffled copy of a collection without changing the original variable.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_choices  apex_t_varchar2 := apex_t_varchar2('A', 'B', 'C', 'D');
+    l_shuffled apex_t_varchar2;
 begin
-    l_result := apex_string.SHUFFLE(
-        p_table => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_shuffled := apex_string.shuffle(
+        p_table => l_choices);
 end;
 /
 ```

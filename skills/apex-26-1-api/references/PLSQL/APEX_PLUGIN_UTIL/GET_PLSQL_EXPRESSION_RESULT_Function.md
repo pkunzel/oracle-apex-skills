@@ -38,19 +38,17 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the VARCHAR2 expression helper for controlled declarative expressions stored in plug-in attributes.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_css_class varchar2(4000);
 begin
-    l_result := apex_plugin_util.GET_PLSQL_EXPRESSION_RESULT(
-        p_plsql_expression => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_css_class := apex_plugin_util.get_plsql_expression_result(
+        p_plsql_expression => p_region.attributes.get_varchar2('CSS_CLASS_EXPR'),
+        p_auto_bind_items  => true);
 end;
 /
 ```
-

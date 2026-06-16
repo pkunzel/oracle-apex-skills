@@ -44,18 +44,27 @@ RETURN BLOB;
 
 ## Simple Example
 
+Create a PDF BLOB from XML report data and an inline layout.
+
 ```sql
 declare
-    l_result BLOB;
+    l_report_data   blob;
+    l_report_layout clob;
+    l_pdf           blob;
 begin
-    l_result := apex_util.GET_PRINT_DOCUMENT(
-        p_report_data => null,
-        p_report_layout => to_clob('Example text'),
-        p_report_layout_type => 'EXAMPLE',
-        p_document_format => 'EXAMPLE',
-        p_print_server => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select report_xml, layout_clob
+      into l_report_data, l_report_layout
+      from report_requests
+     where request_id = :P40_REQUEST_ID;
+
+    l_pdf := apex_util.get_print_document(
+        p_report_data        => l_report_data,
+        p_report_layout      => l_report_layout,
+        p_report_layout_type => 'xsl-fo',
+        p_document_format    => 'pdf');
+
+    insert into generated_documents(request_id, mime_type, document_blob)
+    values (:P40_REQUEST_ID, 'application/pdf', l_pdf);
 end;
 /
 ```

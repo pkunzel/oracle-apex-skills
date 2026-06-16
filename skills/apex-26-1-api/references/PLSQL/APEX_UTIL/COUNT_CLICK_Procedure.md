@@ -49,16 +49,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Track an outbound document link before redirecting the user.
+
 ```sql
 begin
-    apex_util.COUNT_CLICK(
-        p_url => 'EXAMPLE',
-        p_cat => 'EXAMPLE',
-        p_id => 'EXAMPLE',
-        p_user => 'USER',
-        p_workspace => 'EXAMPLE',
-        p_referrer_policy => 'EXAMPLE'
-    );
+    apex_util.count_click(
+        p_url             => 'https://docs.example.com/onboarding.pdf',
+        p_cat             => 'DOCUMENT',
+        p_id              => 'ONBOARDING_GUIDE',
+        p_user            => :APP_USER,
+        p_workspace       => 'MY_WORKSPACE',
+        p_referrer_policy => 'no-referrer');
 end;
 /
 ```

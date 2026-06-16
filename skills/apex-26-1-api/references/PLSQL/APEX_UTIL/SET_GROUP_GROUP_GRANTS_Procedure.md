@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Grant one APEX group membership in other APEX groups.
+
 ```sql
 begin
-    apex_util.SET_GROUP_GROUP_GRANTS(
-        p_group_name => 'EXAMPLE',
-        p_granted_group_names => 'EXAMPLE'
-    );
+    apex_util.set_group_group_grants(
+        p_group_name          => 'APP_MANAGERS',
+        p_granted_group_names => apex_t_varchar2('APP_USERS', 'REPORT_VIEWERS'));
 end;
 /
 ```

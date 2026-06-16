@@ -30,12 +30,19 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Clear component-specific session values after code that temporarily exposes row column values.
 
 ```sql
 begin
-    apex_plugin_util.CLEAR_COMPONENT_VALUES;
+    apex_plugin_util.set_component_values(
+        p_column_value_list => l_column_values,
+        p_row_num           => l_row_num);
+
+    l_label := apex_plugin_util.replace_substitutions('&DISPLAY_NAME.');
+
+    apex_plugin_util.clear_component_values;
 end;
 /
 ```
-

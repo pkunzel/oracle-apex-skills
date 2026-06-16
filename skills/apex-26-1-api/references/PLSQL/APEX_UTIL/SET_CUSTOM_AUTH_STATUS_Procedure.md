@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set a custom authentication status message for the current session.
+
 ```sql
 begin
-    apex_util.SET_CUSTOM_AUTH_STATUS(
-        p_status => 'EXAMPLE'
-    );
+    apex_util.set_custom_auth_status(
+        p_status => 'Password changed successfully.');
 end;
 /
 ```

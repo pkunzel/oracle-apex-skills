@@ -40,16 +40,15 @@ APEX_STRING.SPLIT (
 
 ## Simple Example
 
+Split a colon-delimited multi-value item into a collection.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_ids apex_t_varchar2;
 begin
-    l_result := apex_string.SPLIT(
-        p_str => 'EXAMPLE',
-        p_sep => 'EXAMPLE',
-        p_limit => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_ids := apex_string.split(
+        p_str => :P10_SELECTED_IDS,
+        p_sep => ':');
 end;
 /
 ```

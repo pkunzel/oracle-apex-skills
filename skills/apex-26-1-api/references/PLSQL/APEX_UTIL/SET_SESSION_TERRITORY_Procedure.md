@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the territory for the current APEX session.
+
 ```sql
 begin
-    apex_util.SET_SESSION_TERRITORY(
-        p_territory => 'EXAMPLE'
-    );
+    apex_util.set_session_territory(
+        p_territory => 'AMERICA');
 end;
 /
 ```

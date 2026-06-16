@@ -36,18 +36,21 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use ESCAPE when a plug-in exposes an escape toggle and you need one branch for safe text output.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_label varchar2(4000);
 begin
-    l_result := apex_plugin_util.ESCAPE(
-        p_value => 'EXAMPLE',
-        p_escape => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_label := apex_plugin_util.escape(
+        p_value  => p_item.plain_label,
+        p_escape => p_plugin.attributes.get_boolean(
+            p_static_id     => 'ESCAPE_LABEL',
+            p_default_value => true));
+
+    sys.htp.p('<span class="item-label">' || l_label || '</span>');
 end;
 /
 ```
-

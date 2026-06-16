@@ -44,17 +44,24 @@ Parameter Description p_response Received response of the HTTP invocation. p_res
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the simpler overload when the plug-in does not manage an explicit time budget.
 
 ```sql
+declare
+    l_operation           apex_plugin.t_web_source_operation;
+    l_response            clob;
+    l_response_parameters apex_plugin.t_web_source_parameters;
 begin
-    apex_plugin_util.MAKE_REST_REQUEST(
-        p_web_source_operation => null,
-        p_request_body => to_clob('Example text'),
-        p_response => null,
-        p_response_parameters => null
-    );
+    l_operation := apex_plugin_util.get_web_source_operation(
+        p_web_source => p_web_source);
+
+    apex_plugin_util.make_rest_request(
+        p_web_source_operation => l_operation,
+        p_request_body         => l_request_body,
+        p_response             => l_response,
+        p_response_parameters  => l_response_parameters);
 end;
 /
 ```
-

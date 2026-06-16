@@ -38,19 +38,20 @@ APEX_REST_SOURCE_SYNC.GET_SYNC_TABLE_DEFINITION_SQL (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Generate table-definition SQL for review before applying profile changes to a sync table.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_sql varchar2(32767);
 begin
-    l_result := apex_rest_source_sync.GET_SYNC_TABLE_DEFINITION_SQL(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_application_id => 1,
-        p_include_drop_columns => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_sql := apex_rest_source_sync.get_sync_table_definition_sql(
+        p_module_static_id     => 'ORDERS_API',
+        p_application_id       => :APP_ID,
+        p_include_drop_columns => false);
+
+    :P20_SYNC_DDL := l_sql;
 end;
 /
 ```
-

@@ -32,17 +32,20 @@ This function returns the value of the specified item as T_VALUE. Parent topic: 
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Read a generic value and branch by its stored data type.
 
 ```sql
 declare
-    l_result T_VALUE;
+    l_value apex_session_state.t_value;
 begin
-    l_result := apex_session_state.GET_VALUE(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_value := apex_session_state.get_value(
+        p_item => 'P10_STATUS');
+
+    if l_value.data_type = apex_session_state.c_data_type_varchar2 then
+        apex_debug.info('Status: %s', l_value.varchar2_value);
+    end if;
 end;
 /
 ```
-

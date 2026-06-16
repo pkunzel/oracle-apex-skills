@@ -41,16 +41,16 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Set a CLOB value for large text item state.
 
 ```sql
 begin
-    apex_session_state.SET_VALUE(
-        p_item => 'EXAMPLE',
-        p_value => to_clob('Example text'),
-        p_commit => true
-    );
+    apex_session_state.set_value(
+        p_item   => 'P10_NOTE',
+        p_value  => to_clob('Reviewed by workflow automation.'),
+        p_commit => false);
 end;
 /
 ```
-

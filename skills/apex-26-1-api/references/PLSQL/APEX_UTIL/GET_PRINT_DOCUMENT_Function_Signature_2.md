@@ -46,19 +46,21 @@ RETURN BLOB;
 
 ## Simple Example
 
+Create a PDF BLOB from a named report query and shared layout name.
+
 ```sql
 declare
-    l_result BLOB;
+    l_pdf blob;
 begin
-    l_result := apex_util.GET_PRINT_DOCUMENT(
-        p_application_id => 1,
-        p_report_query_name => to_clob('Example text'),
-        p_report_layout_name => 'EXAMPLE',
-        p_report_layout_type => 'EXAMPLE',
-        p_document_format => 'EXAMPLE',
-        p_print_server => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pdf := apex_util.get_print_document(
+        p_application_id     => :APP_ID,
+        p_report_query_name  => 'ORDER_SUMMARY',
+        p_report_layout_name => 'ORDER_SUMMARY_RTF',
+        p_report_layout_type => 'rtf',
+        p_document_format    => 'pdf');
+
+    insert into generated_documents(request_id, mime_type, document_blob)
+    values (:P40_REQUEST_ID, 'application/pdf', l_pdf);
 end;
 /
 ```

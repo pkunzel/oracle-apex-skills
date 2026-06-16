@@ -41,20 +41,25 @@ APEX_MARKDOWN.TO_HTML (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Convert Markdown to HTML and add safe attributes to generated links.
 
 ```sql
 declare
-    l_result CLOB;
+    l_html clob;
 begin
-    l_result := apex_markdown.TO_HTML(
-        p_markdown => to_clob('Example text'),
-        p_embedded_html_mode => null,
-        p_softbreak => 'EXAMPLE',
-        p_extra_link_attributes => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_html := apex_markdown.to_html(
+        p_markdown => :P10_HELP_MD,
+        p_embedded_html_mode => apex_markdown.c_embedded_html_escape,
+        p_softbreak => apex_application.lf,
+        p_extra_link_attributes => apex_t_varchar2(
+            'target', '_blank',
+            'rel',    'noopener noreferrer'));
+
+    sys.htp.p('<article class="help-content">');
+    sys.htp.p(l_html);
+    sys.htp.p('</article>');
 end;
 /
 ```
-

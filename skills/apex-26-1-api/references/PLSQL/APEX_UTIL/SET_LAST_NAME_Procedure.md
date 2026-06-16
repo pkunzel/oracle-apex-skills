@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update the last name stored for an APEX workspace user.
+
 ```sql
 begin
-    apex_util.SET_LAST_NAME(
-        p_userid => 1,
-        p_last_name => 'EXAMPLE'
-    );
+    apex_util.set_last_name(
+        p_userid    => apex_util.get_user_id('JSMITH'),
+        p_last_name => 'Smith');
 end;
 /
 ```

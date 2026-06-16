@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Expire a workspace developer or administrator account.
+
 ```sql
 begin
-    apex_util.EXPIRE_WORKSPACE_ACCOUNT(
-        p_user_name => 'USER'
-    );
+    apex_util.expire_workspace_account(
+        p_user_name => 'JSMITH');
 end;
 /
 ```

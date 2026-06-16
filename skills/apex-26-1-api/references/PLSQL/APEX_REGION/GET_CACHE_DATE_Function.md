@@ -38,19 +38,23 @@ APEX_REGION.GET_CACHE_DATE (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Check whether a cached region already has an entry for the current session/user scope.
 
 ```sql
 declare
-    l_result DATE;
+    l_cached_at date;
 begin
-    l_result := apex_region.GET_CACHE_DATE(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_cached_at := apex_region.get_cache_date(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_static_id      => 'orders_report');
+
+    if l_cached_at is not null then
+        apex_debug.info('orders_report cache date: %s',
+                        to_char(l_cached_at, 'YYYY-MM-DD HH24:MI:SS'));
+    end if;
 end;
 /
 ```
-

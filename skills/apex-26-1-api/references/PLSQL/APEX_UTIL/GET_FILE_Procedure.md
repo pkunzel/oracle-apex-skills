@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Send a workspace file to the browser inline.
+
 ```sql
 begin
-    apex_util.GET_FILE(
-        p_file_id => 'EXAMPLE',
-        p_inline => 'EXAMPLE'
-    );
+    apex_util.get_file(
+        p_file_id => :P30_FILE_ID,
+        p_inline  => 'YES');
 end;
 /
 ```

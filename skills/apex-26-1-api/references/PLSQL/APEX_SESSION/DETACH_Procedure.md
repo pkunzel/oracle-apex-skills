@@ -30,12 +30,20 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Detach after borrowing an existing APEX session with ATTACH.
 
 ```sql
 begin
-    apex_session.DETACH;
+    apex_session.attach(
+        p_app_id     => 100,
+        p_page_id    => 10,
+        p_session_id => :P900_SESSION_ID);
+
+    apex_debug.info('Attached to session %s', :P900_SESSION_ID);
+
+    apex_session.detach;
 end;
 /
 ```
-

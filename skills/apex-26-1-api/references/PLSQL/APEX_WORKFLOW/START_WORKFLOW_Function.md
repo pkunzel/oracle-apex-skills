@@ -52,19 +52,26 @@ The ID of the newly started workflow.
 
 ## Simple Example
 
+Start a workflow with typed workflow parameters.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_params      apex_workflow.t_workflow_parameters;
+    l_workflow_id number;
 begin
-    l_result := apex_workflow.START_WORKFLOW(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_parameters => null,
-        p_initiator => 'EXAMPLE',
-        p_detail_pk => 'EXAMPLE',
-        p_debug_level => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_params(1).static_id := 'ORDER_ID';
+    l_params(1).value.data_type := apex_session_state.c_data_type_varchar2;
+    l_params(1).value.varchar2_value := :P10_ORDER_ID;
+
+    l_workflow_id := apex_workflow.start_workflow(
+        p_application_id => :APP_ID,
+        p_static_id      => 'ORDER_FULFILLMENT',
+        p_parameters     => l_params,
+        p_initiator      => :APP_USER,
+        p_detail_pk      => :P10_ORDER_ID,
+        p_debug_level    => apex_debug_api.c_log_level_info);
+
+    :P10_WORKFLOW_ID := l_workflow_id;
 end;
 /
 ```

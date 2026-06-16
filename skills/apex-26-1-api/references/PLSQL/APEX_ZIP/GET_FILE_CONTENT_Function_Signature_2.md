@@ -42,15 +42,26 @@ Return Description BLOB BLOB of the file specified in the p_dir_entry record.
 
 ## Simple Example
 
+Extract a file using the current t_dir_entry overload.
+
 ```sql
 declare
-    l_result BLOB;
+    l_zip     blob;
+    l_entries apex_zip.t_dir_entries;
+    l_file    blob;
 begin
-    l_result := apex_zip.GET_FILE_CONTENT(
-        p_zipped_blob => null,
-        p_dir_entry => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select content_blob
+      into l_zip
+      from uploaded_files
+     where file_id = :P10_ZIP_FILE_ID;
+
+    l_entries := apex_zip.get_dir_entries(l_zip);
+
+    if l_entries.exists('manifest.json') then
+        l_file := apex_zip.get_file_content(
+            p_zipped_blob => l_zip,
+            p_dir_entry   => l_entries('manifest.json'));
+    end if;
 end;
 /
 ```

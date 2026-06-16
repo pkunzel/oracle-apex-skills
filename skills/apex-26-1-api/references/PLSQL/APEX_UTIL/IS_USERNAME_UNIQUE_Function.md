@@ -36,14 +36,15 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Check whether a proposed APEX username can be created.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_util.IS_USERNAME_UNIQUE(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_util.is_username_unique(p_username => upper(:P20_USERNAME)) then
+        apex_util.set_session_state('P20_USERNAME_AVAILABLE', 'Y');
+    else
+        apex_util.set_session_state('P20_USERNAME_AVAILABLE', 'N');
+    end if;
 end;
 /
 ```

@@ -47,17 +47,24 @@ Temporary CLOB containing the BLOB contents.
 
 ## Simple Example
 
+Convert a REST response BLOB to CLOB text before parsing or logging it.
+
 ```sql
 declare
-    l_result CLOB;
+    l_response_blob blob;
+    l_response_text clob;
 begin
-    l_result := apex_util.BLOB_TO_CLOB(
-        p_blob => null,
-        p_charset => 'EXAMPLE',
-        p_in_memory => 'EXAMPLE',
-        p_free_immediately => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_response_blob := apex_web_service.make_rest_request_b(
+        p_url         => 'https://api.example.com/status',
+        p_http_method => 'GET');
+
+    l_response_text := apex_util.blob_to_clob(
+        p_blob    => l_response_blob,
+        p_charset => 'AL32UTF8');
+
+    apex_debug.info(
+        p_message => 'Status response length: %s',
+        p0        => sys.dbms_lob.getlength(l_response_text));
 end;
 /
 ```

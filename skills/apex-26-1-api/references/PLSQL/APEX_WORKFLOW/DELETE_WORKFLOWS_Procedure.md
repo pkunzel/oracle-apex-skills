@@ -45,14 +45,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Delete completed or terminated workflow instances for one workflow definition.
+
 ```sql
 begin
-    apex_workflow.DELETE_WORKFLOWS(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_states => 'EXAMPLE',
-        p_include_all_versions => true
-    );
+    apex_workflow.delete_workflows(
+        p_application_id       => :APP_ID,
+        p_static_id            => 'ORDER_FULFILLMENT',
+        p_states               => apex_t_varchar2(
+                                      apex_workflow.c_state_completed,
+                                      apex_workflow.c_state_terminated),
+        p_include_all_versions => false);
 end;
 /
 ```

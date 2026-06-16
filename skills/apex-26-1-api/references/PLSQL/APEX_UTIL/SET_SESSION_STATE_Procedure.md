@@ -19,7 +19,7 @@ Use this page when code needs the `APEX_UTIL.SET_SESSION_STATE` procedure. Confi
 ```sql
 APEX_UTIL.SET_SESSION_STATE (
     p_name     IN    VARCHAR2 DEFAULT NULL,
-    p_value    IN    VARCHAR2 DEFAULT NULL
+    p_value    IN    VARCHAR2 DEFAULT NULL,
     p_commit   IN    BOOLEAN  DEFAULT TRUE );
 ```
 
@@ -43,14 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set page item session state without committing immediately.
+
 ```sql
 begin
-    apex_util.SET_SESSION_STATE(
-        p_name => 'EXAMPLE',
-        p_value => 'EXAMPLE',
-        p_commit => true
-    );
+    apex_util.set_session_state(
+        p_name   => 'P10_STATUS',
+        p_value  => 'APPROVED',
+        p_commit => false);
 end;
 /
 ```
-

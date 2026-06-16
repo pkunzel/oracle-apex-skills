@@ -46,21 +46,24 @@ A BLOB containing the generated document.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the report-query overload when the data source is defined in Shared Components.
 
 ```sql
 declare
-    l_result BLOB;
+    l_pdf blob;
 begin
-    l_result := apex_print.GENERATE_DOCUMENT(
-        p_application_id => 1,
-        p_report_query_static_id => to_clob('Example text'),
-        p_report_layout_static_id => 'EXAMPLE_STATIC_ID',
-        p_output_type => null,
-        p_output_password => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pdf := apex_print.generate_document(
+        p_application_id          => :APP_ID,
+        p_report_query_static_id  => 'ORDER_SUMMARY_QUERY',
+        p_report_layout_static_id => 'ORDER_SUMMARY_LAYOUT',
+        p_output_type             => apex_print.c_output_pdf);
+
+    apex_http.download(
+        p_blob         => l_pdf,
+        p_content_type => 'application/pdf',
+        p_filename     => 'order-summary.pdf');
 end;
 /
 ```
-

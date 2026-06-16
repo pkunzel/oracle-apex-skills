@@ -33,13 +33,11 @@ A table of apex_t_temp_lov_data .
 
 ## Simple Example
 
+Use the workflow-state LOV function as a report or LOV source.
+
 ```sql
-declare
-    l_result APEX_T_TEMP_LOV_DATA;
-begin
-    l_result := apex_workflow.GET_LOV_WORKFLOW_STATE;
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select display_value,
+       return_value
+  from table(apex_workflow.get_lov_workflow_state);
 ```
 

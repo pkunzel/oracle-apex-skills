@@ -44,16 +44,17 @@ TRUE if the user given by p_user is a participant of given participant type for 
 
 ## Simple Example
 
+Check whether a user is a workflow administrator participant.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_workflow.IS_OF_PARTICIPANT_TYPE(
-        p_instance_id => 1,
-        p_participant_type => null,
-        p_user => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_workflow.is_of_participant_type(
+           p_instance_id      => :P30_WORKFLOW_ID,
+           p_participant_type => apex_workflow.c_workflow_admin,
+           p_user             => :APP_USER)
+    then
+        :P30_PARTICIPANT_ADMIN := 'Y';
+    end if;
 end;
 /
 ```

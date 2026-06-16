@@ -44,18 +44,18 @@ APEX_STRING.GREP (
 
 ## Simple Example
 
+Find Oracle error codes in a CLOB log payload.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_errors apex_t_varchar2;
+    l_log    clob := to_clob('Error ORA-20000 on line 1' || chr(10) ||
+                             'Warning ORA-06512 on line 2');
 begin
-    l_result := apex_string.GREP(
-        p_str => to_clob('Example text'),
-        p_pattern => 'EXAMPLE',
-        p_modifier => 'EXAMPLE',
-        p_subexpression => 'EXAMPLE',
-        p_limit => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_errors := apex_string.grep(
+        p_str     => l_log,
+        p_pattern => 'ORA-[[:digit:]]+',
+        p_limit   => 10);
 end;
 /
 ```

@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Purge a specific cached region by name.
+
 ```sql
 begin
-    apex_util.PURGE_REGIONS_BY_NAME(
-        p_application => 1,
-        p_page => 1,
-        p_region_name => 'EXAMPLE'
-    );
+    apex_util.purge_regions_by_name(
+        p_application => :APP_ID,
+        p_page        => 20,
+        p_region_name => 'Quarterly Sales');
 end;
 /
 ```

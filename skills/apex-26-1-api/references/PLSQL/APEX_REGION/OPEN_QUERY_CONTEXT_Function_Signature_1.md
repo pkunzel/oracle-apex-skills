@@ -57,27 +57,42 @@ APEX_REGION.OPEN_QUERY_CONTEXT (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Open a query context by numeric region ID and always close the APEX_EXEC context.
 
 ```sql
 declare
-    l_result APEX_EXEC.T_CONTEXT;
+    l_region_id    number;
+    l_context      apex_exec.t_context;
+    l_context_open boolean := false;
 begin
-    l_result := apex_region.OPEN_QUERY_CONTEXT(
-        p_page_id => 1,
-        p_region_id => 1,
-        p_component_id => 1,
-        p_view_mode => 'EXAMPLE',
-        p_additional_filters => null,
-        p_outer_sql => to_clob('Example text'),
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_total_row_count => true,
-        p_total_row_count_limit => 1,
-        p_parent_column_values => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_region_id := apex_region.get_id(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_dom_static_id  => 'orders_report');
+
+    l_context := apex_region.open_query_context(
+        p_page_id   => 10,
+        p_region_id => l_region_id,
+        p_max_rows  => 100);
+    l_context_open := true;
+
+    while apex_exec.next_row(l_context) loop
+        apex_debug.info(
+            'Order %s has status %s',
+            apex_exec.get_varchar2(l_context, 'ORDER_ID'),
+            apex_exec.get_varchar2(l_context, 'STATUS'));
+    end loop;
+
+    apex_exec.close(l_context);
+    l_context_open := false;
+exception
+    when others then
+        if l_context_open then
+            apex_exec.close(l_context);
+        end if;
+        raise;
 end;
 /
 ```
-

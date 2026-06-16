@@ -26,7 +26,7 @@ APEX_MAIL.SEND (
     p_from                  IN VARCHAR2 DEFAULT NULL,
     p_replyto               IN VARCHAR2 DEFAULT NULL,
     p_application_id        IN NUMBER   DEFAULT apex_application.g_flow_id,
-    p_language_override     IN VARCHAR2 DEFAULT NULL );
+    p_language_override     IN VARCHAR2 DEFAULT NULL )
     RETURN NUMBER;
 ```
 
@@ -50,25 +50,24 @@ APEX_MAIL.SEND (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the template overload when the subject/body are maintained as a Shared Components email template.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_mail_id number;
 begin
-    l_result := apex_mail.SEND(
-        p_template_static_id => 'EXAMPLE_STATIC_ID',
-        p_placeholders => to_clob('Example text'),
-        p_to => 'EXAMPLE',
-        p_cc => 'EXAMPLE',
-        p_bcc => 'EXAMPLE',
-        p_from => 'EXAMPLE',
-        p_replyto => 'EXAMPLE',
-        p_application_id => 1,
-        p_language_override => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_mail_id := apex_mail.send(
+        p_template_static_id => 'CASE_CREATED',
+        p_placeholders       => json_object(
+            'CASE_NUMBER' value :P10_CASE_NUMBER,
+            'CUSTOMER'    value :P10_CUSTOMER_NAME
+            returning clob),
+        p_to             => :P10_TO_EMAIL,
+        p_from           => 'support@example.com',
+        p_replyto        => 'support@example.com',
+        p_application_id => :APP_ID);
 end;
 /
 ```
-

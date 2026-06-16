@@ -45,12 +45,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer application administration APIs for new code.
+
 ```sql
 begin
-    apex_util.SET_APP_BUILD_STATUS(
-        p_application_id => 1,
-        p_build_status => 'EXAMPLE'
-    );
+    apex_util.set_app_build_status(
+        p_application_id => :APP_ID,
+        p_build_status   => 'RUN_AND_BUILD');
 end;
 /
 ```

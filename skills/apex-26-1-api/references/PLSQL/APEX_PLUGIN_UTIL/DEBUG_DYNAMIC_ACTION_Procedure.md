@@ -39,15 +39,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Call this from a dynamic-action plug-in callback while APEX debug is enabled.
 
 ```sql
 begin
-    apex_plugin_util.DEBUG_DYNAMIC(
-        p_plugin => null,
-        p_dynamic_action => null
-    );
+    apex_plugin_util.debug_dynamic_action(
+        p_plugin         => p_plugin,
+        p_dynamic_action => p_dynamic_action);
+
+    apex_debug.info('Rendering custom dynamic action.');
 end;
 /
 ```
-

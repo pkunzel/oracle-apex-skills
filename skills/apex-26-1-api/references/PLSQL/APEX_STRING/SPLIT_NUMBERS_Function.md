@@ -38,15 +38,20 @@ SPLIT_NUMBERS (
 
 ## Simple Example
 
+Split a submitted list of numeric IDs for DML.
+
 ```sql
 declare
-    l_result APEX_T_NUMBER;
+    l_ids apex_t_number;
 begin
-    l_result := apex_string.SPLIT_NUMBERS(
-        p_str => 'EXAMPLE',
-        p_sep => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_ids := apex_string.split_numbers(
+        p_str => :P10_SELECTED_IDS,
+        p_sep => ':');
+
+    forall i in 1 .. l_ids.count
+        update orders
+           set selected_yn = 'Y'
+         where order_id = l_ids(i);
 end;
 /
 ```

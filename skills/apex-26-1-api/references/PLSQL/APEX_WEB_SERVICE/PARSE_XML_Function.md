@@ -40,16 +40,18 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read a scalar value from an XMLTYPE response.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_xml    sys.xmltype;
+    l_status varchar2(4000);
 begin
-    l_result := apex_web_service.PARSE_XML(
-        p_xml => null,
-        p_xpath => 'EXAMPLE',
-        p_ns => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_xml := sys.xmltype('<order><status>SHIPPED</status></order>');
+
+    l_status := apex_web_service.parse_xml(
+        p_xml   => l_xml,
+        p_xpath => '/order/status/text()');
 end;
 /
 ```

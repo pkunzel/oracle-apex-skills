@@ -47,15 +47,24 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add a BLOB file part to a multipart/form-data request.
+
 ```sql
+declare
+    l_parts apex_web_service.t_multipart_parts;
+    l_file  blob;
 begin
-    apex_web_service.APPEND_TO_MULTIPART(
-        p_multipart => null,
-        p_name => 'EXAMPLE',
-        p_filename => 'EXAMPLE',
-        p_content_type => to_clob('Example text'),
-        p_body_blob => to_clob('Example text')
-    );
+    select content_blob
+      into l_file
+      from app_files
+     where file_id = :P10_FILE_ID;
+
+    apex_web_service.append_to_multipart(
+        p_multipart    => l_parts,
+        p_name         => 'file',
+        p_filename     => :P10_FILE_NAME,
+        p_content_type => :P10_MIME_TYPE,
+        p_body_blob    => l_file);
 end;
 /
 ```

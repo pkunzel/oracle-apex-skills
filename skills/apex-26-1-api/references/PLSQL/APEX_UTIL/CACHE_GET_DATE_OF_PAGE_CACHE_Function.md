@@ -38,15 +38,21 @@ RETURN DATE;
 
 ## Simple Example
 
+Check whether a cached page has a cached timestamp before deciding to purge it.
+
 ```sql
 declare
-    l_result DATE;
+    l_cached_on date;
 begin
-    l_result := apex_util.CACHE_GET_DATE_OF_PAGE_CACHE(
-        p_application => 1,
-        p_page => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_cached_on := apex_util.cache_get_date_of_page_cache(
+        p_application => :APP_ID,
+        p_page        => 10);
+
+    if l_cached_on is not null and l_cached_on < sysdate - 1 then
+        apex_util.cache_purge_by_page(
+            p_application => :APP_ID,
+            p_page        => 10);
+    end if;
 end;
 /
 ```

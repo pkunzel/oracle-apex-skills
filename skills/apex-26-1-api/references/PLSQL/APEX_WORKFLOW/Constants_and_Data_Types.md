@@ -22,5 +22,20 @@ Use this page when code needs the `APEX_WORKFLOW.Constants and Data Types` const
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Create workflow parameter values with the documented t_workflow_parameter and session-state value record.
+
+```sql
+declare
+    l_params apex_workflow.t_workflow_parameters;
+begin
+    l_params(1).static_id := 'ORDER_ID';
+    l_params(1).value.data_type := apex_session_state.c_data_type_varchar2;
+    l_params(1).value.varchar2_value := :P10_ORDER_ID;
+
+    l_params(2).static_id := 'NEEDS_REVIEW';
+    l_params(2).value.data_type := apex_session_state.c_data_type_boolean;
+    l_params(2).value.boolean_value := true;
+end;
+/
+```
 

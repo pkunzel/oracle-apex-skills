@@ -38,15 +38,15 @@ APEX_STRING.STRING_TO_TABLE (
 
 ## Simple Example
 
+Convert a colon-delimited value into the legacy vc_arr2 type.
+
 ```sql
 declare
-    l_result APEX_APPLICATION_GLOBAL.VC_ARR2;
+    l_formats apex_application_global.vc_arr2;
 begin
-    l_result := apex_string.STRING_TO_TABLE(
-        p_str => 'EXAMPLE',
-        p_sep => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_formats := apex_string.string_to_table(
+        p_str => 'CSV:PDF:XLSX',
+        p_sep => ':');
 end;
 /
 ```

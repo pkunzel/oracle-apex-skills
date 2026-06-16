@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Print escaped CLOB content to the HTTP response.
+
 ```sql
 begin
-    apex_util.PRN(
-        p_clob => to_clob('Example text'),
-        p_escape => true
-    );
+    apex_util.prn(
+        p_clob   => :P10_NOTES,
+        p_escape => true);
 end;
 /
 ```

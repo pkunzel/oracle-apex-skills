@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Unlock an APEX workspace account after an administrator review.
+
 ```sql
 begin
-    apex_util.UNLOCK_ACCOUNT(
-        p_user_name => 'USER'
-    );
+    apex_util.unlock_account(
+        p_user_name => 'JSMITH');
 end;
 /
 ```

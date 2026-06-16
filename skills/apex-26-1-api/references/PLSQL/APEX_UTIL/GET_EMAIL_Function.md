@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the email address stored for an APEX workspace user.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_email varchar2(320);
 begin
-    l_result := apex_util.GET_EMAIL(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_email := apex_util.get_email(
+        p_username => 'JSMITH');
 end;
 /
 ```

@@ -36,18 +36,19 @@ APEX_PLUGIN_UTIL.REPLACE_SUBSTITUTIONS (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Replace APEX substitutions in controlled plug-in attributes before rendering them.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_title varchar2(4000);
 begin
-    l_result := apex_plugin_util.REPLACE_SUBSTITUTIONS(
-        p_value => 'EXAMPLE',
-        p_escape => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_title := apex_plugin_util.replace_substitutions(
+        p_value  => p_region.attributes.get_varchar2('TITLE_TEMPLATE'),
+        p_escape => true);
+
+    sys.htp.p('<h2>' || l_title || '</h2>');
 end;
 /
 ```
-

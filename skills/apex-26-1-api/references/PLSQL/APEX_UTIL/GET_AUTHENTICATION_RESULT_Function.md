@@ -29,12 +29,15 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Read the custom authentication result code stored for the current session.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_auth_result number;
 begin
-    l_result := apex_util.GET_AUTHENTICATION_RESULT;
-    sys.dbms_output.put_line('Result captured.');
+    l_auth_result := apex_util.get_authentication_result;
+
+    apex_util.set_session_state('P1_AUTH_RESULT', l_auth_result);
 end;
 /
 ```

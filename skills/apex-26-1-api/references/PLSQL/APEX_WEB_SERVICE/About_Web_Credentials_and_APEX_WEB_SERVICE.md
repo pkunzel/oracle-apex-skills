@@ -22,5 +22,17 @@ Use this page when code needs the `APEX_WEB_SERVICE.About Web Credentials and AP
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Prefer a configured Web Credential static ID instead of embedding secrets in PL/SQL.
+
+```sql
+declare
+    l_response clob;
+begin
+    l_response := apex_web_service.make_rest_request(
+        p_url                  => 'https://api.example.com/me',
+        p_http_method          => 'GET',
+        p_credential_static_id => 'MY_API_CREDENTIAL');
+end;
+/
+```
 

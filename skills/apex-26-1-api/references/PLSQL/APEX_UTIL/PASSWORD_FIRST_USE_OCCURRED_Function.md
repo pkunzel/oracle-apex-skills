@@ -36,14 +36,18 @@ RETURN BOOLEAN;
 
 ## Simple Example
 
+Check whether a user has already used the current password.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_used boolean;
 begin
-    l_result := apex_util.PASSWORD_FIRST_USE_OCCURRED(
-        p_user_name => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_used := apex_util.password_first_use_occurred(
+        p_user_name => 'JSMITH');
+
+    if not l_used then
+        apex_debug.info('JSMITH has not completed first password use.');
+    end if;
 end;
 /
 ```

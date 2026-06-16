@@ -22,5 +22,20 @@ Use this page when code needs the `APEX_PLUGIN.t_plugin_attributes` topic. Confi
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Read custom plug-in attributes through the 26.1 attributes object and static IDs.
 
+```sql
+declare
+    l_css_class varchar2(4000);
+    l_required  boolean;
+begin
+    l_css_class := p_plugin.attributes.get_varchar2(
+        p_static_id     => 'CSS_CLASS',
+        p_default_value => 'my-plugin');
+
+    l_required := p_item.attributes.get_boolean(
+        p_static_id     => 'REQUIRED',
+        p_default_value => false);
+end;
+/
+```

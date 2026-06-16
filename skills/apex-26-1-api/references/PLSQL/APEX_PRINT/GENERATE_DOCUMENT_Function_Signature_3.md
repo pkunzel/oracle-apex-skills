@@ -46,21 +46,23 @@ A BLOB containing the generated document.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this overload when JSON data is generated in PL/SQL and the report layout is a Shared Components layout.
 
 ```sql
 declare
-    l_result BLOB;
+    l_pdf blob;
 begin
-    l_result := apex_print.GENERATE_DOCUMENT(
-        p_application_id => 1,
-        p_data => to_clob('Example text'),
-        p_report_layout_static_id => 'EXAMPLE_STATIC_ID',
-        p_output_type => null,
-        p_output_password => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pdf := apex_print.generate_document(
+        p_application_id          => :APP_ID,
+        p_data                    => json_object(
+        'order_id' value :P42_ORDER_ID,
+        'status'   value 'Ready',
+        'customer' value :P42_CUSTOMER_NAME
+        returning clob),
+        p_report_layout_static_id => 'ORDER_CONFIRMATION_LAYOUT',
+        p_output_type             => apex_print.c_output_pdf);
 end;
 /
 ```
-

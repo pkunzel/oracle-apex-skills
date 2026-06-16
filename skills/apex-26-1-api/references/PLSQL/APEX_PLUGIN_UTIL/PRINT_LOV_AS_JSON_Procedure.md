@@ -43,17 +43,24 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Return LOV rows as JSON from an item plug-in Ajax callback.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_LOV_AS_JSON(
-        p_sql_statement => to_clob('Example text'),
-        p_component_name => 'EXAMPLE',
-        p_escape => true,
-        p_replace_substitutions => true
-    );
+    apex_plugin_util.print_json_http_header;
+
+    apex_plugin_util.print_lov_as_json(
+        p_sql_statement => q'[
+            select display_name, user_id
+              from app_users
+             where active_yn = 'Y'
+             order by display_name
+        ]',
+        p_component_name        => p_item.name,
+        p_escape                => true,
+        p_replace_substitutions => false);
 end;
 /
 ```
-

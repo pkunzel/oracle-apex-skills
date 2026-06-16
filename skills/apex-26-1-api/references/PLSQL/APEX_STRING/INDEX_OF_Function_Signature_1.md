@@ -42,15 +42,20 @@ Index of the searched value in the table.
 
 ## Simple Example
 
+Check whether a status value is present in an APEX varchar2 collection.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_allowed apex_t_varchar2 := apex_t_varchar2('NEW', 'OPEN', 'CLOSED');
+    l_pos     number;
 begin
-    l_result := apex_string.INDEX_OF(
-        p_table => 'EXAMPLE',
-        p_value => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pos := apex_string.index_of(
+        p_table => l_allowed,
+        p_value => :P10_STATUS);
+
+    if l_pos is null then
+        raise_application_error(-20000, 'Unsupported status.');
+    end if;
 end;
 /
 ```

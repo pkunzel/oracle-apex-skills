@@ -43,13 +43,24 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add one BLOB file to a ZIP archive being built in memory.
+
 ```sql
+declare
+    l_zip  blob;
+    l_file blob;
 begin
-    apex_zip.ADD_FILE(
-        p_zipped_blob => null,
-        p_file_name => 'EXAMPLE',
-        p_content => to_clob('Example text')
-    );
+    dbms_lob.createtemporary(l_zip, true);
+
+    select content_blob
+      into l_file
+      from app_files
+     where file_id = :P10_FILE_ID;
+
+    apex_zip.add_file(
+        p_zipped_blob => l_zip,
+        p_file_name   => 'documents/' || :P10_FILE_NAME,
+        p_content     => l_file);
 end;
 /
 ```

@@ -22,5 +22,15 @@ Use this page when code needs the `APEX_SHARED_COMPONENT.Global Constants` const
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the documented component-type constants instead of passing untyped values.
 
+```sql
+declare
+    l_component_type apex_shared_component.t_component_type;
+begin
+    l_component_type := apex_shared_component.c_component_email_template;
+
+    apex_debug.info('Ready to publish shared component type %s', l_component_type);
+end;
+/
+```

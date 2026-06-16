@@ -41,12 +41,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Reset a user's password and capture the generated message.
+
 ```sql
+declare
+    l_message varchar2(4000);
 begin
-    apex_util.RESET_PW(
-        p_user => 'USER',
-        p_msg => 'EXAMPLE'
-    );
+    apex_util.reset_pw(
+        p_user => 'JSMITH',
+        p_msg  => l_message);
+
+    apex_debug.info(l_message);
 end;
 /
 ```

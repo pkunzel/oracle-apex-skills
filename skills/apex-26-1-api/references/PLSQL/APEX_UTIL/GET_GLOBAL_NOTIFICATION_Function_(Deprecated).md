@@ -39,14 +39,14 @@ APEX_UTIL.GET_GLOBAL_NOTIFICATION (
 
 ## Simple Example
 
+Legacy only. Prefer modern application administration APIs for new code.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_message varchar2(4000);
 begin
-    l_result := apex_util.GET_GLOBAL_NOTIFICATION(
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_message := apex_util.get_global_notification(
+        p_application_id => :APP_ID);
 end;
 /
 ```

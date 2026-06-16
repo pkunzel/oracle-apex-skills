@@ -40,14 +40,19 @@ This function returns an array of email addresses without duplicates.
 
 ## Simple Example
 
+Extract unique email addresses from free-form message text.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_addresses apex_t_varchar2;
 begin
-    l_result := apex_string_util.FIND_EMAIL_ADDRESSES(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_addresses := apex_string_util.find_email_addresses(
+        p_string => :P10_MESSAGE_TEXT);
+
+    for i in 1 .. l_addresses.count loop
+        insert into message_recipients(message_id, email_address)
+        values (:P10_MESSAGE_ID, l_addresses(i));
+    end loop;
 end;
 /
 ```

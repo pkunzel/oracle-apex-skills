@@ -40,16 +40,21 @@ FUNCTION GET_SEARCHABLE_PHRASES (
 
 ## Simple Example
 
+Generate phrase candidates for a small in-application search index.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_phrases apex_t_varchar2;
 begin
-    l_result := apex_string.GET_SEARCHABLE_PHRASES(
-        p_strings => 'EXAMPLE',
-        p_max_words => 1,
-        p_language => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_phrases := apex_string.get_searchable_phrases(
+        p_strings   => apex_t_varchar2(:P10_TITLE, :P10_DESCRIPTION),
+        p_max_words => 3,
+        p_language  => 'en');
+
+    for i in 1 .. l_phrases.count loop
+        insert into article_search_terms(article_id, phrase)
+        values (:P10_ARTICLE_ID, l_phrases(i));
+    end loop;
 end;
 /
 ```

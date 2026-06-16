@@ -56,23 +56,18 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use PRINT_READ_ONLY to render readonly item output with APEX's standard behavior.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_READ_ONLY(
-        p_item => null,
-        p_param => null,
-        p_value => null,
-        p_display_values => 'EXAMPLE',
-        p_width => 1,
-        p_height => 1,
-        p_css_classes => 'EXAMPLE',
-        p_protected => true,
-        p_escape => true,
-        p_show_icon => true
-    );
+    apex_plugin_util.print_read_only(
+        p_item          => p_item,
+        p_param         => p_param,
+        p_display_value => l_display_value,
+        p_css_classes   => 'custom-item-readonly',
+        p_escape        => true);
 end;
 /
 ```
-

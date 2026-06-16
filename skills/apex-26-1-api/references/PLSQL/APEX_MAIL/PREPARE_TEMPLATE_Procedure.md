@@ -49,20 +49,33 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Render a shared-component email template into subject, HTML, and text before queueing it manually.
 
 ```sql
+declare
+    l_subject varchar2(4000);
+    l_html    clob;
+    l_text    clob;
+    l_mail_id number;
 begin
-    apex_mail.PREPARE_TEMPLATE(
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_placeholders => to_clob('Example text'),
-        p_application_id => 1,
-        p_subject => 'EXAMPLE',
-        p_html => to_clob('Example text'),
-        p_text => to_clob('Example text'),
-        p_language_override => 'EXAMPLE'
-    );
+    apex_mail.prepare_template(
+        p_static_id    => 'ORDER_APPROVED',
+        p_placeholders => json_object(
+            'ORDER_ID'      value :P42_ORDER_ID,
+            'CUSTOMER_NAME' value :P42_CUSTOMER_NAME
+            returning clob),
+        p_subject => l_subject,
+        p_html    => l_html,
+        p_text    => l_text);
+
+    l_mail_id := apex_mail.send(
+        p_to        => :P42_CUSTOMER_EMAIL,
+        p_from      => 'orders@example.com',
+        p_subj      => l_subject,
+        p_body      => l_text,
+        p_body_html => l_html);
 end;
 /
 ```
-

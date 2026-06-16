@@ -36,14 +36,18 @@ APEX_WEB_SERVICE.GET_REQUEST_HEADER (
 
 ## Simple Example
 
+Read a request header that was previously configured.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_content_type varchar2(4000);
 begin
-    l_result := apex_web_service.GET_REQUEST_HEADER(
-        p_header_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_web_service.set_request_headers(
+        p_name_01  => 'Content-Type',
+        p_value_01 => 'application/json');
+
+    l_content_type := apex_web_service.get_request_header(
+        p_header_name => 'Content-Type');
 end;
 /
 ```

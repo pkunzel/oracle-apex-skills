@@ -22,5 +22,16 @@ Use this page when code needs the `APEX_WEB_SERVICE.Setting Cookies and HTTP Hea
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Set headers through the documented helper before invoking the request.
+
+```sql
+begin
+    apex_web_service.set_request_headers(
+        p_name_01  => 'Content-Type',
+        p_value_01 => 'application/json',
+        p_name_02  => 'Accept',
+        p_value_02 => 'application/json');
+end;
+/
+```
 

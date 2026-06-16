@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append a follow-up note to an existing feedback item.
+
 ```sql
 begin
-    apex_util.SUBMIT_FEEDBACK_FOLLOWUP(
-        p_feedback_id => 1,
-        p_follow_up => 'EXAMPLE',
-        p_email => 'EXAMPLE'
-    );
+    apex_util.submit_feedback_followup(
+        p_feedback_id => :P50_FEEDBACK_ID,
+        p_follow_up   => :P50_FOLLOW_UP,
+        p_email       => :P50_EMAIL);
 end;
 /
 ```

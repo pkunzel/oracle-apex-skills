@@ -53,18 +53,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Request an OAuth token with a configured Web Credential.
+
 ```sql
 begin
-    apex_web_service.OAUTH_AUTHENTICATE_CREDENTIAL(
-        p_token_url => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_proxy_override => 'EXAMPLE',
-        p_transfer_timeout => 1,
-        p_wallet_path => 'EXAMPLE',
-        p_wallet_pwd => 'EXAMPLE',
-        p_https_host => 'EXAMPLE',
-        p_scope => 'EXAMPLE'
-    );
+    apex_web_service.oauth_authenticate_credential(
+        p_token_url            => 'https://identity.example.com/oauth2/token',
+        p_credential_static_id => 'ORDERS_CLIENT_CREDENTIAL',
+        p_scope                => 'orders.read orders.write');
 end;
 /
 ```

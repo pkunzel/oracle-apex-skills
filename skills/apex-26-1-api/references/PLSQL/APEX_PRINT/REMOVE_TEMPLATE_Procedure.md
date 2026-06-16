@@ -37,14 +37,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Remove an uploaded template only after application metadata no longer references its template id.
 
 ```sql
 begin
-    apex_print.REMOVE_TEMPLATE(
-        p_template_id => 1
-    );
+    delete from print_template_registry
+     where template_id = :P10_TEMPLATE_ID;
+
+    apex_print.remove_template(
+        p_template_id => :P10_TEMPLATE_ID);
 end;
 /
 ```
-

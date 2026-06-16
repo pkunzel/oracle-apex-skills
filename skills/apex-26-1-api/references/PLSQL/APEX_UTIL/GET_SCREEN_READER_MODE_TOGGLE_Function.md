@@ -38,15 +38,17 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Render the screen reader mode toggle link with custom labels.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_toggle varchar2(4000);
 begin
-    l_result := apex_util.GET_SCREEN_READER_MODE_TOGGLE(
-        p_on_message => to_clob('Example text'),
-        p_off_message => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_toggle := apex_util.get_screen_reader_mode_toggle(
+        p_on_message  => 'Enable screen reader mode',
+        p_off_message => 'Disable screen reader mode');
+
+    htp.p(l_toggle);
 end;
 /
 ```

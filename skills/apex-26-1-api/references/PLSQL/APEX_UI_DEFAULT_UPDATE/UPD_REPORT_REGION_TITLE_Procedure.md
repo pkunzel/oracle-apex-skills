@@ -41,11 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.UPD_REPORT_REGION_TITLE(
-        p_table_name => 'EXAMPLE',
-        p_report_region_title => 'EXAMPLE'
+    apex_ui_default_update.upd_report_region_title(
+        p_table_name => 'DEMO_ORDERS',
+        p_report_region_title => 'Orders'
     );
 end;
 /

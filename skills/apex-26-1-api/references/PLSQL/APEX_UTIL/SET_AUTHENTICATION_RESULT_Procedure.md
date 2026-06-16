@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Record a custom result code from a credentials verification function.
+
 ```sql
 begin
-    apex_util.SET_AUTHENTICATION_RESULT(
-        p_code => 1
-    );
+    apex_util.set_authentication_result(
+        p_code => 0);
 end;
 /
 ```

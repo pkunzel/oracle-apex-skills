@@ -44,16 +44,30 @@ A table of directory entries.
 
 ## Simple Example
 
+Inspect ZIP contents using the current t_dir_entries return type.
+
 ```sql
 declare
-    l_result T_DIR_ENTRIES;
+    l_zip     blob;
+    l_entries apex_zip.t_dir_entries;
+    l_name    varchar2(32767);
 begin
-    l_result := apex_zip.GET_DIR_ENTRIES(
-        p_zipped_blob => null,
-        p_only_files => true,
-        p_encoding => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select content_blob
+      into l_zip
+      from uploaded_files
+     where file_id = :P10_ZIP_FILE_ID;
+
+    l_entries := apex_zip.get_dir_entries(
+        p_zipped_blob => l_zip,
+        p_only_files  => true);
+
+    l_name := l_entries.first;
+    while l_name is not null loop
+        insert into zip_manifest(file_id, entry_name, uncompressed_bytes)
+        values (:P10_ZIP_FILE_ID, l_name, l_entries(l_name).uncompressed_length);
+
+        l_name := l_entries.next(l_name);
+    end loop;
 end;
 /
 ```

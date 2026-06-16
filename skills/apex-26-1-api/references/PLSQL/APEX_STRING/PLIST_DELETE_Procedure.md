@@ -41,12 +41,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove one key from a small property list before converting it to JSON.
+
 ```sql
+declare
+    l_props apex_t_varchar2;
 begin
-    apex_string.PLIST_DELETE(
-        p_table => null,
-        p_key => 'EXAMPLE'
-    );
+    l_props := apex_string.plist_put(l_props, 'status', 'open');
+    l_props := apex_string.plist_put(l_props, 'internal_note', 'draft only');
+
+    apex_string.plist_delete(
+        p_table => l_props,
+        p_key   => 'internal_note');
 end;
 /
 ```

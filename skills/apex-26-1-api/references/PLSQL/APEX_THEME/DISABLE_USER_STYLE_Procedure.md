@@ -42,12 +42,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Temporarily disable use of saved user theme-style preferences.
+
 ```sql
 begin
-    apex_theme.DISABLE_USER_STYLE(
-        p_application_id => 1,
-        p_theme_number => 1
-    );
+    apex_theme.disable_user_style(
+        p_application_id => :APP_ID,
+        p_theme_number   => 42);
 end;
 /
 ```

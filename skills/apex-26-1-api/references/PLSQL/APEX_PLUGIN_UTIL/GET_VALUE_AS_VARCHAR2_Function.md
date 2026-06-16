@@ -38,19 +38,18 @@ APEX_PLUGIN_UTIL.GET_VALUE_AS_VARCHAR2 (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Convert an APEX session-state value into display text using the declared data type and optional format mask.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_display varchar2(32767);
 begin
-    l_result := apex_plugin_util.GET_VALUE_AS_VARCHAR2(
-        p_data_type => 'EXAMPLE',
-        p_value => null,
-        p_format_mask => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_display := apex_plugin_util.get_value_as_varchar2(
+        p_data_type   => apex_plugin_util.c_data_type_date,
+        p_value       => p_value,
+        p_format_mask => 'YYYY-MM-DD');
 end;
 /
 ```
-

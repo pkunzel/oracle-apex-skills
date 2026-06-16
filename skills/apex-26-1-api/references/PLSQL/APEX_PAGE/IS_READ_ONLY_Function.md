@@ -27,15 +27,21 @@ RETURN BOOLEAN;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Check the current page readonly state before performing a data-changing operation.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_page.IS_READ_ONLY;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_page.is_read_only then
+        raise_application_error(
+            -20000,
+            'This page is read-only; changes were not saved.');
+    end if;
+
+    update orders
+       set status = :P42_STATUS
+     where order_id = :P42_ORDER_ID;
 end;
 /
 ```
-

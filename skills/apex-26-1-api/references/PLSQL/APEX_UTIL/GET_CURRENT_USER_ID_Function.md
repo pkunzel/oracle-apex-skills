@@ -29,12 +29,13 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Read the numeric APEX user id for the current authenticated user.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_user_id number;
 begin
-    l_result := apex_util.GET_CURRENT_USER_ID;
-    sys.dbms_output.put_line('Result captured.');
+    l_user_id := apex_util.get_current_user_id;
 end;
 /
 ```

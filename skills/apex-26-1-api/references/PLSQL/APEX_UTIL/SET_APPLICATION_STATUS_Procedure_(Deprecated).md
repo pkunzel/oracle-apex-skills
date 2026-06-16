@@ -49,14 +49,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS in new code.
+
 ```sql
 begin
-    apex_util.SET_APPLICATION_STATUS(
-        p_application_id => 1,
-        p_application_status => 'EXAMPLE',
-        p_unavailable_value => 'EXAMPLE',
-        p_restricted_user_list => 'USER'
-    );
+    apex_util.set_application_status(
+        p_application_id       => :APP_ID,
+        p_application_status   => 'AVAILABLE',
+        p_unavailable_value    => 'Application maintenance is complete.',
+        p_restricted_user_list => 'ADMIN:JSMITH');
 end;
 /
 ```

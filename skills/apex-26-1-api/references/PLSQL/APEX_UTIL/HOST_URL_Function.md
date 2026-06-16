@@ -36,14 +36,20 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Build an absolute link that includes the current APEX script path.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_base_url varchar2(4000);
+    l_link     varchar2(4000);
 begin
-    l_result := apex_util.HOST_URL(
-        p_option => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_base_url := apex_util.host_url(
+        p_option => 'SCRIPT');
+
+    l_link := l_base_url || apex_page.get_url(
+        p_page   => 10,
+        p_items  => 'P10_ORDER_ID',
+        p_values => :P10_ORDER_ID);
 end;
 /
 ```

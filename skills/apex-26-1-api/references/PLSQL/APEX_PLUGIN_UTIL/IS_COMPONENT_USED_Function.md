@@ -33,22 +33,25 @@ APEX_PLUGIN_UTIL.IS_COMPONENT_USED (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this helper before rendering optional plug-in subcomponents that have build options, authorization, or server-side conditions.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_used boolean;
 begin
-    l_result := apex_plugin_util.IS_COMPONENT_USED(
-        p_build_option_id => 1,
-        p_authorization_scheme_id => 'EXAMPLE',
-        p_condition_type => 'EXAMPLE',
-        p_condition_expression1 => 'EXAMPLE',
-        p_condition_expression2 => 'EXAMPLE',
-        p_component => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_used := apex_plugin_util.is_component_used(
+        p_build_option_id         => p_region.build_option_id,
+        p_authorization_scheme_id => p_region.authorization_scheme_id,
+        p_condition_type          => p_region.condition_type,
+        p_condition_expression1   => p_region.condition_expression1,
+        p_condition_expression2   => p_region.condition_expression2,
+        p_component               => p_region.name);
+
+    if l_used then
+        sys.htp.p('<div class="optional-region-content"></div>');
+    end if;
 end;
 /
 ```
-

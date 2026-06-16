@@ -49,18 +49,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This API is deprecated. Use it only in legacy item plug-ins that still receive the older page-item record.
 
 ```sql
 begin
-    apex_plugin_util.DEBUG_PAGE_ITEM(
-        p_plugin => null,
-        p_page_item => null,
-        p_value => 'EXAMPLE',
-        p_is_readonly => true,
-        p_is_printer_friendly => true
-    );
+    apex_plugin_util.debug_page_item(
+        p_plugin    => p_plugin,
+        p_page_item => p_page_item);
 end;
 /
 ```
-

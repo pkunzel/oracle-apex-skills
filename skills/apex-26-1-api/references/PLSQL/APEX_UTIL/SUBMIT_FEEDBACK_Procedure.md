@@ -87,35 +87,21 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Submit contextual feedback from an APEX page.
+
 ```sql
 begin
-    apex_util.SUBMIT_FEEDBACK(
-        p_comment => 'EXAMPLE',
-        p_type => 1,
-        p_application_id => 'EXAMPLE',
-        p_page_id => 'EXAMPLE',
-        p_email => 'EXAMPLE',
-        p_screen_width => 'EXAMPLE',
-        p_screen_height => 'EXAMPLE',
-        p_attribute_01 => 'EXAMPLE',
-        p_attribute_02 => 'EXAMPLE',
-        p_attribute_03 => 'EXAMPLE',
-        p_attribute_04 => 'EXAMPLE',
-        p_attribute_05 => 'EXAMPLE',
-        p_attribute_06 => 'EXAMPLE',
-        p_attribute_07 => 'EXAMPLE',
-        p_attribute_08 => 'EXAMPLE',
-        p_label_01 => 'EXAMPLE',
-        p_label_02 => 'EXAMPLE',
-        p_label_03 => 'EXAMPLE',
-        p_label_04 => 'EXAMPLE',
-        p_label_05 => 'EXAMPLE',
-        p_label_06 => 'EXAMPLE',
-        p_label_07 => 'EXAMPLE',
-        p_label_08 => 'EXAMPLE',
-        p_rating => 1,
-        p_attachment_name => 'EXAMPLE'
-    );
+    apex_util.submit_feedback(
+        p_comment        => :P10_FEEDBACK,
+        p_type           => 1,
+        p_application_id => :APP_ID,
+        p_page_id        => :APP_PAGE_ID,
+        p_email          => :P10_EMAIL,
+        p_screen_width   => :P10_SCREEN_WIDTH,
+        p_screen_height  => :P10_SCREEN_HEIGHT,
+        p_attribute_01   => :P10_ORDER_ID,
+        p_label_01       => 'Order ID',
+        p_rating         => :P10_RATING);
 end;
 /
 ```

@@ -71,26 +71,28 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.UPD_COLUMN(
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_group_id => 'EXAMPLE',
-        p_label => 'EXAMPLE',
-        p_help_text => to_clob('Example text'),
-        p_display_in_form => 'EXAMPLE',
-        p_display_seq_form => 'EXAMPLE',
-        p_mask_form => 'EXAMPLE',
-        p_default_value => 'EXAMPLE',
-        p_required => 'EXAMPLE',
-        p_display_width => 'EXAMPLE',
-        p_max_width => 'EXAMPLE',
-        p_height => 'EXAMPLE',
-        p_display_in_report => 'EXAMPLE',
-        p_display_seq_report => 'EXAMPLE',
-        p_mask_report => 'EXAMPLE',
-        p_alignment => 'EXAMPLE'
+    apex_ui_default_update.upd_column(
+        p_table_name => 'DEMO_ORDERS',
+        p_column_name => 'ORDER_TOTAL',
+        p_group_id => 'Y',
+        p_label => 'Order Total',
+        p_help_text => 'Total amount for the order.',
+        p_display_in_form => 'Y',
+        p_display_seq_form => '40',
+        p_mask_form => 'FML999G999G990D00',
+        p_default_value => '0',
+        p_required => 'Y',
+        p_display_width => '12',
+        p_max_width => 'Y',
+        p_height => 'Y',
+        p_display_in_report => 'Y',
+        p_display_seq_report => '40',
+        p_mask_report => 'FML999G999G990D00',
+        p_alignment => 'RIGHT'
     );
 end;
 /

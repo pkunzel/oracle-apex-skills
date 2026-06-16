@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Store the high contrast session setting as a Y/N item value.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_util.IS_HIGH_CONTRAST_SESSION_YN;
-    sys.dbms_output.put_line('Result captured.');
+    apex_util.set_session_state(
+        p_name  => 'P1_HIGH_CONTRAST_YN',
+        p_value => apex_util.is_high_contrast_session_yn);
 end;
 /
 ```

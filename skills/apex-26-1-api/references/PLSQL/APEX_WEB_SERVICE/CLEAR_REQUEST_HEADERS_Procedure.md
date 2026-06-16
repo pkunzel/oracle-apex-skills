@@ -32,9 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear request headers before setting a new HTTP request profile.
+
 ```sql
 begin
-    apex_web_service.CLEAR_REQUEST_HEADERS;
+    apex_web_service.clear_request_headers;
 end;
 /
 ```

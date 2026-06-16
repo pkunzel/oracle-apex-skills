@@ -51,17 +51,25 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Generate and download a PDF from XML report data and an XSL-FO or RTF layout.
+
 ```sql
+declare
+    l_report_data   blob;
+    l_report_layout clob;
 begin
-    apex_util.DOWNLOAD_PRINT_DOCUMENT(
-        p_file_name => 'EXAMPLE',
-        p_content_disposition => to_clob('Example text'),
-        p_report_data => null,
-        p_report_layout => to_clob('Example text'),
-        p_report_layout_type => 'EXAMPLE',
-        p_document_format => 'EXAMPLE',
-        p_print_server => 'EXAMPLE'
-    );
+    select report_xml, layout_clob
+      into l_report_data, l_report_layout
+      from report_requests
+     where request_id = :P40_REQUEST_ID;
+
+    apex_util.download_print_document(
+        p_file_name           => 'request-' || :P40_REQUEST_ID || '.pdf',
+        p_content_disposition => 'attachment',
+        p_report_data         => l_report_data,
+        p_report_layout       => l_report_layout,
+        p_report_layout_type  => 'xsl-fo',
+        p_document_format     => 'pdf');
 end;
 /
 ```

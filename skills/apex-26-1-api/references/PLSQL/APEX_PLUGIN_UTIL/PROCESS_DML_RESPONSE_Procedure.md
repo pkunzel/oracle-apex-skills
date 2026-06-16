@@ -49,19 +49,19 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Process a REST DML response so APEX can handle returned values and errors consistently.
 
 ```sql
 begin
-    apex_plugin_util.PROCESS_DML_RESPONSE(
-        p_web_source_operation => null,
-        p_web_source => null,
-        p_response => to_clob('Example text'),
-        p_status_code => 1,
-        p_error_message => to_clob('Example text'),
-        p_values_context => to_clob('Example text')
-    );
+    apex_plugin_util.process_dml_response(
+        p_web_source_operation => l_operation,
+        p_web_source           => p_web_source,
+        p_response             => l_response,
+        p_status_code          => l_status_code,
+        p_error_message        => l_error_message,
+        p_values_context       => p_values_context);
 end;
 /
 ```
-

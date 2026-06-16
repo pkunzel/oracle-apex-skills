@@ -49,18 +49,18 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This display-only helper is deprecated. Prefer PRINT_READ_ONLY in current item plug-ins.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_DISPLAY_ONLY(
-        p_item_name => 'EXAMPLE',
-        p_display_value => 'EXAMPLE',
+    apex_plugin_util.print_display_only(
+        p_item_name        => p_item.name,
+        p_display_value    => l_display_value,
         p_show_line_breaks => true,
-        p_attributes => 'EXAMPLE',
-        p_id_postfix => 'EXAMPLE'
-    );
+        p_attributes       => 'class="readonly-display"',
+        p_id_postfix       => '_DISPLAY');
 end;
 /
 ```
-

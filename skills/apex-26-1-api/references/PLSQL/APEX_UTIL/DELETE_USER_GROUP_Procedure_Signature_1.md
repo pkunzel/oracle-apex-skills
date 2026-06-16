@@ -33,11 +33,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Delete a workspace user group by numeric group id.
+
 ```sql
+declare
+    l_group_id number;
 begin
-    apex_util.DELETE_USER_GROUP(
-        p_group_id => 1
-    );
+    l_group_id := to_number(apex_util.get_group_id('OLD_REVIEWERS'));
+
+    apex_util.delete_user_group(
+        p_group_id => l_group_id);
 end;
 /
 ```

@@ -38,17 +38,19 @@ This function returns the database vendor for the data source of the currently e
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the current database type before generating SQL that may differ for local, REST Enabled SQL, or remote sources.
 
 ```sql
 declare
-    l_result APEX_EXEC.T_DATABASE_TYPE;
+    l_database_type apex_exec.t_database_type;
 begin
-    l_result := apex_plugin_util.GET_CURRENT_DATABASE_TYPE(
-        p_remote_server_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_database_type := apex_plugin_util.get_current_database_type;
+
+    apex_debug.info(
+        p_message => 'Active region database type: %s',
+        p0        => to_char(l_database_type));
 end;
 /
 ```
-

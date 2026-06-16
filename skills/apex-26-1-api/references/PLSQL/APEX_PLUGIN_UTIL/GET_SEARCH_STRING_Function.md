@@ -36,18 +36,17 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use GET_SEARCH_STRING to transform user search text according to one of the documented plug-in search modes.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_search varchar2(4000);
 begin
-    l_result := apex_plugin_util.GET_SEARCH_STRING(
-        p_search_type => 'EXAMPLE',
-        p_search_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_search := apex_plugin_util.get_search_string(
+        p_search_type   => apex_plugin_util.c_search_contains_ignore,
+        p_search_string => apex_application.g_x01);
 end;
 /
 ```
-

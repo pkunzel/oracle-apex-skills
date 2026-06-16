@@ -42,15 +42,16 @@ This function returns TRUE if the phrase was found. Otherwise, this function ret
 
 ## Simple Example
 
+Run a normalized phrase check that ignores case and punctuation differences.
+
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_string_util.PHRASE_EXISTS(
-        p_phrase => 'EXAMPLE',
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_string_util.phrase_exists(
+           p_phrase => 'priority customer',
+           p_string => :P10_NOTES)
+    then
+        :P10_PRIORITY_YN := 'Y';
+    end if;
 end;
 /
 ```

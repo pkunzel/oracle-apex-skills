@@ -43,17 +43,23 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Resolve the region ID once, then clear pagination/report settings for that region.
 
 ```sql
+declare
+    l_region_id number;
 begin
-    apex_region.CLEAR(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_region_id => 1,
-        p_component_id => 1
-    );
+    l_region_id := apex_region.get_id(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_dom_static_id  => 'orders_report');
+
+    apex_region.clear(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_region_id      => l_region_id);
 end;
 /
 ```
-

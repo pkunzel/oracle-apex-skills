@@ -36,14 +36,14 @@ RETURN BLOB;
 
 ## Simple Example
 
+Decode base64 content from a service response into a BLOB.
+
 ```sql
 declare
-    l_result BLOB;
+    l_file blob;
 begin
-    l_result := apex_web_service.CLOBBASE642BLOB(
-        p_clob => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_file := apex_web_service.clobbase642blob(
+        p_clob => :P10_BASE64_CONTENT);
 end;
 /
 ```

@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear expiration for an APEX end-user account.
+
 ```sql
 begin
-    apex_util.UNEXPIRE_END_USER_ACCOUNT(
-        p_user_name => 'USER'
-    );
+    apex_util.unexpire_end_user_account(
+        p_user_name => 'JSMITH');
 end;
 /
 ```

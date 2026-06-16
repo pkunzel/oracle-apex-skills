@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Purge page and region cache for an application after a data refresh.
+
 ```sql
 begin
-    apex_util.CACHE_PURGE_BY_APPLICATION(
-        p_application => 1
-    );
+    apex_util.cache_purge_by_application(
+        p_application => :APP_ID);
 end;
 /
 ```

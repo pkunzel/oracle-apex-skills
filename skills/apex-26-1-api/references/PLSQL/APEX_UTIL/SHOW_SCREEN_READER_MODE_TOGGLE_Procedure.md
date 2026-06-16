@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Print the screen reader mode toggle directly to the response.
+
 ```sql
 begin
-    apex_util.SHOW_SCREEN_READER_MODE_TOGGLE(
-        p_on_message => to_clob('Example text'),
-        p_off_message => to_clob('Example text')
-    );
+    apex_util.show_screen_reader_mode_toggle(
+        p_on_message  => 'Enable screen reader mode',
+        p_off_message => 'Disable screen reader mode');
 end;
 /
 ```

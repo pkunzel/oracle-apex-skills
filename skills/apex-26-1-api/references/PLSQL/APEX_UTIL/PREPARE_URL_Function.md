@@ -22,7 +22,7 @@ APEX_UTIL.PREPARE_URL (
     p_url_charset            IN VARCHAR2 DEFAULT NULL,
     p_checksum_type          IN VARCHAR2 DEFAULT NULL,
     p_triggering_element     IN VARCHAR2 DEFAULT 'this',
-    p_plain_url              IN BOOLEAN  DEFAULT FALSE,
+    p_plain_url              IN BOOLEAN  DEFAULT FALSE )
 RETURN VARCHAR2;
 ```
 
@@ -44,19 +44,17 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Add checksum and session handling to an existing APEX navigation URL.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_url varchar2(4000);
 begin
-    l_result := apex_util.PREPARE_URL(
-        p_url => 'EXAMPLE',
-        p_url_charset => 'EXAMPLE',
-        p_checksum_type => 'EXAMPLE',
-        p_triggering_element => 'EXAMPLE',
-        p_plain_url => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_url := apex_util.prepare_url(
+        p_url           => 'f?p=' || :APP_ID || ':20:' || :APP_SESSION ||
+                           '::NO::P20_ORDER_ID:' || apex_escape.url(:P10_ORDER_ID),
+        p_url_charset   => 'UTF-8',
+        p_checksum_type => 'SESSION');
 end;
 /
 ```
-

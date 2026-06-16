@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the application default style after selecting a valid style ID from APEX metadata.
+
 ```sql
 begin
-    apex_theme.SET_CURRENT_STYLE(
-        p_application_id => 1,
-        p_theme_number => 1,
-        p_id => 'EXAMPLE'
-    );
+    apex_theme.set_current_style(
+        p_application_id => :APP_ID,
+        p_theme_number   => 42,
+        p_id             => to_char(:P20_STYLE_ID));
 end;
 /
 ```

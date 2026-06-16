@@ -48,24 +48,23 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this in item plug-ins so generated form controls receive the standard APEX attributes.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_attributes varchar2(32767);
 begin
-    l_result := apex_plugin_util.GET_ELEMENT_ATTRIBUTES(
-        p_item => null,
-        p_name => 'EXAMPLE',
-        p_default_class => 'EXAMPLE',
-        p_add_id => true,
-        p_add_required => true,
-        p_add_labelledby => true,
-        p_aria_describedby_id => 'EXAMPLE',
-        p_add_multi_value => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_attributes := apex_plugin_util.get_element_attributes(
+        p_item                => p_item,
+        p_name                => apex_plugin.get_input_name_for_item,
+        p_default_class       => 'color-picker',
+        p_add_required        => true,
+        p_add_labelledby      => false,
+        p_aria_describedby_id => p_item.name || '_HELP');
+
+    sys.htp.p('<input type="color" ' || l_attributes || '>');
 end;
 /
 ```
-

@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set an externally obtained bearer token for subsequent REST calls.
+
 ```sql
 begin
-    apex_web_service.OAUTH_SET_TOKEN(
-        p_token => 'EXAMPLE',
-        p_expires => sysdate
-    );
+    apex_web_service.oauth_set_token(
+        p_token   => :P10_ACCESS_TOKEN,
+        p_expires => sysdate + (50 / 1440));
 end;
 /
 ```

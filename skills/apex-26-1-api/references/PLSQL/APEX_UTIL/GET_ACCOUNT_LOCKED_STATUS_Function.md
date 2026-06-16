@@ -36,14 +36,18 @@ APEX_UTIL.GET_ACCOUNT_LOCKED_STATUS (
 
 ## Simple Example
 
+Check whether an APEX workspace account is locked.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_locked boolean;
 begin
-    l_result := apex_util.GET_ACCOUNT_LOCKED_STATUS(
-        p_user_name => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_locked := apex_util.get_account_locked_status(
+        p_user_name => 'JSMITH');
+
+    if l_locked then
+        apex_debug.warn('APEX account JSMITH is locked.');
+    end if;
 end;
 /
 ```

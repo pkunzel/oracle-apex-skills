@@ -61,21 +61,23 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.UPD_AD_COLUMN(
-        p_column_name => 'EXAMPLE',
-        p_new_column_name => 'EXAMPLE',
-        p_label => 'EXAMPLE',
-        p_help_text => to_clob('Example text'),
-        p_format_mask => 'EXAMPLE',
-        p_default_value => 'EXAMPLE',
-        p_form_format_mask => 'EXAMPLE',
-        p_form_display_width => 'EXAMPLE',
-        p_form_display_height => 'EXAMPLE',
-        p_form_data_type => 'EXAMPLE',
-        p_report_format_mask => 'EXAMPLE',
-        p_report_col_alignment => 'EXAMPLE'
+    apex_ui_default_update.upd_ad_column(
+        p_column_name => 'CREATED_BY',
+        p_new_column_name => 'Y',
+        p_label => 'Order Total',
+        p_help_text => 'Total amount for the order.',
+        p_format_mask => 'FML999G999G990D00',
+        p_default_value => '0',
+        p_form_format_mask => 'FML999G999G990D00',
+        p_form_display_width => '12',
+        p_form_display_height => '1',
+        p_form_data_type => 'NUMBER',
+        p_report_format_mask => 'FML999G999G990D00',
+        p_report_col_alignment => 'RIGHT'
     );
 end;
 /

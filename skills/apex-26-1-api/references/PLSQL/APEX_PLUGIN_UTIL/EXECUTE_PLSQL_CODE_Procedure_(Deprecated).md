@@ -45,16 +45,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This routine is deprecated. If legacy plug-in metadata still stores executable PL/SQL, keep the code controlled by developers, not end users.
 
 ```sql
 begin
-    apex_plugin_util.EXECUTE_PLSQL_CODE(
-        p_plsql_code => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
+    apex_plugin_util.execute_plsql_code(
+        p_plsql_code      => p_process.attributes.get_varchar2('LEGACY_CALLBACK'),
+        p_auto_bind_items => true);
 end;
 /
 ```
-

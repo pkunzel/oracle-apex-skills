@@ -51,15 +51,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer APEX_IR.ADD_FILTER in new code.
+
 ```sql
 begin
-    apex_util.IR_FILTER(
-        p_page_id => 1,
-        p_report_column => 'EXAMPLE',
-        p_operator_abbr => 'EXAMPLE',
-        p_filter_value => 'EXAMPLE',
-        p_report_alias => 'EXAMPLE'
-    );
+    apex_util.ir_filter(
+        p_page_id       => 20,
+        p_report_column => 'STATUS',
+        p_operator_abbr => 'EQ',
+        p_filter_value  => 'OPEN',
+        p_report_alias  => 'PRIMARY');
 end;
 /
 ```

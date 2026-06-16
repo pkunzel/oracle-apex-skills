@@ -48,16 +48,21 @@ Return Description BLOB BLOB of the file specified in p_file_name .
 
 ## Simple Example
 
+Legacy filename-based extraction. Prefer the t_dir_entry overload in new code.
+
 ```sql
 declare
-    l_result BLOB;
+    l_zip  blob;
+    l_file blob;
 begin
-    l_result := apex_zip.GET_FILE_CONTENT(
-        p_zipped_blob => null,
-        p_file_name => 'EXAMPLE',
-        p_encoding => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select content_blob
+      into l_zip
+      from uploaded_files
+     where file_id = :P10_ZIP_FILE_ID;
+
+    l_file := apex_zip.get_file_content(
+        p_zipped_blob => l_zip,
+        p_file_name   => 'manifest.json');
 end;
 /
 ```

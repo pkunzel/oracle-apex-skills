@@ -44,16 +44,18 @@ The theme style ID which is set as a user preference.
 
 ## Simple Example
 
+Read the user's saved theme style ID before showing a style picker.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_style_id number;
 begin
-    l_result := apex_theme.GET_USER_STYLE(
-        p_application_id => 1,
-        p_user => 'USER',
-        p_theme_number => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_style_id := apex_theme.get_user_style(
+        p_application_id => :APP_ID,
+        p_user           => :APP_USER,
+        p_theme_number   => 42);
+
+    :P20_CURRENT_STYLE_ID := l_style_id;
 end;
 /
 ```

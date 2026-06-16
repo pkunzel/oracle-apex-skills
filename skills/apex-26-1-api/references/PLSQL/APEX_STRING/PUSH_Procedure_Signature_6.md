@@ -41,12 +41,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append values from a legacy vc_arr2 array into an APEX varchar2 collection.
+
 ```sql
+declare
+    l_target apex_t_varchar2;
+    l_source apex_application_global.vc_arr2;
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_values => 'EXAMPLE'
-    );
+    l_source := apex_string.string_to_table('CSV:PDF:XLSX');
+
+    apex_string.push(
+        p_table  => l_target,
+        p_values => l_source);
 end;
 /
 ```

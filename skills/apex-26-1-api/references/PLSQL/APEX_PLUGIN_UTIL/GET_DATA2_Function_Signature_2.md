@@ -56,28 +56,28 @@ APEX_PLUGIN_UTIL.GET_DATA2 (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use GET_DATA2 when plug-in SQL results need native column data types instead of only character values.
 
 ```sql
 declare
-    l_result T_COLUMN_LIST;
+    l_data_types apex_application_global.vc_arr2 := apex_application_global.vc_arr2(
+        apex_plugin_util.c_data_type_varchar2,
+        apex_plugin_util.c_data_type_number);
+    l_rows apex_plugin_util.t_column_list;
 begin
-    l_result := apex_plugin_util.GET_DATA2(
-        p_sql_statement => to_clob('Example text'),
-        p_min_columns => 1,
-        p_max_columns => 1,
-        p_data_type_list => 'EXAMPLE',
-        p_component_name => 'EXAMPLE',
-        p_search_type => 'EXAMPLE',
-        p_search_column_name => 'EXAMPLE',
-        p_search_string => 'EXAMPLE',
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_rows := apex_plugin_util.get_data2(
+        p_sql_statement      => 'select display_name, user_id from app_users where active_yn = ''Y''',
+        p_min_columns        => 2,
+        p_max_columns        => 2,
+        p_data_type_list     => l_data_types,
+        p_component_name     => p_item.name,
+        p_search_column_name => 'DISPLAY_NAME',
+        p_search_type        => apex_plugin_util.c_search_contains_ignore,
+        p_search_string      => apex_application.g_x01,
+        p_first_row          => 1,
+        p_max_rows           => 25);
 end;
 /
 ```
-

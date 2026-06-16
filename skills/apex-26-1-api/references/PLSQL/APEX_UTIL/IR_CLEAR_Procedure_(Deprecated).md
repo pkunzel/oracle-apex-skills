@@ -45,12 +45,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer APEX_IR APIs for interactive report administration.
+
 ```sql
 begin
-    apex_util.IR_CLEAR(
-        p_page_id => 1,
-        p_report_alias => 'EXAMPLE'
-    );
+    apex_util.ir_clear(
+        p_page_id      => 20,
+        p_report_alias => 'PRIMARY');
 end;
 /
 ```

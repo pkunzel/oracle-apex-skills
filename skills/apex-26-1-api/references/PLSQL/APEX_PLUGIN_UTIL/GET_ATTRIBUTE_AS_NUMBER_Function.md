@@ -36,18 +36,19 @@ APEX_PLUGIN_UTIL.GET_ATTRIBUTE_AS_NUMBER (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Convert NUMBER plug-in attributes with APEX's NLS-aware helper instead of TO_NUMBER.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_max_rows number;
 begin
-    l_result := apex_plugin_util.GET_ATTRIBUTE_AS_NUMBER(
-        p_value => 'EXAMPLE',
-        p_attribute_label => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_max_rows := apex_plugin_util.get_attribute_as_number(
+        p_value           => p_region.attributes.get_varchar2('MAX_ROWS'),
+        p_attribute_label => 'Maximum Rows');
+
+    l_max_rows := coalesce(l_max_rows, 50);
 end;
 /
 ```
-

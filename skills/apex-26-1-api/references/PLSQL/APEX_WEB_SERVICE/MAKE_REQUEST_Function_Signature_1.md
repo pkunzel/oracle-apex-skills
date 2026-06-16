@@ -62,25 +62,19 @@ The SOAP service response in an XMLTYPE .
 
 ## Simple Example
 
+Call a SOAP endpoint and receive the XML response directly.
+
 ```sql
 declare
-    l_result SYS.XMLTYPE;
+    l_response sys.xmltype;
 begin
-    l_result := apex_web_service.MAKE_REQUEST(
-        p_url => 'EXAMPLE',
-        p_action => 'EXAMPLE',
-        p_version => 'EXAMPLE',
-        p_envelope => to_clob('Example text'),
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_scheme => 'EXAMPLE',
-        p_proxy_override => 'EXAMPLE',
-        p_transfer_timeout => 1,
-        p_wallet_path => 'EXAMPLE',
-        p_wallet_pwd => 'EXAMPLE',
-        p_https_host => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_response := apex_web_service.make_request(
+        p_url      => 'https://api.example.com/soap/orders',
+        p_action   => 'urn:getOrder',
+        p_version  => '1.1',
+        p_envelope => q'~<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body><getOrder><orderId>1001</orderId></getOrder></soapenv:Body>
+</soapenv:Envelope>~');
 end;
 /
 ```

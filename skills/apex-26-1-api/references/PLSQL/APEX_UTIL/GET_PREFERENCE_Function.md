@@ -38,15 +38,19 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read a saved user preference with a fallback when it has not been set.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_view varchar2(30);
 begin
-    l_result := apex_util.GET_PREFERENCE(
-        p_preference => 'EXAMPLE',
-        p_user => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_view := apex_util.get_preference(
+        p_preference => 'ORDER_REPORT_VIEW',
+        p_user       => :APP_USER);
+
+    if l_view is null then
+        l_view := 'CARDS';
+    end if;
 end;
 /
 ```

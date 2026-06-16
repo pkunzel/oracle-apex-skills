@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the last name stored for an APEX workspace user.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_last_name varchar2(255);
 begin
-    l_result := apex_util.GET_LAST_NAME(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_last_name := apex_util.get_last_name(
+        p_username => 'JSMITH');
 end;
 /
 ```

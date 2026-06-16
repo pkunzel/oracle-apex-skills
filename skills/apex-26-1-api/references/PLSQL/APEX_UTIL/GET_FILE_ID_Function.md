@@ -36,14 +36,14 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Resolve a workspace file name to the id required by GET_FILE.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_file_id number;
 begin
-    l_result := apex_util.GET_FILE_ID(
-        p_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_file_id := apex_util.get_file_id(
+        p_name => 'terms-of-service.pdf');
 end;
 /
 ```

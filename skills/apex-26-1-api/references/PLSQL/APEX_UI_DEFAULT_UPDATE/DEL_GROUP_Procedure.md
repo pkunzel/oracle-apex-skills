@@ -41,11 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove a UI Default entry from the owning schema after confirming generated pages no longer rely on it.
+
 ```sql
 begin
-    apex_ui_default_update.DEL_GROUP(
-        p_table_name => 'EXAMPLE',
-        p_group_name => 'EXAMPLE'
+    apex_ui_default_update.del_group(
+        p_table_name => 'DEMO_ORDERS',
+        p_group_name => 'Audit'
     );
 end;
 /

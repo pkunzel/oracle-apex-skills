@@ -38,15 +38,13 @@ APEX_STRING.JOIN (
 
 ## Simple Example
 
+Convert a selected-value collection back into a colon-delimited page item value.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string.JOIN(
-        p_table => 'EXAMPLE',
-        p_sep => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_SELECTED_STATUS := apex_string.join(
+        p_table => apex_t_varchar2('OPEN', 'PENDING', 'HOLD'),
+        p_sep   => ':');
 end;
 /
 ```

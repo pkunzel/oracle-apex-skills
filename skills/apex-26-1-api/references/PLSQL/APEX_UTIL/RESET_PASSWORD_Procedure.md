@@ -45,14 +45,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Reset an APEX account password and require a change at next login.
+
 ```sql
 begin
-    apex_util.RESET_PASSWORD(
-        p_user_name => 'USER',
-        p_old_password => 'EXAMPLE',
-        p_new_password => 'EXAMPLE',
-        p_change_password_on_first_use => true
-    );
+    apex_util.reset_password(
+        p_user_name                    => 'JSMITH',
+        p_old_password                 => :P100_OLD_PASSWORD,
+        p_new_password                 => :P100_NEW_PASSWORD,
+        p_change_password_on_first_use => true);
 end;
 /
 ```

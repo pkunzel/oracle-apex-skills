@@ -18,7 +18,7 @@ Use this page when code needs the `APEX_UTIL.SET_SESSION_MAX_IDLE_SECONDS` proce
 
 ```sql
 APEX_UTIL.SET_SESSION_MAX_IDLE_SECONDS (
-    p_seconds  IN    NUMEBER,
+    p_seconds  IN    NUMBER,
     p_scope    IN    VARCHAR2 DEFAULT 'SESSION' );
 ```
 
@@ -41,13 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the maximum idle timeout for the current session.
+
 ```sql
 begin
-    apex_util.SET_SESSION_MAX_IDLE_SECONDS(
-        p_seconds => null,
-        p_scope => 'EXAMPLE'
-    );
+    apex_util.set_session_max_idle_seconds(
+        p_seconds => 900,
+        p_scope   => 'SESSION');
 end;
 /
 ```
-

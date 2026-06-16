@@ -22,5 +22,27 @@ Use this page when code needs the `APEX_PRINT.Constants` constants. Confirm secu
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the template and output constants to make document-generation calls self-describing.
 
+```sql
+declare
+    l_document blob;
+    l_template blob;
+begin
+    select template_blob
+      into l_template
+      from print_templates
+     where static_id = 'ORDER_CONFIRMATION';
+
+    l_document := apex_print.generate_document(
+        p_data          => json_object(
+        'order_id' value :P42_ORDER_ID,
+        'status'   value 'Ready',
+        'customer' value :P42_CUSTOMER_NAME
+        returning clob),
+        p_template      => l_template,
+        p_template_type => apex_print.c_template_docx,
+        p_output_type   => apex_print.c_output_pdf);
+end;
+/
+```

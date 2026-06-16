@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove an APEX workspace user by username.
+
 ```sql
 begin
-    apex_util.REMOVE_USER(
-        p_user_name => 'USER'
-    );
+    apex_util.remove_user(
+        p_user_name => 'JSMITH');
 end;
 /
 ```

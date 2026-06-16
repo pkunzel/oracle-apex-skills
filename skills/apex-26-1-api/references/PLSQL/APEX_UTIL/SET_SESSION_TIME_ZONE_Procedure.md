@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the time zone for the current APEX session.
+
 ```sql
 begin
-    apex_util.SET_SESSION_TIME_ZONE(
-        p_time_zone => 'EXAMPLE'
-    );
+    apex_util.set_session_time_zone(
+        p_time_zone => 'America/New_York');
 end;
 /
 ```

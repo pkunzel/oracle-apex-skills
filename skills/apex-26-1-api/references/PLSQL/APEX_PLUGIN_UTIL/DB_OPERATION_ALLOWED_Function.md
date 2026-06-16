@@ -42,19 +42,24 @@ NULL if the operation is allowed. If not allowed, an error message and p_raise_e
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Ask APEX to validate whether a REST Data Source DML operation is allowed before making the remote call.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_error varchar2(32767);
 begin
-    l_result := apex_plugin_util.DB_OPERATION_ALLOWED(
-        p_allowed_operations => 'EXAMPLE',
-        p_operation => null,
-        p_raise_error => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_error := apex_plugin_util.db_operation_allowed(
+        p_allowed_operations => 'UD',
+        p_operation          => p_db_operation,
+        p_raise_error        => false);
+
+    if l_error is not null then
+        apex_error.add_error(
+            p_message          => l_error,
+            p_display_location => apex_error.c_inline_in_notification);
+    end if;
 end;
 /
 ```
-

@@ -32,17 +32,16 @@ This function returns the value of the specified item as VARCHAR2. Parent topic:
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use GET_VARCHAR2 for ordinary text item state.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_status varchar2(32767);
 begin
-    l_result := apex_session_state.GET_VARCHAR2(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_status := apex_session_state.get_varchar2(
+        p_item => 'P10_STATUS');
 end;
 /
 ```
-

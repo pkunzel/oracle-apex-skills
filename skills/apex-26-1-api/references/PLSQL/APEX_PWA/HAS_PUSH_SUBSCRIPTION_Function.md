@@ -40,18 +40,18 @@ Function returns boolean containing whether a user is subscribed to an applicati
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Check subscription state before queuing a notification for the current user.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_pwa.HAS_PUSH_SUBSCRIPTION(
-        p_application_id => 1,
-        p_user_name => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_pwa.has_push_subscription(
+        p_application_id => :APP_ID,
+        p_user_name      => :APP_USER)
+    then
+        apex_debug.info('Push subscription exists for %s.', :APP_USER);
+    end if;
 end;
 /
 ```
-

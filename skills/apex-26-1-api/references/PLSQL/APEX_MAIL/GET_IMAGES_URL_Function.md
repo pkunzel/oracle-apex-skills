@@ -26,15 +26,27 @@ APEX_MAIL.GET_IMAGES_URL return VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the image URL prefix when composing HTML mail that references APEX instance images.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_body_html clob;
+    l_mail_id   number;
 begin
-    l_result := apex_mail.GET_IMAGES_URL;
-    sys.dbms_output.put_line('Result captured.');
+    l_body_html :=
+        '<html><body>' ||
+        '<img src="' || apex_escape.html_attribute(apex_mail.get_images_url || 'logo.png') || '" alt="Logo">' ||
+        '<p>Your order is ready.</p>' ||
+        '</body></html>';
+
+    l_mail_id := apex_mail.send(
+        p_to        => :P30_CUSTOMER_EMAIL,
+        p_from      => 'orders@example.com',
+        p_subj      => 'Order ready',
+        p_body      => 'Your order is ready.',
+        p_body_html => l_body_html);
 end;
 /
 ```
-

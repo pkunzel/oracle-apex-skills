@@ -40,16 +40,20 @@ APEX_STRING.TABLE_TO_CLOB (
 
 ## Simple Example
 
+Convert a vc_arr2 array to a CLOB with line breaks.
+
 ```sql
 declare
-    l_result CLOB;
+    l_lines apex_application_global.vc_arr2;
+    l_text  clob;
 begin
-    l_result := apex_string.TABLE_TO_CLOB(
-        p_table => null,
-        p_sep => 'EXAMPLE',
-        p_dur => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_lines(1) := 'Header';
+    l_lines(2) := 'Detail';
+    l_lines(3) := 'Footer';
+
+    l_text := apex_string.table_to_clob(
+        p_table => l_lines,
+        p_sep   => chr(10));
 end;
 /
 ```

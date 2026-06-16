@@ -38,15 +38,13 @@ APEX_STRING.JOIN (
 
 ## Simple Example
 
+Render a numeric collection as a comma-separated list.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string.JOIN(
-        p_table => 1,
-        p_sep => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_SELECTED_IDS := apex_string.join(
+        p_table => apex_t_number(1001, 1002, 1003),
+        p_sep   => ',');
 end;
 /
 ```

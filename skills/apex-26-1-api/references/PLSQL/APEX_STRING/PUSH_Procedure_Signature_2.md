@@ -41,12 +41,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append one CLOB value to a CLOB collection.
+
 ```sql
+declare
+    l_docs apex_t_clob;
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_value => to_clob('Example text')
-    );
+    apex_string.push(
+        p_table => l_docs,
+        p_value => to_clob('Generated terms and conditions.'));
 end;
 /
 ```

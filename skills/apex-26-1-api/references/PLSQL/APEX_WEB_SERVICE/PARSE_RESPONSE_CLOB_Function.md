@@ -40,16 +40,16 @@ RETURN CLOB;
 
 ## Simple Example
 
+Parse a CLOB value from a SOAP response stored in a collection.
+
 ```sql
 declare
-    l_result CLOB;
+    l_payload clob;
 begin
-    l_result := apex_web_service.PARSE_RESPONSE_CLOB(
-        p_collection_name => 'EXAMPLE',
-        p_xpath => 'EXAMPLE',
-        p_ns => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_payload := apex_web_service.parse_response_clob(
+        p_collection_name => 'SOAP_ORDER_RESPONSE',
+        p_xpath           => '//order/description/text()',
+        p_ns              => null);
 end;
 /
 ```

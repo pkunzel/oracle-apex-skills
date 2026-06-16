@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Re-enable saved user theme-style preferences after an administrative pause.
+
 ```sql
 begin
-    apex_theme.ENABLE_USER_STYLE(
-        p_application_id => 1,
-        p_theme_number => 1
-    );
+    apex_theme.enable_user_style(
+        p_application_id => :APP_ID,
+        p_theme_number   => 42);
 end;
 /
 ```

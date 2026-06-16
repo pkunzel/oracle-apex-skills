@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Export APEX workspace users using Unix line endings.
+
 ```sql
 begin
-    apex_util.EXPORT_USERS(
-        p_export_format => 'EXAMPLE'
-    );
+    apex_util.export_users(
+        p_export_format => 'UNIX');
 end;
 /
 ```

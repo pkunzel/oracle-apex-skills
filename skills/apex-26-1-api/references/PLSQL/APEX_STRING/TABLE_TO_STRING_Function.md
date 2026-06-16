@@ -38,15 +38,18 @@ APEX_STRING.TABLE_TO_STRING (
 
 ## Simple Example
 
+Convert a vc_arr2 array back into a colon-delimited item value.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_values apex_application_global.vc_arr2;
 begin
-    l_result := apex_string.TABLE_TO_STRING(
-        p_table => null,
-        p_sep => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values(1) := 'CSV';
+    l_values(2) := 'PDF';
+
+    :P10_FORMATS := apex_string.table_to_string(
+        p_table => l_values,
+        p_sep   => ':');
 end;
 /
 ```

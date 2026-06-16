@@ -39,15 +39,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Enable SQL trace for future requests in the current session while diagnosing a controlled issue.
 
 ```sql
 begin
-    apex_session.SET_TRACE(
-        p_session_id => 1,
-        p_mode => 'EXAMPLE'
-    );
+    apex_session.set_trace(
+        p_session_id => apex_application.g_instance,
+        p_mode       => 'SQL');
 end;
 /
 ```
-

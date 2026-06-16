@@ -42,19 +42,15 @@ Return Description mdsys.sdo_geometry The geometry for the point.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Create a WGS 84 point from longitude and latitude values.
 
 ```sql
-declare
-    l_result MDSYS.SDO_GEOMETRY;
-begin
-    l_result := apex_spatial.POINT(
-        p_lon => 1,
-        p_lat => 1,
-        p_srid => null
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+insert into customer_locations (customer_id, geom)
+values (
+    :P10_CUSTOMER_ID,
+    apex_spatial.point(
+        p_lon => :P10_LONGITUDE,
+        p_lat => :P10_LATITUDE));
 ```
-

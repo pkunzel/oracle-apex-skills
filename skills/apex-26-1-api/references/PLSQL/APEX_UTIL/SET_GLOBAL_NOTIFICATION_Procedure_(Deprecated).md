@@ -45,12 +45,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Set the global notification message for an application.
+
 ```sql
 begin
-    apex_util.SET_GLOBAL_NOTIFICATION(
-        p_application_id => 1,
-        p_global_notification_message => to_clob('Example text')
-    );
+    apex_util.set_global_notification(
+        p_application_id              => :APP_ID,
+        p_global_notification_message => 'Scheduled maintenance starts at 22:00 UTC.');
 end;
 /
 ```

@@ -41,16 +41,16 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Apply REST Source data-profile changes to the synchronized table after reviewing the generated DDL.
 
 ```sql
 begin
-    apex_rest_source_sync.SYNCHRONIZE_TABLE_DEFINITION(
-        p_module_static_id => 'EXAMPLE_STATIC_ID',
-        p_application_id => 1,
-        p_drop_unused_columns => true
-    );
+    apex_rest_source_sync.synchronize_table_definition(
+        p_module_static_id    => 'ORDERS_API',
+        p_application_id      => :APP_ID,
+        p_drop_unused_columns => false);
 end;
 /
 ```
-

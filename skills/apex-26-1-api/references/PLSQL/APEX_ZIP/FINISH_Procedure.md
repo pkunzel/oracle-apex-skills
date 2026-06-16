@@ -39,11 +39,24 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Finalize a ZIP archive after all files have been added.
+
 ```sql
+declare
+    l_zip blob;
 begin
-    apex_zip.FINISH(
-        p_zipped_blob => null
-    );
+    dbms_lob.createtemporary(l_zip, true);
+
+    for rec in (
+        select file_name, content_blob
+          from app_files
+         where project_id = :P10_PROJECT_ID
+    ) loop
+        apex_zip.add_file(l_zip, rec.file_name, rec.content_blob);
+    end loop;
+
+    apex_zip.finish(
+        p_zipped_blob => l_zip);
 end;
 /
 ```

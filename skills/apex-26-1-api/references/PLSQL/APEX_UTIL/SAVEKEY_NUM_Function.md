@@ -36,14 +36,14 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Save a number in the package variable that KEYVAL_NUM returns later.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_saved number;
 begin
-    l_result := apex_util.SAVEKEY_NUM(
-        p_val => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_saved := apex_util.savekey_num(
+        p_val => :P10_ORDER_ID);
 end;
 /
 ```

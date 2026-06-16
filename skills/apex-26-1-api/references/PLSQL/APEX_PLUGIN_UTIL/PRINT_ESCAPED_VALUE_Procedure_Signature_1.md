@@ -37,14 +37,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Print user-visible text through PRINT_ESCAPED_VALUE when writing directly to the HTTP buffer.
 
 ```sql
 begin
-    apex_plugin_util.PRINT_ESCAPED_VALUE(
-        p_value => 'EXAMPLE'
-    );
+    sys.htp.p('<span class="status-text">');
+    apex_plugin_util.print_escaped_value(:P10_STATUS_LABEL);
+    sys.htp.p('</span>');
 end;
 /
 ```
-

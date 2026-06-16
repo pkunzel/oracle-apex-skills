@@ -69,27 +69,45 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Inspect which password rule checks failed before showing a custom message.
+
 ```sql
+declare
+    l_min_length_err              boolean;
+    l_new_differs_by_err          boolean;
+    l_one_alpha_err               boolean;
+    l_one_numeric_err             boolean;
+    l_one_punctuation_err         boolean;
+    l_one_upper_err               boolean;
+    l_one_lower_err               boolean;
+    l_not_like_username_err       boolean;
+    l_not_like_workspace_name_err boolean;
+    l_not_like_words_err          boolean;
+    l_not_reusable_err            boolean;
 begin
-    apex_util.STRONG_PASSWORD_CHECK(
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_old_password => 'EXAMPLE',
-        p_workspace_name => 'EXAMPLE',
-        p_use_strong_rules => true,
-        p_min_length_err => true,
-        p_new_differs_by_err => true,
-        p_one_alpha_err => true,
-        p_one_numeric_err => true,
-        p_one_punctuation_err => true,
-        p_one_upper_err => true,
-        p_one_lower_err => true,
-        p_not_like_username_err => true,
-        p_not_like_workspace_name_err => true,
-        p_not_like_words_err => true,
-        p_not_reusable_err => true
-    );
+    apex_util.strong_password_check(
+        p_username                    => :APP_USER,
+        p_password                    => :P100_NEW_PASSWORD,
+        p_old_password                => :P100_OLD_PASSWORD,
+        p_workspace_name              => 'MY_WORKSPACE',
+        p_use_strong_rules            => false,
+        p_min_length_err              => l_min_length_err,
+        p_new_differs_by_err          => l_new_differs_by_err,
+        p_one_alpha_err               => l_one_alpha_err,
+        p_one_numeric_err             => l_one_numeric_err,
+        p_one_punctuation_err         => l_one_punctuation_err,
+        p_one_upper_err               => l_one_upper_err,
+        p_one_lower_err               => l_one_lower_err,
+        p_not_like_username_err       => l_not_like_username_err,
+        p_not_like_workspace_name_err => l_not_like_workspace_name_err,
+        p_not_like_words_err          => l_not_like_words_err,
+        p_not_reusable_err            => l_not_reusable_err);
+
+    if l_min_length_err or l_not_reusable_err then
+        apex_error.add_error(
+            p_message          => 'Choose a stronger password.',
+            p_display_location => apex_error.c_inline_in_notification);
+    end if;
 end;
 /
 ```
-

@@ -36,14 +36,16 @@ RETURN NUMBER
 
 ## Simple Example
 
+Show how many days remain before an end-user account expires.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_days_left number;
 begin
-    l_result := apex_util.END_USER_ACCOUNT_DAYS_LEFT(
-        p_user_name => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_days_left := apex_util.end_user_account_days_left(
+        p_user_name => :APP_USER);
+
+    apex_util.set_session_state('P1_ACCOUNT_DAYS_LEFT', l_days_left);
 end;
 /
 ```

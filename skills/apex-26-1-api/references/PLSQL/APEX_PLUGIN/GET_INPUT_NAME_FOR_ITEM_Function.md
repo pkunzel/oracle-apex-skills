@@ -27,15 +27,21 @@ APEX_PLUGIN.GET_INPUT_NAME_FOR_ITEM
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the returned input name for HTML form controls whose value should submit into APEX session state.
 
 ```sql
 declare
-    l_result T_INPUT_NAME;
+    l_input_name apex_plugin.t_input_name;
 begin
-    l_result := apex_plugin.GET_INPUT_NAME_FOR_ITEM;
-    sys.dbms_output.put_line('Result captured.');
+    l_input_name := apex_plugin.get_input_name_for_item;
+
+    sys.htp.p(
+        '<input type="text"' ||
+        ' id="' || apex_escape.html_attribute(p_item.name) || '"' ||
+        ' name="' || apex_escape.html_attribute(l_input_name) || '"' ||
+        ' value="' || apex_escape.html_attribute(p_param.value) || '">');
 end;
 /
 ```
-

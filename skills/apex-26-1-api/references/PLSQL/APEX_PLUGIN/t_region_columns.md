@@ -22,5 +22,26 @@ Use this page when code needs the `APEX_PLUGIN.t_region_columns` topic. Confirm 
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Region plug-ins receive region metadata and return a render result after writing markup.
 
+```sql
+function render_task_region (
+    p_region in apex_plugin.t_region,
+    p_plugin in apex_plugin.t_plugin,
+    p_param  in apex_plugin.t_region_render_param )
+    return apex_plugin.t_region_render_result
+is
+    l_result apex_plugin.t_region_render_result;
+begin
+    sys.htp.p(
+        '<section id="' || apex_escape.html_attribute(p_region.dom_id) || '"' ||
+        ' class="task-region">' ||
+        '<input id="' || apex_escape.html_attribute(p_region.dom_id || '_search') || '" type="search">' ||
+        '<div class="task-region-body"></div>' ||
+        '</section>');
+
+    l_result.navigable_dom_id := p_region.dom_id || '_search';
+    return l_result;
+end;
+/
+```

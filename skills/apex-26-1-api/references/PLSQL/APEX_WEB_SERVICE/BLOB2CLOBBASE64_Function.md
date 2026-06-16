@@ -40,16 +40,22 @@ RETURN CLOB;
 
 ## Simple Example
 
+Encode a BLOB attachment as base64 for a SOAP or JSON payload.
+
 ```sql
 declare
-    l_result CLOB;
+    l_file   blob;
+    l_base64 clob;
 begin
-    l_result := apex_web_service.BLOB2CLOBBASE64(
-        p_blob => null,
-        p_newlines => 'EXAMPLE',
-        p_padding => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    select content_blob
+      into l_file
+      from app_files
+     where file_id = :P10_FILE_ID;
+
+    l_base64 := apex_web_service.blob2clobbase64(
+        p_blob     => l_file,
+        p_newlines => 'N',
+        p_padding  => 'Y');
 end;
 /
 ```

@@ -43,12 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.UPD_LABEL(
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_label => 'EXAMPLE'
+    apex_ui_default_update.upd_label(
+        p_table_name => 'DEMO_ORDERS',
+        p_column_name => 'ORDER_TOTAL',
+        p_label => 'Order Total'
     );
 end;
 /

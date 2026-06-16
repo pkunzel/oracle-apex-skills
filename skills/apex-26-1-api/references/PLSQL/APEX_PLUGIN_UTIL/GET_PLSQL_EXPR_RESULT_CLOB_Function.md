@@ -38,19 +38,19 @@ APEX_PLUGIN_UTIL.GET_PLSQL_EXPR_RESULT_CLOB (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the CLOB expression helper for controlled PL/SQL expressions that return large text.
 
 ```sql
 declare
-    l_result CLOB;
+    l_content clob;
 begin
-    l_result := apex_plugin_util.GET_PLSQL_EXPR_RESULT_CLOB(
-        p_plsql_expression => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_content := apex_plugin_util.get_plsql_expr_result_clob(
+        p_plsql_expression => p_region.attributes.get_varchar2('CONTENT_EXPR'),
+        p_auto_bind_items  => true);
+
+    sys.htp.p(apex_escape.html(l_content));
 end;
 /
 ```
-

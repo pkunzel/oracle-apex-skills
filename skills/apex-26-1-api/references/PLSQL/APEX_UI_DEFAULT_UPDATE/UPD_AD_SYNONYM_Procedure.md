@@ -41,11 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.UPD_AD_SYNONYM(
-        p_syn_name => 'EXAMPLE',
-        p_new_syn_name => 'EXAMPLE'
+    apex_ui_default_update.upd_ad_synonym(
+        p_syn_name => 'CREATED_USER',
+        p_new_syn_name => 'CREATED_BY_USER'
     );
 end;
 /

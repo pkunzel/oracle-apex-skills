@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the time zone currently associated with the APEX session.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_time_zone varchar2(255);
 begin
-    l_result := apex_util.GET_SESSION_TIME_ZONE;
-    sys.dbms_output.put_line('Result captured.');
+    l_time_zone := apex_util.get_session_time_zone;
 end;
 /
 ```

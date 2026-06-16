@@ -70,30 +70,23 @@ APEX_WEB_SERVICE.MAKE_REST_REQUEST (
 
 ## Simple Example
 
+Call a REST endpoint with query parameters and a Web Credential.
+
 ```sql
 declare
-    l_result CLOB;
+    l_names    apex_application_global.vc_arr2;
+    l_values   apex_application_global.vc_arr2;
+    l_response clob;
 begin
-    l_result := apex_web_service.MAKE_REST_REQUEST(
-        p_url => 'EXAMPLE',
-        p_http_method => 'EXAMPLE',
-        p_username => 'USER',
-        p_password => 'EXAMPLE',
-        p_scheme => 'EXAMPLE',
-        p_proxy_override => 'EXAMPLE',
-        p_transfer_timeout => 1,
-        p_body => to_clob('Example text'),
-        p_body_blob => to_clob('Example text'),
-        p_parm_name => 'EXAMPLE',
-        p_parm_value => 'EXAMPLE',
-        p_wallet_path => 'EXAMPLE',
-        p_wallet_pwd => 'EXAMPLE',
-        p_https_host => 'EXAMPLE',
-        p_credential_static_id => 'EXAMPLE_STATIC_ID',
-        p_token_url => 'EXAMPLE',
-        p_oauth_scope => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_names  := apex_string.string_to_table('status:limit');
+    l_values := apex_string.string_to_table('open:25');
+
+    l_response := apex_web_service.make_rest_request(
+        p_url                  => 'https://api.example.com/orders',
+        p_http_method          => 'GET',
+        p_parm_name            => l_names,
+        p_parm_value           => l_values,
+        p_credential_static_id => 'ORDERS_API');
 end;
 /
 ```

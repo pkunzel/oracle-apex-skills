@@ -46,14 +46,19 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Continue a specific waiting activity instance when the callback stores the activity instance ID.
+
 ```sql
+declare
+    l_params wwv_flow_global.vc_map;
 begin
-    apex_workflow.CONTINUE_ACTIVITY(
-        p_instance_id => 1,
-        p_activity_instance_id => 1,
-        p_activity_params => null,
-        p_activity_status => null
-    );
+    l_params('PAYMENT_STATUS') := 'CAPTURED';
+
+    apex_workflow.continue_activity(
+        p_instance_id          => :P20_WORKFLOW_ID,
+        p_activity_instance_id => :P20_ACTIVITY_INSTANCE_ID,
+        p_activity_params      => l_params,
+        p_activity_status      => apex_workflow.c_activity_status_success);
 end;
 /
 ```

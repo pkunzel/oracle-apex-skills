@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the first name stored for an APEX workspace user.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_first_name varchar2(255);
 begin
-    l_result := apex_util.GET_FIRST_NAME(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_first_name := apex_util.get_first_name(
+        p_username => 'JSMITH');
 end;
 /
 ```

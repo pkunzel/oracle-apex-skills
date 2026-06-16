@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append a duplicate-key entry when order matters.
+
 ```sql
+declare
+    l_props apex_t_varchar2;
 begin
-    apex_string.PLIST_PUSH(
-        p_table => null,
-        p_key => 'EXAMPLE',
-        p_value => 'EXAMPLE'
-    );
+    apex_string.plist_push(l_props, 'filter', 'status = OPEN');
+    apex_string.plist_push(l_props, 'filter', 'priority = HIGH');
 end;
 /
 ```

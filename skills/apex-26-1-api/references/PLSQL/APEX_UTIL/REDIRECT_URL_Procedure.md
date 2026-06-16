@@ -41,12 +41,22 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Redirect to a checksum-prepared APEX page URL.
+
 ```sql
+declare
+    l_url varchar2(4000);
 begin
-    apex_util.REDIRECT_URL(
-        p_url => 'EXAMPLE',
-        p_reset_htp_buffer => true
-    );
+    l_url := apex_util.prepare_url(
+        p_url           => apex_page.get_url(
+                               p_page   => 20,
+                               p_items  => 'P20_ORDER_ID',
+                               p_values => :P10_ORDER_ID),
+        p_checksum_type => 'SESSION');
+
+    apex_util.redirect_url(
+        p_url              => l_url,
+        p_reset_htp_buffer => true);
 end;
 /
 ```

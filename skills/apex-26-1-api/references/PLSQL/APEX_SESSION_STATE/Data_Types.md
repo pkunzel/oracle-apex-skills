@@ -22,5 +22,19 @@ Use this page when code needs the `APEX_SESSION_STATE.Data Types` data types. Co
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use t_value when code needs to preserve the data type of a session-state value.
 
+```sql
+declare
+    l_value apex_session_state.t_value;
+begin
+    l_value.data_type := apex_session_state.c_data_type_varchar2;
+    l_value.varchar2_value := 'READY';
+
+    apex_session_state.set_value(
+        p_item   => 'P10_STATUS',
+        p_value  => l_value,
+        p_commit => false);
+end;
+/
+```

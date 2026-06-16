@@ -41,16 +41,27 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Attach to a known existing APEX session, work inside it, then detach so the database session is clean.
 
 ```sql
 begin
-    apex_session.ATTACH(
-        p_app_id => 1,
-        p_page_id => 1,
-        p_session_id => 1
-    );
+    apex_session.attach(
+        p_app_id     => 100,
+        p_page_id    => 10,
+        p_session_id => :P900_SESSION_ID);
+
+    apex_session_state.set_value(
+        p_item   => 'P10_STATUS',
+        p_value  => 'REVIEWED',
+        p_commit => false);
+
+    apex_session.detach;
+exception
+    when others then
+        apex_session.detach;
+        raise;
 end;
 /
 ```
-

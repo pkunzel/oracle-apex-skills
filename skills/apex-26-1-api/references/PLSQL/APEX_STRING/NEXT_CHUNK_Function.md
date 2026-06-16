@@ -46,17 +46,23 @@ True if another chunk could be read. False if reading past the end of p_str .
 
 ## Simple Example
 
+Read a CLOB in safe fixed-size chunks.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_offset integer := 1;
+    l_chunk  varchar2(32767);
+    l_text   clob := :P10_LONG_TEXT;
 begin
-    l_result := apex_string.NEXT_CHUNK(
-        p_str => to_clob('Example text'),
-        p_chunk => 'EXAMPLE',
-        p_offset => 1,
-        p_amount => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    while apex_string.next_chunk(
+              p_str    => l_text,
+              p_chunk  => l_chunk,
+              p_offset => l_offset,
+              p_amount => 8191)
+    loop
+        insert into text_chunks(document_id, chunk_text)
+        values (:P10_DOCUMENT_ID, l_chunk);
+    end loop;
 end;
 /
 ```

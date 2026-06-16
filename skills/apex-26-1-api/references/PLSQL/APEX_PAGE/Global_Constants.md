@@ -22,5 +22,19 @@ Use this page when code needs the `APEX_PAGE.Global Constants` constants. Confir
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the documented page-mode constants with GET_PAGE_MODE rather than comparing to hard-coded strings.
 
+```sql
+declare
+    l_mode varchar2(30);
+begin
+    l_mode := apex_page.get_page_mode(
+        p_application_id => :APP_ID,
+        p_page_id        => 42);
+
+    if l_mode = apex_page.c_page_mode_modal then
+        apex_debug.info('Page 42 opens as a modal dialog.');
+    end if;
+end;
+/
+```

@@ -38,15 +38,18 @@ APEX_STRING.PLIST_GET (
 
 ## Simple Example
 
+Read a value from a property list.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_props apex_t_varchar2;
+    l_value varchar2(4000);
 begin
-    l_result := apex_string.PLIST_GET(
-        p_table => 'EXAMPLE',
-        p_key => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_props := apex_string.plist_put(l_props, 'status', 'open');
+
+    l_value := apex_string.plist_get(
+        p_table => l_props,
+        p_key   => 'status');
 end;
 /
 ```

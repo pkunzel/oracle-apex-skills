@@ -38,19 +38,17 @@ APEX_PLUGIN_UTIL.GET_PLSQL_FUNC_RESULT_CLOB (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the CLOB function helper when a controlled plug-in attribute returns generated markup or text.
 
 ```sql
 declare
-    l_result CLOB;
+    l_markup clob;
 begin
-    l_result := apex_plugin_util.GET_PLSQL_FUNC_RESULT_CLOB(
-        p_plsql_function => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_markup := apex_plugin_util.get_plsql_func_result_clob(
+        p_plsql_function  => p_region.attributes.get_varchar2('MARKUP_FUNCTION'),
+        p_auto_bind_items => true);
 end;
 /
 ```
-

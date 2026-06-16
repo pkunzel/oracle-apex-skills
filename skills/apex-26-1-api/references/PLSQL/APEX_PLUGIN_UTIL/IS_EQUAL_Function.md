@@ -18,7 +18,7 @@ Use this page when code needs the `APEX_PLUGIN_UTIL.IS_EQUAL` function. Confirm 
 
 ```sql
 APEX_PLUGIN_UTIL.IS_EQUAL (
-    p_value1 IN VARCHAR2
+    p_value1 IN VARCHAR2,
     p_value2 IN VARCHAR2 )
 RETURN BOOLEAN;
 ```
@@ -40,18 +40,18 @@ Return Description BOOLEAN Returns TRUE if both values are equal or both values 
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use IS_EQUAL when two nullable values should be treated as equal if both are null.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_plugin_util.IS_EQUAL(
-        p_value1 => 'EXAMPLE',
-        p_value2 => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_plugin_util.is_equal(
+        p_value1 => :P10_OLD_STATUS,
+        p_value2 => :P10_NEW_STATUS)
+    then
+        apex_debug.info('Status did not change.');
+    end if;
 end;
 /
 ```
-

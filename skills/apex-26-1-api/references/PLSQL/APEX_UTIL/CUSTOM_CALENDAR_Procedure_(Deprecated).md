@@ -43,11 +43,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer native Calendar regions for new applications.
+
 ```sql
 begin
-    apex_util.CUSTOM_CALENDAR(
-        p_date_type_field => 'EXAMPLE'
-    );
+    apex_util.custom_calendar(
+        p_date_type_field => 'P10_EVENT_DATE');
 end;
 /
 ```

@@ -32,15 +32,19 @@ Parameter Description * True when spatial (SDO_GEOMETRY) is available in the dat
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Check Spatial availability before creating metadata or indexes.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_spatial.SPATIAL_IS_AVAILABLE;
-    sys.dbms_output.put_line('Result captured.');
+    if apex_spatial.spatial_is_available then
+        apex_spatial.insert_geom_metadata_lonlat(
+            p_table_name        => 'CUSTOMER_LOCATIONS',
+            p_column_name       => 'GEOM',
+            p_tolerance         => 1,
+            p_create_index_name => 'CUSTOMER_LOCATIONS_SX');
+    end if;
 end;
 /
 ```
-

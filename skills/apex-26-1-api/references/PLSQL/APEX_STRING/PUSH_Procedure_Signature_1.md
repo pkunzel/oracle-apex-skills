@@ -41,12 +41,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append one VARCHAR2 value to an APEX collection.
+
 ```sql
+declare
+    l_values apex_t_varchar2;
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_value => 'EXAMPLE'
-    );
+    apex_string.push(l_values, 'OPEN');
+    apex_string.push(l_values, 'PENDING');
 end;
 /
 ```

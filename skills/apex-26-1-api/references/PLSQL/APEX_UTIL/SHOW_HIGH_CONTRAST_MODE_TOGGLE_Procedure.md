@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Print the high contrast toggle directly to the response.
+
 ```sql
 begin
-    apex_util.SHOW_HIGH_CONTRAST_MODE_TOGGLE(
-        p_on_message => to_clob('Example text'),
-        p_off_message => to_clob('Example text')
-    );
+    apex_util.show_high_contrast_mode_toggle(
+        p_on_message  => 'Enable high contrast mode',
+        p_off_message => 'Disable high contrast mode');
 end;
 /
 ```

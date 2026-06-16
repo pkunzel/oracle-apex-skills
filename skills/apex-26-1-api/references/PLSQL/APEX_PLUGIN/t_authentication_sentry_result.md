@@ -22,5 +22,18 @@ Use this page when code needs the `APEX_PLUGIN.t_authentication_sentry_result` t
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Authentication plug-ins use the authentication records in their sentry, authentication, invalid-session, logout, and Ajax callbacks.
 
+```sql
+function authenticate_user (
+    p_authentication in apex_plugin.t_authentication,
+    p_plugin         in apex_plugin.t_plugin )
+    return apex_plugin.t_authentication_auth_result
+is
+    l_result apex_plugin.t_authentication_auth_result;
+begin
+    apex_debug.info('Authentication plug-in invoked: %s', p_authentication.name);
+    return l_result;
+end;
+/
+```

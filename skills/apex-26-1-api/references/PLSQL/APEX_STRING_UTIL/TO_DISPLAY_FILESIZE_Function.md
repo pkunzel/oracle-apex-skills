@@ -40,14 +40,12 @@ Returns the file size with a unit.
 
 ## Simple Example
 
+Show a friendly file-size label from a byte count.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.TO_DISPLAY_FILESIZE(
-        p_size_in_bytes => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_FILE_SIZE_LABEL := apex_string_util.to_display_filesize(
+        p_size_in_bytes => :P10_FILE_SIZE_BYTES);
 end;
 /
 ```

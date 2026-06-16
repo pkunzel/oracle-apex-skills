@@ -39,15 +39,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Publish a trusted shared component, such as an email template selected from APEX metadata.
 
 ```sql
 begin
-    apex_shared_component.PUBLISH(
-        p_component_type => null,
-        p_component_id => 1
-    );
+    apex_shared_component.publish(
+        p_component_type => apex_shared_component.c_component_email_template,
+        p_component_id   => :P50_EMAIL_TEMPLATE_ID);
 end;
 /
 ```
-

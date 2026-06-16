@@ -42,15 +42,15 @@ CLOB
 
 ## Simple Example
 
+Read a CLOB workflow variable for display or audit.
+
 ```sql
 declare
-    l_result CLOB;
+    l_payload clob;
 begin
-    l_result := apex_workflow.GET_VARIABLE_CLOB_VALUE(
-        p_instance_id => 1,
-        p_variable_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_payload := apex_workflow.get_variable_clob_value(
+        p_instance_id        => :P20_WORKFLOW_ID,
+        p_variable_static_id => 'REQUEST_PAYLOAD');
 end;
 /
 ```

@@ -40,14 +40,12 @@ This function returns a domain from a url or email.
 
 ## Simple Example
 
+Normalize a URL down to its domain before grouping links.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.GET_DOMAIN(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_LINK_DOMAIN := apex_string_util.get_domain(
+        p_string => :P10_URL);
 end;
 /
 ```

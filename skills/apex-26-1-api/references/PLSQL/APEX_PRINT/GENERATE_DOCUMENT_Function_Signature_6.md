@@ -48,24 +48,22 @@ APEX_PRINT.GENERATE_DOCUMENT (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this overload when both the report query and the template object are configured outside the current PL/SQL block.
 
 ```sql
 declare
-    l_result BLOB;
+    l_pdf blob;
 begin
-    l_result := apex_print.GENERATE_DOCUMENT(
-        p_application_id => 1,
-        p_report_query_static_id => to_clob('Example text'),
-        p_template_type => null,
-        p_template_bucket => 'EXAMPLE',
-        p_template_namespace => 'EXAMPLE',
-        p_template_object => 'EXAMPLE',
-        p_output_type => null,
-        p_output_password => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_pdf := apex_print.generate_document(
+        p_application_id         => :APP_ID,
+        p_report_query_static_id => 'ORDER_SUMMARY_QUERY',
+        p_template_type          => apex_print.c_template_docx,
+        p_template_bucket        => 'apex-print-templates',
+        p_template_namespace     => 'tenantnamespace',
+        p_template_object        => 'orders/order-summary.docx',
+        p_output_type            => apex_print.c_output_pdf);
 end;
 /
 ```
-

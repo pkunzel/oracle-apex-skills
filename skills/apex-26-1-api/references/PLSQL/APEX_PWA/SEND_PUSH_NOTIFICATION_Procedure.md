@@ -47,19 +47,23 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Send a short notification to a subscribed user and use an APEX-generated target URL.
 
 ```sql
 begin
-    apex_pwa.SEND_PUSH_NOTIFICATION(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_title => 'EXAMPLE',
-        p_body => to_clob('Example text'),
-        p_icon_url => 'EXAMPLE',
-        p_target_url => 'EXAMPLE'
-    );
+    apex_pwa.send_push_notification(
+        p_application_id => :APP_ID,
+        p_user_name      => :P20_ASSIGNEE,
+        p_title          => 'Task assigned',
+        p_body           => 'Task ' || :P20_TASK_ID || ' is waiting for review.',
+        p_icon_url       => apex_mail.get_images_url || 'app-icon-192.png',
+        p_target_url     => apex_page.get_url(
+                                p_application => :APP_ID,
+                                p_page        => 20,
+                                p_items       => 'P20_TASK_ID',
+                                p_values      => :P20_TASK_ID));
 end;
 /
 ```
-

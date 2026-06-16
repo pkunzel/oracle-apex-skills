@@ -32,17 +32,16 @@ This function returns the value of the specified item as NUMBER. Parent topic: A
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Read a numeric item with the item format mask applied.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_task_id number;
 begin
-    l_result := apex_session_state.GET_NUMBER(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_task_id := apex_session_state.get_number(
+        p_item => 'P10_TASK_ID');
 end;
 /
 ```
-

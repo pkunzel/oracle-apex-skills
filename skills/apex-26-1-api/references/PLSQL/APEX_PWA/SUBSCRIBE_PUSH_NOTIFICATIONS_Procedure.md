@@ -41,16 +41,16 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this from a trusted Ajax callback that receives the browser-generated subscription JSON.
 
 ```sql
 begin
-    apex_pwa.SUBSCRIBE_PUSH_NOTIFICATIONS(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_subscription_interface => 'EXAMPLE'
-    );
+    apex_pwa.subscribe_push_notifications(
+        p_application_id         => :APP_ID,
+        p_user_name              => :APP_USER,
+        p_subscription_interface => :P10_PUSH_SUBSCRIPTION_JSON);
 end;
 /
 ```
-

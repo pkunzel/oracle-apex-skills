@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Resolve a security group id back to a workspace name.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_workspace varchar2(255);
 begin
-    l_result := apex_util.FIND_WORKSPACE(
-        p_security_group_id => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_workspace := apex_util.find_workspace(
+        p_security_group_id => apex_util.find_security_group_id('MY_WORKSPACE'));
 end;
 /
 ```

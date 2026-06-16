@@ -41,16 +41,16 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Format a follow-up entry for a feedback record.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_follow_up varchar2(4000);
 begin
-    l_result := apex_util.GET_FEEDBACK_FOLLOW_UP(
-        p_feedback_id => 1,
-        p_row => 1,
-        p_template => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_follow_up := apex_util.get_feedback_follow_up(
+        p_feedback_id => :P50_FEEDBACK_ID,
+        p_row         => 1,
+        p_template    => '#CREATED_ON# by #CREATED_BY#: #FOLLOW_UP#');
 end;
 /
 ```

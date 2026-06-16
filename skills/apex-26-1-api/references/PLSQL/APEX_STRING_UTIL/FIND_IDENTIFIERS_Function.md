@@ -42,15 +42,15 @@ Returns an array of identifiers present in a string.
 
 ## Simple Example
 
+Find ticket identifiers such as INC10042 in a message body.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_ids apex_t_varchar2;
 begin
-    l_result := apex_string_util.FIND_IDENTIFIERS(
-        p_string => 'EXAMPLE',
-        p_prefix => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_ids := apex_string_util.find_identifiers(
+        p_string => :P10_MESSAGE_TEXT,
+        p_prefix => 'INC');
 end;
 /
 ```

@@ -44,18 +44,17 @@ GREP (
 
 ## Simple Example
 
+Filter an APEX string table down to page item names for a specific page.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_names   apex_t_varchar2 := apex_t_varchar2('P10_STATUS', 'P10_OWNER', 'P20_STATUS');
+    l_matches apex_t_varchar2;
 begin
-    l_result := apex_string.GREP(
-        p_table => 'EXAMPLE',
-        p_pattern => 'EXAMPLE',
-        p_modifier => 'EXAMPLE',
-        p_subexpression => 'EXAMPLE',
-        p_limit => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_matches := apex_string.grep(
+        p_table    => l_names,
+        p_pattern  => '^P10_',
+        p_modifier => 'i');
 end;
 /
 ```

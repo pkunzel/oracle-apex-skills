@@ -46,21 +46,17 @@ Return Description mdsys.sdo_geometry The geometry for the polygon that approxim
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Build a circle polygon in meters for radius searches around a longitude/latitude point.
 
 ```sql
-declare
-    l_result MDSYS.SDO_GEOMETRY;
-begin
-    l_result := apex_spatial.CIRCLE_POLYGON(
-        p_lon => 1,
-        p_lat => 1,
-        p_radius => 1,
-        p_arc_tolerance => 1,
-        p_srid => null
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select customer_id
+  from customer_locations
+ where sdo_anyinteract(
+           geom,
+           apex_spatial.circle_polygon(
+               p_lon    => :P10_LONGITUDE,
+               p_lat    => :P10_LATITUDE,
+               p_radius => 5000)) = 'TRUE';
 ```
-

@@ -32,17 +32,16 @@ This function returns the value of the specified item as TIMESTAMP. Parent topic
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Read timestamp item state as a TIMESTAMP value.
 
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_due_at timestamp;
 begin
-    l_result := apex_session_state.GET_TIMESTAMP(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_due_at := apex_session_state.get_timestamp(
+        p_item => 'P10_DUE_AT');
 end;
 /
 ```
-

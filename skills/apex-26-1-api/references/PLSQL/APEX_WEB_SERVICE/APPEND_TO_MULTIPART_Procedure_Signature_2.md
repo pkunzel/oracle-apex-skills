@@ -47,15 +47,17 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add a text field to a multipart/form-data request.
+
 ```sql
+declare
+    l_parts apex_web_service.t_multipart_parts;
 begin
-    apex_web_service.APPEND_TO_MULTIPART(
-        p_multipart => null,
-        p_name => 'EXAMPLE',
-        p_filename => 'EXAMPLE',
-        p_content_type => to_clob('Example text'),
-        p_body => to_clob('Example text')
-    );
+    apex_web_service.append_to_multipart(
+        p_multipart    => l_parts,
+        p_name         => 'metadata',
+        p_content_type => 'application/json',
+        p_body         => json_object('orderId' value :P10_ORDER_ID returning clob));
 end;
 /
 ```

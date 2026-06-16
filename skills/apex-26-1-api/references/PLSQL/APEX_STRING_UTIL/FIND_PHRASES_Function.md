@@ -42,15 +42,15 @@ This function returns an array of phrases that were found, without duplicates.
 
 ## Simple Example
 
+Detect known business phrases in a text value.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_found apex_t_varchar2;
 begin
-    l_result := apex_string_util.FIND_PHRASES(
-        p_phrases => 'EXAMPLE',
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_found := apex_string_util.find_phrases(
+        p_phrases => apex_t_varchar2('urgent review', 'customer escalation'),
+        p_string  => :P10_NOTES);
 end;
 /
 ```

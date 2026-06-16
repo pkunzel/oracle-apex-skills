@@ -22,7 +22,7 @@ This member is marked deprecated in the APEX 26.1 documentation. Prefer the docu
 
 ```sql
 FUNCTION get_build_option_status (
-    p_application_id     IN NUMBER
+    p_application_id     IN NUMBER,
     p_build_option_name  IN VARCHAR2 )
     return VARCHAR2;
 ```
@@ -42,16 +42,15 @@ FUNCTION get_build_option_status (
 
 ## Simple Example
 
+Legacy only. Check a build option by name in older code.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_status varchar2(255);
 begin
-    l_result := apex_util.GET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_build_option_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_status := apex_util.get_build_option_status(
+        p_application_id    => :APP_ID,
+        p_build_option_name => 'Feature: Bulk Upload');
 end;
 /
 ```
-

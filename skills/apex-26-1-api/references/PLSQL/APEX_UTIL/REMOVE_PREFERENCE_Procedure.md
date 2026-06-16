@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove a saved preference for the current user.
+
 ```sql
 begin
-    apex_util.REMOVE_PREFERENCE(
-        p_preference => 'EXAMPLE',
-        p_user => 'USER'
-    );
+    apex_util.remove_preference(
+        p_preference => 'ORDER_REPORT_VIEW',
+        p_user       => :APP_USER);
 end;
 /
 ```

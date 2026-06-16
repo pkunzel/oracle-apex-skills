@@ -27,15 +27,21 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Expose the Ajax identifier during rendering and use it from client JavaScript with apex.server.plugin.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_ajax_identifier varchar2(4000);
 begin
-    l_result := apex_plugin.GET_AJAX_IDENTIFIER;
-    sys.dbms_output.put_line('Result captured.');
+    l_ajax_identifier := apex_plugin.get_ajax_identifier;
+
+    apex_javascript.add_onload_code(
+        p_code => 'myRegion.init(' ||
+                  apex_javascript.add_value(p_region.dom_id) ||
+                  apex_javascript.add_value(l_ajax_identifier, false) ||
+                  ');');
 end;
 /
 ```
-

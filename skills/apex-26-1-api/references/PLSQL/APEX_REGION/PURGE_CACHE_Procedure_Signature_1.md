@@ -43,17 +43,28 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Purge a specific cached region by numeric region ID after changing data that feeds it.
 
 ```sql
+declare
+    l_region_id number;
 begin
-    apex_region.PURGE_CACHE(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_region_id => 1,
-        p_current_session_only => true
-    );
+    update orders
+       set status = :P10_STATUS
+     where order_id = :P10_ORDER_ID;
+
+    l_region_id := apex_region.get_id(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_dom_static_id  => 'orders_report');
+
+    apex_region.purge_cache(
+        p_application_id       => :APP_ID,
+        p_page_id              => 10,
+        p_region_id            => l_region_id,
+        p_current_session_only => true);
 end;
 /
 ```
-

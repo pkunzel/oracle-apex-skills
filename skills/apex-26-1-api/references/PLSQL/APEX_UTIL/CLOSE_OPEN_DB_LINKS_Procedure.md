@@ -32,9 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Close database links opened during the request after remote work is complete.
+
 ```sql
 begin
-    apex_util.CLOSE_OPEN_DB_LINKS;
+    apex_util.close_open_db_links;
 end;
 /
 ```

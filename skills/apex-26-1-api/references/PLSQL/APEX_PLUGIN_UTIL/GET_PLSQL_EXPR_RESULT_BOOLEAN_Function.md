@@ -38,19 +38,17 @@ RETURN BOOLEAN;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the Boolean expression helper when a plug-in attribute stores a PL/SQL expression expected to return TRUE or FALSE.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_show_badge boolean;
 begin
-    l_result := apex_plugin_util.GET_PLSQL_EXPR_RESULT_BOOLEAN(
-        p_plsql_expression => to_clob('Example text'),
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_show_badge := apex_plugin_util.get_plsql_expr_result_boolean(
+        p_plsql_expression => p_region.attributes.get_varchar2('SHOW_BADGE'),
+        p_auto_bind_items  => true);
 end;
 /
 ```
-

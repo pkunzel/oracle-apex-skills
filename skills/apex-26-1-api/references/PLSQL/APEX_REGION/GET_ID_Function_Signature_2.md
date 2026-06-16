@@ -38,19 +38,18 @@ APEX_REGION.GET_ID (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the region-name overload only when names are controlled and unique on the page.
 
 ```sql
 declare
-    l_result NUMBER;
+    l_region_id number;
 begin
-    l_result := apex_region.GET_ID(
-        p_application_id => 1,
-        p_page_id => 1,
-        p_name => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_region_id := apex_region.get_id(
+        p_application_id => :APP_ID,
+        p_page_id        => 10,
+        p_name           => 'Orders');
 end;
 /
 ```
-

@@ -46,18 +46,20 @@ Parameter Description p_request_body Request body (substitutions replaced or bui
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+In REST Data Source DML plug-ins, let APEX substitute column placeholders into the configured request-body template.
 
 ```sql
+declare
+    l_request_body clob := p_request_body_template;
 begin
-    apex_plugin_util.BUILD_REQUEST_BODY(
-        p_request_format => null,
-        p_profile_columns => null,
-        p_values_context => to_clob('Example text'),
+    apex_plugin_util.build_request_body(
+        p_request_format   => p_web_source.request_format,
+        p_profile_columns  => p_web_source.profile_columns,
+        p_values_context   => p_values_context,
         p_build_when_empty => true,
-        p_request_body => to_clob('Example text')
-    );
+        p_request_body     => l_request_body);
 end;
 /
 ```
-

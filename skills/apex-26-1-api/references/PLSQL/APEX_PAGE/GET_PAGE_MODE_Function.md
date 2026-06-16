@@ -36,18 +36,21 @@ FUNCTION GET_PAGE_MODE (
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the page mode when a process needs different behavior for normal and dialog pages.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_mode varchar2(30);
 begin
-    l_result := apex_page.GET_PAGE_MODE(
-        p_application_id => 1,
-        p_page_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_mode := apex_page.get_page_mode(
+        p_application_id => :APP_ID,
+        p_page_id        => 42);
+
+    apex_debug.info(
+        p_message => 'Page 42 mode: %s',
+        p0        => l_mode);
 end;
 /
 ```
-

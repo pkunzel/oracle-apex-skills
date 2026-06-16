@@ -42,15 +42,20 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Legacy only. Prefer APEX_STRING.JOIN for new code.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_values apex_application_global.vc_arr2;
+    l_string varchar2(4000);
 begin
-    l_result := apex_util.TABLE_TO_STRING(
-        p_table => null,
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values(1) := 'APP_USERS';
+    l_values(2) := 'REPORT_VIEWERS';
+    l_values(3) := 'APP_MANAGERS';
+
+    l_string := apex_util.table_to_string(
+        p_table  => l_values,
+        p_string => ':');
 end;
 /
 ```

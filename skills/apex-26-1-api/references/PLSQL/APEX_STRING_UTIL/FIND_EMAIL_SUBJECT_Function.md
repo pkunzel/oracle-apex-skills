@@ -40,14 +40,12 @@ This function returns the subject line.
 
 ## Simple Example
 
+Read a subject line from raw mail header text.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.FIND_EMAIL_SUBJECT(
-        p_string => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_SUBJECT := apex_string_util.find_email_subject(
+        p_string => :P10_RAW_EMAIL_HEADERS);
 end;
 /
 ```

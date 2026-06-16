@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Write the supporting objects install script to DBMS_OUTPUT.
+
 ```sql
 begin
-    apex_util.GET_SUPPORTING_OBJECT_SCRIPT(
-        p_application_id => 1,
-        p_script_type => 'EXAMPLE',
-        p_output_type => 'EXAMPLE'
-    );
+    apex_util.get_supporting_object_script(
+        p_application_id => :APP_ID,
+        p_script_type    => apex_util.c_install_script,
+        p_output_type    => apex_util.c_output_as_dbms_output);
 end;
 /
 ```

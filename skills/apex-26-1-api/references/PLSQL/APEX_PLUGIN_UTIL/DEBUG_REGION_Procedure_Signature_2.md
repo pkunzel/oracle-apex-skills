@@ -41,16 +41,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this while diagnosing a region plug-in render or Ajax callback.
 
 ```sql
 begin
-    apex_plugin_util.DEBUG_REGION(
-        p_plugin => null,
-        p_region => null,
-        p_is_printer_friendly => true
-    );
+    apex_plugin_util.debug_region(
+        p_plugin => p_plugin,
+        p_region => p_region);
+
+    apex_debug.info('Rendering region DOM id %s', p_region.dom_id);
 end;
 /
 ```
-

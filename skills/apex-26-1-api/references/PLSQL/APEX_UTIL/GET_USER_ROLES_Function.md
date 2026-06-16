@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the developer role string for a workspace user.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_roles varchar2(4000);
 begin
-    l_result := apex_util.GET_USER_ROLES(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_roles := apex_util.get_user_roles(
+        p_username => 'JSMITH');
 end;
 /
 ```

@@ -21,7 +21,7 @@ APEX_MAIL.ADD_ATTACHMENT (
     p_mail_id           IN NUMBER,
     p_attachment        IN BLOB,
     p_filename          IN VARCHAR2,
-    p_mime_type         IN VARCHAR2
+    p_mime_type         IN VARCHAR2,
     p_content_id        IN VARCHAR2    DEFAULT NULL );
 ```
 
@@ -45,18 +45,31 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Queue the message first, keep the returned mail id, then add one BLOB attachment for that same message.
 
 ```sql
+declare
+    l_mail_id     number;
+    l_invoice_pdf blob;
 begin
-    apex_mail.ADD_ATTACHMENT(
-        p_mail_id => 1,
-        p_attachment => null,
-        p_filename => 'EXAMPLE',
-        p_mime_type => 'EXAMPLE',
-        p_content_id => to_clob('Example text')
-    );
+    select file_content
+      into l_invoice_pdf
+      from invoice_files
+     where invoice_id = :P42_INVOICE_ID;
+
+    l_mail_id := apex_mail.send(
+        p_to   => :P42_BILL_TO_EMAIL,
+        p_from => 'billing@example.com',
+        p_subj => 'Invoice ' || :P42_INVOICE_NUMBER,
+        p_body => 'Your invoice is attached.');
+
+    apex_mail.add_attachment(
+        p_mail_id    => l_mail_id,
+        p_attachment => l_invoice_pdf,
+        p_filename   => 'invoice-' || :P42_INVOICE_NUMBER || '.pdf',
+        p_mime_type  => 'application/pdf');
 end;
 /
 ```
-

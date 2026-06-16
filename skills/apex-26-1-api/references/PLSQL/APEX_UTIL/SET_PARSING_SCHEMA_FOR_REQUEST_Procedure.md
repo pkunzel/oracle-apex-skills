@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the parsing schema for a request before running APEX logic that depends on it.
+
 ```sql
 begin
-    apex_util.SET_PARSING_SCHEMA_FOR(
-        p_schema => 'EXAMPLE'
-    );
+    apex_util.set_parsing_schema_for_request(
+        p_schema => 'APP_DATA');
 end;
 /
 ```

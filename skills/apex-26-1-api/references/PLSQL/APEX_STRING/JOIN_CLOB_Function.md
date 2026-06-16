@@ -40,16 +40,16 @@ APEX_STRING.JOIN_CLOB (
 
 ## Simple Example
 
+Join many varchar2 values into a CLOB when the result might exceed VARCHAR2 limits.
+
 ```sql
 declare
-    l_result CLOB;
+    l_lines apex_t_varchar2 := apex_t_varchar2('Order', 'Customer', 'Total');
+    l_csv   clob;
 begin
-    l_result := apex_string.JOIN_CLOB(
-        p_table => 'EXAMPLE',
-        p_sep => 'EXAMPLE',
-        p_dur => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_csv := apex_string.join_clob(
+        p_table => l_lines,
+        p_sep   => chr(10));
 end;
 /
 ```

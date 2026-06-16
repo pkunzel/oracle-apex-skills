@@ -38,17 +38,16 @@ RETURN VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+This helper is deprecated. Existing legacy plug-ins can use it to convert item names into a jQuery selector.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_selector varchar2(4000);
 begin
-    l_result := apex_plugin_util.PAGE_ITEM_NAMES_TO_JQUERY(
-        p_page_item_names => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_selector := apex_plugin_util.page_item_names_to_jquery(
+        p_page_item_names => 'P10_STATUS,P10_OWNER');
 end;
 /
 ```
-

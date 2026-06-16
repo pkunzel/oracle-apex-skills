@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the language currently associated with the APEX session.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_language varchar2(255);
 begin
-    l_result := apex_util.GET_SESSION_LANG;
-    sys.dbms_output.put_line('Result captured.');
+    l_language := apex_util.get_session_lang;
 end;
 /
 ```

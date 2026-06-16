@@ -32,12 +32,13 @@ The schema name which contains the APEX engine.
 
 ## Simple Example
 
+Read the parsing schema that owns the installed APEX engine.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_apex_owner varchar2(128);
 begin
-    l_result := apex_util.GET_APEX_OWNER;
-    sys.dbms_output.put_line('Result captured.');
+    l_apex_owner := apex_util.get_apex_owner;
 end;
 /
 ```

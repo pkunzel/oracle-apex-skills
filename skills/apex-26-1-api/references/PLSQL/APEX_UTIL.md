@@ -2,26 +2,24 @@
 
 Source: [Oracle APEX 26.1 API Reference](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_UTIL.html)
 
-Status: curated first-pass reference.
+Status: reviewed against the Oracle APEX 26.1 API reference, with examples curated for human and LLM use.
 
 ## Purpose
 
-`APEX_UTIL` is a broad utility package for APEX session state, users, preferences, URLs, workspace context, cache management, file helpers, printing helpers, account state, accessibility toggles, and legacy compatibility APIs.
+`APEX_UTIL` is a broad utility package for Oracle APEX runtime programming. It includes APIs for session state, workspace context, user and group administration, user preferences, cache management, URL preparation, printing helpers, feedback, files, accessibility toggles, and legacy compatibility routines.
 
-Because it is broad, use it carefully. Many members are administrative or security-sensitive, and several older members are deprecated.
+Because the package is intentionally broad, choose the most specific API available for new code. Prefer packages such as `APEX_SESSION`, `APEX_SESSION_STATE`, `APEX_AUTHORIZATION`, `APEX_PAGE`, `APEX_THEME`, `APEX_IR`, or `APEX_PRINT` when they express the intent more directly.
 
 ## When To Use
 
 Use `APEX_UTIL` when:
 
-- Server-side code needs to set or get APEX session state.
-- A script needs workspace/security group context.
-- The app manages APEX workspace users or user preferences.
-- Code needs to prepare APEX URLs with checksum/session behavior.
-- A process needs to clear app/page/user cache.
-- A page must support print/download helpers.
-
-Prefer newer, more specific packages when available, such as `APEX_SESSION`, `APEX_SESSION_STATE`, `APEX_AUTHORIZATION`, `APEX_CREDENTIAL`, or dedicated region/report APIs.
+- Server-side APEX code needs to set or read session state.
+- A batch script needs to set workspace/security group context before using APEX APIs.
+- An administrator flow manages APEX workspace users, groups, or account state.
+- Code needs to prepare an existing `f?p` URL with checksum or zero-session handling.
+- A process clears APEX page, region, user, or application cache.
+- An app uses legacy printing, feedback, file, or compatibility helpers.
 
 ## Common Member Groups
 
@@ -30,27 +28,29 @@ Prefer newer, more specific packages when available, such as `APEX_SESSION`, `AP
 | Session state | `SET_SESSION_STATE`, `GET_SESSION_STATE`, `GET_NUMERIC_SESSION_STATE`, `FETCH_APP_ITEM` |
 | Workspace context | `SET_WORKSPACE`, `FIND_SECURITY_GROUP_ID`, `SET_SECURITY_GROUP_ID`, `FIND_WORKSPACE` |
 | URLs/navigation | `PREPARE_URL`, `REDIRECT_URL`, `HOST_URL` |
-| Preferences | `SET_PREFERENCE`, `GET_PREFERENCE`, `REMOVE_PREFERENCE`, sort preferences |
-| User management | `CREATE_USER`, `EDIT_USER`, `REMOVE_USER`, `GET_USER_ID`, `GET_USERNAME`, `LOCK_ACCOUNT`, `UNLOCK_ACCOUNT` |
-| Cache | `CLEAR_APP_CACHE`, `CLEAR_PAGE_CACHE`, `CLEAR_USER_CACHE`, `CACHE_PURGE_*` |
-| Files/printing | `GET_BLOB_FILE_SRC`, `GET_FILE`, `GET_PRINT_DOCUMENT`, `DOWNLOAD_PRINT_DOCUMENT` |
-| Accessibility/session settings | high contrast, screen reader, session language, territory, time zone |
-| Deprecated legacy APIs | IR helpers, build-option status helpers, `STRING_TO_TABLE`, `TABLE_TO_STRING`, `URL_ENCODE` |
+| Preferences | `SET_PREFERENCE`, `GET_PREFERENCE`, `REMOVE_PREFERENCE`, `REMOVE_SORT_PREFERENCES` |
+| User and group administration | `CREATE_USER`, `EDIT_USER`, `FETCH_USER`, `REMOVE_USER`, `LOCK_ACCOUNT`, `UNLOCK_ACCOUNT`, `CREATE_USER_GROUP`, `SET_GROUP_USER_GRANTS` |
+| Cache | `CLEAR_APP_CACHE`, `CLEAR_PAGE_CACHE`, `CLEAR_USER_CACHE`, `CACHE_PURGE_*`, `PURGE_REGIONS_*` |
+| Files and printing | `GET_BLOB_FILE_SRC`, `GET_FILE`, `GET_PRINT_DOCUMENT`, `DOWNLOAD_PRINT_DOCUMENT` |
+| Feedback | `SUBMIT_FEEDBACK`, `REPLY_TO_FEEDBACK`, `DELETE_FEEDBACK`, `GET_FEEDBACK_FOLLOW_UP` |
+| Accessibility/session preferences | high contrast, screen reader, language, territory, time zone, lifetime, idle timeout |
+| Deprecated legacy APIs | legacy IR helpers, build-option helpers, `STRING_TO_TABLE`, `TABLE_TO_STRING`, `URL_ENCODE`, application status helpers |
 
 ## Session State
 
-Set session state from PL/SQL:
+Set a page item in the current APEX session:
 
 ```sql
 begin
     apex_util.set_session_state(
-        p_name  => 'P10_STATUS',
-        p_value => 'APPROVED');
+        p_name   => 'P10_STATUS',
+        p_value  => 'APPROVED',
+        p_commit => false);
 end;
 /
 ```
 
-Read session state:
+Read it later in PL/SQL:
 
 ```sql
 declare
@@ -61,54 +61,7 @@ end;
 /
 ```
 
-Use `APEX_SESSION.CREATE_SESSION` before calling this from scripts outside a normal APEX request.
-
-## Prepare A URL
-
-Use `PREPARE_URL` when generating an APEX URL that needs the correct session and checksum behavior:
-
-```sql
-declare
-    l_url varchar2(4000);
-begin
-    l_url := apex_util.prepare_url(
-        p_url => 'f?p=' || :APP_ID || ':20:' || :APP_SESSION || '::NO::P20_ID:' || :P10_ID);
-end;
-/
-```
-
-Prefer `APEX_PAGE.GET_URL` when it fits the use case. Use `PREPARE_URL` for legacy URL strings and checksum preparation.
-
-## Preferences
-
-Store a user preference:
-
-```sql
-begin
-    apex_util.set_preference(
-        p_preference => 'DEFAULT_REPORT_VIEW',
-        p_value      => 'CARDS',
-        p_user       => :APP_USER);
-end;
-/
-```
-
-Read it later:
-
-```sql
-declare
-    l_view varchar2(100);
-begin
-    l_view := apex_util.get_preference(
-        p_preference => 'DEFAULT_REPORT_VIEW',
-        p_user       => :APP_USER);
-end;
-/
-```
-
-## Workspace Context For Scripts
-
-Assuming a script must run outside a browser request:
+From a script outside a normal browser request, create APEX context before calling session APIs:
 
 ```sql
 begin
@@ -126,30 +79,45 @@ end;
 /
 ```
 
-Use the exact workspace and application context required by the operation.
+## Prepare A URL
 
-## User Administration
-
-Administrative user operations should be tightly controlled:
+`PREPARE_URL` is useful when you already have an `f?p` URL string and need APEX to add the correct checksum or zero-session behavior. Prefer `APEX_PAGE.GET_URL` for new URL construction when possible.
 
 ```sql
+declare
+    l_url varchar2(4000);
 begin
-    apex_util.lock_account(
-        p_user_name => 'SCOTT');
+    l_url := apex_util.prepare_url(
+        p_url           => 'f?p=' || :APP_ID || ':20:' || :APP_SESSION ||
+                           '::NO::P20_ORDER_ID:' || apex_escape.url(:P10_ORDER_ID),
+        p_checksum_type => 'SESSION',
+        p_url_charset   => 'UTF-8');
 end;
 /
 ```
 
-Before exposing user operations in an app, enforce authorization with an authorization scheme or explicit server-side check.
+## User Administration
+
+User and group APIs operate on APEX workspace accounts. They should only run in tightly authorized administrator flows:
+
+```sql
+begin
+    apex_util.lock_account(
+        p_user_name => 'JSMITH');
+end;
+/
+```
+
+For developer or administrator accounts, remember that `CREATE_USER` creates the APEX repository user. If the development environment authenticates with another scheme, such as database accounts, that account must also exist there.
 
 ## Safety Guidance
 
-- Many `APEX_UTIL` members change APEX user/session/workspace state. Treat them as privileged APIs.
-- Prefer specialized packages when they express the intent more clearly.
-- Avoid deprecated APIs for new work.
-- Use `APEX_SESSION` when a script needs APEX context.
-- Never concatenate untrusted values into URLs without escaping/checksum handling.
-- Do not expose user-management operations without strict authorization.
+- Many members change APEX user, session, workspace, or application state. Treat them as privileged APIs.
+- Prefer specialized modern packages when they fit the task.
+- Do not use deprecated APIs in new work unless you are maintaining legacy code.
+- Use `APEX_SESSION` when a non-browser script needs APEX application/session context.
+- Check authorization before exposing user, group, cache, preference, or feedback administration in an application.
+- Prepare or generate URLs with checksum-aware APIs; do not concatenate untrusted values into navigation targets without escaping.
 
 <!-- BEGIN GENERATED MEMBER LINKS -->
 

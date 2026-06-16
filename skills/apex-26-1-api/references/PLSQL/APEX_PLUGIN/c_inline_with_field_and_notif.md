@@ -22,5 +22,26 @@ Use this page when code needs the `APEX_PLUGIN.c_inline_with_field_and_notif` to
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use validation display constants when returning item validation errors from a plug-in.
 
+```sql
+function validate_hex_color (
+    p_item   in apex_plugin.t_item,
+    p_plugin in apex_plugin.t_plugin,
+    p_value  in varchar2 )
+    return apex_plugin.t_item_validation_result
+is
+    l_result apex_plugin.t_item_validation_result;
+begin
+    if p_value is not null
+       and not regexp_like(p_value, '^#[[:xdigit:]]{6})
+    then
+        l_result.message := p_item.plain_label || ' must be a hex color like #336699.';
+        l_result.display_location := apex_plugin.c_inline_with_field_and_notif;
+        l_result.page_item_name := p_item.name;
+    end if;
+
+    return l_result;
+end;
+/
+```

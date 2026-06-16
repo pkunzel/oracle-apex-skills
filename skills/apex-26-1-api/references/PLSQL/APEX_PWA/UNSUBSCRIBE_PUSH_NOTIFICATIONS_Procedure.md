@@ -41,16 +41,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Unsubscribe the current user from all push subscriptions for the application.
 
 ```sql
 begin
-    apex_pwa.UNSUBSCRIBE_PUSH_NOTIFICATIONS(
-        p_application_id => 1,
-        p_user_name => 'USER',
-        p_subscription_interface => 'EXAMPLE'
-    );
+    apex_pwa.unsubscribe_push_notifications(
+        p_application_id => :APP_ID,
+        p_user_name      => :APP_USER);
 end;
 /
 ```
-

@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the database edition for the current APEX request.
+
 ```sql
 begin
-    apex_util.SET_EDITION(
-        p_edition => 'EXAMPLE'
-    );
+    apex_util.set_edition(
+        p_edition => 'APP_V2');
 end;
 /
 ```

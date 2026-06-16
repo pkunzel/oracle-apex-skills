@@ -43,17 +43,17 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the lon/lat convenience routine for WGS 84 geometry columns.
 
 ```sql
 begin
-    apex_spatial.INSERT_GEOM_METADATA_LONLAT(
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_tolerance => 1,
-        p_create_index_name => true
-    );
+    apex_spatial.insert_geom_metadata_lonlat(
+        p_table_name        => 'CUSTOMER_LOCATIONS',
+        p_column_name       => 'GEOM',
+        p_tolerance         => 1,
+        p_create_index_name => 'CUSTOMER_LOCATIONS_SX');
 end;
 /
 ```
-

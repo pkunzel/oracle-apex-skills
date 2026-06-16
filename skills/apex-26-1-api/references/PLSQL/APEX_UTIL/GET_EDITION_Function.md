@@ -29,12 +29,13 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read the edition set for the current APEX request.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_edition varchar2(128);
 begin
-    l_result := apex_util.GET_EDITION;
-    sys.dbms_output.put_line('Result captured.');
+    l_edition := apex_util.get_edition;
 end;
 /
 ```

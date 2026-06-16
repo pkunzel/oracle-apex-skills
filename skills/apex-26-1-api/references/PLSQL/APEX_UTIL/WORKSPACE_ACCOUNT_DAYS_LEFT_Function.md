@@ -36,14 +36,14 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Show how many days remain before a workspace account expires.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_days_left number;
 begin
-    l_result := apex_util.WORKSPACE_ACCOUNT_DAYS_LEFT(
-        p_user_name => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_days_left := apex_util.workspace_account_days_left(
+        p_user_name => 'JSMITH');
 end;
 /
 ```

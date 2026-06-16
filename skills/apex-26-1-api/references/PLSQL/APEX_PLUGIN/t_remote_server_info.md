@@ -22,5 +22,16 @@ Use this page when code needs the `APEX_PLUGIN.t_remote_server_info` topic. Conf
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Flexible Remote Server plug-ins use the APEX-supplied remote server records during configuration instead of hard-coding endpoint details.
 
+```sql
+procedure configure_remote_server (
+    p_plugin        in            apex_plugin.t_plugin,
+    p_remote_server in            apex_plugin.t_remote_server_info,
+    p_config        in out nocopy apex_plugin.t_remote_server_config )
+is
+begin
+    apex_debug.info('Configuring flexible remote server for plug-in %s', p_plugin.name);
+end;
+/
+```

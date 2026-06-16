@@ -42,15 +42,23 @@ true : The user credentials are valid. false : The user credentials are invalid.
 
 ## Simple Example
 
+Validate APEX Accounts credentials in a custom authentication function.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_valid boolean;
 begin
-    l_result := apex_util.IS_LOGIN_PASSWORD_VALID(
-        p_username => 'USER',
-        p_password => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_valid := apex_util.is_login_password_valid(
+        p_username => :P101_USERNAME,
+        p_password => :P101_PASSWORD);
+
+    if l_valid then
+        apex_util.set_authentication_result(0);
+    elsif l_valid is null then
+        apex_util.set_authentication_result(2);
+    else
+        apex_util.set_authentication_result(1);
+    end if;
 end;
 /
 ```

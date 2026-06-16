@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear saved sort preferences for a user.
+
 ```sql
 begin
-    apex_util.REMOVE_SORT_PREFERENCES(
-        p_user => 'USER'
-    );
+    apex_util.remove_sort_preferences(
+        p_user => :APP_USER);
 end;
 /
 ```

@@ -44,18 +44,28 @@ APEX_UTIL.GET_PRINT_DOCUMENT (
 
 ## Simple Example
 
+Create a PDF BLOB from XML held as a CLOB.
+
 ```sql
 declare
-    l_result BLOB;
+    l_xml    clob;
+    l_layout clob;
+    l_pdf    blob;
 begin
-    l_result := apex_util.GET_PRINT_DOCUMENT(
-        p_report_data => to_clob('Example text'),
-        p_report_layout => to_clob('Example text'),
-        p_report_layout_type => 'EXAMPLE',
-        p_document_format => 'EXAMPLE',
-        p_print_server => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_xml := '<ROWSET><ROW><ORDER_ID>' ||
+             apex_escape.html(:P40_ORDER_ID) ||
+             '</ORDER_ID></ROW></ROWSET>';
+
+    select layout_clob
+      into l_layout
+      from report_layouts
+     where layout_code = 'ORDER_DETAIL_XSL';
+
+    l_pdf := apex_util.get_print_document(
+        p_report_data        => l_xml,
+        p_report_layout      => l_layout,
+        p_report_layout_type => 'xsl-fo',
+        p_document_format    => 'pdf');
 end;
 /
 ```

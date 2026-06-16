@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear all session state for the current application.
+
 ```sql
 begin
-    apex_util.CLEAR_APP_CACHE(
-        p_app_id => 'EXAMPLE'
-    );
+    apex_util.clear_app_cache(
+        p_app_id => :APP_ID);
 end;
 /
 ```

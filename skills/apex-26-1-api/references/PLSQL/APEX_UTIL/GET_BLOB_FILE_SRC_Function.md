@@ -42,17 +42,19 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Generate a BLOB download URL for a page item backed by BLOB source columns.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_src varchar2(4000);
 begin
-    l_result := apex_util.GET_BLOB_FILE_SRC(
-        p_item_name => 'EXAMPLE',
-        p_v1 => 'EXAMPLE',
-        p_v2 => 'EXAMPLE',
-        p_content_disposition => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_src := apex_util.get_blob_file_src(
+        p_item_name           => 'P20_PHOTO',
+        p_v1                  => :P20_EMPLOYEE_ID,
+        p_content_disposition => 'inline');
+
+    htp.p('<img alt="Employee photo" src="' ||
+          apex_escape.html_attribute(l_src) || '">');
 end;
 /
 ```

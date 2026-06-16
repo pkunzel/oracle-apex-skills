@@ -40,14 +40,12 @@ This function returns the file name's extension in lower case.
 
 ## Simple Example
 
+Capture a file extension for validation or display.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string_util.GET_FILE_EXTENSION(
-        p_filename => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_EXTENSION := apex_string_util.get_file_extension(
+        p_string => :P10_FILE_NAME);
 end;
 /
 ```

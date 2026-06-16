@@ -39,15 +39,15 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Enable the synchronization schedule after configuration or maintenance is complete.
 
 ```sql
 begin
-    apex_rest_source_sync.ENABLE(
-        p_application_id => 1,
-        p_module_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_rest_source_sync.enable(
+        p_application_id   => :APP_ID,
+        p_module_static_id => 'ORDERS_API');
 end;
 /
 ```
-

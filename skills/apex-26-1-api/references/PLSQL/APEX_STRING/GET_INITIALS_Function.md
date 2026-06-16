@@ -38,15 +38,13 @@ APEX_STRING.GET_INITIALS (
 
 ## Simple Example
 
+Derive a compact avatar label from a user's display name.
+
 ```sql
-declare
-    l_result VARCHAR2;
 begin
-    l_result := apex_string.GET_INITIALS(
-        p_str => 'EXAMPLE',
-        p_cnt => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    :P10_AVATAR_INITIALS := apex_string.get_initials(
+        p_str => :P10_FULL_NAME,
+        p_cnt => 2);
 end;
 /
 ```

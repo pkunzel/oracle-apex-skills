@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Delete the attachment associated with a feedback record.
+
 ```sql
 begin
-    apex_util.DELETE_FEEDBACK_ATTACHMENT(
-        p_feedback_id => 1
-    );
+    apex_util.delete_feedback_attachment(
+        p_feedback_id => :P50_FEEDBACK_ID);
 end;
 /
 ```

@@ -40,18 +40,21 @@ TRUE if synchronization is currently running. FALSE otherwise.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Avoid starting a second synchronization while one is already running.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_rest_source_sync.IS_RUNNING(
-        p_application_id => 1,
-        p_module_static_id => 'EXAMPLE_STATIC_ID'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if not apex_rest_source_sync.is_running(
+        p_module_static_id => 'ORDERS_API',
+        p_application_id   => :APP_ID)
+    then
+        apex_rest_source_sync.synchronize_data(
+            p_module_static_id  => 'ORDERS_API',
+            p_run_in_background => true,
+            p_application_id    => :APP_ID);
+    end if;
 end;
 /
 ```
-

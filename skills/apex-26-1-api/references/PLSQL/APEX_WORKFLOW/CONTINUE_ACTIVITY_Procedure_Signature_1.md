@@ -46,14 +46,20 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Continue a waiting activity by Static ID after validating an external callback.
+
 ```sql
+declare
+    l_params wwv_flow_global.vc_map;
 begin
-    apex_workflow.CONTINUE_ACTIVITY(
-        p_instance_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID',
-        p_activity_params => null,
-        p_activity_status => null
-    );
+    l_params('REVIEW_STATUS') := 'APPROVED';
+    l_params('REVIEWED_BY')   := :APP_USER;
+
+    apex_workflow.continue_activity(
+        p_instance_id     => :P20_WORKFLOW_ID,
+        p_static_id       => 'WAIT_FOR_REVIEW',
+        p_activity_params => l_params,
+        p_activity_status => apex_workflow.c_activity_status_success);
 end;
 /
 ```

@@ -26,15 +26,27 @@ APEX_MAIL.GET_INSTANCE_URL return VARCHAR2;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Build absolute APEX links for email by combining the instance URL with an application URL.
 
 ```sql
 declare
-    l_result VARCHAR2;
+    l_order_url varchar2(4000);
+    l_mail_id   number;
 begin
-    l_result := apex_mail.GET_INSTANCE_URL;
-    sys.dbms_output.put_line('Result captured.');
+    l_order_url := apex_mail.get_instance_url ||
+        apex_page.get_url(
+            p_application => :APP_ID,
+            p_page        => 42,
+            p_items       => 'P42_ORDER_ID',
+            p_values      => :P42_ORDER_ID);
+
+    l_mail_id := apex_mail.send(
+        p_to   => :P42_CUSTOMER_EMAIL,
+        p_from => 'orders@example.com',
+        p_subj => 'Order ' || :P42_ORDER_ID,
+        p_body => 'View your order: ' || l_order_url);
 end;
 /
 ```
-

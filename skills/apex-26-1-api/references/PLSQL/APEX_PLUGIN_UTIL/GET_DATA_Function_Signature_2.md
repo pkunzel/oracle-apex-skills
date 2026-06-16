@@ -54,27 +54,24 @@ RETURN t_column_value_list;
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use GET_DATA for controlled plug-in SQL such as LOV/search results, with APEX handling search filtering and item binding.
 
 ```sql
 declare
-    l_result T_COLUMN_VALUE_LIST;
+    l_rows apex_plugin_util.t_column_value_list;
 begin
-    l_result := apex_plugin_util.GET_DATA(
-        p_sql_statement => to_clob('Example text'),
-        p_min_columns => 1,
-        p_max_columns => 1,
-        p_component_name => 'EXAMPLE',
-        p_search_type => 'EXAMPLE',
-        p_search_column_name => 'EXAMPLE',
-        p_search_string => 'EXAMPLE',
-        p_first_row => 1,
-        p_max_rows => 1,
-        p_auto_bind_items => true,
-        p_bind_list => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_rows := apex_plugin_util.get_data(
+        p_sql_statement      => 'select display_name, user_id from app_users where active_yn = ''Y''',
+        p_min_columns        => 2,
+        p_max_columns        => 2,
+        p_component_name     => p_item.name,
+        p_search_column_name => 'DISPLAY_NAME',
+        p_search_type        => apex_plugin_util.c_search_contains_ignore,
+        p_search_string      => apex_application.g_x01,
+        p_first_row          => 1,
+        p_max_rows           => 25);
 end;
 /
 ```
-

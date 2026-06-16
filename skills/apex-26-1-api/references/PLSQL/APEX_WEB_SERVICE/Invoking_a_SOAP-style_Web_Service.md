@@ -22,5 +22,22 @@ Use this page when code needs the `APEX_WEB_SERVICE.Invoking a SOAP-style Web Se
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Build the SOAP envelope as a CLOB and pass it to MAKE_REQUEST.
+
+```sql
+declare
+    l_envelope clob;
+    l_response sys.xmltype;
+begin
+    l_envelope := q'~<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body><getOrder><orderId>1001</orderId></getOrder></soapenv:Body>
+</soapenv:Envelope>~';
+
+    l_response := apex_web_service.make_request(
+        p_url      => 'https://api.example.com/soap/orders',
+        p_action   => 'urn:getOrder',
+        p_envelope => l_envelope);
+end;
+/
+```
 

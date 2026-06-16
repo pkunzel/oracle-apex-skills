@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove development-mode instances for one workflow definition.
+
 ```sql
 begin
-    apex_workflow.REMOVE_DEVELOPMENT_INSTANCES(
-        p_application_id => 1,
-        p_static_id => 'EXAMPLE_STATIC_ID'
-    );
+    apex_workflow.remove_development_instances(
+        p_application_id => :APP_ID,
+        p_static_id      => 'ORDER_FULFILLMENT');
 end;
 /
 ```

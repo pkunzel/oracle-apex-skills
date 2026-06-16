@@ -32,9 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear cached session state for the current user.
+
 ```sql
 begin
-    apex_util.CLEAR_USER_CACHE;
+    apex_util.clear_user_cache;
 end;
 /
 ```

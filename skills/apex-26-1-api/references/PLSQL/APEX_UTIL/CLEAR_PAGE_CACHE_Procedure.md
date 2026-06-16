@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear session state for a single page before redirecting back to it.
+
 ```sql
 begin
-    apex_util.CLEAR_PAGE_CACHE(
-        p_page_id => 1
-    );
+    apex_util.clear_page_cache(
+        p_page_id => 30);
 end;
 /
 ```

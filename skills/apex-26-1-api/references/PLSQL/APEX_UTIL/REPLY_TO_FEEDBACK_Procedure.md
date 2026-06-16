@@ -51,17 +51,18 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Add an administrator response and status to a feedback item.
+
 ```sql
 begin
-    apex_util.REPLY_TO_FEEDBACK(
-        p_feedback_id => 1,
-        p_type => 1,
-        p_status => 1,
-        p_tags => 'EXAMPLE',
-        p_developer_comment => 'EXAMPLE',
-        p_public_response => true,
-        p_followup => 'EXAMPLE'
-    );
+    apex_util.reply_to_feedback(
+        p_feedback_id       => :P50_FEEDBACK_ID,
+        p_type              => 1,
+        p_status            => 3,
+        p_tags              => 'resolved,orders',
+        p_developer_comment => :P50_INTERNAL_NOTE,
+        p_public_response   => :P50_PUBLIC_RESPONSE,
+        p_followup          => :P50_FOLLOW_UP);
 end;
 /
 ```

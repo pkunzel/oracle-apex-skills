@@ -33,12 +33,14 @@ Returns the timestamp of the next purge.
 
 ## Simple Example
 
+Show the next scheduled workflow purge timestamp.
+
 ```sql
 declare
-    l_result TIMESTAMP;
+    l_next_purge timestamp with time zone;
 begin
-    l_result := apex_workflow.GET_NEXT_PURGE_TIMESTAMP;
-    sys.dbms_output.put_line('Result captured.');
+    l_next_purge := apex_workflow.get_next_purge_timestamp;
+    :P30_NEXT_PURGE := to_char(l_next_purge, 'YYYY-MM-DD HH24:MI TZH:TZM');
 end;
 /
 ```

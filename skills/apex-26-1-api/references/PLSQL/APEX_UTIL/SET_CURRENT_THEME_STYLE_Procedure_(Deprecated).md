@@ -45,12 +45,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer APEX_THEME.SET_USER_STYLE for current theme style changes.
+
 ```sql
 begin
-    apex_util.SET_CURRENT_THEME_STYLE(
-        p_theme_number => 1,
-        p_theme_style_id => 1
-    );
+    apex_util.set_current_theme_style(
+        p_theme_number   => 42,
+        p_theme_style_id => 123456789);
 end;
 /
 ```

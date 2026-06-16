@@ -53,18 +53,27 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Fetch the common user profile fields by user id.
+
 ```sql
+declare
+    l_user_name      varchar2(255);
+    l_first_name     varchar2(255);
+    l_last_name      varchar2(255);
+    l_email          varchar2(320);
+    l_groups         varchar2(4000);
+    l_developer_role varchar2(4000);
+    l_description    varchar2(4000);
 begin
-    apex_util.FETCH_USER(
-        p_user_id => 1,
-        p_user_name => 'USER',
-        p_first_name => 'EXAMPLE',
-        p_last_name => 'EXAMPLE',
-        p_email_address => 'EXAMPLE',
-        p_groups => 'EXAMPLE',
-        p_developer_role => 'EXAMPLE',
-        p_description => 'EXAMPLE'
-    );
+    apex_util.fetch_user(
+        p_user_id        => apex_util.get_user_id('JSMITH'),
+        p_user_name      => l_user_name,
+        p_first_name     => l_first_name,
+        p_last_name      => l_last_name,
+        p_email_address  => l_email,
+        p_groups         => l_groups,
+        p_developer_role => l_developer_role,
+        p_description    => l_description);
 end;
 /
 ```

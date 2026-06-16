@@ -39,15 +39,23 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Expose row column values as component substitutions while rendering row-specific output.
 
 ```sql
+declare
+    l_rows apex_plugin_util.t_column_list;
 begin
-    apex_plugin_util.SET_COMPONENT_VALUES(
-        p_column_value_list => null,
-        p_row_num => 1
-    );
+    l_rows := apex_plugin_util.get_data2(
+        p_sql_statement  => 'select display_name, status from tasks',
+        p_min_columns    => 2,
+        p_max_columns    => 2,
+        p_component_name => p_region.name);
+
+    apex_plugin_util.set_component_values(
+        p_column_value_list => l_rows,
+        p_row_num           => 1);
 end;
 /
 ```
-

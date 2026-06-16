@@ -36,9 +36,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer APEX_AUTHORIZATION.RESET_CACHE in new code.
+
 ```sql
 begin
-    apex_util.RESET_AUTHORIZATIONS;
+    apex_util.reset_authorizations;
 end;
 /
 ```

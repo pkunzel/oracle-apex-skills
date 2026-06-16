@@ -36,14 +36,14 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Save a string in the package variable that KEYVAL_VC2 returns later.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_saved varchar2(4000);
 begin
-    l_result := apex_util.SAVEKEY_VC2(
-        p_val => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_saved := apex_util.savekey_vc2(
+        p_val => :P10_ORDER_STATUS);
 end;
 /
 ```

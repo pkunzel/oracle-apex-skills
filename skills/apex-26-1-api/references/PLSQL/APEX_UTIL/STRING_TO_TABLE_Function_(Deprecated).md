@@ -42,15 +42,15 @@ APEX_UTIL.STRING_TO_TABLE (
 
 ## Simple Example
 
+Legacy only. Prefer APEX_STRING.SPLIT for new string parsing.
+
 ```sql
 declare
-    l_result APEX_APPLICATION_GLOBAL.VC_ARR2;
+    l_values apex_application_global.vc_arr2;
 begin
-    l_result := apex_util.STRING_TO_TABLE(
-        p_string => 'EXAMPLE',
-        p_separator => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_values := apex_util.string_to_table(
+        p_string    => 'APP_USERS:REPORT_VIEWERS:APP_MANAGERS',
+        p_separator => ':');
 end;
 /
 ```

@@ -43,13 +43,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Append numbers as formatted strings.
+
 ```sql
+declare
+    l_values apex_t_varchar2;
 begin
-    apex_string.PUSH(
-        p_table => null,
-        p_values => 1,
-        p_format_mask => 'EXAMPLE'
-    );
+    apex_string.push(
+        p_table       => l_values,
+        p_values      => apex_t_number(10.5, 99.95),
+        p_format_mask => 'FM999G990D00');
 end;
 /
 ```

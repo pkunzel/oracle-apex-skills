@@ -44,16 +44,16 @@ This function returns the found tags in upper case.
 
 ## Simple Example
 
+Extract hash tags and ignore purely numeric tags.
+
 ```sql
 declare
-    l_result APEX_T_VARCHAR2;
+    l_tags apex_t_varchar2;
 begin
-    l_result := apex_string_util.FIND_TAGS(
-        p_string => 'EXAMPLE',
-        p_prefix => 'EXAMPLE',
-        p_exclude_numeric => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_tags := apex_string_util.find_tags(
+        p_string          => :P10_COMMENT,
+        p_prefix          => '#',
+        p_exclude_numeric => true);
 end;
 /
 ```

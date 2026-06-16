@@ -22,5 +22,23 @@ Use this page when code needs the `APEX_PLUGIN.c_on_error_page` topic. Confirm s
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use c_on_error_page when a validation error should redirect to APEX's error page instead of inline display.
 
+```sql
+function validate_external_reference (
+    p_item   in apex_plugin.t_item,
+    p_plugin in apex_plugin.t_plugin,
+    p_value  in varchar2 )
+    return apex_plugin.t_item_validation_result
+is
+    l_result apex_plugin.t_item_validation_result;
+begin
+    if p_value like 'TEMP-%' then
+        l_result.message := 'Temporary references cannot be submitted.';
+        l_result.display_location := apex_plugin.c_on_error_page;
+    end if;
+
+    return l_result;
+end;
+/
+```

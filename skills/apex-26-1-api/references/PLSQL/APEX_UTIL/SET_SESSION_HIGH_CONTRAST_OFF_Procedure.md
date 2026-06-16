@@ -32,9 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Turn high contrast mode off for the current APEX session.
+
 ```sql
 begin
-    apex_util.SET_SESSION_HIGH_CONTRAST_OFF;
+    apex_util.set_session_high_contrast_off;
 end;
 /
 ```

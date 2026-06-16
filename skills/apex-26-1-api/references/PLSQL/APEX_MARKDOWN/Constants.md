@@ -22,5 +22,17 @@ Use this page when code needs the `APEX_MARKDOWN.Constants` constants. Confirm s
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Keep the default escape mode for user-authored Markdown; preserve embedded HTML only for controlled content.
 
+```sql
+declare
+    l_html clob;
+begin
+    l_html := apex_markdown.to_html(
+        p_markdown           => :P10_NOTE_MD,
+        p_embedded_html_mode => apex_markdown.c_embedded_html_escape);
+
+    sys.htp.p(l_html);
+end;
+/
+```

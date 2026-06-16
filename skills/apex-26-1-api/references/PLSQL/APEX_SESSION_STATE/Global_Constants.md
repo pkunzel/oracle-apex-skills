@@ -22,5 +22,19 @@ Use this page when code needs the `APEX_SESSION_STATE.Global Constants` constant
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the data-type constants when constructing a generic t_value record.
 
+```sql
+declare
+    l_value apex_session_state.t_value;
+begin
+    l_value.data_type := apex_session_state.c_data_type_boolean;
+    l_value.boolean_value := true;
+
+    apex_session_state.set_value(
+        p_item   => 'P10_INCLUDE_DONE',
+        p_value  => l_value,
+        p_commit => false);
+end;
+/
+```

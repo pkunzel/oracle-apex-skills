@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Delete a feedback record after an administrator confirms it is obsolete.
+
 ```sql
 begin
-    apex_util.DELETE_FEEDBACK(
-        p_feedback_id => 1
-    );
+    apex_util.delete_feedback(
+        p_feedback_id => :P50_FEEDBACK_ID);
 end;
 /
 ```

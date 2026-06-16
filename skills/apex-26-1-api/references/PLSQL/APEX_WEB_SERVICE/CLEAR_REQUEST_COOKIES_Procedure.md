@@ -32,9 +32,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Clear request cookies before starting an unrelated outbound call.
+
 ```sql
 begin
-    apex_web_service.CLEAR_REQUEST_COOKIES;
+    apex_web_service.clear_request_cookies;
 end;
 /
 ```

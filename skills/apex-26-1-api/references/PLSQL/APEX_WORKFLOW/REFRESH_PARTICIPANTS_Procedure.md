@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Refresh participants after workflow-related ownership data changes.
+
 ```sql
 begin
-    apex_workflow.REFRESH_PARTICIPANTS(
-        p_instance_id => 1
-    );
+    apex_workflow.refresh_participants(
+        p_instance_id => :P30_WORKFLOW_ID);
 end;
 /
 ```

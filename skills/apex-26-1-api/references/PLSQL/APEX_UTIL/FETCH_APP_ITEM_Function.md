@@ -40,16 +40,16 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read an application-level item from an APEX session.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_support_email varchar2(320);
 begin
-    l_result := apex_util.FETCH_APP_ITEM(
-        p_item => 'EXAMPLE',
-        p_app => 1,
-        p_session => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_support_email := apex_util.fetch_app_item(
+        p_item    => 'F_SUPPORT_EMAIL',
+        p_app     => :APP_ID,
+        p_session => :APP_SESSION);
 end;
 /
 ```

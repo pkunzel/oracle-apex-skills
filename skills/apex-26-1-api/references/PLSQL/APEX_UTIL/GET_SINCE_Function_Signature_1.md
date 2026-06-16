@@ -38,15 +38,15 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Format elapsed time from a DATE value.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_label varchar2(255);
 begin
-    l_result := apex_util.GET_SINCE(
-        p_date => sysdate,
-        p_short => null
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_label := apex_util.get_since(
+        p_date  => sysdate - (90 / 1440),
+        p_short => true);
 end;
 /
 ```

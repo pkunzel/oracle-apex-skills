@@ -45,20 +45,31 @@ This function returns a table of search results as defined by the apex_search_re
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the pipelined SEARCH function in SQL rather than trying to assign it directly to a PL/SQL variable.
 
 ```sql
-declare
-    l_result APEX_SEARCH_RESULT_TABLE;
 begin
-    l_result := apex_search.SEARCH(
-        p_search_static_ids => 'EXAMPLE_STATIC_ID',
-        p_search_expression => 'EXAMPLE',
-        p_apply_order_bys => 'EXAMPLE',
-        p_return_total_row_count => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    apex_json.open_array;
+
+    for r in (
+        select title, subtitle, url
+          from table(
+                   apex_search.search(
+                       p_search_static_ids => apex_t_varchar2('ORDERS', 'CUSTOMERS'),
+                       p_search_expression => :P10_SEARCH,
+                       p_apply_order_bys   => 'Y'))
+         fetch first 20 rows only
+    ) loop
+        apex_json.open_object;
+        apex_json.write('title', r.title);
+        apex_json.write('subtitle', r.subtitle);
+        apex_json.write('url', r.url);
+        apex_json.close_object;
+    end loop;
+
+    apex_json.close_array;
 end;
 /
 ```
-

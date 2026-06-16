@@ -43,13 +43,14 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Apply a session-only style by theme style Static ID.
+
 ```sql
 begin
-    apex_theme.SET_SESSION_STYLE(
-        p_application_id => 1,
-        p_theme_number => null,
-        p_name => 'EXAMPLE'
-    );
+    apex_theme.set_session_style(
+        p_application_id => :APP_ID,
+        p_theme_number   => 42,
+        p_name           => 'VITA_DARK');
 end;
 /
 ```

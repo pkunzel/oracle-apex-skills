@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Set the language for the current APEX session.
+
 ```sql
 begin
-    apex_util.SET_SESSION_LANG(
-        p_lang => 'EXAMPLE'
-    );
+    apex_util.set_session_lang(
+        p_lang => 'en-us');
 end;
 /
 ```

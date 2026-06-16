@@ -38,15 +38,20 @@ APEX_STRING.PLIST_EXISTS (
 
 ## Simple Example
 
+Check whether a property list already contains a key.
+
 ```sql
 declare
-    l_result BOOLEAN;
+    l_props apex_t_varchar2;
 begin
-    l_result := apex_string.PLIST_EXISTS(
-        p_table => 'EXAMPLE',
-        p_key => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_props := apex_string.plist_put(l_props, 'priority', 'high');
+
+    if apex_string.plist_exists(
+           p_table => l_props,
+           p_key   => 'priority')
+    then
+        apex_debug.info('Priority is set.');
+    end if;
 end;
 /
 ```

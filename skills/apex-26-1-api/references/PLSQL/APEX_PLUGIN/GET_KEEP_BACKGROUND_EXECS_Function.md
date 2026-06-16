@@ -22,5 +22,13 @@ Use this page when code needs the `APEX_PLUGIN.GET_KEEP_BACKGROUND_EXECS` functi
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use this helper when a plug-in must honor the current background-execution preference.
 
+```sql
+begin
+    if apex_plugin.get_keep_background_execs then
+        apex_debug.info('Preserving existing background executions for this plug-in call.');
+    end if;
+end;
+/
+```

@@ -43,11 +43,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Delete a saved interactive report by report id in older code.
+
 ```sql
 begin
-    apex_util.IR_DELETE_REPORT(
-        p_report_id => 1
-    );
+    apex_util.ir_delete_report(
+        p_report_id => :P20_REPORT_ID);
 end;
 /
 ```

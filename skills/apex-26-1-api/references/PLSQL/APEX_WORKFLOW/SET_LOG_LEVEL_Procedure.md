@@ -41,12 +41,13 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Temporarily increase logging for a workflow instance during troubleshooting.
+
 ```sql
 begin
-    apex_workflow.SET_LOG_LEVEL(
-        p_instance_id => 1,
-        p_debug_level => null
-    );
+    apex_workflow.set_log_level(
+        p_instance_id => :P30_WORKFLOW_ID,
+        p_debug_level => apex_debug_api.c_log_level_info);
 end;
 /
 ```

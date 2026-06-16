@@ -45,14 +45,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Apply controlled tenant CSS for the current session.
+
 ```sql
 begin
-    apex_theme.SET_SESSION_STYLE_CSS(
-        p_application_id => 1,
-        p_theme_number => 1,
-        p_css_file_urls => 'EXAMPLE',
-        p_page_css_classes => 'EXAMPLE'
-    );
+    apex_theme.set_session_style_css(
+        p_application_id   => :APP_ID,
+        p_theme_number     => 42,
+        p_css_file_urls    => '#APP_FILES#themes/acme.css',
+        p_page_css_classes => 'tenant-acme');
 end;
 /
 ```

@@ -47,18 +47,18 @@ A table of workflows (type apex_t_workflow_instances ) containing the following 
 
 ## Simple Example
 
+Query workflow instances with the pipelined table function.
+
 ```sql
-declare
-    l_result APEX_T_WORKFLOW_INSTANCES;
-begin
-    l_result := apex_workflow.GET_WORKFLOWS(
-        p_context => to_clob('Example text'),
-        p_user => 'USER',
-        p_workflow_id => 1,
-        p_application_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
-end;
-/
+select workflow_id,
+       workflow_def_static_id,
+       state,
+       title,
+       created_on
+  from table(apex_workflow.get_workflows(
+           p_context        => apex_workflow.c_context_my_workflows,
+           p_user           => :APP_USER,
+           p_application_id => :APP_ID))
+ order by created_on desc;
 ```
 

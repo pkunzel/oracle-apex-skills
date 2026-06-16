@@ -39,11 +39,12 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Remove stale cached pages and regions for an application.
+
 ```sql
 begin
-    apex_util.CACHE_PURGE_STALE(
-        p_application => 1
-    );
+    apex_util.cache_purge_stale(
+        p_application => :APP_ID);
 end;
 /
 ```

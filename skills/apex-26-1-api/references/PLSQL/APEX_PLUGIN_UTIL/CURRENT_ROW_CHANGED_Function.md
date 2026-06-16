@@ -17,7 +17,7 @@ Use this page when code needs the `APEX_PLUGIN_UTIL.CURRENT_ROW_CHANGED` functio
 ## Signature
 
 ```sql
-API_PLUGIN_UTIL.CURRENT_ROW_CHANGED(
+APEX_PLUGIN_UTIL.CURRENT_ROW_CHANGED(
     p_old_row_context       IN apex_exec.t_context,
     p_new_row_context       IN apex_exec.t_context )
 RETURN BOOLEAN;
@@ -40,18 +40,18 @@ Parameter Description * Whether there is a difference between the rows.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use this in REST Data Source DML code to skip unnecessary updates when old and new row contexts match.
 
 ```sql
-declare
-    l_result BOOLEAN;
 begin
-    l_result := apex_plugin_util.CURRENT_ROW_CHANGED(
-        p_old_row_context => to_clob('Example text'),
-        p_new_row_context => to_clob('Example text')
-    );
-    sys.dbms_output.put_line('Result captured.');
+    if apex_plugin_util.current_row_changed(
+        p_old_row_context => p_old_values_context,
+        p_new_row_context => p_new_values_context)
+    then
+        apex_debug.info('REST DML row changed; sending update request.');
+    end if;
 end;
 /
 ```
-

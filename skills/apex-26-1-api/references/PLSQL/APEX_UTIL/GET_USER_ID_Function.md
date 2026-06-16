@@ -36,14 +36,14 @@ RETURN NUMBER;
 
 ## Simple Example
 
+Resolve an APEX username to its numeric user id.
+
 ```sql
 declare
-    l_result NUMBER;
+    l_user_id number;
 begin
-    l_result := apex_util.GET_USER_ID(
-        p_username => 'USER'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_user_id := apex_util.get_user_id(
+        p_username => 'JSMITH');
 end;
 /
 ```

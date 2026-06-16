@@ -22,5 +22,22 @@ Use this page when code needs the `APEX_WEB_SERVICE.Data Types` data types. Conf
 
 ## Example
 
-This member is a topic, constants section, data type section, or conceptual page. Use the documented definitions from the source link directly in the calling API examples.
+Use the multipart collection type with APPEND_TO_MULTIPART and GENERATE_REQUEST_BODY.
+
+```sql
+declare
+    l_parts apex_web_service.t_multipart_parts;
+    l_body  blob;
+begin
+    apex_web_service.append_to_multipart(
+        p_multipart    => l_parts,
+        p_name         => 'notes',
+        p_content_type => 'text/plain',
+        p_body         => to_clob(:P10_NOTES));
+
+    l_body := apex_web_service.generate_request_body(
+        p_multipart => l_parts);
+end;
+/
+```
 

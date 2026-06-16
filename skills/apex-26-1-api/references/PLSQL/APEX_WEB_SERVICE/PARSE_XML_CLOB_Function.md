@@ -40,16 +40,18 @@ RETURN CLOB;
 
 ## Simple Example
 
+Read a large text node from an XMLTYPE response.
+
 ```sql
 declare
-    l_result CLOB;
+    l_xml         sys.xmltype;
+    l_description clob;
 begin
-    l_result := apex_web_service.PARSE_XML_CLOB(
-        p_xml => null,
-        p_xpath => 'EXAMPLE',
-        p_ns => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_xml := sys.xmltype('<order><description>Long order notes</description></order>');
+
+    l_description := apex_web_service.parse_xml_clob(
+        p_xml   => l_xml,
+        p_xpath => '/order/description/text()');
 end;
 /
 ```

@@ -44,20 +44,18 @@ Parameter Description * Plug-In meta data for the web source operation.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Use the operation metadata configured for the REST Data Source plug-in instead of constructing endpoint details manually.
 
 ```sql
 declare
-    l_result APEX_PLUGIN.T_WEB_SOURCE_OPERATION;
+    l_operation apex_plugin.t_web_source_operation;
 begin
-    l_result := apex_plugin_util.GET_WEB_SOURCE_OPERATION(
-        p_web_source => null,
-        p_db_operation => null,
-        p_perform_init => true,
-        p_preserve_headers => true
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_operation := apex_plugin_util.get_web_source_operation(
+        p_web_source   => p_web_source,
+        p_db_operation => p_db_operation,
+        p_perform_init => true);
 end;
 /
 ```
-

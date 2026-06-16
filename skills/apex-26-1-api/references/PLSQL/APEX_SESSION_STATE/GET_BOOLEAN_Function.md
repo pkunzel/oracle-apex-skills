@@ -32,17 +32,20 @@ This function returns the value of the specified item as BOOLEAN. Parent topic: 
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Read a checkbox or switch item as a Boolean when the application logic needs a true/false value.
 
 ```sql
 declare
-    l_result BOOLEAN;
+    l_include_done boolean;
 begin
-    l_result := apex_session_state.GET_BOOLEAN(
-        p_item => 'EXAMPLE'
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_include_done := apex_session_state.get_boolean(
+        p_item => 'P10_INCLUDE_DONE');
+
+    if l_include_done then
+        apex_debug.info('Including completed tasks.');
+    end if;
 end;
 /
 ```
-

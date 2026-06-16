@@ -36,9 +36,11 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Legacy only. Prefer native Calendar region controls in new applications.
+
 ```sql
 begin
-    apex_util.INCREMENT_CALENDAR;
+    apex_util.increment_calendar;
 end;
 /
 ```

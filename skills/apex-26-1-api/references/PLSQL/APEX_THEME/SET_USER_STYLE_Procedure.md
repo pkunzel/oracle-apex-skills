@@ -45,14 +45,15 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Persist the selected theme style for the current user.
+
 ```sql
 begin
-    apex_theme.SET_USER_STYLE(
-        p_application_id => 1,
-        p_user => 'USER',
-        p_theme_number => 1,
-        p_id => 1
-    );
+    apex_theme.set_user_style(
+        p_application_id => :APP_ID,
+        p_user           => :APP_USER,
+        p_theme_number   => 42,
+        p_id             => :P20_STYLE_ID);
 end;
 /
 ```

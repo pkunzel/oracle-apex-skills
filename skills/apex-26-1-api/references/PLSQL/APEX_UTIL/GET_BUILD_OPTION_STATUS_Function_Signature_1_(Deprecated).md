@@ -42,15 +42,15 @@ FUNCTION get_build_option_status(
 
 ## Simple Example
 
+Legacy only. Check a build option by id in older code.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_status varchar2(255);
 begin
-    l_result := apex_util.GET_BUILD_OPTION_STATUS(
-        p_application_id => 1,
-        p_id => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_status := apex_util.get_build_option_status(
+        p_application_id => :APP_ID,
+        p_id             => 123456789);
 end;
 /
 ```

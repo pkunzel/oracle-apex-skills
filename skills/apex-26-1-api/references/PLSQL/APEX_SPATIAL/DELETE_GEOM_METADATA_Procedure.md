@@ -41,16 +41,16 @@ This is a procedure and does not return a value.
 - Validate user-controlled values before passing them into administrative, security, SQL, or web-service APIs.
 - Use the source link for exact behavior, defaults, and version-specific caveats.
 
-## Simple Example
+## Example
+
+Remove geometry metadata, optionally dropping the simple spatial index created by the metadata helper.
 
 ```sql
 begin
-    apex_spatial.DELETE_GEOM_METADATA(
-        p_table_name => 'EXAMPLE',
-        p_column_name => 'EXAMPLE',
-        p_drop_index => true
-    );
+    apex_spatial.delete_geom_metadata(
+        p_table_name  => 'CUSTOMER_LOCATIONS',
+        p_column_name => 'GEOM',
+        p_drop_index  => true);
 end;
 /
 ```
-

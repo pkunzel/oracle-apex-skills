@@ -38,15 +38,15 @@ RETURN VARCHAR2;
 
 ## Simple Example
 
+Read one of the custom attributes stored on an APEX user account.
+
 ```sql
 declare
-    l_result VARCHAR2;
+    l_cost_center varchar2(4000);
 begin
-    l_result := apex_util.GET_ATTRIBUTE(
-        p_username => 'USER',
-        p_attribute_number => 1
-    );
-    sys.dbms_output.put_line('Result captured.');
+    l_cost_center := apex_util.get_attribute(
+        p_username         => 'JSMITH',
+        p_attribute_number => 1);
 end;
 /
 ```

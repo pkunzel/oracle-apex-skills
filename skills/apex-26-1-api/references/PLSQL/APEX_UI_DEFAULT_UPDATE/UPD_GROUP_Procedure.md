@@ -47,14 +47,16 @@ This is a procedure and does not return a value.
 
 ## Simple Example
 
+Update UI Defaults in the table-owning schema before generating new forms or reports from the table.
+
 ```sql
 begin
-    apex_ui_default_update.UPD_GROUP(
-        p_table_name => 'EXAMPLE',
-        p_group_name => 'EXAMPLE',
-        p_new_group_name => 'EXAMPLE',
-        p_description => 'EXAMPLE',
-        p_display_sequence => 'EXAMPLE'
+    apex_ui_default_update.upd_group(
+        p_description => 'Audit columns for generated order pages.',
+        p_display_sequence => '90',
+        p_table_name => 'DEMO_ORDERS',
+        p_group_name => 'Audit',
+        p_new_group_name => 'Order Audit'
     );
 end;
 /
