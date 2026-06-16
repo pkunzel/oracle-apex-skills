@@ -1,8 +1,10 @@
 # APEX Skills
 
-Local, skill-oriented reference project for Oracle APEX 26.1 APIs.
+Local, skill-oriented reference project for Oracle APEX 26.1 APIs (not APEXlang) 
 
 This repository is organized as a small monorepo for installable Codex skills. The first skill is focused on Oracle APEX 26.1 PL/SQL and JavaScript APIs.
+
+For APEXlang, please check the [APEXlang Official Skills](https://github.com/oracle/skills)
 
 ## Source Documentation
 
